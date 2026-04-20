@@ -1,1 +1,397 @@
-hello worl
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAWIK CHEAP BOOSTING PANEL | UGX SMM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #f59e0b;
+            --bg-black: #080808;
+            --card-dark: #121212;
+            --input-dark: #1a1a1a;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding-bottom: 80px; /* Space for mobile nav if needed */
+        }
+
+        .balance-card {
+            background-color: var(--card-dark);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+
+        .icon-btn {
+            background-color: var(--card-dark);
+            border-radius: 12px;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .icon-btn:hover {
+            background-color: #1a1a1a;
+        }
+
+        .icon-btn.active {
+            background-color: var(--primary-orange);
+            color: black;
+        }
+
+        .input-field {
+            background-color: var(--input-dark);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 14px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary-orange);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-orange);
+            color: black;
+            font-weight: 700;
+            padding: 16px;
+            border-radius: 12px;
+            width: 100%;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .shawik-glow {
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .telegram-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,136,204,0.4);
+            z-index: 50;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Startup Popup -->
+    <div id="startupModal" class="modal-overlay">
+        <div class="bg-[#121212] p-8 rounded-[32px] max-w-sm w-[90%] text-center shawik-glow">
+            <div class="text-6xl mb-6">🇺🇬</div>
+            <h2 class="text-2xl font-bold mb-2">SHAWIK UGANDA</h2>
+            <p class="text-gray-400 italic mb-8">"It's not about education, it's all about wisdom 🙌"</p>
+            <button onclick="closeModal()" class="w-full bg-[#f59e0b] text-black font-bold py-4 rounded-2xl shadow-lg">
+                GET STARTED
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="p-6 flex justify-between items-center max-w-4xl mx-auto">
+        <div class="flex items-center gap-2">
+            <div class="text-orange-500 text-2xl"><i class="fas fa-spider"></i></div>
+            <h1 class="text-xl font-bold tracking-tight uppercase">SHAWIK<span class="text-orange-500">SMM</span></h1>
+        </div>
+        <button class="text-2xl"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <main class="max-w-xl mx-auto px-4 space-y-6 pb-20">
+        
+        <!-- Balance Cards -->
+        <div class="space-y-3">
+            <div class="balance-card">
+                <div class="text-orange-500 text-2xl bg-orange-500/10 p-3 rounded-full"><i class="fas fa-comment-dollar"></i></div>
+                <div>
+                    <p class="text-sm text-gray-500">Spent balance</p>
+                    <h2 class="text-xl font-bold font-mono">≈ USh 330,760.27</h2>
+                    <a href="#" class="text-xs text-orange-500 border-b border-orange-500/30">My Orders</a>
+                </div>
+            </div>
+            <div class="balance-card">
+                <div class="text-orange-500 text-2xl bg-orange-500/10 p-3 rounded-full"><i class="fas fa-coins"></i></div>
+                <div>
+                    <p class="text-sm text-gray-500">Account balance</p>
+                    <h2 class="text-xl font-bold font-mono">≈ USh 772.69</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Grid Filters -->
+        <div class="grid grid-cols-4 gap-3">
+            <div class="icon-btn active" onclick="setCategory('all')"><i class="fas fa-bars"></i></div>
+            <div class="icon-btn" onclick="setCategory('instagram')"><i class="fab fa-instagram text-pink-500"></i></div>
+            <div class="icon-btn" onclick="setCategory('tiktok')"><i class="fab fa-tiktok"></i></div>
+            <div class="icon-btn" onclick="setCategory('facebook')"><i class="fab fa-facebook text-blue-600"></i></div>
+            <div class="icon-btn" onclick="setCategory('youtube')"><i class="fab fa-youtube text-red-600"></i></div>
+            <div class="icon-btn" onclick="setCategory('telegram')"><i class="fab fa-telegram-plane text-blue-400"></i></div>
+            <div class="icon-btn" onclick="setCategory('x')"><i class="fab fa-twitter"></i></div>
+            <div class="icon-btn"><i class="fas fa-plus"></i></div>
+        </div>
+
+        <!-- Search -->
+        <div class="relative">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <input type="text" placeholder="Search" class="input-field pl-12">
+        </div>
+
+        <!-- Form Area -->
+        <div class="space-y-6 animate-fade">
+            <!-- Category -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Category</label>
+                <select id="catSelect" class="input-field appearance-none cursor-pointer" onchange="updateServices()">
+                    <option value="tiktok">TikTok Followers / Likes</option>
+                    <option value="tiktok_live">TikTok Live Stream [Views/Likes]</option>
+                    <option value="unlocker">TikTok Live Button Unlocker</option>
+                    <option value="youtube">YouTube Growth</option>
+                    <option value="facebook">Facebook Engagement</option>
+                </select>
+            </div>
+
+            <!-- Service -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Service</label>
+                <select id="serviceSelect" class="input-field appearance-none cursor-pointer" onchange="updatePrice()">
+                    <!-- Options injected by JS -->
+                </select>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Description</label>
+                <div class="input-field text-sm text-gray-500 min-h-[60px]" id="serviceDesc">
+                    Select a service to see details.
+                </div>
+            </div>
+
+            <!-- Link -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest" id="linkLabel">Link / Username</label>
+                <input type="text" placeholder="Enter link or username" class="input-field">
+            </div>
+
+            <!-- Quantity -->
+            <div id="qtySection">
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Quantity</label>
+                <input type="number" id="qty" value="1000" class="input-field" oninput="updatePrice()">
+                <p class="text-xs text-gray-600 mt-2">Min: 10 - Max: 10,000,000</p>
+            </div>
+
+            <!-- Average Time -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Average time <i class="fas fa-info-circle ml-1"></i></label>
+                <div class="input-field text-gray-500">Instant (0 - 15 minutes)</div>
+            </div>
+
+            <!-- Charge -->
+            <div>
+                <label class="text-sm font-semibold text-gray-400 ml-1 block mb-2 uppercase tracking-widest">Charge</label>
+                <div class="input-field font-bold text-orange-500">USh <span id="chargeDisplay">0.00</span></div>
+            </div>
+
+            <button class="submit-btn" onclick="handleSubmit()">SUBMIT ORDER</button>
+        </div>
+
+        <!-- Affiliate Program Promo -->
+        <div class="bg-[#121212] p-6 rounded-[24px] border border-white/5 space-y-4">
+            <h3 class="text-lg font-bold">Join Our Affiliate Program!</h3>
+            <p class="text-sm text-gray-500">💰 Start earning with SHAWIK SMM! Invite new users and earn commissions every time they add funds.</p>
+            <button class="w-full bg-white/5 py-3 rounded-xl text-sm font-semibold hover:bg-white/10 transition">Learn More</button>
+        </div>
+
+    </main>
+
+    <!-- Telegram Button -->
+    <a href="#" class="telegram-fab"><i class="fab fa-telegram-plane"></i></a>
+
+    <!-- Navigation Menu (Internal functionality logic) -->
+    <div class="fixed bottom-0 left-0 right-0 glass border-t border-white/5 p-4 flex justify-around md:hidden bg-black/80 backdrop-blur-xl">
+        <button class="text-orange-500"><i class="fas fa-home"></i></button>
+        <button class="text-gray-500" onclick="alert('Navigating to Add Funds...')"><i class="fas fa-wallet"></i></button>
+        <button class="text-gray-500"><i class="fas fa-ticket-alt"></i></button>
+        <button class="text-gray-500"><i class="fas fa-user-circle"></i></button>
+    </div>
+
+    <script>
+        const servicesData = {
+            tiktok: [
+                { id: 101, name: "TikTok Followers | Real | Instant", price: 500, desc: "Instant Start - High Quality - No Drop" },
+                { id: 102, name: "TikTok Likes | Cheap", price: 300, desc: "Fast Delivery - Worldwide Users" }
+            ],
+            tiktok_live: [
+                { id: 201, name: "TikTok Live Stream Views [1 Hour]", price: 1200, desc: "Views stay for full duration. Stable." },
+                { id: 202, name: "TikTok Live Likes & Comments", price: 2000, desc: "Customizable comments - boost engagement" }
+            ],
+            unlocker: [
+                { id: 301, name: "TikTok Live Button Unlocker [100% Work]", price: 25000, desc: "Bypass follower requirement. Unlocks Live Button instantly." }
+            ],
+            youtube: [
+                { id: 401, name: "YouTube Subscribers | Non-Drop", price: 15000, desc: "Real users - 30 days refill guarantee" }
+            ],
+            facebook: [
+                { id: 501, name: "FB Page Likes + Followers", price: 8000, desc: "Page promotion - Global audience" }
+            ]
+        };
+
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('startupModal').classList.add('active');
+            }, 300);
+            updateServices();
+        };
+
+        function closeModal() {
+            document.getElementById('startupModal').classList.remove('active');
+        }
+
+        function setCategory(cat) {
+            document.querySelectorAll('.icon-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            // Mock logic to update select box based on grid click
+            if(cat !== 'all') {
+                const select = document.getElementById('catSelect');
+                for(let option of select.options) {
+                    if(option.value.includes(cat)) {
+                        select.value = option.value;
+                        updateServices();
+                        break;
+                    }
+                }
+            }
+        }
+
+        function updateServices() {
+            const cat = document.getElementById('catSelect').value;
+            const serviceSelect = document.getElementById('serviceSelect');
+            const qtySection = document.getElementById('qtySection');
+            const linkLabel = document.getElementById('linkLabel');
+            
+            serviceSelect.innerHTML = '';
+            
+            servicesData[cat].forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = `${s.id} - ${s.name}`;
+                opt.dataset.price = s.price;
+                opt.dataset.desc = s.desc;
+                serviceSelect.appendChild(opt);
+            });
+
+            // Special logic for Unlocker
+            if(cat === 'unlocker') {
+                qtySection.style.display = 'none';
+                linkLabel.textContent = "Paste TikTok Username or Link";
+            } else {
+                qtySection.style.display = 'block';
+                linkLabel.textContent = "Link / Username";
+            }
+
+            updatePrice();
+        }
+
+        function updatePrice() {
+            const select = document.getElementById('serviceSelect');
+            const qty = document.getElementById('qty').value || 0;
+            const chargeDisplay = document.getElementById('chargeDisplay');
+            const descArea = document.getElementById('serviceDesc');
+
+            if (select.selectedOptions.length > 0) {
+                const option = select.selectedOptions[0];
+                const pricePerK = parseFloat(option.dataset.price);
+                const desc = option.dataset.desc;
+                
+                descArea.textContent = desc;
+
+                const cat = document.getElementById('catSelect').value;
+                if(cat === 'unlocker') {
+                    chargeDisplay.textContent = pricePerK.toLocaleString();
+                } else {
+                    const total = (pricePerK * qty) / 1000;
+                    chargeDisplay.textContent = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+                }
+            }
+        }
+
+        function handleSubmit() {
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Submitting...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Success!';
+                btn.style.backgroundColor = '#10b981';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.opacity = '1';
+                }, 2000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
+
+

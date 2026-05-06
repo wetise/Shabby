@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proton VPN | TikTok Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --proton-purple: #6d4aff;
+            --proton-green: #2ecc71;
+            --proton-dark: #1a1b23;
+            --proton-bg: #0e0f14;
+        }
+        body {
+            background-color: var(--proton-bg);
+            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: #1a1b23;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #252631;
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--proton-purple);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(109, 74, 255, 0.4);
+        }
+        .loader-ring {
+            border: 4px solid rgba(109, 74, 255, 0.1);
+            border-top: 4px solid var(--proton-purple);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .server-glow {
+            box-shadow: 0 0 10px var(--proton-green);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: LOGIN -->
+    <div id="loginPage" class="hidden min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-md p-8 glass-card">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-600/10 rounded-2xl mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="text-purple-500"><path d="M12 2L3 7V12C3 17.5 7 21 12 22C17 21 21 17.5 21 12V7L12 2Z"/></svg>
+                </div>
+                <h1 class="text-2xl font-bold">Put your Proton Login</h1>
+            </div>
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-[10px] text-gray-500 uppercase font-black mb-2">Email Address</label>
+                    <input type="email" id="email" required class="w-full bg-[#252631] border border-[#363745] p-3 rounded-lg focus:outline-none focus:border-purple-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 uppercase font-black mb-2">Password</label>
+                    <input type="password" id="password" required class="w-full bg-[#252631] border border-[#363745] p-3 rounded-lg focus:outline-none focus:border-purple-500 transition-colors">
+                </div>
+                <button type="submit" class="w-full bg-[#6d4aff] hover:bg-[#5b3ce0] py-4 rounded-xl font-bold transition-all transform active:scale-95">Sign In</button>
+                <p id="errorMsg" class="hidden text-red-500 text-sm text-center font-medium">Authentication failed.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: LOADING -->
+    <div id="loadingPage" class="hidden min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div class="loader-ring mb-8"></div>
+        <h2 class="text-xl font-bold mb-2">Establishing Secure Node...</h2>
+        <p class="text-gray-500 text-sm mb-8">Encrypting connection to Saudi Arabia (SA-01)</p>
+        <div class="w-64 h-1.5 bg-[#252631] rounded-full overflow-hidden">
+            <div id="loadProgress" class="h-full bg-purple-600 transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p id="secondsLeft" class="mt-4 text-xs font-mono text-gray-600">20.0s</p>
+    </div>
+
+    <!-- SCREEN 3: DASHBOARD -->
+    <div id="dashboardPage" class="hidden min-h-screen flex flex-col">
+        <nav class="border-b border-white/5 bg-[#1a1b23] px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-purple-600 rounded flex items-center justify-center"><i class="fas fa-lock text-xs"></i></div>
+                <span class="font-black text-lg">Proton <span class="text-gray-500">VPN</span></span>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-green-400 font-black">allah.kingdom.fam</p>
+                <p class="text-[9px] text-gray-500">ID: 7633340561102472210</p>
+            </div>
+        </nav>
+
+        <main class="flex-1 p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-7xl mx-auto w-full">
+            
+            <!-- Left Side: Profile & Server -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass-card p-6 border-l-4 border-green-500">
+                    <p class="text-[10px] text-gray-500 uppercase font-black mb-3 tracking-widest">Connection Location</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://flagcdn.com/w80/sa.png" class="w-10 rounded shadow-sm" alt="SA">
+                        <div>
+                            <p class="font-bold">Saudi Arabia</p>
+                            <p class="text-xs text-green-500 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-green-500 server-glow"></span> Locked & Secure
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <p class="text-[10px] text-gray-500 uppercase font-black mb-4 tracking-widest">Account Details</p>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between py-2 border-b border-white/5">
+                            <span class="text-gray-500">User ID</span>
+                            <span class="font-mono">7633340561102472210</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/5">
+                            <span class="text-gray-500">Created</span>
+                            <span>2026-04-27 07:40:29</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/5">
+                            <span class="text-gray-500">Nickname</span>
+                            <span class="text-purple-400 font-bold">allah.kingdom.fam</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500">Private Mode</span>
+                            <span class="text-red-400">Disabled (Public)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 border border-purple-500/20 bg-gradient-to-br from-[#1a1b23] to-[#12131a]">
+                    <div class="flex justify-between items-center mb-4">
+                        <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Billing</p>
+                        <span class="text-[9px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full font-bold">SUBSCRIBED</span>
+                    </div>
+                    <p class="text-xs text-gray-400">Monthly Plan</p>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <span class="text-3xl font-black text-white">$200</span>
+                        <span class="text-xs text-gray-500">USD</span>
+                    </div>
+                    <p class="text-sm text-purple-400 mt-2 font-bold italic">≈ 752,400.00 UGX</p>
+                </div>
+            </div>
+
+            <!-- Right Side: TikTok Adjuster -->
+            <div class="lg:col-span-8">
+                <div class="glass-card p-8 h-full flex flex-col">
+                    <div class="flex justify-between items-start mb-12">
+                        <div>
+                            <h2 class="text-2xl font-black italic uppercase tracking-tight">Tiktok Live views</h2>
+                            <p class="text-gray-500 text-sm mt-1">Adjust your cloud traffic volume</p>
+                        </div>
+                        <i class="fab fa-tiktok text-4xl opacity-10"></i>
+                    </div>
+
+                    <!-- ACTIVE ADJUSTER -->
+                    <div id="adjusterSection" class="flex-1 space-y-12">
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-end">
+                                <label class="text-xs font-black text-gray-400 uppercase">Volume Adjuster</label>
+                                <div id="liveVal" class="text-4xl font-black text-purple-500">1,000</div>
+                            </div>
+                            <input type="range" id="volumeRange" min="0" max="2000" value="1000">
+                            <div class="flex justify-between text-[10px] font-bold text-gray-700 uppercase">
+                                <span>Zero</span>
+                                <span>1k (Mid)</span>
+                                <span>2k (Max Limit)</span>
+                            </div>
+                        </div>
+
+                        <button onclick="submitAdjustment()" class="w-full bg-purple-600 hover:bg-purple-700 py-5 rounded-2xl font-black text-lg shadow-xl shadow-purple-900/40 transition-all transform active:scale-95">
+                            SUBMIT ADJUSTMENT
+                        </button>
+                    </div>
+
+                    <!-- LOCKED STATUS -->
+                    <div id="lockedSection" class="hidden flex-1 flex flex-col items-center justify-center py-10 space-y-8 text-center">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-orange-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
+                            <div class="relative w-20 h-20 bg-[#252631] border border-orange-500/30 text-orange-500 rounded-full flex items-center justify-center text-3xl">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black mb-2 italic">DEVICE LOCKED</h3>
+                            <p class="text-gray-500 text-sm max-w-xs mx-auto">Volume adjustment active. Device memory will reset in 6 hours.</p>
+                        </div>
+                        <div class="bg-[#252631] border border-white/5 px-6 py-4 rounded-2xl">
+                            <p class="text-[10px] text-gray-500 font-black uppercase mb-1">Active Volume</p>
+                            <p id="savedVolLabel" class="text-3xl font-black text-purple-400">1,000</p>
+                        </div>
+                        <div class="pt-4">
+                            <p class="text-[10px] text-gray-700 font-black uppercase mb-2">Available again in</p>
+                            <div id="timerDisplay" class="text-4xl font-mono font-black text-white tracking-widest">06:00:00</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 pt-8 border-t border-white/5 grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <p class="text-[9px] text-gray-600 font-black uppercase mb-1">Device ID</p>
+                            <p class="text-[10px] font-mono truncate">PRTN-SA-763334056</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <p class="text-[9px] text-gray-600 font-black uppercase mb-1">Status</p>
+                            <p class="text-[10px] text-green-500 font-bold uppercase">Optimized</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Persistence Keys
+        const AUTH_KEY = "proton_auth_session";
+        const LOADED_KEY = "proton_connection_stable";
+        const LOCK_KEY = "proton_adjust_lock";
+        const VOL_KEY = "proton_adjust_vol";
+
+        const validEmail = "Weriseandshine847@gmail.com";
+        const validPass = "Shanic@256";
+
+        // Elements
+        const lp = document.getElementById('loginPage');
+        const ldg = document.getElementById('loadingPage');
+        const dp = document.getElementById('dashboardPage');
+        const volRange = document.getElementById('volumeRange');
+        const liveVal = document.getElementById('liveVal');
+
+        // Logic on Startup
+        window.onload = function() {
+            if (localStorage.getItem(AUTH_KEY) === "true") {
+                if (localStorage.getItem(LOADED_KEY) === "true") {
+                    showDashboard();
+                } else {
+                    startLoadingSequence();
+                }
+            } else {
+                lp.classList.remove('hidden');
+            }
+        };
+
+        // Handle Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            if (email === validEmail && pass === validPass) {
+                localStorage.setItem(AUTH_KEY, "true");
+                startLoadingSequence();
+            } else {
+                const err = document.getElementById('errorMsg');
+                err.classList.remove('hidden');
+                setTimeout(() => err.classList.add('hidden'), 3000);
+            }
+        });
+
+        // Handle Loading (20 Seconds)
+        function startLoadingSequence() {
+            lp.classList.add('hidden');
+            ldg.classList.remove('hidden');
+            
+            let seconds = 20;
+            const progress = document.getElementById('loadProgress');
+            const timer = document.getElementById('secondsLeft');
+
+            const interval = setInterval(() => {
+                seconds -= 0.1;
+                const perc = ((20 - seconds) / 20) * 100;
+                progress.style.width = perc + '%';
+                timer.innerText = seconds.toFixed(1) + 's';
+
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    localStorage.setItem(LOADED_KEY, "true");
+                    showDashboard();
+                }
+            }, 100);
+        }
+
+        // Dashboard Logic
+        function showDashboard() {
+            ldg.classList.add('hidden');
+            lp.classList.add('hidden');
+            dp.classList.remove('hidden');
+            checkAdjustmentLock();
+        }
+
+        volRange.oninput = () => {
+            liveVal.innerText = Number(volRange.value).toLocaleString();
+        };
+
+        function submitAdjustment() {
+            const now = new Date().getTime();
+            const expiry = now + (6 * 60 * 60 * 1000);
+            localStorage.setItem(LOCK_KEY, expiry);
+            localStorage.setItem(VOL_KEY, volRange.value);
+            checkAdjustmentLock();
+        }
+
+        function checkAdjustmentLock() {
+            const expiry = localStorage.getItem(LOCK_KEY);
+            const val = localStorage.getItem(VOL_KEY);
+            const adjustUI = document.getElementById('adjusterSection');
+            const lockUI = document.getElementById('lockedSection');
+
+            if (expiry) {
+                const now = new Date().getTime();
+                const timeLeft = expiry - now;
+
+                if (timeLeft > 0) {
+                    adjustUI.classList.add('hidden');
+                    lockUI.classList.remove('hidden');
+                    document.getElementById('savedVolLabel').innerText = Number(val).toLocaleString();
+                    startCountdown(expiry);
+                } else {
+                    localStorage.removeItem(LOCK_KEY);
+                    adjustUI.classList.remove('hidden');
+                    lockUI.classList.add('hidden');
+                }
+            }
+        }
+
+        function startCountdown(endTime) {
+            const display = document.getElementById('timerDisplay');
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const diff = endTime - now;
+
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    checkAdjustmentLock();
+                    return;
+                }
+
+                const h = Math.floor(diff / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                display.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+

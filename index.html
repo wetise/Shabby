@@ -4,349 +4,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PayPal Business</title>
+    <title>SHAWIKBOOSTER | Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+
+        :root { --brand-orange: #ff8c00; }
+
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #ffffff;
-            color: #000;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000; color: #fff; margin: 0; padding: 0;
+            overflow-x: hidden; touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%;
         }
 
-        .balance-text {
-            font-size: 3.5rem;
+        /* Magical Text Effects */
+        .magical-text {
             font-weight: 800;
-            line-height: 1;
-            letter-spacing: -2px;
+            background: linear-gradient(90deg, #ff8c00, #ffffff, #ff8c00);
+            background-size: 200% auto;
+            color: #fff; background-clip: text; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; animation: shine 3s linear infinite;
         }
 
-        .quick-access-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            width: 85px;
-            cursor: pointer;
+        /* Premium Credits Animation */
+        .premium-credit {
+            display: inline-block;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ff8c00 0%, #fff 50%, #ff8c00 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flowText 4s linear infinite, pulseGlow 2s ease-in-out infinite;
         }
 
-        .quick-access-circle {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background-color: #f5f7fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: #2c2e2f;
-            transition: all 0.2s;
+        @keyframes flowText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
-        .quick-access-circle:active {
-            background-color: #e8f1ff;
-            color: #0070ba;
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 2px rgba(255,140,0,0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 8px rgba(255,140,0,0.6)); transform: scale(1.02); }
         }
 
-        .performance-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 20px;
-            min-width: 260px;
-        }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        .notification-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-
-        .feedback-handle {
-            position: fixed;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%) rotate(-90deg);
-            transform-origin: right bottom;
-            background: #000;
-            color: #fff;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 8px 8px 0 0;
-            z-index: 40;
-        }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-card { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 20px; }
         
-        .modal-animate {
-            animation: slideUp 0.3s ease-out;
+        .sidebar {
+            position: fixed; top: 0; right: -100%; width: 85%; height: 100%;
+            background: #000; z-index: 1000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+        .sidebar.active { right: 0; }
+
+        .page { display: none; min-height: 100vh; flex-direction: column; }
+        .page.active { display: flex; }
+
+        #devNotice {
+            position: fixed; bottom: 24px; left: 20px; right: 20px;
+            background: #111; border: 1px solid #ff8c0055; border-radius: 20px;
+            padding: 20px; z-index: 5000; transform: translateY(200%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+        #devNotice.show { transform: translateY(0); }
+
+        .platform-btn { background: #111; border: 1px solid #1a1a1a; transition: 0.3s; height: 48px; border-radius: 12px; }
+        .platform-btn.selected { border-color: var(--brand-orange); color: var(--brand-orange); background: rgba(255,140,0,0.05); }
+        
+        input, select, textarea {
+            background: #0a0a0a !important; border: 1px solid #222 !important;
+            color: white !important; outline: none; width: 100%;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.97);
+            z-index: 2000; display: none; padding: 20px; overflow-y: auto;
+        }
+        .modal.active { display: block; }
+
+        .api-code-block {
+            background: #050505; border: 1px solid #222; border-radius: 12px;
+            padding: 15px; font-family: monospace; font-size: 10px; color: #aaa;
+            white-space: pre-wrap; line-height: 1.5;
         }
     </style>
 </head>
-<body class="pb-10">
+<body>
 
-    <!-- Header -->
-    <nav class="flex items-center justify-between px-5 py-4 sticky top-0 bg-white z-50">
-        <div class="flex items-center gap-3">
-            <img src="shaw.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg'">
-            <h2 class="text-xl font-extrabold tracking-tight uppercase">EPHIA SHAWIK</h2>
-        </div>
-        <div class="flex items-center gap-5">
-            <div class="relative">
-                <i class="fa-regular fa-bell text-2xl"></i>
-                <span class="absolute -top-1 -right-1 bg-[#d93025] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">2</span>
-            </div>
-            <i class="fa-solid fa-bars text-2xl"></i>
-        </div>
-    </nav>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page items-center justify-center px-8">
+        <div class="text-center w-full max-w-sm">
+            <i class="fa-solid fa-spider text-5xl text-[#ff8c00] mb-6"></i>
+            <h1 class="text-3xl magical-text mb-2 tracking-tight">SHAWIKBOOSTER</h1>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em] mb-12">Universal SMM Panel</p>
 
-    <!-- Main Content -->
-    <div class="px-5 pt-8">
-        
-        <!-- Balance Section -->
-        <section class="mb-8">
-            <div class="flex items-baseline gap-2 mb-1" onclick="toggleCurrency()">
-                <h1 id="main-balance" class="balance-text">US$3,128.85</h1>
-                <span id="main-currency" class="text-2xl font-extrabold">USD</span>
+            <div class="space-y-4">
+                <button onclick="triggerNotice('maintenance')" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm">
+                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Sign in with Google
+                </button>
+                <button onclick="loginAsGuest()" class="w-full bg-[#111] border border-gray-800 text-white py-4 rounded-2xl font-bold text-sm">
+                    Login as Guest
+                </button>
             </div>
-            <p class="text-[#6c7378] text-sm font-semibold mb-6">Available balance</p>
-            <button onclick="toggleCurrency()" class="border border-gray-300 rounded-full px-8 py-3 text-sm font-bold hover:bg-gray-50 transition active:scale-95">
-                View Money page
+
+            <!-- Animated Credits on Login -->
+            <div class="mt-20 space-y-4">
+                <div>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Developer</p>
+                    <span class="premium-credit text-xl">SHAWIK</span>
+                </div>
+                <div>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Official Sponsors</p>
+                    <span class="premium-credit text-sm">Dj Douglas & Ava max</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page px-5 pb-24">
+        <header class="flex justify-between items-center py-6">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-spider text-[#ff8c00] text-xl"></i>
+                <h1 class="text-md magical-text tracking-tighter">SHAWIKBOOSTER</h1>
+            </div>
+            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-[#111] border border-gray-800 flex items-center justify-center">
+                <i class="fa-solid fa-bars-staggered"></i>
             </button>
-        </section>
+        </header>
 
-        <!-- Notification Card -->
-        <div class="notification-card">
-            <div class="text-[#0070ba] text-xl mb-3">
-                <i class="fa-solid fa-lock"></i>
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="glass-card p-4">
+                <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Current Balance</span>
+                <p class="text-lg font-bold">USh 0.00</p>
             </div>
-            <h3 class="text-[#0070ba] font-bold text-lg underline mb-2 decoration-1 underline-offset-4 cursor-pointer">Submit info to access your funds</h3>
-            <p class="text-sm text-[#2c2e2f] leading-relaxed font-medium">To continue having access to your funds, you need to submit the info requested.</p>
+            <div class="glass-card p-4">
+                <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Total Spending</span>
+                <p class="text-lg font-bold text-[#ff8c00]">USh 0.00</p>
+            </div>
         </div>
 
-        <!-- Quick Access -->
-        <section class="mb-12">
-            <div class="flex items-center gap-2 mb-6">
-                <h3 class="text-lg font-bold">Quick Access</h3>
-                <i class="fa-solid fa-pencil text-xs text-gray-400"></i>
-            </div>
-            <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-                <div class="quick-access-item">
-                    <div class="quick-access-circle"><i class="fa-solid fa-layer-group"></i></div>
-                    <span class="text-xs font-bold text-center">Business Tools</span>
-                </div>
-                <div class="quick-access-item" onclick="openRegionModal()">
-                    <div class="quick-access-circle"><i class="fa-solid fa-paper-plane"></i></div>
-                    <span class="text-xs font-bold text-center">Send money</span>
-                </div>
-                <div class="quick-access-item">
-                    <div class="quick-access-circle"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                    <span class="text-xs font-bold text-center">Invoicing</span>
-                </div>
-                <div class="quick-access-item">
-                    <div class="quick-access-circle"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                    <span class="text-xs font-bold text-center">Request money</span>
-                </div>
-            </div>
-        </section>
+        <!-- Social Navigation -->
+        <div class="glass-card p-4 mb-4 grid grid-cols-4 gap-2">
+            <button class="platform-btn selected" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok"></i></button>
+            <button class="platform-btn text-pink-500" onclick="triggerNotice('platform')"><i class="fa-brands fa-instagram"></i></button>
+            <button class="platform-btn text-blue-600" onclick="triggerNotice('platform')"><i class="fa-brands fa-facebook"></i></button>
+            <button class="platform-btn text-red-600" onclick="triggerNotice('platform')"><i class="fa-brands fa-youtube"></i></button>
+        </div>
 
-        <!-- Business Performance -->
-        <section>
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-bold">Business Performance</h3>
-                <span class="text-[#0070ba] font-bold text-sm">View more</span>
-            </div>
-            <p class="text-xs text-gray-500 font-bold mb-4">All comparisons to previous 30 days</p>
-            
-            <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-                <div class="performance-card flex-1">
-                    <h4 class="text-sm font-bold underline decoration-gray-300 underline-offset-4 mb-4">Total sales volume</h4>
-                    <div class="flex items-center gap-2">
-                        <span class="text-2xl font-bold">-</span>
-                        <span class="bg-gray-100 text-[10px] font-extrabold px-2 py-1 rounded-full text-gray-500">-</span>
-                    </div>
-                </div>
-                <div class="performance-card flex-1">
-                    <h4 class="text-sm font-bold underline decoration-gray-300 underline-offset-4 mb-4">Average transaction</h4>
-                    <div class="flex items-center gap-2">
-                        <span class="text-2xl font-bold">-</span>
-                        <span class="bg-gray-100 text-[10px] font-extrabold px-2 py-1 rounded-full text-gray-500">-</span>
-                    </div>
+        <!-- Main Form -->
+        <div class="space-y-4">
+            <div>
+                <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Category</label>
+                <div class="relative mt-1">
+                    <i class="fa-brands fa-tiktok absolute left-4 top-4 text-[#ff8c00]"></i>
+                    <input type="text" id="catDisplay" value="TikTok Followers" readonly class="pl-12 py-3.5 rounded-2xl text-sm">
                 </div>
             </div>
-        </section>
 
+            <div>
+                <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Choose Service</label>
+                <select id="serviceSelect" class="py-4 px-4 mt-1 rounded-2xl text-sm appearance-none">
+                    <option value="1.5" data-time="15 Mins">Ka boom 💥 100% instant ($1.5/1k)</option>
+                    <option value="3.0" data-time="20 Mins">Massavu ddala Organic Real ($3.0/1k)</option>
+                    <option value="1.0" data-time="30 Mins">Bots 100% Instant ($1.0/1k)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Profile / Link</label>
+                <input type="url" id="linkInput" placeholder="Paste your TikTok link here..." class="p-4 mt-1 rounded-2xl text-sm">
+            </div>
+
+            <div class="flex gap-3">
+                <div class="flex-[1.5]">
+                    <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Quantity</label>
+                    <input type="number" id="qtyInput" placeholder="1000" class="p-4 mt-1 rounded-2xl text-sm">
+                </div>
+                <div class="flex-1">
+                    <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Delivery</label>
+                    <div id="timeDisplay" class="p-4 mt-1 rounded-2xl text-[10px] font-bold text-gray-400 bg-[#0a0a0a] border border-[#222]">15 Mins</div>
+                </div>
+            </div>
+
+            <div class="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl flex justify-between items-center">
+                <div>
+                    <p class="text-[9px] text-gray-500 uppercase font-bold">Total Payable</p>
+                    <p id="priceDisplay" class="text-2xl font-black text-[#ff8c00]">USh 0.00</p>
+                </div>
+                <i class="fa-solid fa-coins text-orange-900/40 text-2xl"></i>
+            </div>
+
+            <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                Place Order
+            </button>
+        </div>
+
+        <!-- Lower Menu Grid -->
+        <div class="mt-8 grid grid-cols-2 gap-3">
+            <button onclick="openModal('ticketsModal')" class="bg-[#111] p-5 rounded-2xl border border-gray-800 flex flex-col items-center gap-2">
+                <i class="fa-solid fa-ticket text-[#ff8c00] text-lg"></i>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Tickets</span>
+            </button>
+            <button onclick="openModal('apiModal')" class="bg-[#111] p-5 rounded-2xl border border-gray-800 flex flex-col items-center gap-2">
+                <i class="fa-solid fa-code text-blue-500 text-lg"></i>
+                <span class="text-[10px] font-bold uppercase tracking-wider">API Keys</span>
+            </button>
+        </div>
+
+        <!-- Animated Footer Credits -->
+        <footer class="mt-16 text-center pb-12 opacity-90">
+            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Designed & Built By</p>
+            <span class="premium-credit text-lg block mb-4">SHAWIK</span>
+            <div class="h-[1px] w-12 bg-gray-900 mx-auto mb-4"></div>
+            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Powered By</p>
+            <span class="premium-credit text-xs block">Dj Douglas & Ava max</span>
+        </footer>
     </div>
 
-    <!-- Feedback Tab -->
-    <div class="feedback-handle">Feedback</div>
+    <!-- API MODAL -->
+    <div id="apiModal" class="modal">
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-sm font-black uppercase magical-text">API Implementation</h3>
+                <button onclick="closeModal('apiModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-[10px] text-gray-500 mb-4 uppercase font-bold">Standard PHP Integration for shawikbooster</p>
+            <div class="api-code-block">
+&lt;?php
+class Api {
+    public $api_url = 'https://shawikbooster.com/api/v2';
+    public $api_key = 'YOUR_API_KEY_HERE';
 
-    <!-- Unified Send Modal -->
-    <div id="send-modal" class="fixed inset-0 z-[100] hidden flex items-end sm:items-center justify-center">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
-        <div class="bg-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-[32px] relative z-10 p-8 shadow-2xl modal-animate">
+    /** Add order */
+    public function order($data) {
+        $post = array_merge(['key' => $this->api_key, 'action' => 'add'], $data);
+        return json_decode((string)$this->connect($post));
+    }
+
+    /** Check balance */
+    public function balance() {
+        return json_decode($this->connect(['key' => $this->api_key, 'action' => 'balance']));
+    }
+
+    private function connect($post) {
+        $ch = curl_init($this->api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; SHAWIKBOOSTER)');
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+}
+?&gt;
+            </div>
+        </div>
+    </div>
+
+    <!-- TICKETS MODAL -->
+    <div id="ticketsModal" class="modal">
+        <div class="p-6">
             <div class="flex justify-between items-center mb-8">
-                <div class="flex items-center gap-3">
-                    <img src="shaw.png" alt="Logo" class="h-6 w-auto" onerror="this.src='https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg'">
-                    <h3 id="modal-title" class="text-xl font-bold">Select Region</h3>
-                </div>
-                <i class="fa-solid fa-xmark text-2xl cursor-pointer text-gray-400" onclick="closeModal()"></i>
+                <h3 class="text-sm font-black uppercase tracking-widest">Support Center</h3>
+                <button onclick="closeModal('ticketsModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
-            <!-- Step 1: Regions -->
-            <div id="region-step" class="space-y-4">
-                <div class="p-5 border rounded-2xl flex items-center justify-between hover:bg-gray-50 transition active:bg-blue-50 cursor-pointer" onclick="showBanks('UK')">
-                    <div class="flex items-center gap-4">
-                        <span class="text-2xl">🇬🇧</span>
-                        <span class="font-bold text-gray-800">United Kingdom</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+            <div class="space-y-5">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Order Number</label>
+                    <input type="text" placeholder="e.g. #SHAWIK-9981" class="p-4 rounded-xl text-sm mt-1">
                 </div>
-                <div class="p-5 border rounded-2xl flex items-center justify-between hover:bg-gray-50 transition active:bg-blue-50 cursor-pointer" onclick="showBanks('US')">
-                    <div class="flex items-center gap-4">
-                        <span class="text-2xl">🇺🇸</span>
-                        <span class="font-bold text-gray-800">United States</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Issue Category</label>
+                    <select class="p-4 rounded-xl text-sm mt-1 appearance-none">
+                        <option>Refill Request</option>
+                        <option>Payment Issues</option>
+                        <option>Order Cancellation</option>
+                        <option>Other Support</option>
+                    </select>
                 </div>
-                <div class="p-5 border rounded-2xl flex items-center justify-between hover:bg-gray-50 transition active:bg-blue-50 cursor-pointer" onclick="showBanks('JP')">
-                    <div class="flex items-center gap-4">
-                        <span class="text-2xl">🇯🇵</span>
-                        <span class="font-bold text-gray-800">Japan</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Detailed Message</label>
+                    <textarea rows="5" placeholder="Explain your issue here..." class="p-4 rounded-xl text-sm mt-1"></textarea>
                 </div>
-            </div>
-
-            <!-- Step 2: Banks -->
-            <div id="bank-step" class="hidden">
-                <div class="mb-4 flex items-center gap-2 cursor-pointer text-[#0070ba] font-bold text-sm" onclick="showRegions()">
-                    <i class="fa-solid fa-arrow-left text-xs"></i> Back to regions
-                </div>
-                <p id="bank-subtitle" class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Verified Partners</p>
-                <div id="bank-list" class="space-y-3 max-h-[50vh] overflow-y-auto pr-1 no-scrollbar">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-            
-            <div class="mt-8 pt-4 border-t border-gray-100">
-                <button class="w-full bg-[#0070ba] text-white py-4 rounded-full font-bold shadow-lg shadow-blue-100 active:scale-95 transition">Add new bank account</button>
+                <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">Submit Ticket</button>
             </div>
         </div>
     </div>
 
-    <!-- Success Toast -->
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#2c2e2f] text-white px-8 py-4 rounded-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 z-[200] font-bold text-sm shadow-xl">
-        <i class="fa-solid fa-circle-check text-green-400"></i>
-        <span id="toast-text">Balance updated</span>
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar p-8">
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="text-xl magical-text">SHAWIK</h2>
+            <button onclick="toggleSidebar()" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <nav class="space-y-3">
+            <a href="#" onclick="toggleSidebar()" class="flex items-center p-4 rounded-xl bg-[#111] text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
+            <a href="#" onclick="triggerNotice('maintenance')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
+            <a href="#" onclick="triggerNotice('maintenance')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4"></i> Mass Orders</a>
+            <a href="#" onclick="openModal('apiModal')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-link mr-4"></i> API Access</a>
+            <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-4 rounded-xl text-green-500 font-bold border border-green-900/20"><i class="fa-brands fa-whatsapp mr-4 text-xl"></i> WhatsApp Support</a>
+            <hr class="border-gray-900 my-6">
+            <a href="#" onclick="logout()" class="flex items-center p-4 rounded-xl text-red-500 font-bold"><i class="fa-solid fa-power-off mr-4"></i> Logout</a>
+        </nav>
+    </div>
+
+    <!-- NOTIFICATION BOX -->
+    <div id="devNotice">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-500">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="flex-1">
+                <h4 id="noticeTitle" class="text-xs font-black uppercase">Service Update</h4>
+                <p id="noticeText" class="text-[9px] text-gray-400 leading-tight">Optimizing...</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        let isUSD = true;
-        const balanceUSD = 3128.85;
-        const rateUGX = 3842.15;
+        const USH_RATE = 3850;
 
-        const bankData = {
-            'UK': [
-                { name: 'HSBC Bank UK', icon: 'fa-building-columns', color: '#db0011' },
-                { name: 'Barclays Bank', icon: 'fa-building-columns', color: '#00aeef' },
-                { name: 'Lloyds Bank', icon: 'fa-building-columns', color: '#006a4d' }
-            ],
-            'US': [
-                { name: 'JPMorgan Chase', icon: 'fa-building-columns', color: '#117aca' },
-                { name: 'Bank of America', icon: 'fa-building-columns', color: '#e31837' },
-                { name: 'Wells Fargo', icon: 'fa-building-columns', color: '#d71e28' }
-            ],
-            'JP': [
-                { name: 'MUFG Bank', icon: 'fa-building-columns', color: '#c8102e' },
-                { name: 'Mizuho Bank', icon: 'fa-building-columns', color: '#002664' },
-                { name: 'Sumitomo Mitsui', icon: 'fa-building-columns', color: '#00a35b' }
-            ]
+        // Persistent Login Memory
+        window.onload = () => {
+            const isGuest = localStorage.getItem('shawik_active_session');
+            if (isGuest === 'true') {
+                showPage('dashboardPage');
+            } else {
+                showPage('loginPage');
+            }
         };
 
-        function toggleCurrency() {
-            const balanceEl = document.getElementById('main-balance');
-            const currencyEl = document.getElementById('main-currency');
-            
-            if (isUSD) {
-                const ugx = (balanceUSD * rateUGX).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                balanceEl.innerText = 'USh' + ugx;
-                currencyEl.innerText = 'UGX';
-                showToast("Converted to UGX");
+        function loginAsGuest() {
+            localStorage.setItem('shawik_active_session', 'true');
+            showPage('dashboardPage');
+        }
+
+        function logout() {
+            localStorage.removeItem('shawik_active_session');
+            location.reload(); // Takes them back to login page
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); if(id !== 'apiModal') toggleSidebar(); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Notice System
+        let noticeTimer;
+        function triggerNotice(type) {
+            const notice = document.getElementById('devNotice');
+            const title = document.getElementById('noticeTitle');
+            const text = document.getElementById('noticeText');
+
+            if (type === 'platform') {
+                title.innerText = "Deployment Phase";
+                text.innerHTML = "Only TikTok services are updated. Other platforms launch on <b>18 May 2026</b>.";
             } else {
-                balanceEl.innerText = 'US$3,128.85';
-                currencyEl.innerText = 'USD';
-                showToast("Converted to USD");
+                title.innerText = "System Locked";
+                text.innerHTML = "Our secure payment gateway is undergoing optimization. Launch: <b>18 May 2026</b>.";
             }
-            isUSD = !isUSD;
+
+            notice.classList.add('show');
+            clearTimeout(noticeTimer);
+            noticeTimer = setTimeout(() => notice.classList.remove('show'), 5000);
         }
 
-        function openRegionModal() {
-            document.getElementById('send-modal').classList.remove('hidden');
-            showRegions();
-            document.body.style.overflow = 'hidden';
-        }
+        // Pricing & Delivery Logic
+        const qtyIn = document.getElementById('qtyInput');
+        const srvSel = document.getElementById('serviceSelect');
+        const prDisp = document.getElementById('priceDisplay');
+        const timeDisp = document.getElementById('timeDisplay');
 
-        function showRegions() {
-            document.getElementById('modal-title').innerText = 'Select Region';
-            document.getElementById('region-step').classList.remove('hidden');
-            document.getElementById('bank-step').classList.add('hidden');
-        }
-
-        function showBanks(region) {
-            const list = document.getElementById('bank-list');
-            const regionNames = { 'UK': 'United Kingdom', 'US': 'United States', 'JP': 'Japan' };
+        function updateForm() {
+            const q = parseFloat(qtyIn.value) || 0;
+            const r = parseFloat(srvSel.value);
+            const t = srvSel.options[srvSel.selectedIndex].dataset.time;
             
-            document.getElementById('modal-title').innerText = 'Banks in ' + regionNames[region];
-            document.getElementById('region-step').classList.add('hidden');
-            document.getElementById('bank-step').classList.remove('hidden');
-            
-            list.innerHTML = '';
-            bankData[region].forEach(bank => {
-                const div = document.createElement('div');
-                div.className = 'p-5 border rounded-2xl flex items-center justify-between hover:bg-gray-50 transition active:bg-blue-50 cursor-pointer';
-                div.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: ${bank.color}">
-                            <i class="fa-solid ${bank.icon} text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold text-gray-800">${bank.name}</p>
-                            <p class="text-[10px] font-black text-blue-600 uppercase">Verified</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
-                `;
-                div.onclick = () => {
-                    closeModal();
-                    showToast("Transfer to " + bank.name + " initiated");
-                };
-                list.appendChild(div);
-            });
+            const res = (q / 1000) * r * USH_RATE;
+            prDisp.innerText = "USh " + res.toLocaleString(undefined, {minimumFractionDigits: 2});
+            timeDisp.innerText = t;
         }
 
-        function closeModal() {
-            document.getElementById('send-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function showToast(text) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-text').innerText = text;
-            toast.classList.remove('opacity-0', 'translate-y-4');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-4');
-            }, 3000);
-        }
+        qtyIn.addEventListener('input', updateForm);
+        srvSel.addEventListener('change', updateForm);
     </script>
 </body>
 </html>

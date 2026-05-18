@@ -91,9 +91,55 @@
             padding: 15px; font-family: monospace; font-size: 10px; color: #aaa;
             white-space: pre-wrap; line-height: 1.5;
         }
+
+        /* Pulsing indicator for updates page */
+        .pulsing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ff8c00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
+            70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 10px rgba(255, 140, 0, 0); }
+            100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- FIRST/INTRO PAGE (LAUGHING NOW UPDATES) -->
+    <div id="introPage" class="page active items-center justify-center px-8 transition-opacity duration-1000">
+        <div class="text-center w-full max-w-sm flex flex-col items-center">
+            <!-- Icon with rotating aura -->
+            <div class="relative mb-8">
+                <i class="fa-solid fa-spider text-6xl text-[#ff8c00] animate-pulse"></i>
+                <div class="absolute inset-0 bg-[#ff8c00] blur-xl opacity-20 -z-10 animate-pulse"></div>
+            </div>
+            
+            <h1 class="text-4xl magical-text mb-6 tracking-tight">Laughing Now</h1>
+            
+            <!-- Update Message Glass Card -->
+            <div class="glass-card p-6 w-full mb-8 border-orange-500/20 bg-gradient-to-b from-[#111] to-black">
+                <div class="flex items-center justify-center gap-2 mb-3">
+                    <span class="pulsing-dot"></span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Live Updates</span>
+                </div>
+                <p class="text-sm text-gray-200 font-semibold leading-relaxed">
+                    Our Developers are making updates
+                </p>
+                <p class="text-[11px] text-[#ff8c00] mt-2 font-medium">
+                    Thank you all
+                </p>
+            </div>
+
+            <button onclick="skipIntro()" class="text-[10px] text-gray-500 hover:text-white uppercase tracking-[0.2em] transition-colors flex items-center gap-2">
+                Continue to App <i class="fa-solid fa-arrow-right text-[8px]"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- LOGIN PAGE -->
     <div id="loginPage" class="page items-center justify-center px-8">
@@ -331,15 +377,34 @@ class Api {
     <script>
         const USH_RATE = 3850;
 
-        // Persistent Login Memory
+        // Intro and Navigation Controller
         window.onload = () => {
-            const isGuest = localStorage.getItem('shawik_active_session');
-            if (isGuest === 'true') {
-                showPage('dashboardPage');
-            } else {
-                showPage('loginPage');
-            }
+            // First display the updates intro page, then auto-route to correct place
+            setTimeout(() => {
+                exitIntro();
+            }, 4500); // Intro displays for 4.5 seconds
         };
+
+        function exitIntro() {
+            const intro = document.getElementById('introPage');
+            intro.style.opacity = '0';
+            
+            setTimeout(() => {
+                intro.classList.remove('active');
+                
+                // Now direct the user to the appropriate page
+                const isGuest = localStorage.getItem('shawik_active_session');
+                if (isGuest === 'true') {
+                    showPage('dashboardPage');
+                } else {
+                    showPage('loginPage');
+                }
+            }, 1000); // Match Tailwind's duration-1000 transition
+        }
+
+        function skipIntro() {
+            exitIntro();
+        }
 
         function loginAsGuest() {
             localStorage.setItem('shawik_active_session', 'true');
@@ -348,12 +413,14 @@ class Api {
 
         function logout() {
             localStorage.removeItem('shawik_active_session');
-            location.reload(); // Takes them back to login page
+            location.reload(); // Takes them back to intro page, then login
         }
 
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const targetPage = document.getElementById(id);
+            targetPage.classList.add('active');
+            targetPage.style.opacity = '1';
             window.scrollTo(0,0);
         }
 

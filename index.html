@@ -10,12 +10,21 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
 
-        :root { --brand-orange: #ff8c00; }
+        :root { 
+            --brand-orange: #ff8c00; 
+            --dark-card: #0d0d0d;
+            --dark-bg: #000000;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #000; color: #fff; margin: 0; padding: 0;
-            overflow-x: hidden; touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%;
+            background-color: var(--dark-bg); 
+            color: #fff; 
+            margin: 0; 
+            padding: 0;
+            overflow-x: hidden; 
+            touch-action: pan-x pan-y; 
+            -webkit-text-size-adjust: 100%;
         }
 
         /* Magical Text Effects */
@@ -51,7 +60,7 @@
 
         @keyframes shine { to { background-position: 200% center; } }
 
-        .glass-card { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 20px; }
+        .glass-card { background: var(--dark-card); border: 1px solid #1a1a1a; border-radius: 20px; }
         
         .sidebar {
             position: fixed; top: 0; right: -100%; width: 85%; height: 100%;
@@ -80,6 +89,17 @@
             color: white !important; outline: none; width: 100%;
         }
 
+        /* Custom inputs specifically for sleek payment styling */
+        .payment-input {
+            background: #080808 !important;
+            border: 1px solid #1a1a1a !important;
+            border-radius: 12px;
+            transition: border-color 0.2s;
+        }
+        .payment-input:focus {
+            border-color: var(--brand-orange) !important;
+        }
+
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.97);
             z-index: 2000; display: none; padding: 20px; overflow-y: auto;
@@ -105,6 +125,27 @@
             0% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
             70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 10px rgba(255, 140, 0, 0); }
             100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+        }
+
+        /* Method Selector State Styles */
+        .payment-method-btn {
+            background: #0d0d0d;
+            border: 1.5px solid #1c1c1c;
+            border-radius: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .payment-method-btn.selected {
+            border-color: var(--brand-orange);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.15);
+        }
+
+        /* Custom loading overlay inside forms */
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
         }
     </style>
 </head>
@@ -149,7 +190,7 @@
             <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em] mb-12">Universal SMM Panel</p>
 
             <div class="space-y-4">
-                <button onclick="triggerNotice('maintenance')" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm">
+                <button onclick="loginAsGuest()" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm">
                     <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Sign in with Google
                 </button>
                 <button onclick="loginAsGuest()" class="w-full bg-[#111] border border-gray-800 text-white py-4 rounded-2xl font-bold text-sm">
@@ -187,7 +228,7 @@
         <div class="grid grid-cols-2 gap-3 mb-4">
             <div class="glass-card p-4">
                 <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Current Balance</span>
-                <p class="text-lg font-bold">USh 0.00</p>
+                <p id="dashboardBalance" class="text-lg font-bold">USh 0.00</p>
             </div>
             <div class="glass-card p-4">
                 <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Total Spending</span>
@@ -246,8 +287,8 @@
                 <i class="fa-solid fa-coins text-orange-900/40 text-2xl"></i>
             </div>
 
-            <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
-                Place Order
+            <button onclick="showPage('addFundsPage')" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                Place Order (Deposit to Pay)
             </button>
         </div>
 
@@ -271,6 +312,167 @@
             <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Powered By</p>
             <span class="premium-credit text-xs block">Dj Douglas & Ava max</span>
         </footer>
+    </div>
+
+    <!-- NEW INTERACTIVE ADD FUNDS PAGE (MATCHING THE SCREENSHOT & REQUEST) -->
+    <div id="addFundsPage" class="page px-5 pb-24">
+        <!-- Add Funds Header -->
+        <header class="flex items-center gap-4 py-6">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-[#0d0d0d] border border-gray-900 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+            </button>
+            <h1 class="text-lg font-black tracking-widest uppercase">Add Funds</h1>
+        </header>
+
+        <div class="max-w-md mx-auto w-full space-y-6">
+            
+            <!-- Deposit Amount Card -->
+            <div class="glass-card p-5 bg-gradient-to-b from-[#111] to-[#080808]">
+                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block mb-2">Deposit Amount (USD)</label>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-2xl font-black text-gray-400">$</span>
+                    <input type="number" id="depositAmount" value="10" min="1" class="pl-10 pr-4 py-4 rounded-xl text-2xl font-bold bg-[#050505] border border-gray-800 focus:border-[#ff8c00] transition-colors w-full" placeholder="10">
+                </div>
+                <div class="flex justify-between items-center mt-2 px-1">
+                    <span class="text-[10px] text-gray-500">Estimated conversion:</span>
+                    <span id="ugxConversion" class="text-[11px] text-[#ff8c00] font-bold">USh 38,500</span>
+                </div>
+            </div>
+
+            <!-- Choose Method Header -->
+            <div>
+                <h3 class="text-[11px] text-gray-500 font-extrabold uppercase tracking-[0.2em] mb-3">Choose Method</h3>
+                
+                <div class="space-y-3">
+                    <!-- Credit Card Method Button -->
+                    <button id="methodCard" onclick="selectPaymentMethod('card')" class="payment-method-btn selected w-full p-4 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-900/20 border border-blue-900/40 rounded-xl flex items-center justify-center text-blue-500">
+                                <i class="fa-solid fa-credit-card text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Credit Card</h4>
+                                <p class="text-[10px] text-gray-500 font-semibold">Visa, Mastercard, Amex</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-6 h-auto opacity-80" alt="Visa">
+                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="w-6 h-auto opacity-80" alt="Mastercard">
+                        </div>
+                    </button>
+
+                    <!-- Mobile Money Method Button -->
+                    <button id="methodMobileMoney" onclick="selectPaymentMethod('momo')" class="payment-method-btn w-full p-4 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-yellow-900/20 border border-yellow-900/40 rounded-xl flex items-center justify-center text-yellow-500">
+                                <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Mobile Money</h4>
+                                <p class="text-[10px] text-gray-500 font-semibold">MTN & Airtel Uganda</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="px-2 py-1 bg-[#ffcc00] text-black text-[9px] font-black rounded uppercase">MTN</span>
+                            <span class="px-2 py-1 bg-[#ff0000] text-white text-[9px] font-black rounded uppercase">Airtel</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Form Loading Section -->
+            <div id="paymentFormContainer" class="glass-card p-5 bg-[#0a0a0a] border border-[#141414]">
+                
+                <!-- 1. LOADING STATE (Simulated 4 Seconds for Credit Card loading) -->
+                <div id="paymentLoadingState" class="spinner-container hidden">
+                    <div class="relative w-12 h-12 mb-4">
+                        <div class="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
+                        <div class="absolute inset-0 border-4 border-[#ff8c00] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <p class="text-xs text-gray-400 animate-pulse">Establishing secure gateway connection...</p>
+                    <p class="text-[10px] text-gray-600 mt-1">Please wait, checking parameters...</p>
+                </div>
+
+                <!-- 2. CREDIT CARD OPTION FORM -->
+                <div id="creditCardForm" class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-900 pb-3 mb-2">
+                        <span class="text-xs font-bold text-[#ff8c00] uppercase tracking-wider">Card Details</span>
+                        <i class="fa-solid fa-lock text-[10px] text-gray-500"> Secure 256-bit SSL</i>
+                    </div>
+
+                    <div>
+                        <input type="text" id="cardNo" placeholder="Card Number (0000 0000 0000 0)" class="payment-input p-4 text-sm w-full font-mono tracking-widest" maxlength="19">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" class="payment-input p-4 text-sm font-mono text-center" maxlength="5">
+                        <input type="password" id="cardCVC" placeholder="CVC" class="payment-input p-4 text-sm font-mono text-center" maxlength="4">
+                    </div>
+
+                    <button onclick="submitCreditCardPayment()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-orange-500 shadow-lg shadow-orange-500/10">
+                        Confirm Payment
+                    </button>
+                </div>
+
+                <!-- 3. MOBILE MONEY UGANDA FORM -->
+                <div id="mobileMoneyForm" class="hidden space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-900 pb-3 mb-2">
+                        <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider">Mobile Money Uganda</span>
+                        <span class="text-[9px] bg-green-950 text-green-400 px-2 py-0.5 rounded-full font-bold">Instant Credit</span>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Select Network</label>
+                        <select id="momoProvider" class="payment-input p-4 text-sm w-full appearance-none">
+                            <option value="mtn">MTN MoMo Uganda (077 / 078 / 076)</option>
+                            <option value="airtel">Airtel Money Uganda (075 / 070 / 074)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Phone Number</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-sm text-gray-500 font-bold font-mono">+256</span>
+                            <input type="tel" id="momoPhone" placeholder="700 000000" class="payment-input pl-16 pr-4 py-4 text-sm w-full font-mono" maxlength="9">
+                        </div>
+                        <span class="text-[9px] text-gray-600 mt-1 block">Enter your 9-digit mobile phone number (exclude first 0).</span>
+                    </div>
+
+                    <button onclick="submitMomoPayment()" class="w-full bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-yellow-400">
+                        Initiate Push Payment
+                    </button>
+                </div>
+
+                <!-- 4. ERROR NOTICE INTERACTIVE COMPONENT -->
+                <div id="errorGatewayContainer" class="hidden text-center py-6 px-4 space-y-4">
+                    <div class="w-16 h-16 bg-red-950/40 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 mx-auto">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black uppercase text-red-500 tracking-wider">Gateway Load Failure</h4>
+                        <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                            Couldn't load. Try again later.
+                        </p>
+                        <p class="text-[9px] text-gray-600 mt-1">
+                            Response code: 503 Service Temporarily Unavailable
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="retrySelectedPayment()" class="px-6 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-xs font-bold text-white hover:bg-neutral-800 transition-colors uppercase tracking-widest">
+                            <i class="fa-solid fa-arrows-rotate mr-2"></i> Retry Connection
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Helpful security badge -->
+            <div class="flex items-center justify-center gap-2 text-gray-600">
+                <i class="fa-solid fa-shield text-[10px]"></i>
+                <span class="text-[9px] font-semibold uppercase tracking-widest">End-to-End Encrypted Gateway</span>
+            </div>
+
+        </div>
     </div>
 
     <!-- API MODAL -->
@@ -351,8 +553,8 @@ class Api {
             <button onclick="toggleSidebar()" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <nav class="space-y-3">
-            <a href="#" onclick="toggleSidebar()" class="flex items-center p-4 rounded-xl bg-[#111] text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
-            <a href="#" onclick="triggerNotice('maintenance')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
+            <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl bg-[#111] text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
+            <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
             <a href="#" onclick="triggerNotice('maintenance')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4"></i> Mass Orders</a>
             <a href="#" onclick="openModal('apiModal')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-link mr-4"></i> API Access</a>
             <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-4 rounded-xl text-green-500 font-bold border border-green-900/20"><i class="fa-brands fa-whatsapp mr-4 text-xl"></i> WhatsApp Support</a>
@@ -376,6 +578,7 @@ class Api {
 
     <script>
         const USH_RATE = 3850;
+        let selectedMethod = 'card';
 
         // Intro and Navigation Controller
         window.onload = () => {
@@ -383,6 +586,9 @@ class Api {
             setTimeout(() => {
                 exitIntro();
             }, 4500); // Intro displays for 4.5 seconds
+
+            // Auto-format Inputs for UX
+            setupInputs();
         };
 
         function exitIntro() {
@@ -422,6 +628,12 @@ class Api {
             targetPage.classList.add('active');
             targetPage.style.opacity = '1';
             window.scrollTo(0,0);
+
+            // Trigger specific state loaders when landing on Add Funds page
+            if(id === 'addFundsPage') {
+                resetForms();
+                triggerMethodTransition('card');
+            }
         }
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
@@ -466,6 +678,158 @@ class Api {
 
         qtyIn.addEventListener('input', updateForm);
         srvSel.addEventListener('change', updateForm);
+
+        /* --- ADD FUNDS INTERACTIVE LOGIC --- */
+        
+        // Deposit Amount Exchange calculation live view
+        const depositAmtInput = document.getElementById('depositAmount');
+        const ugxConv = document.getElementById('ugxConversion');
+
+        depositAmtInput.addEventListener('input', () => {
+            const val = parseFloat(depositAmtInput.value) || 0;
+            const converted = val * USH_RATE;
+            ugxConv.innerText = "USh " + converted.toLocaleString(undefined, { maximumFractionDigits: 0 });
+        });
+
+        function resetForms() {
+            document.getElementById('creditCardForm').classList.add('hidden');
+            document.getElementById('mobileMoneyForm').classList.add('hidden');
+            document.getElementById('paymentLoadingState').classList.add('hidden');
+            document.getElementById('errorGatewayContainer').classList.add('hidden');
+        }
+
+        // Method selector tab handler
+        function selectPaymentMethod(method) {
+            selectedMethod = method;
+            
+            // Adjust CSS active selectors
+            document.getElementById('methodCard').classList.remove('selected');
+            document.getElementById('methodMobileMoney').classList.remove('selected');
+
+            if(method === 'card') {
+                document.getElementById('methodCard').classList.add('selected');
+                triggerMethodTransition('card');
+            } else {
+                document.getElementById('methodMobileMoney').classList.add('selected');
+                triggerMethodTransition('momo');
+            }
+        }
+
+        // Custom reload animation when switching or submitting
+        function triggerMethodTransition(method) {
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+
+            if (method === 'card') {
+                // Credit card reloads/loads for EXACTLY 4 seconds before presenting credit card details option
+                setTimeout(() => {
+                    document.getElementById('paymentLoadingState').classList.add('hidden');
+                    document.getElementById('creditCardForm').classList.remove('hidden');
+                }, 4000);
+            } else {
+                // Mobile money loading: loads for 1.2s to feel interactive, then reveals the custom Momo form
+                setTimeout(() => {
+                    document.getElementById('paymentLoadingState').classList.add('hidden');
+                    document.getElementById('mobileMoneyForm').classList.remove('hidden');
+                }, 1200);
+            }
+        }
+
+        // Credit card submit -> fails and triggers error notice "Couldn't load. Try again later."
+        function submitCreditCardPayment() {
+            // Validate inputs first
+            const cardVal = document.getElementById('cardNo').value.trim();
+            const expiryVal = document.getElementById('cardExpiry').value.trim();
+            const cvcVal = document.getElementById('cardCVC').value.trim();
+
+            if (!cardVal || !expiryVal || !cvcVal) {
+                showNoticeMessage("Incomplete Details", "Please fill in all credit card parameters before confirming.");
+                return;
+            }
+
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+            
+            // Simulates transaction validation, then reloads to reveal customized error banner
+            setTimeout(() => {
+                document.getElementById('paymentLoadingState').classList.add('hidden');
+                document.getElementById('errorGatewayContainer').classList.remove('hidden');
+            }, 3000);
+        }
+
+        // Mobile money push submit simulation
+        function submitMomoPayment() {
+            const phone = document.getElementById('momoPhone').value.trim();
+            if(phone.length < 9) {
+                showNoticeMessage("Invalid Phone Number", "Please enter a valid 9-digit Ugandan phone number.");
+                return;
+            }
+
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+
+            // Simulate Uganda MTN/Airtel gateway check, then show custom load failure
+            setTimeout(() => {
+                document.getElementById('paymentLoadingState').classList.add('hidden');
+                document.getElementById('errorGatewayContainer').classList.remove('hidden');
+            }, 2500);
+        }
+
+        // Retry connection logic
+        function retrySelectedPayment() {
+            triggerMethodTransition(selectedMethod);
+        }
+
+        // Format helpers (Card formatting, Expire formatting)
+        function setupInputs() {
+            const cardNoInput = document.getElementById('cardNo');
+            cardNoInput.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let matches = val.match(/\d{4,16}/g);
+                let match = matches && matches[0] || '';
+                let parts = [];
+
+                for (let i=0, len=match.length; i<len; i+=4) {
+                    parts.push(match.substring(i, i+4));
+                }
+
+                if (parts.length > 0) {
+                    e.target.value = parts.join(' ');
+                } else {
+                    e.target.value = val;
+                }
+            });
+
+            const expiryInput = document.getElementById('cardExpiry');
+            expiryInput.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                if (val.length >= 2) {
+                    e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                } else {
+                    e.target.value = val;
+                }
+            });
+
+            const cvcInput = document.getElementById('cardCVC');
+            cvcInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            });
+
+            const momoPhoneInput = document.getElementById('momoPhone');
+            momoPhoneInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            });
+        }
+
+        // Quick overlay notice
+        function showNoticeMessage(title, text) {
+            const notice = document.getElementById('devNotice');
+            document.getElementById('noticeTitle').innerText = title;
+            document.getElementById('noticeText').innerHTML = text;
+            notice.classList.add('show');
+            clearTimeout(noticeTimer);
+            noticeTimer = setTimeout(() => notice.classList.remove('show'), 4000);
+        }
     </script>
 </body>
 </html>

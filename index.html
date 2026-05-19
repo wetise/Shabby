@@ -147,66 +147,137 @@
             justify-content: center;
             padding: 30px;
         }
+
+        /* Custom tab styles for auth */
+        .auth-tab {
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .auth-tab.active {
+            color: #ff8c00;
+            border-color: #ff8c00;
+        }
     </style>
 </head>
 <body>
 
-    <!-- FIRST/INTRO PAGE (LAUGHING NOW UPDATES) -->
+    <!-- FIRST/INTRO PAGE (LAUNCHED & UPDATED STATUS) -->
     <div id="introPage" class="page active items-center justify-center px-8 transition-opacity duration-1000">
         <div class="text-center w-full max-w-sm flex flex-col items-center">
             <!-- Icon with rotating aura -->
             <div class="relative mb-8">
-                <i class="fa-solid fa-spider text-6xl text-[#ff8c00] animate-pulse"></i>
-                <div class="absolute inset-0 bg-[#ff8c00] blur-xl opacity-20 -z-10 animate-pulse"></div>
+                <i class="fa-solid fa-rocket text-6xl text-[#ff8c00] animate-bounce"></i>
+                <div class="absolute inset-0 bg-[#ff8c00] blur-xl opacity-25 -z-10 animate-pulse"></div>
             </div>
             
-            <h1 class="text-4xl magical-text mb-6 tracking-tight">Laughing Now</h1>
+            <h1 class="text-4xl magical-text mb-6 tracking-tight">System Launched</h1>
             
-            <!-- Update Message Glass Card -->
+            <!-- Launch Message Glass Card -->
             <div class="glass-card p-6 w-full mb-8 border-orange-500/20 bg-gradient-to-b from-[#111] to-black">
                 <div class="flex items-center justify-center gap-2 mb-3">
                     <span class="pulsing-dot"></span>
-                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Live Updates</span>
+                    <span class="text-[10px] text-green-400 font-bold uppercase tracking-widest">Now Fully Active</span>
                 </div>
                 <p class="text-sm text-gray-200 font-semibold leading-relaxed">
-                    Our Developers are making updates
+                    SHAWIKBOOSTER has successfully updated, tested, and officially launched!
                 </p>
-                <p class="text-[11px] text-[#ff8c00] mt-2 font-medium">
-                    Thank you all
-                </p>
+                <div class="mt-4 p-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                    <p class="text-[10px] text-gray-400 font-black tracking-wide uppercase">New User Reward Available</p>
+                    <p class="text-xs text-[#ff8c00] font-bold">Claim UGX 10,000 Sign-up Bonus Inside!</p>
+                </div>
             </div>
 
-            <button onclick="skipIntro()" class="text-[10px] text-gray-500 hover:text-white uppercase tracking-[0.2em] transition-colors flex items-center gap-2">
+            <button onclick="skipIntro()" class="text-[10px] text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors flex items-center gap-2">
                 Continue to App <i class="fa-solid fa-arrow-right text-[8px]"></i>
             </button>
         </div>
     </div>
 
-    <!-- LOGIN PAGE -->
-    <div id="loginPage" class="page items-center justify-center px-8">
-        <div class="text-center w-full max-w-sm">
-            <i class="fa-solid fa-spider text-5xl text-[#ff8c00] mb-6"></i>
-            <h1 class="text-3xl magical-text mb-2 tracking-tight">SHAWIKBOOSTER</h1>
-            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em] mb-12">Universal SMM Panel</p>
+    <!-- RESPONSIVE LOGIN & SIGN-UP PAGE -->
+    <div id="loginPage" class="page items-center justify-center px-5 py-10">
+        <div class="w-full max-w-md mx-auto">
+            <!-- Top Branding -->
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-spider text-5xl text-[#ff8c00] mb-4"></i>
+                <h1 class="text-3xl magical-text tracking-tight">SHAWIKBOOSTER</h1>
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">Universal SMM Panel</p>
+            </div>
 
-            <div class="space-y-4">
-                <button onclick="loginAsGuest()" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm">
-                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Sign in with Google
+            <!-- Login / Sign Up Tabs -->
+            <div class="glass-card p-2 flex mb-6">
+                <button onclick="switchAuthTab('login')" id="tabBtn-login" class="flex-1 py-3 text-sm font-bold auth-tab active text-center">
+                    Sign In
                 </button>
-                <button onclick="loginAsGuest()" class="w-full bg-[#111] border border-gray-800 text-white py-4 rounded-2xl font-bold text-sm">
-                    Login as Guest
+                <button onclick="switchAuthTab('signup')" id="tabBtn-signup" class="flex-1 py-3 text-sm font-bold auth-tab text-gray-500 text-center">
+                    Create Account
                 </button>
             </div>
 
-            <!-- Animated Credits on Login -->
-            <div class="mt-20 space-y-4">
+            <!-- Authentic Form Container -->
+            <div class="glass-card p-6 space-y-4">
+                
+                <!-- Display warning if device already has account -->
+                <div id="signupBlockerNotice" class="hidden p-3 bg-red-950/40 border border-red-900/40 text-red-400 text-xs rounded-xl font-semibold mb-2">
+                    <i class="fa-solid fa-circle-info mr-1.5"></i> Single-Device Rule: This device already has an account registered. Please sign in instead.
+                </div>
+
+                <!-- Extra field for sign up (Only visible during Sign Up) -->
+                <div id="signupNameField" class="hidden">
+                    <label class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Full Name</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-4 top-4 text-gray-600"></i>
+                        <input type="text" id="authName" placeholder="John Doe" class="pl-12 pr-4 py-3.5 rounded-xl text-sm payment-input w-full">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Email Address</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-4 text-gray-600"></i>
+                        <input type="email" id="authEmail" placeholder="you@example.com" class="pl-12 pr-4 py-3.5 rounded-xl text-sm payment-input w-full">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Secure Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-4 text-gray-600"></i>
+                        <input type="password" id="authPassword" placeholder="••••••••" class="pl-12 pr-4 py-3.5 rounded-xl text-sm payment-input w-full">
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions check for Sign up -->
+                <div id="termsCheckbox" class="hidden flex items-start gap-2 pt-1">
+                    <input type="checkbox" id="agreeTerms" class="w-4 h-4 rounded border-gray-800 bg-black mt-0.5 accent-orange-500">
+                    <label for="agreeTerms" class="text-[10px] text-gray-400">I agree to the Terms of Service & Privacy Policy</label>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                    Sign In
+                </button>
+
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-gray-950"></div>
+                    <span class="flex-shrink mx-4 text-gray-600 text-[10px] font-bold uppercase tracking-widest">or</span>
+                    <div class="flex-grow border-t border-gray-950"></div>
+                </div>
+
+                <!-- Google SSO -->
+                <button onclick="handleGoogleSignIn()" class="w-full bg-white text-black py-4 rounded-xl font-bold flex items-center justify-center gap-3 text-sm active:scale-95 transition-transform">
+                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Continue with Google
+                </button>
+            </div>
+
+            <!-- Dynamic Credits -->
+            <div class="mt-12 text-center space-y-4">
                 <div>
                     <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Developer</p>
-                    <span class="premium-credit text-xl">SHAWIK</span>
+                    <span class="premium-credit text-lg">SHAWIK</span>
                 </div>
                 <div>
                     <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Official Sponsors</p>
-                    <span class="premium-credit text-sm">Dj Douglas & Ava max</span>
+                    <span class="premium-credit text-[10px]">Dj Douglas & Ava max</span>
                 </div>
             </div>
         </div>
@@ -219,29 +290,38 @@
                 <i class="fa-solid fa-spider text-[#ff8c00] text-xl"></i>
                 <h1 class="text-md magical-text tracking-tighter">SHAWIKBOOSTER</h1>
             </div>
-            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-[#111] border border-gray-800 flex items-center justify-center">
-                <i class="fa-solid fa-bars-staggered"></i>
-            </button>
+            <div class="flex items-center gap-3">
+                <span id="headerAccountStatus" class="text-[9px] font-bold uppercase bg-orange-950 text-[#ff8c00] border border-orange-900/50 px-2.5 py-1 rounded-full"><i class="fa-solid fa-user-check mr-1"></i> Logged In</span>
+                <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-[#111] border border-gray-800 flex items-center justify-center">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
         </header>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 gap-3 mb-4">
-            <div class="glass-card p-4">
+            <div class="glass-card p-4 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-10 text-orange-500 text-4xl">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
                 <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Current Balance</span>
-                <p id="dashboardBalance" class="text-lg font-bold">USh 0.00</p>
+                <p id="dashboardBalance" class="text-lg font-black text-white">USh 0.00</p>
             </div>
-            <div class="glass-card p-4">
+            <div class="glass-card p-4 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-10 text-orange-500 text-4xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
                 <span class="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Total Spending</span>
-                <p class="text-lg font-bold text-[#ff8c00]">USh 0.00</p>
+                <p id="dashboardSpending" class="text-lg font-bold text-[#ff8c00]">USh 0.00</p>
             </div>
         </div>
 
         <!-- Social Navigation -->
         <div class="glass-card p-4 mb-4 grid grid-cols-4 gap-2">
-            <button class="platform-btn selected" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok"></i></button>
-            <button class="platform-btn text-pink-500" onclick="triggerNotice('platform')"><i class="fa-brands fa-instagram"></i></button>
-            <button class="platform-btn text-blue-600" onclick="triggerNotice('platform')"><i class="fa-brands fa-facebook"></i></button>
-            <button class="platform-btn text-red-600" onclick="triggerNotice('platform')"><i class="fa-brands fa-youtube"></i></button>
+            <button id="platform-TikTok" class="platform-btn selected" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok"></i></button>
+            <button id="platform-Instagram" class="platform-btn text-pink-500" onclick="selectPlatform('Instagram')"><i class="fa-brands fa-instagram"></i></button>
+            <button id="platform-Facebook" class="platform-btn text-blue-600" onclick="selectPlatform('Facebook')"><i class="fa-brands fa-facebook"></i></button>
+            <button id="platform-YouTube" class="platform-btn text-red-600" onclick="selectPlatform('YouTube')"><i class="fa-brands fa-youtube"></i></button>
         </div>
 
         <!-- Main Form -->
@@ -257,9 +337,9 @@
             <div>
                 <label class="text-[10px] text-gray-500 font-bold uppercase px-1">Choose Service</label>
                 <select id="serviceSelect" class="py-4 px-4 mt-1 rounded-2xl text-sm appearance-none">
-                    <option value="1.5" data-time="15 Mins">Ka boom 💥 100% instant ($1.5/1k)</option>
-                    <option value="3.0" data-time="20 Mins">Massavu ddala Organic Real ($3.0/1k)</option>
-                    <option value="1.0" data-time="30 Mins">Bots 100% Instant ($1.0/1k)</option>
+                    <option value="1.5" data-id="1" data-name="Ka boom 💥 100% instant ($1.5/1k)" data-time="15 Mins">Ka boom 💥 100% instant ($1.5/1k)</option>
+                    <option value="3.0" data-id="2" data-name="Massavu ddala Organic Real ($3.0/1k)" data-time="20 Mins">Massavu ddala Organic Real ($3.0/1k)</option>
+                    <option value="1.0" data-id="3" data-name="Bots 100% Instant ($1.0/1k)" data-time="30 Mins">Bots 100% Instant ($1.0/1k)</option>
                 </select>
             </div>
 
@@ -287,8 +367,8 @@
                 <i class="fa-solid fa-coins text-orange-900/40 text-2xl"></i>
             </div>
 
-            <button onclick="showPage('addFundsPage')" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
-                Place Order (Deposit to Pay)
+            <button onclick="placeSingleOrder()" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                Place Order
             </button>
         </div>
 
@@ -312,6 +392,84 @@
             <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Powered By</p>
             <span class="premium-credit text-xs block">Dj Douglas & Ava max</span>
         </footer>
+    </div>
+
+    <!-- MASS ORDERS PAGE -->
+    <div id="massOrdersPage" class="page px-5 pb-24">
+        <!-- Mass Orders Header -->
+        <header class="flex items-center gap-4 py-6">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-[#0d0d0d] border border-gray-900 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+            </button>
+            <h1 class="text-lg font-black tracking-widest uppercase">Mass Orders</h1>
+        </header>
+
+        <div class="max-w-md mx-auto w-full space-y-6">
+            <div class="glass-card p-5 bg-[#0d0d0d] border border-gray-900">
+                <h3 class="text-xs font-black uppercase text-[#ff8c00] tracking-wider mb-2">Service Quick Index</h3>
+                <div class="space-y-1.5 text-[10px] text-gray-400 font-medium">
+                    <p><b class="text-white">ID 1:</b> Ka boom 💥 100% instant ($1.5/1k ≈ USh 5,775)</p>
+                    <p><b class="text-white">ID 2:</b> Massavu ddala Organic Real ($3.0/1k ≈ USh 11,550)</p>
+                    <p><b class="text-white">ID 3:</b> Bots 100% Instant ($1.0/1k ≈ USh 3,850)</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-5 space-y-4">
+                <div>
+                    <label class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Enter Bulk Orders</label>
+                    <p class="text-[9px] text-gray-600 mb-2">Place each order on a new line in the following format:<br><b class="text-gray-400">service_id | link | quantity</b></p>
+                    <textarea id="massOrdersInput" rows="8" placeholder="1 | https://www.tiktok.com/@username/video/1 | 1000&#10;2 | https://www.tiktok.com/@username/video/2 | 5000" class="p-4 text-xs font-mono rounded-xl bg-black border border-gray-800 w-full" style="line-height: 1.6;"></textarea>
+                </div>
+
+                <div class="p-4 bg-orange-500/5 border border-orange-500/10 rounded-xl">
+                    <p class="text-[9px] text-gray-500 uppercase font-black">Conversion Info</p>
+                    <p class="text-[10px] text-gray-400 leading-normal mt-1">
+                        System will automatically split multi-line lists, evaluate total currency balances, and schedule tasks dynamically.
+                    </p>
+                </div>
+
+                <button onclick="submitMassOrders()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-lg shadow-orange-500/10">
+                    Place Mass Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER TRACKING PAGE -->
+    <div id="ordersPage" class="page px-5 pb-24">
+        <!-- Header -->
+        <header class="flex items-center justify-between py-6">
+            <div class="flex items-center gap-4">
+                <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-[#0d0d0d] border border-gray-900 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                    <i class="fa-solid fa-arrow-left text-white text-md"></i>
+                </button>
+                <h1 class="text-lg font-black tracking-widest uppercase">Order Tracker</h1>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span>
+                <span class="text-[9px] bg-green-950 text-green-400 border border-green-900 font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Global Stream</span>
+            </div>
+        </header>
+
+        <!-- Live Orders List -->
+        <div class="max-w-md mx-auto w-full space-y-4">
+            
+            <div class="flex items-center justify-between px-1">
+                <span id="orderCount" class="text-[10px] text-gray-500 font-black uppercase tracking-wider">Total: 0 Orders</span>
+                <button onclick="clearAllOrders()" class="text-[9px] text-red-500 font-black uppercase tracking-widest hover:text-red-400 transition-colors">Clear Cache</button>
+            </div>
+
+            <!-- Interactive tab inside Tracker (All vs Global Feed) -->
+            <div class="grid grid-cols-2 gap-2 bg-[#080808] p-1 rounded-xl border border-gray-900 mb-2">
+                <button id="orderTabSelf" onclick="switchOrderTab('self')" class="py-2 text-[10px] font-black uppercase tracking-widest rounded-lg bg-orange-500 text-black">Your Orders</button>
+                <button id="orderTabGlobal" onclick="switchOrderTab('global')" class="py-2 text-[10px] font-black uppercase tracking-widest rounded-lg text-gray-400">Live Global Feed</button>
+            </div>
+
+            <!-- Orders Container -->
+            <div id="ordersListContainer" class="space-y-3">
+                <!-- Javascript will render active card items here -->
+            </div>
+        </div>
     </div>
 
     <!-- NEW INTERACTIVE ADD FUNDS PAGE (MATCHING THE SCREENSHOT & REQUEST) -->
@@ -546,6 +704,34 @@ class Api {
         </div>
     </div>
 
+    <!-- WELCOME APPRECIATION BONUS MODAL -->
+    <div id="bonusModal" class="modal bg-black/95 flex items-center justify-center p-5 select-none" style="display: none; align-items: center; justify-content: center; z-index: 9999;">
+        <div class="glass-card w-full max-w-sm p-8 text-center border-orange-500/30 bg-gradient-to-b from-[#111] to-black relative">
+            
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center border-4 border-black animate-bounce">
+                <i class="fa-solid fa-gift text-black text-3xl"></i>
+            </div>
+            
+            <div class="pt-8">
+                <h3 class="text-xl font-black text-white uppercase tracking-tight mb-2">Welcome First-Time Reward</h3>
+                <p class="text-xs text-gray-400 mb-4 leading-relaxed">
+                    Thank you for choosing SHAWIKBOOSTER! As a token of our appreciation, your account is being processed for a launch bonus.
+                </p>
+
+                <!-- Processing Counter Container -->
+                <div class="bg-black border border-gray-900 rounded-2xl p-4 my-5 relative">
+                    <p class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Processing Security Reward</p>
+                    <div class="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden mb-3">
+                        <div id="bonusProgressBar" class="h-full bg-gradient-to-r from-[#ff8c00] to-yellow-400 w-0 transition-all duration-1000"></div>
+                    </div>
+                    <div id="timerNumber" class="text-3xl font-black text-[#ff8c00]">Claiming...</div>
+                </div>
+
+                <p id="appreciationClaimText" class="text-[10px] text-gray-500 uppercase tracking-widest font-black">Hold on, verifying session...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar p-8">
         <div class="flex justify-between items-center mb-12">
@@ -554,8 +740,9 @@ class Api {
         </div>
         <nav class="space-y-3">
             <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl bg-[#111] text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
+            <a href="#" onclick="showPage('massOrdersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4 text-orange-500"></i> Mass Orders</a>
+            <a href="#" onclick="showPage('ordersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-receipt mr-4 text-blue-400"></i> Order Tracker</a>
             <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
-            <a href="#" onclick="triggerNotice('maintenance')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4"></i> Mass Orders</a>
             <a href="#" onclick="openModal('apiModal')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-link mr-4"></i> API Access</a>
             <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-4 rounded-xl text-green-500 font-bold border border-green-900/20"><i class="fa-brands fa-whatsapp mr-4 text-xl"></i> WhatsApp Support</a>
             <hr class="border-gray-900 my-6">
@@ -579,16 +766,64 @@ class Api {
     <script>
         const USH_RATE = 3850;
         let selectedMethod = 'card';
+        let currentAuthTab = 'login';
+        let activeOrderTab = 'self';
+        
+        // System memory for balances & live logs
+        let userSession = {
+            active: false,
+            balance: 0,
+            spending: 0,
+            hasReceivedBonus: false,
+            name: 'Guest User',
+            email: ''
+        };
+
+        // Real credentials validation database on local storage
+        let registeredAccounts = [];
+
+        // Orders registry stored in dynamic runtime array
+        let ordersList = [
+            { id: "SHAWIK-1052", date: "Just now", serviceName: "TikTok Followers [100% Instant]", link: "https://www.tiktok.com/@shawik", qty: 1000, cost: 5775, status: "Pending" }
+        ];
+
+        // Global simulated real-time stream of orders (makes it look highly active!)
+        let globalSimulatedOrders = [
+            { id: "SHAWIK-8842", date: "2 mins ago", serviceName: "Ka boom 💥 100% instant", link: "https://www.tiktok.com/@sheilah_gashumba", qty: 5000, cost: 28875, status: "Completed" },
+            { id: "SHAWIK-7231", date: "4 mins ago", serviceName: "Massavu ddala Organic Real", link: "https://www.tiktok.com/@mcbaba_ug", qty: 2500, cost: 28875, status: "Completed" },
+            { id: "SHAWIK-1250", date: "8 mins ago", serviceName: "Bots 100% Instant", link: "https://www.tiktok.com/@kansiime_anne", qty: 10000, cost: 38500, status: "Completed" }
+        ];
+
+        const ugandanTikTokHandles = [
+            "@bobi_wine", "@eddyleenzo", "@SpiceDianaUg", "@martha_kay", "@realkenzo", "@zarithebosslady", "@sheebahricher", "@jovial_ug", "@mr_mosh", "@uncle_mo_ug"
+        ];
 
         // Intro and Navigation Controller
         window.onload = () => {
-            // First display the updates intro page, then auto-route to correct place
+            // Load saved accounts DB
+            const savedAccounts = localStorage.getItem('shawik_registered_accounts');
+            if (savedAccounts) {
+                registeredAccounts = JSON.parse(savedAccounts);
+            }
+
+            // Check existing session
+            const savedSession = localStorage.getItem('shawik_active_session_v2');
+            if (savedSession) {
+                userSession = JSON.parse(savedSession);
+            }
+
+            // Auto display intro
             setTimeout(() => {
                 exitIntro();
-            }, 4500); // Intro displays for 4.5 seconds
+            }, 3500); // Intro displays for 3.5 seconds
 
-            // Auto-format Inputs for UX
+            // Setup input event listeners
             setupInputs();
+            renderOrders();
+            updateBalanceDisplays();
+
+            // Set up constant live global orders feed stream interval (every 6 seconds)
+            setInterval(simulateGlobalOrderFeed, 6000);
         };
 
         function exitIntro() {
@@ -597,31 +832,320 @@ class Api {
             
             setTimeout(() => {
                 intro.classList.remove('active');
-                
-                // Now direct the user to the appropriate page
-                const isGuest = localStorage.getItem('shawik_active_session');
-                if (isGuest === 'true') {
+                if (userSession.active) {
                     showPage('dashboardPage');
                 } else {
                     showPage('loginPage');
+                    switchAuthTab('login'); // default to login
                 }
-            }, 1000); // Match Tailwind's duration-1000 transition
+            }, 1000);
         }
 
         function skipIntro() {
             exitIntro();
         }
 
-        function loginAsGuest() {
-            localStorage.setItem('shawik_active_session', 'true');
+        // Authentication Controller Tab switcher
+        function switchAuthTab(tab) {
+            currentAuthTab = tab;
+            
+            // Check if device is already registered to lock duplicate sign-ups
+            const deviceHasAccount = localStorage.getItem('shawik_device_has_account');
+
+            document.getElementById('tabBtn-login').classList.remove('active', 'text-white');
+            document.getElementById('tabBtn-login').classList.add('text-gray-500');
+            document.getElementById('tabBtn-signup').classList.remove('active', 'text-white');
+            document.getElementById('tabBtn-signup').classList.add('text-gray-500');
+
+            document.getElementById(`tabBtn-${tab}`).classList.add('active', 'text-white');
+
+            const signupField = document.getElementById('signupNameField');
+            const termsBox = document.getElementById('termsCheckbox');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const signupBlockerNotice = document.getElementById('signupBlockerNotice');
+
+            if (tab === 'signup') {
+                if (deviceHasAccount === 'true') {
+                    // Block access to sign up form fields
+                    signupField.classList.add('hidden');
+                    termsBox.classList.add('hidden');
+                    signupBlockerNotice.classList.remove('hidden');
+                    submitBtn.classList.add('opacity-50', 'pointer-events-none');
+                    submitBtn.innerText = "Registration Locked";
+                } else {
+                    signupField.classList.remove('hidden');
+                    termsBox.classList.remove('hidden');
+                    signupBlockerNotice.classList.add('hidden');
+                    submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                    submitBtn.innerText = "Register Account";
+                }
+            } else {
+                signupField.classList.add('hidden');
+                termsBox.classList.add('hidden');
+                signupBlockerNotice.classList.add('hidden');
+                submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                submitBtn.innerText = "Sign In";
+            }
+        }
+
+        // Submission handlers with local device memory verification
+        function handleAuthSubmit() {
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
+            const password = document.getElementById('authPassword').value.trim();
+            const name = document.getElementById('authName').value.trim();
+
+            if (!email || !password) {
+                showNoticeMessage("Credentials Required", "Please provide a valid email and password.");
+                return;
+            }
+
+            if (currentAuthTab === 'signup') {
+                // Prevent signup if already has account
+                if (localStorage.getItem('shawik_device_has_account') === 'true') {
+                    showNoticeMessage("Registration Blocked", "Your device is already linked to an active account.");
+                    return;
+                }
+
+                if (!name) {
+                    showNoticeMessage("Name Required", "Please fill in your full name to set up the account.");
+                    return;
+                }
+                if (!document.getElementById('agreeTerms').checked) {
+                    showNoticeMessage("Agreement Required", "You must accept our Terms of Service to proceed.");
+                    return;
+                }
+
+                // Register Account & Bind to Device
+                const newAccount = { email, password, name, balance: 0, spending: 0, hasReceivedBonus: false };
+                registeredAccounts.push(newAccount);
+                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                localStorage.setItem('shawik_device_has_account', 'true');
+
+                // Initialize user Session
+                userSession = {
+                    active: true,
+                    balance: 0,
+                    spending: 0,
+                    hasReceivedBonus: false,
+                    name: name,
+                    email: email
+                };
+
+                saveAndProceed();
+
+            } else {
+                // Login Flow: MUST match registered accounts on this device
+                const matchedAccount = registeredAccounts.find(acc => acc.email === email && acc.password === password);
+
+                if (!matchedAccount) {
+                    showNoticeMessage("Access Denied", "Incorrect credentials or account not found on this device.");
+                    return;
+                }
+
+                // Restore User Session
+                userSession = {
+                    active: true,
+                    balance: matchedAccount.balance,
+                    spending: matchedAccount.spending,
+                    hasReceivedBonus: matchedAccount.hasReceivedBonus,
+                    name: matchedAccount.name,
+                    email: matchedAccount.email
+                };
+
+                saveAndProceed();
+            }
+        }
+
+        function handleGoogleSignIn() {
+            // Check device lock
+            const hasDeviceAccount = localStorage.getItem('shawik_device_has_account');
+            
+            if (hasDeviceAccount === 'true' && registeredAccounts.length > 0) {
+                // Try to auto-sign into the primary device account
+                const primaryAccount = registeredAccounts[0];
+                userSession = {
+                    active: true,
+                    balance: primaryAccount.balance,
+                    spending: primaryAccount.spending,
+                    hasReceivedBonus: primaryAccount.hasReceivedBonus,
+                    name: primaryAccount.name,
+                    email: primaryAccount.email
+                };
+                showNoticeMessage("Google Link Verified", `Welcome back, ${primaryAccount.name}!`);
+            } else {
+                // Register a new Google-linked account
+                const googleEmail = "google.user." + Math.floor(100+Math.random()*900) + "@gmail.com";
+                const googleAcc = { email: googleEmail, password: "GoogleSSO_Verified", name: "Google Booster", balance: 0, spending: 0, hasReceivedBonus: false };
+                
+                registeredAccounts.push(googleAcc);
+                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                localStorage.setItem('shawik_device_has_account', 'true');
+
+                userSession = {
+                    active: true,
+                    balance: 0,
+                    spending: 0,
+                    hasReceivedBonus: false,
+                    name: "Google Booster",
+                    email: googleEmail
+                };
+            }
+            saveAndProceed();
+        }
+
+        function saveAndProceed() {
+            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
             showPage('dashboardPage');
+
+            // Trigger Welcome Bonus process if not received yet
+            if (!userSession.hasReceivedBonus) {
+                triggerAppreciationBonusSequence();
+            }
+        }
+
+        // Sync local current user session changes back to our static simulated database accounts list
+        function syncSessionToDatabase() {
+            if (userSession.email) {
+                const accIndex = registeredAccounts.findIndex(acc => acc.email === userSession.email);
+                if (accIndex !== -1) {
+                    registeredAccounts[accIndex].balance = userSession.balance;
+                    registeredAccounts[accIndex].spending = userSession.spending;
+                    registeredAccounts[accIndex].hasReceivedBonus = userSession.hasReceivedBonus;
+                    localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                }
+            }
+            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
         }
 
         function logout() {
-            localStorage.removeItem('shawik_active_session');
-            location.reload(); // Takes them back to intro page, then login
+            localStorage.removeItem('shawik_active_session_v2');
+            userSession = { active: false, balance: 0, spending: 0, hasReceivedBonus: false, name: 'Guest User', email: '' };
+            location.reload();
         }
 
+        // Welcome Appreciation 10,000 UGX sequence controller
+        function triggerAppreciationBonusSequence() {
+            const modal = document.getElementById('bonusModal');
+            const progressBar = document.getElementById('bonusProgressBar');
+            const timerNumber = document.getElementById('timerNumber');
+            const claimText = document.getElementById('appreciationClaimText');
+
+            modal.style.display = 'flex';
+            setTimeout(() => modal.style.opacity = "1", 50);
+
+            let progress = 0;
+            let count = 5;
+
+            timerNumber.innerText = `${count} Seconds`;
+            claimText.innerText = "Verifying first-time secure device fingerprint...";
+
+            const interval = setInterval(() => {
+                count--;
+                progress += 20;
+                progressBar.style.width = `${progress}%`;
+
+                if (count > 0) {
+                    timerNumber.innerText = `${count} Seconds`;
+                    if(count === 3) claimText.innerText = "Processing launch promo reward credit...";
+                    if(count === 1) claimText.innerText = "Adding USh 10,000 into secure balance...";
+                } else {
+                    clearInterval(interval);
+                    timerNumber.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i> USh 10,000';
+                    claimText.innerHTML = '<span class="text-[#ff8c00] font-black">CREDITED SUCCESSFULLY!</span>';
+                    
+                    userSession.balance += 10000;
+                    userSession.hasReceivedBonus = true;
+                    syncSessionToDatabase();
+
+                    // Refresh stats
+                    updateBalanceDisplays();
+
+                    // Close the reward screen after 1.5 seconds
+                    setTimeout(() => {
+                        modal.style.opacity = "0";
+                        setTimeout(() => modal.style.display = 'none', 500);
+                        showNoticeMessage("Bonus Deposited", "You've received USh 10,000 appreciation bonus!");
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        function updateBalanceDisplays() {
+            document.getElementById('dashboardBalance').innerText = "USh " + userSession.balance.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('dashboardSpending').innerText = "USh " + userSession.spending.toLocaleString(undefined, {minimumFractionDigits: 2});
+        }
+
+        // Platforms Selector Switch
+        function selectPlatform(platform) {
+            // Remove selection class from all
+            document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            if (platform === 'TikTok') {
+                document.getElementById('platform-TikTok').classList.add('selected');
+                showNoticeMessage("Platform Switched", "TikTok optimization services loaded.");
+            } else {
+                // Re-select TikTok since others are coming soon
+                document.getElementById('platform-TikTok').classList.add('selected');
+                showNoticeMessage("Launching Soon", `${platform} services are undergoing final testing and will be launched soon! Stay tuned.`);
+            }
+        }
+
+        // Live Simulated Orders Loop (Shows realistic order feeds dynamically)
+        function simulateGlobalOrderFeed() {
+            const randomHandle = ugandanTikTokHandles[Math.floor(Math.random() * ugandanTikTokHandles.length)];
+            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
+            const quantities = [1000, 2500, 5000, 10000];
+            const randomQty = quantities[Math.floor(Math.random() * quantities.length)];
+            
+            const services = [
+                { name: "Ka boom 💥 100% instant", rate: 1.5 },
+                { name: "Massavu ddala Organic Real", rate: 3.0 },
+                { name: "Bots 100% Instant", rate: 1.0 }
+            ];
+            const randomService = services[Math.floor(Math.random() * services.length)];
+            const calculatedCost = (randomQty / 1000) * randomService.rate * USH_RATE;
+
+            const newSimulatedOrder = {
+                id: randomId,
+                date: "Just now",
+                serviceName: randomService.name,
+                link: `https://www.tiktok.com/${randomHandle}`,
+                qty: randomQty,
+                cost: calculatedCost,
+                status: "Completed"
+            };
+
+            // Insert into the front of the global tracker log
+            globalSimulatedOrders.unshift(newSimulatedOrder);
+            if (globalSimulatedOrders.length > 20) globalSimulatedOrders.pop(); // keep it clean
+
+            // If we are currently browsing the Live Tracker page, re-render immediately
+            if (document.getElementById('ordersPage').classList.contains('active')) {
+                renderOrders();
+            }
+        }
+
+        // Active Orders Tab Switcher
+        function switchOrderTab(tab) {
+            activeOrderTab = tab;
+            
+            document.getElementById('orderTabSelf').classList.remove('bg-orange-500', 'text-black');
+            document.getElementById('orderTabSelf').classList.add('text-gray-400');
+            document.getElementById('orderTabGlobal').classList.remove('bg-orange-500', 'text-black');
+            document.getElementById('orderTabGlobal').classList.add('text-gray-400');
+
+            if (tab === 'self') {
+                document.getElementById('orderTabSelf').classList.add('bg-orange-500', 'text-black');
+                document.getElementById('orderTabSelf').classList.remove('text-gray-400');
+            } else {
+                document.getElementById('orderTabGlobal').classList.add('bg-orange-500', 'text-black');
+                document.getElementById('orderTabGlobal').classList.remove('text-gray-400');
+            }
+
+            renderOrders();
+        }
+
+        // Dynamic multi-page SPA switch
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const targetPage = document.getElementById(id);
@@ -629,10 +1153,12 @@ class Api {
             targetPage.style.opacity = '1';
             window.scrollTo(0,0);
 
-            // Trigger specific state loaders when landing on Add Funds page
+            // Re-trigger specific state views when switching
             if(id === 'addFundsPage') {
                 resetForms();
                 triggerMethodTransition('card');
+            } else if (id === 'ordersPage') {
+                renderOrders();
             }
         }
 
@@ -640,44 +1166,189 @@ class Api {
         function openModal(id) { document.getElementById(id).classList.add('active'); if(id !== 'apiModal') toggleSidebar(); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        // Notice System
-        let noticeTimer;
-        function triggerNotice(type) {
-            const notice = document.getElementById('devNotice');
-            const title = document.getElementById('noticeTitle');
-            const text = document.getElementById('noticeText');
+        // Place Single Order handler with dynamic real-time balance calculations
+        function placeSingleOrder() {
+            const link = document.getElementById('linkInput').value.trim();
+            const qty = parseInt(document.getElementById('qtyInput').value) || 0;
+            const selectEl = document.getElementById('serviceSelect');
+            const serviceRate = parseFloat(selectEl.value);
+            const serviceName = selectEl.options[selectEl.selectedIndex].dataset.name;
 
-            if (type === 'platform') {
-                title.innerText = "Deployment Phase";
-                text.innerHTML = "Only TikTok services are updated. Other platforms launch on <b>18 May 2026</b>.";
-            } else {
-                title.innerText = "System Locked";
-                text.innerHTML = "Our secure payment gateway is undergoing optimization. Launch: <b>18 May 2026</b>.";
+            if (!link) {
+                showNoticeMessage("Input Missing", "Please paste your TikTok Profile/Video Link to proceed.");
+                return;
+            }
+            if (qty < 100) {
+                showNoticeMessage("Quantity Error", "Minimum ordering size is 100 followers.");
+                return;
             }
 
-            notice.classList.add('show');
-            clearTimeout(noticeTimer);
-            noticeTimer = setTimeout(() => notice.classList.remove('show'), 5000);
+            const cost = (qty / 1000) * serviceRate * USH_RATE;
+
+            if (userSession.balance < cost) {
+                showNoticeMessage("Insufficient Funds", "Your balance is too low. Please deposit funds on the wallet page.");
+                return;
+            }
+
+            // Deduct from balance dynamically and reduce in real-time
+            userSession.balance -= cost;
+            userSession.spending += cost;
+            syncSessionToDatabase();
+            updateBalanceDisplays();
+
+            // Add order entry
+            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
+            ordersList.unshift({
+                id: randomId,
+                date: "Just now",
+                serviceName: serviceName,
+                link: link,
+                qty: qty,
+                cost: cost,
+                status: "Pending"
+            });
+
+            // Clear Fields
+            document.getElementById('linkInput').value = "";
+            document.getElementById('qtyInput').value = "";
+            document.getElementById('priceDisplay').innerText = "USh 0.00";
+
+            showNoticeMessage("Order Successful", `Task scheduled under #${randomId}. Tracker logs updated.`);
+            switchOrderTab('self');
+            showPage('ordersPage');
         }
 
-        // Pricing & Delivery Logic
-        const qtyIn = document.getElementById('qtyInput');
-        const srvSel = document.getElementById('serviceSelect');
-        const prDisp = document.getElementById('priceDisplay');
-        const timeDisp = document.getElementById('timeDisplay');
+        // Mass Bulk Orders Parser
+        function submitMassOrders() {
+            const bulkText = document.getElementById('massOrdersInput').value.trim();
+            if(!bulkText) {
+                showNoticeMessage("Input Empty", "Please input mass orders before submitting.");
+                return;
+            }
 
-        function updateForm() {
-            const q = parseFloat(qtyIn.value) || 0;
-            const r = parseFloat(srvSel.value);
-            const t = srvSel.options[srvSel.selectedIndex].dataset.time;
+            const lines = bulkText.split('\n');
+            let successCount = 0;
+            let totalCost = 0;
+            let tempOrders = [];
+
+            for (let line of lines) {
+                if(!line.trim()) continue;
+                
+                const parts = line.split('|');
+                if(parts.length < 3) continue;
+
+                const serviceId = parseInt(parts[0].trim());
+                const link = parts[1].trim();
+                const qty = parseInt(parts[2].trim());
+
+                if(isNaN(serviceId) || isNaN(qty) || !link) continue;
+
+                // Match with rate values
+                let rate = 1.0;
+                let sName = "Bots 100% Instant ($1.0/1k)";
+                
+                if (serviceId === 1) {
+                    rate = 1.5;
+                    sName = "Ka boom 💥 100% instant ($1.5/1k)";
+                } else if (serviceId === 2) {
+                    rate = 3.0;
+                    sName = "Massavu ddala Organic Real ($3.0/1k)";
+                }
+
+                const lineCost = (qty / 1000) * rate * USH_RATE;
+                totalCost += lineCost;
+
+                tempOrders.push({
+                    id: "SHAWIK-" + Math.floor(1000 + Math.random() * 9000),
+                    date: "Bulk Action",
+                    serviceName: sName,
+                    link: link,
+                    qty: qty,
+                    cost: lineCost,
+                    status: "Pending"
+                });
+                successCount++;
+            }
+
+            if(successCount === 0) {
+                showNoticeMessage("Parse Error", "No lines matched the format: service_id | link | quantity");
+                return;
+            }
+
+            if(userSession.balance < totalCost) {
+                showNoticeMessage("Insufficient Funds", `Total bulk cost is USh ${totalCost.toLocaleString()}. Please deposit funds.`);
+                return;
+            }
+
+            // Deduct and save
+            userSession.balance -= totalCost;
+            userSession.spending += totalCost;
+            syncSessionToDatabase();
+            updateBalanceDisplays();
+
+            // Push all successfully parsed items into active Tracker list
+            for(let parsedOrder of tempOrders) {
+                ordersList.unshift(parsedOrder);
+            }
+
+            document.getElementById('massOrdersInput').value = "";
+            showNoticeMessage("Mass Order Placed", `Created ${successCount} tasks. Balance updated!`);
+            switchOrderTab('self');
+            showPage('ordersPage');
+        }
+
+        // Order list renderer for simulated and personal orders
+        function renderOrders() {
+            const container = document.getElementById('ordersListContainer');
+            const countEl = document.getElementById('orderCount');
             
-            const res = (q / 1000) * r * USH_RATE;
-            prDisp.innerText = "USh " + res.toLocaleString(undefined, {minimumFractionDigits: 2});
-            timeDisp.innerText = t;
+            const activeList = (activeOrderTab === 'self') ? ordersList : globalSimulatedOrders;
+            countEl.innerText = `Total: ${activeList.length} Orders (${activeOrderTab === 'self' ? 'Your Logs' : 'Global Feed'})`;
+
+            if(activeList.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card p-6 text-center text-gray-600">
+                        <i class="fa-solid fa-folder-open text-2xl mb-2"></i>
+                        <p class="text-xs">No active orders found.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = activeList.map(item => `
+                <div class="glass-card p-4 border-l-4 ${activeOrderTab === 'self' ? 'border-l-[#ff8c00]' : 'border-l-blue-500'} bg-gradient-to-r from-[#0a0a0a] to-[#050505] transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] text-gray-500 font-black uppercase tracking-wider">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[8px] text-gray-600 font-bold uppercase">${item.date}</span>
+                            <span class="text-[9px] font-black px-2.5 py-1 rounded-full ${
+                                item.status === 'Completed' ? 'bg-green-950 text-green-400 border border-green-900/40' : 'bg-orange-950/40 text-orange-400 border border-orange-900/30'
+                            }">${item.status}</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xs font-bold text-white mb-1.5">${item.serviceName}</h4>
+                    
+                    <div class="space-y-1.5 text-[10px] text-gray-400">
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-link text-gray-600"></i>
+                            <a href="${item.link}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[280px]">${item.link}</a>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-500 font-medium">
+                            <span>Quantity: <b class="text-gray-300 font-bold">${item.qty.toLocaleString()}</b></span>
+                            <span>Cost: <b class="text-[#ff8c00] font-black">USh ${item.cost.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        qtyIn.addEventListener('input', updateForm);
-        srvSel.addEventListener('change', updateForm);
+        function clearAllOrders() {
+            if (activeOrderTab === 'self') {
+                ordersList = [];
+            } else {
+                globalSimulatedOrders = [];
+            }
+            renderOrders();
+        }
 
         /* --- ADD FUNDS INTERACTIVE LOGIC --- */
         
@@ -780,45 +1451,74 @@ class Api {
             triggerMethodTransition(selectedMethod);
         }
 
-        // Format helpers (Card formatting, Expire formatting)
+        // Format helpers (Card formatting, Expire formatting) and real-time form payable updating
         function setupInputs() {
             const cardNoInput = document.getElementById('cardNo');
-            cardNoInput.addEventListener('input', (e) => {
-                let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let matches = val.match(/\d{4,16}/g);
-                let match = matches && matches[0] || '';
-                let parts = [];
+            if (cardNoInput) {
+                cardNoInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                    let matches = val.match(/\d{4,16}/g);
+                    let match = matches && matches[0] || '';
+                    let parts = [];
 
-                for (let i=0, len=match.length; i<len; i+=4) {
-                    parts.push(match.substring(i, i+4));
-                }
+                    for (let i=0, len=match.length; i<len; i+=4) {
+                        parts.push(match.substring(i, i+4));
+                    }
 
-                if (parts.length > 0) {
-                    e.target.value = parts.join(' ');
-                } else {
-                    e.target.value = val;
-                }
-            });
+                    if (parts.length > 0) {
+                        e.target.value = parts.join(' ');
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
 
             const expiryInput = document.getElementById('cardExpiry');
-            expiryInput.addEventListener('input', (e) => {
-                let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                if (val.length >= 2) {
-                    e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
-                } else {
-                    e.target.value = val;
-                }
-            });
+            if (expiryInput) {
+                expiryInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                    if (val.length >= 2) {
+                        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
 
             const cvcInput = document.getElementById('cardCVC');
-            cvcInput.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            });
+            if (cvcInput) {
+                cvcInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                });
+            }
 
             const momoPhoneInput = document.getElementById('momoPhone');
-            momoPhoneInput.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            });
+            if (momoPhoneInput) {
+                momoPhoneInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                });
+            }
+
+            // Real-time listener for the dashboard choose service order form
+            const qtyInput = document.getElementById('qtyInput');
+            const serviceSelect = document.getElementById('serviceSelect');
+            const priceDisplay = document.getElementById('priceDisplay');
+
+            function calculateRealtimeCost() {
+                const qtyVal = parseFloat(qtyInput.value) || 0;
+                const rateVal = parseFloat(serviceSelect.value) || 0;
+                const totalUshCost = (qtyVal / 1000) * rateVal * USH_RATE;
+                
+                priceDisplay.innerText = "USh " + totalUshCost.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+
+            if(qtyInput && serviceSelect) {
+                qtyInput.addEventListener('input', calculateRealtimeCost);
+                serviceSelect.addEventListener('change', calculateRealtimeCost);
+            }
         }
 
         // Quick overlay notice

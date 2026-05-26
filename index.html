@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rico Animations - YouTube Creator & Pay-out Studio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .uganda-gradient {
+            background: linear-gradient(135deg, #000000 0%, #FCDC04 50%, #D9231D 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pulse-yellow {
+            animation: pulse-y 2s infinite;
+        }
+        @keyframes pulse-y {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(252, 220, 4, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 15px 5px rgba(252, 220, 4, 0.2); }
+        }
+    </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col justify-between">
+
+    <!-- LOGIN WALL SCREEN -->
+    <div id="login-wall" class="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950 px-4">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1920');"></div>
+        
+        <div class="w-full max-w-md relative z-10">
+            <!-- Uganda Flag Accent Bar -->
+            <div class="h-2 w-full rounded-t-2xl flex">
+                <div class="w-1/3 bg-black"></div>
+                <div class="w-1/3 bg-[#FCDC04]"></div>
+                <div class="w-1/3 bg-[#D9231D]"></div>
+            </div>
+            
+            <div class="bg-neutral-900 border-x border-b border-neutral-800 rounded-b-2xl p-8 shadow-2xl">
+                <!-- Profile / Logo Header -->
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-neutral-800 border-2 border-[#FCDC04] rounded-full mx-auto flex items-center justify-center mb-3 shadow-lg">
+                        <i class="fa-solid fa-play text-red-600 text-3xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-black tracking-tight text-white">RICO ANIMATIONS</h1>
+                    <p class="text-xs text-neutral-400 mt-1 uppercase tracking-widest">Uganda Partner Program Login</p>
+                </div>
+
+                <!-- Live Notification Card -->
+                <div class="mb-6 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center space-x-3">
+                    <i class="fa-solid fa-circle-exclamation text-yellow-500 text-lg animate-pulse"></i>
+                    <p class="text-xs text-yellow-200">Pending monthly payout of <strong>UGX 23,000,000</strong> requires authentication.</p>
+                </div>
+
+                <!-- Form -->
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Creator ID / Email</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <input type="text" id="username" value="rico.animations@youtube.ug" required
+                                class="w-full pl-10 pr-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl focus:outline-none focus:border-[#FCDC04] text-white placeholder-neutral-600 transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider">Creator Passcode</label>
+                            <a href="#" class="text-xs text-yellow-500 hover:underline">Forgot?</a>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" value="••••••••••••••" required
+                                class="w-full pl-10 pr-10 py-3 bg-neutral-950 border border-neutral-800 rounded-xl focus:outline-none focus:border-[#FCDC04] text-white transition-all text-sm">
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-500 hover:text-neutral-300">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-red-900/20 hover:shadow-red-600/30">
+                            <span>Access Creator Suite</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Helper Logins Details -->
+                <div class="mt-6 pt-6 border-t border-neutral-800 text-center">
+                    <p class="text-[11px] text-neutral-500">Authorized for Rico Animations Channel & Partners.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MAIN DASHBOARD CONTENT (Initially Hidden) -->
+    <div id="main-dashboard" class="hidden flex-grow flex flex-col">
+        <!-- Top Sticky Header -->
+        <header class="bg-neutral-900/80 backdrop-blur-md border-b border-neutral-800 sticky top-0 z-40 px-4 lg:px-8 py-3">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <!-- Branding -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/20">
+                        <i class="fa-solid fa-play text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-extrabold text-base tracking-tight text-white">RICO ANIMATIONS</span>
+                            <span class="bg-red-500/10 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Official</span>
+                        </div>
+                        <p class="text-xs text-neutral-400">YouTube Partner Network · Uganda Hub</p>
+                    </div>
+                </div>
+
+                <!-- Right Quick Info -->
+                <div class="flex items-center space-x-4">
+                    <!-- Uganda Flag Tag -->
+                    <div class="hidden sm:flex items-center space-x-2 bg-neutral-800/80 border border-neutral-700/60 rounded-full py-1 px-3">
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping"></span>
+                        <span class="text-xs font-semibold text-neutral-300">UG Creator Network</span>
+                        <div class="flex space-x-0.5 h-2.5 w-4 rounded-sm overflow-hidden border border-neutral-600">
+                            <div class="w-1/3 bg-black"></div>
+                            <div class="w-1/3 bg-[#FCDC04]"></div>
+                            <div class="w-1/3 bg-[#D9231D]"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Logout -->
+                    <button onclick="logout()" class="text-neutral-400 hover:text-red-500 transition-colors p-2 rounded-lg bg-neutral-800/40 border border-neutral-800 hover:border-neutral-700/60" title="Log Out">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Container -->
+        <main class="max-w-7xl w-full mx-auto p-4 lg:p-8 flex-grow space-y-6">
+            
+            <!-- Quick Alert Notification for Creator -->
+            <div class="bg-neutral-900 border-l-4 border-yellow-500 rounded-r-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+                <div class="flex items-start space-x-3">
+                    <div class="p-2 bg-yellow-500/10 rounded-lg text-yellow-500 mt-0.5">
+                        <i class="fa-solid fa-wallet text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base">Pending YouTube Creator AdSense Clearance</h4>
+                        <p class="text-xs text-neutral-400 mt-0.5">Your monthly earnings of <strong class="text-neutral-200">UGX 23,000,000</strong> are cleared. Withdraw securely to your registered Ugandan accounts.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="scrollToWithdraw()" class="bg-yellow-500 hover:bg-yellow-600 text-neutral-950 text-xs font-extrabold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-lg shadow-yellow-500/10">
+                        <span>Withdraw Now</span>
+                        <i class="fa-solid fa-arrow-down-wide-short"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left Main Column (Financials & Quick Stats) -->
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <!-- Analytics Grid Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Card 1: Monthly Earnings -->
+                        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 relative overflow-hidden group hover:border-neutral-700 transition-all">
+                            <div class="absolute -right-8 -bottom-8 opacity-5 text-yellow-400 text-9xl group-hover:scale-110 transition-transform duration-500">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>
+                            </div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Monthly Revenue</span>
+                                <span class="bg-emerald-500/10 text-emerald-500 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center space-x-1">
+                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                                    <span>Active Payout</span>
+                                </span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">UGX 23,000,000</h2>
+                            <p class="text-xs text-neutral-400 mt-1">Calculated from May 1 - May 26, 2026</p>
+                            <div class="mt-4 pt-4 border-t border-neutral-800 flex justify-between items-center text-xs">
+                                <span class="text-neutral-500">Estimated CPM</span>
+                                <span class="text-neutral-300 font-medium">UGX 4,200</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Channel Audience / Subscriptions -->
+                        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 relative overflow-hidden group hover:border-neutral-700 transition-all">
+                            <div class="absolute -right-8 -bottom-8 opacity-5 text-red-500 text-9xl group-hover:scale-110 transition-transform duration-500">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Total Subscribers</span>
+                                <button onclick="toggleSubs()" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1 transition-colors">
+                                    <i class="fa-solid fa-sliders text-[8px]"></i>
+                                    <span id="sub-toggle-text">Convert to Milestone</span>
+                                </button>
+                            </div>
+                            <!-- Dynamic Subs Counter with editable component -->
+                            <div class="flex items-baseline space-x-2">
+                                <h2 id="subs-counter" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">13,000,000</h2>
+                                <span id="subs-badge" class="text-xs text-red-500 font-bold">Subs (M)</span>
+                            </div>
+                            <!-- Live Editing of subscribers to directly match custom needs -->
+                            <div class="mt-1 flex items-center space-x-1.5">
+                                <p class="text-xs text-neutral-400">Directly verified via YouTube Studio Uganda</p>
+                                <span class="text-neutral-600">·</span>
+                                <button onclick="promptSubEdit()" class="text-[10px] text-yellow-500 hover:underline">Change</button>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-neutral-800 flex justify-between items-center text-xs">
+                                <span class="text-neutral-500">Monthly growth</span>
+                                <span class="text-emerald-500 font-bold"><i class="fa-solid fa-arrow-up text-[10px]"></i> +342.1K</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rankings Section -->
+                    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-lg font-extrabold text-white">Uganda Top Creator Rankings</h3>
+                                <p class="text-xs text-neutral-400">Based on animation & comedy watch hours</p>
+                            </div>
+                            <span class="bg-[#FCDC04]/10 text-[#FCDC04] text-[10px] font-bold px-3 py-1 rounded-full border border-[#FCDC04]/20 uppercase tracking-wider">Top 1% National</span>
+                        </div>
+
+                        <!-- Ranking List -->
+                        <div class="space-y-3">
+                            <!-- Rico Rank -->
+                            <div class="p-3 bg-neutral-800/60 rounded-xl border border-neutral-700/50 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-500 font-bold flex items-center justify-center text-sm border border-yellow-500/30 shadow-inner">
+                                        #1
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-sm">Rico Animations <span class="text-[10px] text-[#FCDC04] font-semibold">(Your Channel)</span></h4>
+                                        <p class="text-xs text-neutral-400">Animation / 2D Sketches</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs font-bold text-emerald-500">Top Rank</div>
+                                    <p class="text-[10px] text-neutral-500">921.4M total views</p>
+                                </div>
+                            </div>
+
+                            <!-- Rank #2 -->
+                            <div class="p-3 bg-neutral-900 rounded-xl border border-neutral-800 flex items-center justify-between opacity-75">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-neutral-800 text-neutral-400 font-bold flex items-center justify-center text-sm border border-neutral-700">
+                                        #2
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-neutral-200 text-sm">Kansiime Anne Channel</h4>
+                                        <p class="text-xs text-neutral-500">Uganda Comedy/vlogs</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs font-bold text-neutral-400">Partner</div>
+                                    <p class="text-[10px] text-neutral-500">Uganda</p>
+                                </div>
+                            </div>
+
+                            <!-- Rank #3 -->
+                            <div class="p-3 bg-neutral-900 rounded-xl border border-neutral-800 flex items-center justify-between opacity-75">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-neutral-800 text-neutral-400 font-bold flex items-center justify-center text-sm border border-neutral-700">
+                                        #3
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-neutral-200 text-sm">Eddy Kenzo</h4>
+                                        <p class="text-xs text-neutral-500">Uganda Music</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs font-bold text-neutral-400">Partner</div>
+                                    <p class="text-[10px] text-neutral-500">Uganda</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings Chart Visualizer -->
+                    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="text-base font-extrabold text-white">Earnings & Viewership Analysis</h3>
+                                <p class="text-xs text-neutral-400">Historical performance trend over last 6 months</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-neutral-500">Peak Month</p>
+                                <p class="text-sm font-bold text-emerald-400">UGX 26.5M</p>
+                            </div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="earningsChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Side Column (Withdrawal Terminal & Recent Logs) -->
+                <div class="space-y-6">
+                    
+                    <!-- WITHDRAWAL ACTION BOX (Scroll Target) -->
+                    <div id="withdraw-terminal" class="bg-neutral-900 border-2 border-neutral-800 rounded-2xl p-6 relative overflow-hidden transition-all duration-300">
+                        <!-- Embedded Header with Brand Logo -->
+                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-neutral-800">
+                            <div>
+                                <h3 class="text-lg font-black text-white tracking-tight flex items-center space-x-2">
+                                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#FCDC04] pulse-yellow"></span>
+                                    <span>UGANDA WITHDRAWAL HUB</span>
+                                </h3>
+                                <p class="text-[11px] text-neutral-400 mt-0.5">Approved Instant Mobile & Bank Payouts</p>
+                            </div>
+                            <i class="fa-solid fa-shield-halved text-emerald-500 text-xl" title="Authorized & Encrypted Platform"></i>
+                        </div>
+
+                        <!-- Current Balance to Cash Out -->
+                        <div class="bg-neutral-950 p-4 rounded-xl mb-4 border border-neutral-800">
+                            <span class="text-[10px] text-neutral-400 font-extrabold tracking-wider uppercase">Available Balance</span>
+                            <div class="flex items-baseline space-x-2 mt-1">
+                                <h2 class="text-2xl font-black text-[#FCDC04]">UGX 23,000,000</h2>
+                            </div>
+                            <p class="text-[10px] text-neutral-500 mt-1">Fees: 0% YouTube-Partner Sponsored Withdrawal</p>
+                        </div>
+
+                        <!-- Withdrawal Form -->
+                        <form id="withdraw-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 mb-2">Select Withdrawal Gateway</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <!-- Mobile Money Option -->
+                                    <label class="relative flex flex-col p-3 bg-neutral-950 hover:bg-neutral-800/50 border border-neutral-800 rounded-xl cursor-pointer transition-all focus-within:border-yellow-500">
+                                        <input type="radio" name="withdraw_channel" value="MTN Mobile Money" checked class="absolute top-2 right-2 accent-[#FCDC04]">
+                                        <span class="text-xs font-bold text-neutral-200 mt-2">MTN MoMo</span>
+                                        <span class="text-[9px] text-yellow-500 mt-1"><i class="fa-solid fa-bolt"></i> Instant</span>
+                                    </label>
+                                    
+                                    <!-- Bank Transfer Option -->
+                                    <label class="relative flex flex-col p-3 bg-neutral-950 hover:bg-neutral-800/50 border border-neutral-800 rounded-xl cursor-pointer transition-all focus-within:border-yellow-500">
+                                        <input type="radio" name="withdraw_channel" value="Airtel Money" class="absolute top-2 right-2 accent-[#FCDC04]">
+                                        <span class="text-xs font-bold text-neutral-200 mt-2">Airtel Money</span>
+                                        <span class="text-[9px] text-red-400 mt-1"><i class="fa-solid fa-bolt"></i> Instant</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Payee Destination Input -->
+                            <div>
+                                <label class="block text-xs font-semibold text-neutral-300 mb-1.5">Registered Phone / Account</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500 text-xs font-medium">
+                                        +256
+                                    </span>
+                                    <input type="tel" id="payout-address" required placeholder="771 234 567"
+                                        class="w-full pl-14 pr-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl focus:outline-none focus:border-[#FCDC04] text-white text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Amount To Cash Out -->
+                            <div>
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <label class="block text-xs font-semibold text-neutral-300">Amount (UGX)</label>
+                                    <button type="button" onclick="setMaxWithdrawal()" class="text-[10px] text-yellow-500 font-bold hover:underline">Withdraw Max</button>
+                                </div>
+                                <input type="number" id="payout-amount" required min="10000" max="23000000" placeholder="Enter amount to withdraw"
+                                    class="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl focus:outline-none focus:border-[#FCDC04] text-white text-sm font-bold">
+                            </div>
+
+                            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-neutral-950 font-extrabold py-3 px-4 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-yellow-500/10">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <span>Execute Secure Withdrawal</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- RECENT WITHDRAWALS LOG (Dynamic update) -->
+                    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Recent Withdrawal Log</h3>
+                                <p class="text-[10px] text-neutral-400">Live transaction registry</p>
+                            </div>
+                            <span class="text-[10px] text-emerald-500 font-bold flex items-center space-x-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span>Secure Gateway</span>
+                            </span>
+                        </div>
+
+                        <!-- Transactions List Container -->
+                        <div id="withdrawals-list" class="space-y-3">
+                            <!-- Dynamic Withdrawals loaded here -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-neutral-900 border-t border-neutral-800 py-6 px-4 mt-12 text-center text-xs text-neutral-500">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-2">
+                    <span class="font-extrabold text-white text-sm">RICO ANIMATIONS</span>
+                    <span class="text-neutral-600">|</span>
+                    <span>YouTube Partner Network Official</span>
+                </div>
+                <p>&copy; 2026 Rico Animations Studio (Uganda Office). Secured via Google Creator Wallet.</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- CUSTOM MODAL POPUP FOR NOTIFICATION / RECEIPT -->
+    <div id="receipt-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden px-4">
+        <div class="bg-neutral-900 border-2 border-yellow-500 rounded-2xl w-full max-w-md p-6 relative">
+            <div class="text-center">
+                <div class="w-14 h-14 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-lg font-black text-white">Withdrawal Transaction Initiated!</h3>
+                <p class="text-xs text-neutral-400 mt-1">Funds are being pushed to your designated Uganda wallet.</p>
+            </div>
+
+            <!-- Receipt Breakdown -->
+            <div class="mt-6 bg-neutral-950 p-4 rounded-xl border border-neutral-800 text-xs space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-neutral-500">Recipient Account:</span>
+                    <span id="receipt-account" class="text-neutral-200 font-bold">MTN +256 771 234 567</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-neutral-500">Gross Amount:</span>
+                    <span id="receipt-amount-val" class="text-[#FCDC04] font-bold">UGX 23,000,000</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-neutral-500">Transaction Status:</span>
+                    <span class="text-yellow-500 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-hourglass-start animate-spin text-[10px]"></i> Processing
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-neutral-500">Transaction ID:</span>
+                    <span id="receipt-txid" class="text-neutral-400 font-mono">TX-UG91932-841</span>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-neutral-800 flex justify-end">
+                <button onclick="closeReceiptModal()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-neutral-950 font-bold py-2.5 rounded-xl text-xs transition-all">
+                    Acknowledge & Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JS Script logic -->
+    <script>
+        // Preset withdrawal records
+        let withdrawals = [
+            { id: "TX-UG8829-109", provider: "MTN Mobile Money", address: "+256 771 228 104", amount: 12500000, status: "Completed", date: "May 10, 2026" },
+            { id: "TX-UG8102-392", provider: "Airtel Money", address: "+256 701 441 908", amount: 8900000, status: "Completed", date: "Apr 28, 2026" },
+            { id: "TX-UG7729-112", provider: "Standard Chartered Bank", address: "******9210", amount: 15000000, status: "Completed", date: "Apr 05, 2026" }
+        ];
+
+        let showFullSubs = true;
+
+        // On document load
+        window.onload = function() {
+            renderWithdrawals();
+            initChart();
+        }
+
+        // Login Action Simulation
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Simple animated delay to feel authentic
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Authenticating Partner...</span>`;
+            
+            setTimeout(() => {
+                document.getElementById('login-wall').classList.add('hidden');
+                document.getElementById('main-dashboard').classList.remove('hidden');
+            }, 1200);
+        });
+
+        function logout() {
+            document.getElementById('login-wall').classList.remove('hidden');
+            document.getElementById('main-dashboard').classList.add('hidden');
+            // reset login form button
+            const btn = document.getElementById('login-form').querySelector('button[type="submit"]');
+            btn.innerHTML = `<span>Access Creator Suite</span><i class="fa-solid fa-arrow-right"></i>`;
+        }
+
+        // Toggle Subscriber display between full number & abbreviation to match user's customized input
+        function toggleSubs() {
+            showFullSubs = !showFullSubs;
+            const counter = document.getElementById('subs-counter');
+            const badge = document.getElementById('subs-badge');
+            const toggleBtnText = document.getElementById('sub-toggle-text');
+
+            if (showFullSubs) {
+                counter.innerText = "13,000,000";
+                badge.innerText = "Subs (M)";
+                toggleBtnText.innerText = "Convert to Unit";
+            } else {
+                counter.innerText = "13";
+                badge.innerText = "Subscribers";
+                toggleBtnText.innerText = "Convert to Millions";
+            }
+        }
+
+        // Prompt user to customize the subscriber count
+        function promptSubEdit() {
+            let customVal = prompt("Enter custom subscriber count:", showFullSubs ? "13000000" : "13");
+            if (customVal !== null && customVal.trim() !== "") {
+                const counter = document.getElementById('subs-counter');
+                // format with commas if numeric
+                if (!isNaN(customVal)) {
+                    counter.innerText = Number(customVal).toLocaleString();
+                } else {
+                    counter.innerText = customVal;
+                }
+            }
+        }
+
+        // Set maximum withdrawal amount in the input field
+        function setMaxWithdrawal() {
+            document.getElementById('payout-amount').value = 23000000;
+        }
+
+        // Handle withdrawal request
+        document.getElementById('withdraw-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const provider = document.querySelector('input[name="withdraw_channel"]:checked').value;
+            const address = document.getElementById('payout-address').value;
+            const amount = parseFloat(document.getElementById('payout-amount').value);
+            
+            // Generate realistic receipt details
+            const txid = "TX-UG" + Math.floor(1000 + Math.random() * 90000) + "-" + Math.floor(100 + Math.random() * 900);
+            
+            // Add new transaction to start of withdrawals list array
+            const newWithdrawal = {
+                id: txid,
+                provider: provider,
+                address: "+256 " + address,
+                amount: amount,
+                status: "Processing",
+                date: "Today, May 26, 2026"
+            };
+
+            withdrawals.unshift(newWithdrawal);
+            renderWithdrawals();
+
+            // Set modal values
+            document.getElementById('receipt-account').innerText = provider + " (" + (address.startsWith("+") ? "" : "+256 ") + address + ")";
+            document.getElementById('receipt-amount-val').innerText = "UGX " + amount.toLocaleString();
+            document.getElementById('receipt-txid').innerText = txid;
+
+            // Show receipt modal
+            document.getElementById('receipt-modal').classList.remove('hidden');
+
+            // Reset payout input
+            document.getElementById('payout-amount').value = '';
+            document.getElementById('payout-address').value = '';
+        });
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').classList.add('hidden');
+        }
+
+        // Render withdrawals dynamically
+        function renderWithdrawals() {
+            const list = document.getElementById('withdrawals-list');
+            list.innerHTML = '';
+
+            withdrawals.forEach((w) => {
+                const statusColor = w.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20';
+                const statusIcon = w.status === 'Completed' ? '<i class="fa-solid fa-check text-[10px]"></i>' : '<i class="fa-solid fa-spinner animate-spin text-[10px]"></i>';
+                
+                list.innerHTML += `
+                    <div class="p-3 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700/60 transition-all">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <div>
+                                <h4 class="font-bold text-neutral-200 text-xs">${w.provider}</h4>
+                                <p class="text-[10px] text-neutral-500 mt-0.5">${w.address}</p>
+                            </div>
+                            <span class="text-xs font-bold text-white">UGX ${w.amount.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] pt-1.5 border-t border-neutral-900">
+                            <span class="text-neutral-500 font-mono">${w.id}</span>
+                            <span class="${statusColor} px-2 py-0.5 rounded-full flex items-center gap-1">
+                                ${statusIcon}
+                                <span>${w.status}</span>
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Smooth scroll helper
+        function scrollToWithdraw() {
+            document.getElementById('withdraw-terminal').scrollIntoView({ behavior: 'smooth' });
+            // Glow effect focus
+            const target = document.getElementById('withdraw-terminal');
+            target.classList.remove('border-neutral-800');
+            target.classList.add('border-yellow-500');
+            setTimeout(() => {
+                target.classList.remove('border-yellow-500');
+                target.classList.add('border-neutral-800');
+            }, 2500);
+        }
+
+        // Chart.js implementation for historical trends
+        function initChart() {
+            const ctx = document.getElementById('earningsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May (Current)'],
+                    datasets: [{
+                        label: 'Earnings (UGX Million)',
+                        data: [15.2, 19.8, 14.5, 26.5, 21.0, 23.0],
+                        borderColor: '#FCDC04',
+                        backgroundColor: 'rgba(252, 220, 4, 0.05)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#D9231D',
+                        pointBorderColor: '#fff',
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#a3a3a3',
+                                callback: function(value) {
+                                    return value + 'M';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#a3a3a3'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+

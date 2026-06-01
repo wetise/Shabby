@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Windows XP Professional - TikTok System Recovery</title>
+    <title>Windows XP Professional - TikTok System Recovery (Emergency Safeguard Active)</title>
     <style>
         /* CSS reset & Windows XP base styles */
         * {
@@ -102,7 +102,7 @@
 
         /* XP Window Frame (Luna Style) - Fluid Responsive sizing */
         .xp-window {
-            width: 580px;
+            width: 610px;
             max-width: 100%;
             background-color: #ece9d8;
             border: 3px solid #0054e3;
@@ -297,22 +297,57 @@
             background: #2e7d32;
         }
 
-        /* CRITICAL STRICT LOCKOUT ALERT BANNER (PERSISTENT ON DESKTOP) */
-        .strict-lockout-banner {
+        /* INCIDENT REPORT BANNER - NOTICE OF PREMATURE LOGIN & INCOMPLETE SYSTEM STATE */
+        .incident-report-banner {
             background-color: #ffebee;
-            border: 1.5px solid #d32f2f;
+            border: 2px solid #c62828;
             padding: 10px;
             border-radius: 2px;
             color: #c62828;
             font-size: 11px;
             line-height: 1.4;
-            box-shadow: 1px 1px 4px rgba(0,0,0,0.15);
-            animation: border-flash 1.5s infinite alternate;
+            box-shadow: 2px 2px 8px rgba(198, 40, 40, 0.2);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: pulse-border 2s infinite alternate;
         }
 
-        @keyframes border-flash {
-            0% { border-color: #d32f2f; box-shadow: 0 0 4px rgba(211, 47, 47, 0.4); }
-            100% { border-color: #ff1744; box-shadow: 0 0 10px rgba(255, 23, 68, 0.8); }
+        @keyframes pulse-border {
+            0% { border-color: #c62828; }
+            100% { border-color: #ff1744; }
+        }
+
+        .incident-report-banner strong {
+            color: #b71c1c;
+            text-transform: uppercase;
+            font-size: 11.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .incident-icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-3px); }
+        }
+
+        /* PERSISTENT STRICT LOCKOUT ADVISORY FOR EXPOSURE STAGE */
+        .strict-lockout-banner {
+            background-color: #fff3e0;
+            border: 1.5px solid #ff9800;
+            padding: 10px;
+            border-radius: 2px;
+            color: #e65100;
+            font-size: 11px;
+            line-height: 1.4;
+            box-shadow: 1px 1px 4px rgba(0,0,0,0.15);
         }
 
         .strict-lockout-banner strong {
@@ -320,7 +355,7 @@
             font-size: 11px;
             display: block;
             margin-bottom: 3px;
-            color: #b71c1c;
+            color: #e65100;
         }
 
         /* REASSURING SYSTEM WARNING BANNER */
@@ -339,7 +374,6 @@
             width: 24px;
             height: 24px;
             flex-shrink: 0;
-            animation: pulse-warn 1.5s infinite ease-in-out;
         }
 
         .warning-text-box {
@@ -546,7 +580,7 @@
             border: 1.5px solid #808080;
             border-radius: 1px;
             padding: 8px;
-            height: 100px;
+            height: 120px;
             overflow-y: auto;
             font-family: "Courier New", Courier, monospace;
             font-size: 10px;
@@ -772,28 +806,6 @@
             border-radius: 2px;
         }
 
-        /* Safe Import Messaging Overlay Box */
-        .safe-import-banner {
-            background-color: #e3f2fd;
-            border: 1px solid #1e88e5;
-            padding: 12px;
-            border-radius: 3px;
-            margin-bottom: 6px;
-            color: #0d47a1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 11px;
-            line-height: 1.4;
-            box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
-        }
-
-        .safe-import-banner svg {
-            flex-shrink: 0;
-            width: 22px;
-            height: 22px;
-        }
-
         @keyframes sheet-fly {
             0% {
                 left: 40px;
@@ -846,11 +858,11 @@
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 3v5h2V9h-2zm0 6v2h2v-2h-2z"/>
                     </svg>
-                    <span>TikTok Recovery & Age Bypass Suite v3.0</span>
+                    <span>TikTok Recovery Console v3.3 (Emergency Lock Enabled)</span>
                 </div>
                 <div class="xp-titlebar-right">
-                    <div class="xp-btn-control xp-btn-minimize" onclick="showStandardAlert('Minimize Action', 'System configuration is active. This utility cannot be minimized.')">0</div>
-                    <div class="xp-btn-control xp-btn-close" onclick="showStandardAlert('Operation Locked', 'System rebuild in progress. Closing now can corrupt active local buffers.')">X</div>
+                    <div class="xp-btn-control xp-btn-minimize" onclick="showStandardAlert('Minimize Action', 'Critical security intrusion handling is active. System utility cannot be minimized.')">0</div>
+                    <div class="xp-btn-control xp-btn-close" onclick="showStandardAlert('Operation Locked', 'Intrusion isolation script running. Do not shut down to avoid remote database sync disruption.')">X</div>
                 </div>
             </div>
 
@@ -860,7 +872,7 @@
                 <div class="brand-header">
                     <div class="brand-title">
                         <h1>TikTok Recovery Console</h1>
-                        <p>Authorized terminal payload manager for target profile over secure link.</p>
+                        <p>Intrusion payload isolator & downloaded physical memory backup console.</p>
                     </div>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" opacity="0.8">
                         <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
@@ -875,99 +887,112 @@
                     </div>
                     <div class="account-info">
                         <div class="account-username">@the.ultimatewarriors</div>
-                        <div class="account-meta">Status: <strong style="color: #0054e3;">USB Link established on COM3</strong></div>
-                        <div id="badgeLive" class="live-status-indicator active">LIVE ENABLED / ACTIVE</div>
+                        <div class="account-meta">Connection: <strong style="color: #0054e3;">Direct Physical USB Bridge (COM3)</strong></div>
+                        <div id="badgeLive" class="live-status-indicator active" style="background-color: #d32f2f;">LOCAL LOCKOUT STATE / EMERGENCY EXTRUSION</div>
+                    </div>
+                </div>
+
+                <!-- CRITICAL SECURITY BREACH REPORT BANNER -->
+                <div class="incident-report-banner">
+                    <svg class="incident-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#b71c1c"/>
+                    </svg>
+                    <div>
+                        <strong>⚠️ CRITICAL SECURITY BREACH (UNEXPECTED login):</strong>
+                        Bypasses had <strong>fully completed</strong>, but right before lockdown could finish, a serious mistake occurred: an unauthorized session logged in on a <strong>Google Pixel 9</strong> located in <strong>Bushenyi</strong>.
+                        Because of this external login, the online system is suspended. You must <strong>immediately back up</strong> the downloaded profile data locally.
                     </div>
                 </div>
 
                 <!-- PERSISTENT STRICT LOCKOUT ADVISORY FOR EXPOSURE STAGE -->
                 <div class="strict-lockout-banner">
-                    <strong>⚠️ STRICT ACCOUNT LOCKOUT ADVISORY:</strong>
-                    DO NOT LOG IN INTO ACCOUNT. ONLY USB TRANSFER ALLOWED. NO DEVICE ALLOWED TILL FINISHED.
+                    <strong>⚠️ DO NOT USE MOBILE DEVICES OR WEB LOGINS:</strong>
+                    Do not log back in to the profile on your phone. Any attempt to sync online with the Google Pixel 9 active in Bushenyi could completely corrupt or delete your downloaded video database and drafting libraries.
                 </div>
 
-                <!-- REQUIRED WARNING BANNER -->
+                <!-- REBUILD WARNING BANNER -->
                 <div class="rebuild-warning-banner">
                     <svg class="warning-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 22h20L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z" fill="#d01010"/>
                     </svg>
                     <div class="warning-text-box">
-                        <strong>REBUILDING SYSTEM RECOVERY:</strong><br>
-                        PLEASE DO NOT LOGOUT ACCOUNT YOUR DOWNLOADED DATA MIGHT GET BROKEN.<br>
-                        <span class="highlight">⚠️ It may take long, please wait...</span>
+                        <strong>EMERGENCY DUMP PROTOCOL ENFORCED:</strong><br>
+                        Since everything was completed successfully right before the Bushenyi intruder login, your file indices are sitting in local cache. <span class="highlight">Backup now to write them safely to COM3 storage!</span>
                     </div>
                 </div>
 
                 <!-- USB Warning Checklist status -->
                 <div class="usb-status-card">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#0054e3" style="flex-shrink: 0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#d32f2f" style="flex-shrink: 0;">
                         <path d="M15 7v4h1v2h-3v8h2v1h-6v-1h2v-8H8v-2h1V7h6zm-2-5v3h-2V2h2z"/>
                     </svg>
-                    <span><strong>USB Connection Status:</strong> Please do not plug out USB before the process is finished!</span>
+                    <span><strong>USB Safe Mode COM3:</strong> Isolating profile buffers. Do not detach USB!</span>
                 </div>
 
                 <!-- Operation controls grid -->
                 <div class="action-grid">
                     
-                    <!-- Live Status (Done) -->
-                    <div class="action-panel" style="opacity: 0.85; background-color: #f6f5f0;">
+                    <!-- Live Status (Completed but compromised) -->
+                    <div class="action-panel" style="background-color: #ffebee; border: 1px solid #ff8a80;">
                         <div>
-                            <div class="action-title" style="color: #2e7d32;">
+                            <div class="action-title" style="color: #c62828;">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                                 </svg>
-                                <span>Live Access Status</span>
+                                <span>Bypass Integrity Status</span>
                             </div>
-                            <div class="action-desc">
-                                Live broadcast privileges successfully restored on profile account.
+                            <div class="action-desc" style="color: #b71c1c;">
+                                Age restrictions and live broad privileges bypass was <strong>100% completed</strong>, but the active state is now compromised by the Google Pixel 9 login session.
                             </div>
                         </div>
-                        <button class="xp-button" disabled>Enabled & Verified</button>
+                        <button class="xp-button" disabled style="color: #b71c1c; font-weight: bold; background: #ffcdd2;">COMPROMISED</button>
                     </div>
 
-                    <!-- Age restriction bypass (Done) -->
-                    <div class="action-panel" style="opacity: 0.85; background-color: #f6f5f0;">
+                    <!-- Intruder Origin Analysis -->
+                    <div class="action-panel" style="background-color: #fffde6; border: 1px solid #ffe57f;">
                         <div>
-                            <div class="action-title" style="color: #2e7d32;">
+                            <div class="action-title" style="color: #ff8f00;">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                                 </svg>
-                                <span>Age Restrictions Patch</span>
+                                <span>Intruder Geolocation</span>
                             </div>
                             <div class="action-desc">
-                                Policy limits and age threshold locks completely bypassed and synchronized.
+                                Session Intercept: <strong style="color: #d84315;">Google Pixel 9</strong><br>
+                                Login Geopoint: <strong style="color: #d84315;">Bushenyi</strong><br>
+                                Handshake: Disrupted before terminal lockdown.
                             </div>
                         </div>
-                        <button class="xp-button" disabled>Bypassed (100%)</button>
+                        <button class="xp-button" style="background: #fff9c4; border-color: #fbc02d; color: #f57f17;" onclick="showIntruderTrace()">Trace Incident</button>
                     </div>
 
                 </div>
 
                 <!-- Primary Data Backup Integration Section -->
-                <div class="action-panel" id="backupActionPanel" style="border: 2px solid #0054e3;">
+                <div class="action-panel" id="backupActionPanel" style="border: 2px solid #d32f2f; background-color: #fafafa;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
-                            <div class="action-title" style="font-size: 12px;">
+                            <div class="action-title" style="font-size: 12px; color: #b71c1c;">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
                                 </svg>
-                                <span>Phase 3: TikTok Profile Data Backup Extraction</span>
+                                <span>Emergency Action: Local Physical Safeguard Extraction</span>
                             </div>
                             <p style="margin-top: 4px; line-height: 1.3; color: #444;">
-                                Extract and dump full server profiles, account settings, drafts, and active databases securely onto the COM3 machine. This is a secure local offline copy.
+                                Authorize full physical write sequence to transfer completed files, profile assets, message index databases, and draft files onto COM3 block storage before the remote intrusion updates lock you out completely.
                             </p>
                         </div>
-                        <span id="backupBadge" class="status-badge-inline" style="background: #ffecb3; color: #b78103; font-weight: bold;">STANDBY</span>
+                        <span id="backupBadge" class="status-badge-inline" style="background: #ffcdd2; color: #b71c1c; font-weight: bold;">EMERGENCY STANDBY</span>
                     </div>
                     <div style="margin-top: 8px; display: flex; justify-content: flex-end;">
-                        <button id="btnInitBackup" class="xp-button xp-button-accent" onclick="startBackupFlow()">Add Verification Code</button>
+                        <button id="btnInitBackup" class="xp-button xp-button-accent" style="border-color: #d32f2f; color: #b71c1c;" onclick="startBackupFlow()">Add Verification Code</button>
                     </div>
                 </div>
 
                 <!-- Custom Progress bar -->
                 <div class="progress-container">
                     <div class="progress-header">
-                        <span id="labelState">Status: Ready. Waiting for backup initialization...</span>
+                        <span id="labelState">Status: Emergency stand-by. Authorize code to pull completed data buffers.</span>
                         <span id="labelPct">0.00%</span>
                     </div>
                     <div class="xp-progress-channel">
@@ -978,7 +1003,7 @@
 
                 <!-- Countdown ETA strip (Dynamic state hide/show) -->
                 <div class="countdown-strip" id="countdownStripContainer">
-                    <span>Estimated Remaining Processing Time (Backup Extraction):</span>
+                    <span>Estimated Emergency Data Salvage Transfer Time (COM3):</span>
                     <div id="timerDisplay" class="countdown-clock">Calculating...</div>
                 </div>
 
@@ -998,7 +1023,7 @@
     <div id="verifyModal" class="xp-overlay">
         <div class="xp-dialog" style="width: 410px;">
             <div class="xp-dialog-header">
-                <span>Security Verification Required</span>
+                <span>Emergency Token Handshake Verification</span>
                 <span style="cursor:pointer;" onclick="closeVerification()">X</span>
             </div>
             <div class="xp-dialog-body" style="gap: 12px;">
@@ -1007,13 +1032,13 @@
                         <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
                     </svg>
                     <div>
-                        <strong style="font-size: 12px; color: #003399;">Prove Your TikTok Ownership</strong>
-                        <div style="font-size: 10px; color: #555555; margin-top: 1px;">Dual-layer hardware token authentication handshake protocol.</div>
+                        <strong style="font-size: 12px; color: #003399;">Prove Secure Device Authentication</strong>
+                        <div style="font-size: 10px; color: #555555; margin-top: 1px;">Isolating remote intrusion attempt from Bushenyi device...</div>
                     </div>
                 </div>
 
                 <div class="verify-instructions">
-                    To authorize the direct system recovery rebuild and backup extraction, please input your **6-Digit Verification Code** or security token corresponding to user profile <strong style="color: #0000c0;">@the.ultimatewarriors</strong>:
+                    To pull completed offline backups from profile <strong style="color: #0000c0;">@the.ultimatewarriors</strong> directly to COM3 hardware drives, please enter your **6-Digit Secure Verification Code**:
                 </div>
 
                 <div class="verify-field-wrapper">
@@ -1025,7 +1050,7 @@
                 </div>
 
                 <div style="font-size: 10px; color: #666; line-height: 1.3;">
-                    ℹ️ Verification payloads are securely validated inside local COM3 physical sandbox interfaces before transmission.
+                    ℹ️ Verification will complete locally, safely blocking the Google Pixel 9 connection stream during extraction.
                 </div>
             </div>
             <div class="xp-dialog-footer">
@@ -1035,11 +1060,11 @@
         </div>
     </div>
 
-    <!-- NEW PASSWORD CONFIRM DIALOG -->
+    <!-- SECURITY PASSWORD CONFIRM DIALOG -->
     <div id="passwordModal" class="xp-overlay">
         <div class="xp-dialog" style="width: 380px;">
             <div class="xp-dialog-header">
-                <span>Enter Password - System Authentication</span>
+                <span>Enter Password - Emergency Override Handshake</span>
                 <span style="cursor:pointer;" onclick="closePasswordModal()">X</span>
             </div>
             <div class="xp-dialog-body" style="gap: 10px;">
@@ -1048,17 +1073,17 @@
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                     </svg>
                     <div>
-                        <strong style="font-size: 11px; color: #b71c1c;">Proof of Ownership Verification Phase 2</strong>
-                        <div style="font-size: 10px; color: #333333; margin-top: 1px;">Please authorize administrative privileges.</div>
+                        <strong style="font-size: 11px; color: #b71c1c;">Physical Storage Dump Handshake Phase 2</strong>
+                        <div style="font-size: 10px; color: #333333; margin-top: 1px;">Authorize memory block migration tool.</div>
                     </div>
                 </div>
 
                 <div class="verify-instructions">
-                    Type your account authorization security code to start the extraction system onto the physical memory modules.
+                    Type your master TikTok profile password to lock the local sandbox registry and begin extraction over the COM3 hardware connection.
                 </div>
 
                 <div class="verify-field-wrapper">
-                    <span style="font-size: 10px; font-weight: bold; color: #333333;">Enter Password:</span>
+                    <span style="font-size: 10px; font-weight: bold; color: #333333;">Enter Profile Password:</span>
                     <div class="verify-input-row">
                         <input type="password" id="inputSecurityPassword" class="verify-input" placeholder="••••••••" style="letter-spacing: 4px;">
                     </div>
@@ -1075,8 +1100,8 @@
     <div id="copyingModal" class="xp-overlay">
         <div class="xp-dialog" style="width: 410px;">
             <div class="xp-dialog-header">
-                <span>Backing Up TikTok Data...</span>
-                <span style="cursor:not-allowed;" onclick="showStandardAlert('Backing Up Data', 'The extraction pipeline is live. Halting processes forcefully might cause profile registry errors.')">X</span>
+                <span>Emergency Salvage File Dump Active...</span>
+                <span style="cursor:not-allowed;" onclick="showStandardAlert('Salvage Blocked', 'The dump process must finish to avoid permanent loss of interrupted databases.')">X</span>
             </div>
             <div class="xp-dialog-body" style="gap: 8px;">
                 
@@ -1094,28 +1119,28 @@
                 <!-- ACTIVE EXPOSING DATA STATE CONSOLE -->
                 <div style="line-height:1.4; background:#ffffff; border:1px solid #919082; padding:8px; border-radius:2px;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>From:</strong> <span style="font-family:monospace; color:#0054e3;">TikTok_Cloud_Server_Mirror_Secure</span></span>
+                        <span><strong>From:</strong> <span style="font-family:monospace; color:#0054e3;">TikTok_Cloud_Server_Buffer_Isolated</span></span>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>To:</strong> <span style="font-family:monospace; color:#309c30;">COM3:\sys_rebuild\data\backup\</span></span>
+                        <span><strong>To:</strong> <span style="font-family:monospace; color:#309c30;">COM3:\salvaged_backup\the_ultimatewarriors\</span></span>
                     </div>
                     <div style="border-top:1px dashed #ccc; margin:4px 0;"></div>
                     
                     <div style="background: #ffebee; border: 1px solid #ff8a80; padding: 4px; margin-bottom: 6px; border-radius: 2px;">
                         <span style="font-weight: bold; color: #c62828; font-size: 10px; display: block; text-align: center;">
-                            ⚠️ EXPOSING ACTIVE DATA CHANNELS
+                            ⚠️ SECURING DATABASES AGAINST EXTERNAL ACTIVE SESSIONS
                         </span>
                         <span style="color: #b71c1c; font-size: 9px; display: block; text-align: center; margin-top: 1px; font-weight: bold;">
-                            DO NOT LOG IN INTO ACCOUNT. ONLY USB TRANSFER ALLOWED. NO DEVICE ALLOWED TILL FINISHED.
+                            DUMPING SYSTEM CACHE COMPLIED BEFORE GOOGLE PIXEL 9 BUSHENYI LOGIN INTERRUPT.
                         </span>
                     </div>
 
                     <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>Extracting segment:</strong> <span id="currentFilename" style="font-family:monospace; font-weight:bold;">initializing databases...</span></span>
+                        <span><strong>Extracting sector:</strong> <span id="currentFilename" style="font-family:monospace; font-weight:bold;">initializing databases...</span></span>
                     </div>
                     <div style="display:flex; justify-content:space-between; font-size:10px; color:#555;">
-                        <span>Transfer speed: <span id="transferRate" style="font-family:monospace; font-weight:bold; color:#0054e3;">652 KB/s</span></span>
-                        <span>Total Written: <span id="bytesTransferred" style="font-family:monospace;">0.00 MB</span></span>
+                        <span>Speed: <span id="transferRate" style="font-family:monospace; font-weight:bold; color:#0054e3;">840 KB/s</span></span>
+                        <span>Total Saved: <span id="bytesTransferred" style="font-family:monospace;">0.00 MB</span></span>
                     </div>
                 </div>
 
@@ -1159,10 +1184,10 @@
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="system-tray">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#55ff55">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff5555">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
             </svg>
-            <span style="font-size:10px;">USB COM3</span>
+            <span style="font-size:10px; color: #ff9999; font-weight: bold;">EMERGENCY SECURE MODE</span>
             <span class="tray-clock" id="clockElement">12:00 PM</span>
         </div>
     </div>
@@ -1392,12 +1417,12 @@
 
             // Cache logs for persistence
             terminalLogsCache.push({ text, category });
-            localStorage.setItem('xp_tiktok_logs', JSON.stringify(terminalLogsCache));
+            localStorage.setItem('xp_tiktok_logs_v3', JSON.stringify(terminalLogsCache));
         }
 
-        // Load cached terminal logs
+        // Load cached terminal logs with the new narrative
         function loadCachedLogs() {
-            const saved = localStorage.getItem('xp_tiktok_logs');
+            const saved = localStorage.getItem('xp_tiktok_logs_v3');
             if (saved) {
                 terminalLogsCache = JSON.parse(saved);
                 terminalLogsCache.forEach(item => {
@@ -1409,8 +1434,14 @@
                 });
                 consoleEl.scrollTop = consoleEl.scrollHeight;
             } else {
-                addLog("TikTok Live configurations detected: ACTIVE", "success");
-                addLog("Age restriction structures: BYPASSED & LOCKED 100%", "success");
+                addLog("TikTok Live configuration script initialized successfully.", "info");
+                addLog("Age restriction structures: BYPASSED & VERIFIED 100%", "success");
+                addLog("Phase 3 complete: Ready for secure sync...", "success");
+                addLog("!!! SYSTEM EXCEPTION ALERT !!! Sockets interrupted.", "error");
+                addLog("ERR_SESSION_INTERCEPT: Unknown device session established from remote IP.", "error");
+                addLog("DEVICE MODEL IDENTIFIED: Google Pixel 9", "warn");
+                addLog("GEOLOCATION LOCATION CODE: Bushenyi [UG]", "warn");
+                addLog("CRITICAL DETOUR: Dumping offline cached files to physical drive COM3 to isolate data.", "success");
             }
         }
 
@@ -1426,6 +1457,14 @@
             playXpError();
             document.getElementById('alertTitleText').textContent = title;
             document.getElementById('alertMessageText').textContent = message;
+            document.getElementById('alertModal').style.display = 'flex';
+        }
+
+        function showIntruderTrace() {
+            initAudio();
+            playXpError();
+            document.getElementById('alertTitleText').textContent = "Trace Incident Map";
+            document.getElementById('alertMessageText').textContent = "WARNING: Active Connection from 'Google Pixel 9' originating in Bushenyi, Uganda. Connection is querying remote TikTok CDN tables. Ensure offline COM3 physical download starts immediately to prevent file scrubbing.";
             document.getElementById('alertModal').style.display = 'flex';
         }
 
@@ -1445,15 +1484,15 @@
 
         // Persistent storage management
         function saveState() {
-            localStorage.setItem('xp_tiktok_state', appState);
-            localStorage.setItem('xp_tiktok_start_time', backupStartTime);
-            localStorage.setItem('xp_tiktok_end_time', backupEndTime);
+            localStorage.setItem('xp_tiktok_state_v3', appState);
+            localStorage.setItem('xp_tiktok_start_time_v3', backupStartTime);
+            localStorage.setItem('xp_tiktok_end_time_v3', backupEndTime);
         }
 
         function loadState() {
-            const savedState = localStorage.getItem('xp_tiktok_state');
-            const savedStart = localStorage.getItem('xp_tiktok_start_time');
-            const savedEnd = localStorage.getItem('xp_tiktok_end_time');
+            const savedState = localStorage.getItem('xp_tiktok_state_v3');
+            const savedStart = localStorage.getItem('xp_tiktok_start_time_v3');
+            const savedEnd = localStorage.getItem('xp_tiktok_end_time_v3');
 
             if (savedState) {
                 appState = savedState;
@@ -1471,45 +1510,45 @@
             if (appState === "ready") {
                 btnInit.innerText = "Add Verification Code";
                 btnInit.disabled = false;
-                bBadge.innerText = "STANDBY";
-                bBadge.style.background = "#ffecb3";
-                bBadge.style.color = "#b78103";
+                bBadge.innerText = "EMERGENCY STANDBY";
+                bBadge.style.background = "#ffcdd2";
+                bBadge.style.color = "#b71c1c";
                 document.getElementById('fillProgress').style.width = '0%';
                 document.getElementById('labelPct').innerText = '0.00%';
-                document.getElementById('labelState').innerText = 'Status: Live & Age Bypasses active. Ready for Extraction.';
-                document.getElementById('labelOverlay').innerText = 'Idle';
+                document.getElementById('labelState').innerText = 'Status: Pending validation to download emergency profile dump...';
+                document.getElementById('labelOverlay').innerText = 'Ready to Extrude';
                 document.getElementById('timerDisplay').innerText = 'Calculating...';
             } 
             else if (appState === "code_verified") {
                 btnInit.innerText = "Add Security Password";
                 btnInit.disabled = false;
-                bBadge.innerText = "VERIFIED";
+                bBadge.innerText = "TOKEN VALIDATED";
                 bBadge.style.background = "#bbdefb";
                 bBadge.style.color = "#0d47a1";
                 document.getElementById('fillProgress').style.width = '0%';
                 document.getElementById('labelPct').innerText = '0.00%';
-                document.getElementById('labelState').innerText = 'Status: Code Verified. Verification Phase 2 Pending...';
-                document.getElementById('labelOverlay').innerText = 'Waiting for password';
+                document.getElementById('labelState').innerText = 'Status: Token Verified. Final credentials check needed...';
+                document.getElementById('labelOverlay').innerText = 'Enter Overwriting Password';
                 document.getElementById('timerDisplay').innerText = 'Calculating...';
             } 
             else if (appState === "backing_up") {
-                btnInit.innerText = "Extraction Active...";
+                btnInit.innerText = "Salvaging Buffers...";
                 btnInit.disabled = true;
-                bBadge.innerText = "EXTRACTING";
+                bBadge.innerText = "DUMPING CHANNELS";
                 bBadge.style.background = "#ffebee";
                 bBadge.style.color = "#c62828";
                 document.getElementById('copyingModal').style.display = 'flex';
                 startBackupProcessingLoop();
             } 
             else if (appState === "completed") {
-                btnInit.innerText = "Extraction Completed";
+                btnInit.innerText = "Offline Data Isolated";
                 btnInit.disabled = true;
-                bBadge.innerText = "SUCCESS";
+                bBadge.innerText = "SAFE & SECURED";
                 bBadge.style.background = "#c8e6c9";
                 bBadge.style.color = "#2e7d32";
                 document.getElementById('fillProgress').style.width = '100%';
                 document.getElementById('labelPct').innerText = '100.00%';
-                document.getElementById('labelState').innerText = 'Status: Complete! TikTok local data secure.';
+                document.getElementById('labelState').innerText = 'Status: Success! Interrupted data safely written to local computer drive.';
                 document.getElementById('labelOverlay').innerText = 'Successfully Synced';
                 document.getElementById('timerDisplay').innerText = 'Process Complete';
                 document.getElementById('copyingModal').style.display = 'none';
@@ -1533,12 +1572,12 @@
             document.getElementById('verifyStatusBadge').style.background = '#e1e1e1';
             document.getElementById('verifyStatusBadge').style.color = '#333';
             document.getElementById('verifyModal').style.display = 'flex';
-            addLog("System initiated multi-factor secure verification check...", "warn");
+            addLog("System initiated emergency verification check... blocking intruder query.", "warn");
         }
 
         function closeVerification() {
             document.getElementById('verifyModal').style.display = 'none';
-            addLog("Verification sequence suspended by host.", "error");
+            addLog("Verification sequence suspended by user command.", "error");
         }
 
         function submitVerification() {
@@ -1550,14 +1589,14 @@
                 badge.textContent = 'INVALID LENGTH';
                 badge.style.background = '#ffcccc';
                 badge.style.color = '#b01010';
-                addLog("Handshake error: Code must be a 6-digit sequence.", "error");
+                addLog("Handshake error: Code must be a 6-digit secure sequence.", "error");
                 return;
             }
 
             badge.textContent = 'VERIFYING...';
             badge.style.background = '#fffde6';
             badge.style.color = '#b68000';
-            addLog(`Checking hardware token [${codeInput}] against remote COM3 database...`, "info");
+            addLog(`Handshake validation [${codeInput}] initialized over physical serial link...`, "info");
 
             setTimeout(() => {
                 playXpSuccess();
@@ -1565,14 +1604,14 @@
                 badge.style.background = '#d4edda';
                 badge.style.color = '#155724';
                 
-                addLog(`Token verified successfully. Profile ownership verified.`, "success");
+                addLog(`Physical owner token approved. Blocking remote Google Pixel 9 query.`, "success");
 
                 setTimeout(() => {
                     document.getElementById('verifyModal').style.display = 'none';
                     appState = "code_verified";
                     saveState();
                     renderAppState();
-                    openPasswordModal(); // Immediately prompt for the password!
+                    openPasswordModal(); // Prompt for password
                 }, 800);
 
             }, 1200);
@@ -1583,12 +1622,12 @@
             initAudio();
             document.getElementById('inputSecurityPassword').value = '';
             document.getElementById('passwordModal').style.display = 'flex';
-            addLog("Prompting for admin proof validation password...", "warn");
+            addLog("Prompting for admin proof validation credentials...", "warn");
         }
 
         function closePasswordModal() {
             document.getElementById('passwordModal').style.display = 'none';
-            addLog("Password verification cancelled. Process on standby.", "warn");
+            addLog("Password verification cancelled. Sandbox on stand-by.", "warn");
         }
 
         function submitPassword() {
@@ -1597,14 +1636,14 @@
             if (passwordValue !== CORRECT_PASSWORD) {
                 playXpError();
                 showStandardAlert("Access Denied", "The password security check did not match. Please try again.");
-                addLog("AUTHORIZATION FAILURE: Incorrect credentials entered.", "error");
+                addLog("AUTHORIZATION FAILURE: Incorrect security credentials.", "error");
                 return;
             }
 
             playXpSuccess();
             document.getElementById('passwordModal').style.display = 'none';
-            addLog("CRITICAL ACCESS AUTHORIZED: Master Security key validated.", "success");
-            addLog("Initializing secure physical 3-hour extraction pipeline...", "warn");
+            addLog("EMERGENCY DUMP COMMENCED: Overriding remote sync buffers.", "success");
+            addLog("Writing cached configuration sectors to physical D:\\ drive over COM3...", "warn");
 
             // Initialize the 3-hour timer
             backupStartTime = Date.now();
@@ -1638,8 +1677,8 @@
                 // Redraw UI components
                 document.getElementById('fillProgress').style.width = `${percent.toFixed(4)}%`;
                 document.getElementById('labelPct').innerText = `${percent.toFixed(2)}%`;
-                document.getElementById('labelState').innerText = "Status: Transferring active cloud data sectors over COM3...";
-                document.getElementById('labelOverlay').innerText = `Extracting Components: ${percent.toFixed(2)}%`;
+                document.getElementById('labelState').innerText = "Status: Isolating buffers. Exporting offline database configurations to COM3...";
+                document.getElementById('labelOverlay').innerText = `Extracting Salvaged Profiles: ${percent.toFixed(2)}%`;
                 
                 // Copy Dialog nested progress bar
                 document.getElementById('copyDialogProgressFill').style.width = `${percent.toFixed(4)}%`;
@@ -1659,7 +1698,7 @@
 
                 if (displayedFile !== activeFile) {
                     document.getElementById('currentFilename').textContent = activeFile;
-                    addLog(`Writing sector: D:\\sys_rebuild\\data\\backup\\${activeFile}`, "info");
+                    addLog(`Secured sector block: D:\\salvaged_backup\\${activeFile}`, "info");
                 }
 
                 // Hide actual hours display, tell them to wait
@@ -1676,9 +1715,9 @@
             saveState();
             renderAppState();
 
-            addLog("SUCCESS: Full database extraction written safely to system hardware logs.", "success");
-            addLog("TikTok backup complete! Rebuild environment is stable. Devices are secure.", "success");
-            showStandardAlert("Extraction Complete", "The 3-hour secure TikTok profile backup has completed successfully onto your hardware COM3 memory blocks!");
+            addLog("SUCCESS: Full database extraction written safely to hardware COM3 logs.", "success");
+            addLog("Google Pixel 9 connection completely isolated. Backup saved safely.", "success");
+            showStandardAlert("Backup Isolated", "The 3-hour emergency recovery of your downloaded account data has completed successfully! All files are isolated and saved on your local computer disk storage.");
         }
 
         // Secondary interaction rules (prevent exit or interrupt gracefully)
@@ -1700,10 +1739,10 @@
             clearInterval(progressInterval);
             stopCopySoundLoop();
             
-            localStorage.removeItem('xp_tiktok_state');
-            localStorage.removeItem('xp_tiktok_start_time');
-            localStorage.removeItem('xp_tiktok_end_time');
-            localStorage.removeItem('xp_tiktok_logs');
+            localStorage.removeItem('xp_tiktok_state_v3');
+            localStorage.removeItem('xp_tiktok_start_time_v3');
+            localStorage.removeItem('xp_tiktok_end_time_v3');
+            localStorage.removeItem('xp_tiktok_logs_v3');
 
             appState = "ready";
             backupStartTime = null;
@@ -1711,10 +1750,9 @@
             terminalLogsCache = [];
             consoleEl.innerHTML = '';
 
-            addLog("System diagnostic cleared. Initiating COM3 port listening...", "success");
+            addLog("System diagnostic cleared. Listening for COM3 override ports...", "success");
             renderAppState();
         }
     </script>
 </body>
 </html>
-

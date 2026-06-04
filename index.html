@@ -2,1757 +2,1062 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Windows XP Professional - TikTok System Recovery (Emergency Safeguard Active)</title>
-    <style>
-        /* CSS reset & Windows XP base styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Tahoma", "Segoe UI", Geneva, sans-serif;
-            font-size: 11px;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #0a56e5;
-        }
-
-        /* High-fidelity CSS Bliss Hill Background */
-        .desktop {
-            position: relative;
-            width: 100%;
-            height: calc(100% - 30px); /* taskbar is 30px */
-            background: linear-gradient(to bottom, #4293f0 0%, #b6dbfc 50%, #71b539 50%, #1e5b02 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        /* Bliss-style hill gradient curvature */
-        .desktop::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -10%;
-            width: 120%;
-            height: 48%;
-            background: radial-gradient(ellipse at 50% 0%, #7ec445 0%, #2e7a08 65%, #123d01 100%);
-            border-radius: 100% 100% 0 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Desktop Shortcuts - Responsive configuration */
-        .desktop-shortcuts {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 5;
-        }
-
-        /* On small screens, arrange icons horizontally at the top */
-        @media (max-width: 640px) {
-            .desktop-shortcuts {
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                flex-direction: row;
-                justify-content: flex-start;
-                gap: 10px;
-            }
-            .desktop {
-                padding-top: 80px; /* Leave space for icons on top */
-            }
-        }
-
-        .shortcut {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 75px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .shortcut svg {
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.6));
-            margin-bottom: 4px;
-        }
-
-        .shortcut-text {
-            color: #ffffff;
-            text-shadow: 1px 1px 2px #000, 1px 1.5px 1px #000;
-            line-height: 1.2;
-            font-size: 10px;
-        }
-
-        /* XP Window Frame (Luna Style) - Fluid Responsive sizing */
-        .xp-window {
-            width: 610px;
-            max-width: 100%;
-            background-color: #ece9d8;
-            border: 3px solid #0054e3;
-            border-top-width: 30px;
-            border-radius: 7px 7px 0 0;
-            position: relative;
-            box-shadow: 4px 6px 20px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        /* Classic Titlebar */
-        .xp-titlebar {
-            position: absolute;
-            top: -27px;
-            left: 0;
-            width: 100%;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 8px;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            text-shadow: 1px 1px 1px #002c80;
-            pointer-events: none;
-        }
-
-        .xp-titlebar-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .xp-titlebar-right {
-            display: flex;
-            gap: 3px;
-            pointer-events: auto;
-        }
-
-        /* Classic Luna buttons */
-        .xp-btn-control {
-            width: 21px;
-            height: 21px;
-            border: 1px solid #ffffff;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.4);
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
-        }
-
-        .xp-btn-minimize {
-            background: linear-gradient(135deg, #3d86fc, #0541c9);
-            border-color: #1a4da3;
-        }
-        .xp-btn-minimize:hover {
-            background: linear-gradient(135deg, #609dfd, #0d51ee);
-        }
-
-        .xp-btn-close {
-            background: linear-gradient(135deg, #e04343, #b01010);
-            border-color: #7c0404;
-        }
-        .xp-btn-close:hover {
-            background: linear-gradient(135deg, #f76363, #d02020);
-        }
-
-        /* Content Bevel */
-        .xp-window-content {
-            border: 1px solid #ffffff;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background-color: #f1efe2;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        /* Top Brand Header */
-        .brand-header {
-            background: linear-gradient(to right, #003399 0%, #0054e3 100%);
-            padding: 8px 12px;
-            color: white;
-            border: 1px solid #1a4da3;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-title h1 {
-            font-size: 13px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-        }
-        .brand-title p {
-            font-size: 10px;
-            opacity: 0.9;
-        }
-
-        /* Account Profile Card */
-        .account-card {
-            background: #ffffff;
-            border: 1px solid #919082;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: inset 1px 1px 2px #cfcdc4;
-        }
-
-        /* Circular Profile Avatar */
-        .avatar-container {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            border: 2px solid #0054e3;
-            overflow: hidden;
-            background-color: #ccc;
-            flex-shrink: 0;
-            position: relative;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .avatar-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .avatar-container .avatar-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0054e3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .account-info {
-            flex-grow: 1;
-            min-width: 0;
-        }
-
-        .account-username {
-            font-size: 13px;
-            font-weight: bold;
-            color: #000000;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .account-meta {
-            font-size: 10px;
-            color: #555555;
-            margin-top: 2px;
-        }
-
-        .live-status-indicator {
-            display: inline-block;
-            background: #767676;
-            color: white;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 2px 5px;
-            border-radius: 3px;
-            margin-top: 4px;
-            text-transform: uppercase;
-        }
-
-        .live-status-indicator.active {
-            background: #2e7d32;
-        }
-
-        /* INCIDENT REPORT BANNER - NOTICE OF PREMATURE LOGIN & INCOMPLETE SYSTEM STATE */
-        .incident-report-banner {
-            background-color: #ffebee;
-            border: 2px solid #c62828;
-            padding: 10px;
-            border-radius: 2px;
-            color: #c62828;
-            font-size: 11px;
-            line-height: 1.4;
-            box-shadow: 2px 2px 8px rgba(198, 40, 40, 0.2);
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            animation: pulse-border 2s infinite alternate;
-        }
-
-        @keyframes pulse-border {
-            0% { border-color: #c62828; }
-            100% { border-color: #ff1744; }
-        }
-
-        .incident-report-banner strong {
-            color: #b71c1c;
-            text-transform: uppercase;
-            font-size: 11.5px;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .incident-icon {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-3px); }
-        }
-
-        /* PERSISTENT STRICT LOCKOUT ADVISORY FOR EXPOSURE STAGE */
-        .strict-lockout-banner {
-            background-color: #fff3e0;
-            border: 1.5px solid #ff9800;
-            padding: 10px;
-            border-radius: 2px;
-            color: #e65100;
-            font-size: 11px;
-            line-height: 1.4;
-            box-shadow: 1px 1px 4px rgba(0,0,0,0.15);
-        }
-
-        .strict-lockout-banner strong {
-            text-transform: uppercase;
-            font-size: 11px;
-            display: block;
-            margin-bottom: 3px;
-            color: #e65100;
-        }
-
-        /* REASSURING SYSTEM WARNING BANNER */
-        .rebuild-warning-banner {
-            background-color: #ffffe1;
-            border: 1.5px solid #d01010;
-            padding: 10px;
-            border-radius: 2px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
-        }
-
-        .warning-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
-
-        .warning-text-box {
-            font-size: 11px;
-            color: #333;
-            line-height: 1.4;
-        }
-
-        .warning-text-box strong {
-            color: #d01010;
-            font-weight: bold;
-        }
-
-        .warning-text-box .highlight {
-            font-weight: bold;
-            color: #a04000;
-        }
-
-        /* USB Connection Status Card */
-        .usb-status-card {
-            background-color: #f1f8ff;
-            border: 1px solid #7ea7d8;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 10px;
-        }
-
-        .usb-status-card strong {
-            color: #003399;
-        }
-
-        /* Actions Grid - fully dynamic */
-        .action-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        @media (max-width: 500px) {
-            .action-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .action-panel {
-            border: 1px solid #919082;
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 2px;
-            box-shadow: inset 1px 1px 1px #f4f3ee;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .action-title {
-            font-size: 11px;
-            font-weight: bold;
-            color: #003399;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .action-title svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .action-desc {
-            font-size: 10px;
-            color: #555555;
-            line-height: 1.3;
-        }
-
-        /* Classic XP Buttons */
-        .xp-button {
-            background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
-            border: 1px solid #003c74;
-            border-radius: 3px;
-            color: #000000;
-            font-size: 11px;
-            padding: 6px 10px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: inset -1px -1px 1px #d0c9b1, 1px 1px 2px rgba(0,0,0,0.15);
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .xp-button:hover:not(:disabled) {
-            background: linear-gradient(to bottom, #fffde6 0%, #fce99c 100%);
-            border-color: #e59c00;
-        }
-
-        .xp-button:active:not(:disabled) {
-            background: linear-gradient(to bottom, #dedbcb 0%, #f4f3eb 100%);
-            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
-        }
-
-        .xp-button:disabled {
-            background: #e8e7e1;
-            border-color: #a0a0a0;
-            color: #888888;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .xp-button-accent {
-            background: linear-gradient(to bottom, #f7f9fa 0%, #d8e4f8 100%);
-            border-color: #0054e3;
-            color: #002080;
-        }
-
-        .xp-button-accent:hover:not(:disabled) {
-            background: linear-gradient(to bottom, #e3efff 0%, #9cbef5 100%);
-        }
-
-        /* Progress System */
-        .progress-container {
-            background: #ffffff;
-            border: 1px solid #919082;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            color: #333333;
-        }
-
-        .xp-progress-channel {
-            border: 1px solid #7f9db9;
-            background-color: #fff;
-            padding: 1px;
-            height: 22px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Animated Green XP Segment Blocks */
-        .xp-progress-bar {
-            height: 100%;
-            width: 0%;
-            background-image: repeating-linear-gradient(
-                90deg,
-                #309c30,
-                #309c30 8px,
-                #ffffff 8px,
-                #ffffff 10px
-            );
-        }
-
-        .xp-progress-text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-            color: #000;
-        }
-
-        /* Decryption Clock countdown */
-        .countdown-strip {
-            background: #f0f4f9;
-            border: 1px solid #a3b8cc;
-            padding: 6px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: #2c4c6f;
-        }
-
-        .countdown-clock {
-            font-family: "Courier New", monospace;
-            font-size: 12px;
-            font-weight: bold;
-            color: #d32f2f;
-            background: #ffffff;
-            border: 1px solid #a3b8cc;
-            padding: 2px 8px;
-            border-radius: 2px;
-        }
-
-        /* MS-DOS/CMD System Terminal Log Output */
-        .diagnostic-terminal {
-            background-color: #000000;
-            border: 1.5px solid #808080;
-            border-radius: 1px;
-            padding: 8px;
-            height: 120px;
-            overflow-y: auto;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 10px;
-            color: #00ff00;
-            line-height: 1.3;
-        }
-
-        .terminal-line {
-            margin-bottom: 3px;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .terminal-line.success {
-            color: #55ff55;
-        }
-
-        .terminal-line.warn {
-            color: #ffff55;
-        }
-
-        .terminal-line.error {
-            color: #ff5555;
-        }
-
-        /* XP Royal Taskbar bottom */
-        .taskbar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: linear-gradient(to bottom, #245dd7 0%, #1c4ca0 50%, #1f53b7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 100;
-            border-top: 1px solid #1a3c75;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.25);
-        }
-
-        /* Green Start Button */
-        .start-button {
-            height: 100%;
-            background: linear-gradient(to bottom, #388e3c 0%, #2e7d32 40%, #1b5e20 100%);
-            border-right: 2px solid #55a058;
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-            padding: 0 14px 0 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: white;
-            font-weight: bold;
-            font-style: italic;
-            font-size: 13px;
-            text-shadow: 1px 1px 2px #000;
-            cursor: pointer;
-            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.5);
-        }
-
-        .start-button:hover {
-            background: linear-gradient(to bottom, #4caf50 0%, #388e3c 40%, #2e7d32 100%);
-        }
-
-        /* System tray */
-        .system-tray {
-            height: 100%;
-            background: linear-gradient(to bottom, #0c8df4 0%, #0d5ea6 100%);
-            border-left: 1px solid #002d80;
-            padding: 0 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: white;
-            font-size: 10px;
-            text-shadow: 1px 1px 1px #000;
-        }
-
-        .tray-clock {
-            font-weight: bold;
-        }
-
-        /* Floating Overlays */
-        .xp-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            display: none;
-            padding: 10px;
-        }
-
-        .xp-dialog {
-            width: 410px;
-            max-width: 100%;
-            background: #ece9d8;
-            border: 3px solid #225ad5;
-            border-radius: 4px 4px 0 0;
-            box-shadow: 4px 4px 20px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .xp-dialog-header {
-            background: linear-gradient(to bottom, #0054e3 0%, #1a4da3 100%);
-            color: white;
-            padding: 4px 8px;
-            font-weight: bold;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .xp-dialog-body {
-            padding: 12px;
-            background: #f1efe2;
-            font-size: 11px;
-            color: #000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border-bottom: 1px solid #dcdad0;
-        }
-
-        .xp-dialog-footer {
-            padding: 8px;
-            background: #ece9d8;
-            display: flex;
-            justify-content: flex-end;
-            gap: 6px;
-        }
-
-        /* Animated File Transporter graphics */
-        .copying-animation-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 50px;
-            background: #fff;
-            border: 1px solid #919082;
-            padding: 4px 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .folder-asset {
-            width: 28px;
-            height: 28px;
-            z-index: 2;
-        }
-
-        .transit-sheet {
-            position: absolute;
-            width: 12px;
-            height: 16px;
-            background: #fafafa;
-            border: 1px solid #aaa;
-            box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
-            animation: sheet-fly 1.8s infinite linear;
-            z-index: 1;
-            top: 16px;
-            left: 40px;
-        }
-
-        /* Verification Form Styling */
-        .verify-field-wrapper {
-            background: #ffffff;
-            border: 1px solid #7f9db9;
-            padding: 12px;
-            border-radius: 2px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .verify-instructions {
-            font-size: 11px;
-            color: #333333;
-            line-height: 1.4;
-            margin-bottom: 4px;
-        }
-
-        .verify-input-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .verify-input {
-            flex-grow: 1;
-            height: 26px;
-            border: 1px solid #7f9db9;
-            background-color: #ffffff;
-            padding: 0 8px;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 14px;
-            font-weight: bold;
-            color: #0000c0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            outline: none;
-        }
-
-        .verify-input:focus {
-            border-color: #225ad5;
-            box-shadow: 0 0 3px rgba(34, 90, 213, 0.5);
-        }
-
-        .status-badge-inline {
-            font-size: 9px;
-            font-weight: bold;
-            padding: 2px 6px;
-            background: #e1e1e1;
-            border: 1px solid #999;
-            border-radius: 2px;
-        }
-
-        @keyframes sheet-fly {
-            0% {
-                left: 40px;
-                top: 16px;
-                transform: rotate(0deg);
-            }
-            50% {
-                top: 6px;
-                transform: rotate(180deg);
-            }
-            100% {
-                left: calc(100% - 70px);
-                top: 16px;
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Windows XP - Secure Terminal</title>
+  <!-- Tailwind CSS for utility rendering -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons for system icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Classic Tahoma XP Font setup */
+    @import url('https://fonts.googleapis.com/css2?family=Courier+New&family=Tahoma&display=swap');
+    
+    body {
+      font-family: 'Tahoma', 'Segoe UI', sans-serif;
+      background-color: #000000;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .xp-font-mono {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* Classic Windows XP Inset & Outset Borders */
+    .xp-window {
+      box-shadow: inset -1px -1px #1a1a1a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+      border: 1px solid #000000;
+    }
+
+    .xp-inset {
+      border: 2px solid;
+      border-color: #808080 #ffffff #ffffff #808080;
+    }
+
+    .xp-outset {
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+    }
+
+    /* Windows XP Luna Blue Titlebar Gradient */
+    .xp-titlebar {
+      background: linear-gradient(to right, #0053e2 0%, #0756eb 12%, #2c72f1 79%, #3d86f5 94%, #0053e2 100%);
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    }
+
+    /* Windows XP Green Start Button Gradient */
+    .xp-start-btn {
+      background: linear-gradient(to bottom, #388a08 0%, #62b31a 10%, #4da20a 50%, #307404 90%, #205002 100%);
+      box-shadow: 0px 1px 1px rgba(0,0,0,0.4), inset 1px 1px 1px rgba(255,255,255,0.4);
+    }
+    
+    .xp-start-btn:active {
+      background: linear-gradient(to bottom, #205002 0%, #307404 10%, #4da20a 50%, #62b31a 90%, #388a08 100%);
+    }
+
+    /* Windows XP Taskbar Blue Gradient */
+    .xp-taskbar {
+      background: linear-gradient(to bottom, #245dd7 0%, #0e3ebd 12%, #114df3 40%, #1145d8 88%, #0a2eb3 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    /* XP Button styling (Default dialog button) */
+    .xp-btn-default {
+      background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
+      border: 1px solid #003c74;
+      border-radius: 3px;
+      box-shadow: inset 1px 1px 0px #ffffff;
+    }
+    .xp-btn-default:hover {
+      background: linear-gradient(to bottom, #ece9d8 0%, #e0e0d0 100%);
+    }
+    .xp-btn-default:active {
+      box-shadow: inset -1px -1px 1px #ffffff, inset 1px 1px 2px #808080;
+    }
+
+    /* Simulated Bliss Background gradient */
+    .xp-bliss-bg {
+      background: radial-gradient(circle at top, #7fa8e3 0%, #3a6ea5 100%);
+      background-size: cover;
+      position: relative;
+    }
+    
+    /* Classic XP Boot Loading bars */
+    .boot-segment {
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(to right, #3862ff, #7ca1ff, #3862ff);
+      display: inline-block;
+      margin-right: 2px;
+      border-radius: 1px;
+    }
+
+    /* Scrollbars retro look */
+    ::-webkit-scrollbar {
+      width: 16px;
+      height: 16px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1efe2;
+      box-shadow: inset 1px 1px #808080;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ece9d8;
+      border: 2px solid #f1efe2;
+      box-shadow: inset -1px -1px #808080, inset 1px 1px #ffffff;
+    }
+
+    /* Close Button Style */
+    .xp-close-btn {
+      background: linear-gradient(to bottom, #f3765a 0%, #e0431f 40%, #c41e00 100%);
+      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .xp-close-btn:hover {
+      background: linear-gradient(to bottom, #f68a72 0%, #ea522f 40%, #dd2a0a 100%);
+    }
+  </style>
 </head>
-<body onclick="enableAudioOnFirstClick()">
+<body class="h-screen overflow-hidden select-none flex flex-col justify-between bg-black text-slate-800">
 
-    <!-- Desktop Workspace -->
-    <div class="desktop">
+  <!-- ================= WINDOWS XP WELCOME / LOGIN SCREEN ================= -->
+  <div id="login-screen" class="fixed inset-0 z-50 flex flex-col justify-between bg-[#5b7edc]">
+    <!-- Top Blue Band -->
+    <div class="h-[15%] bg-[#00309c] border-b-2 border-[#1852d4] flex items-center justify-end px-12">
+      <div class="text-white opacity-80 text-xs text-right">
+        <p class="font-bold">Windows XP Professional</p>
+        <p>Remote Decryption Terminal</p>
+      </div>
+    </div>
 
-        <!-- Classic Desktop Icons -->
-        <div class="desktop-shortcuts">
-            <div class="shortcut" onclick="restartSystem()">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="6" y="8" width="36" height="26" rx="3" fill="#3A75C4" stroke="#ffffff" stroke-width="2"/>
-                    <rect x="18" y="34" width="12" height="6" fill="#808080"/>
-                    <rect x="14" y="40" width="20" height="2" fill="#404040"/>
-                    <path d="M6 30H42" stroke="#ffffff" stroke-width="2"/>
-                </svg>
-                <span class="shortcut-text">My Computer</span>
+    <!-- Center Content Belt -->
+    <div class="flex-1 flex flex-col md:flex-row bg-[#7a96df] border-t-2 border-[#a2bced] border-b-2 border-[#1852d4] relative">
+      <!-- Left side: Welcome label -->
+      <div class="w-full md:w-1/2 flex items-center justify-center md:justify-end px-12 py-8 border-b md:border-b-0 md:border-r border-[#506fbc]">
+        <div class="text-center md:text-right">
+          <h1 class="text-white text-4xl font-normal italic tracking-wider" style="text-shadow: 2px 2px 3px rgba(0,0,0,0.4);">welcome</h1>
+          <p class="text-white text-xs mt-2 opacity-90">To begin, verify your authentication keys</p>
+        </div>
+      </div>
+
+      <!-- Right side: User Login Selection panel -->
+      <div class="w-full md:w-1/2 flex flex-col justify-center px-12 py-8">
+        <form id="login-form" class="max-w-xs space-y-4" onsubmit="handleLogin(event)">
+          <!-- Dynamic User Account Selection Grid -->
+          <div class="flex items-center gap-4 mb-4">
+            <!-- Classic User Icon Frame -->
+            <div class="w-12 h-12 border-2 border-white rounded-md bg-[#245dd7] flex items-center justify-center text-white shadow-md">
+              <i class="fa-solid fa-chess-knight text-2xl"></i>
             </div>
-            <div class="shortcut" onclick="openExplorerPrompt()">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="16" fill="#0054e3" stroke="#ffffff" stroke-width="2"/>
-                    <path d="M6 24C6 24 15 14 24 14C33 14 42 24 42 24" stroke="#ffcc00" stroke-width="4"/>
-                </svg>
-                <span class="shortcut-text">Internet Explorer</span>
+            <div>
+              <h2 class="text-white font-bold text-lg leading-tight" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.3);">Japanboys</h2>
+              <p class="text-[#203a74] text-[11px] font-semibold">System Operator</p>
             </div>
+          </div>
+
+          <!-- Email Input Field -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#1d356d]">E-mail Address</label>
+            <input type="email" id="login-email" required
+              class="w-full bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1 text-sm outline-none focus:border-[#4d69a2] font-mono text-slate-800"
+              placeholder="Japanboys0099@gmail.com">
+          </div>
+
+          <!-- Password Input Field -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#1d356d]">Password</label>
+            <input type="password" id="login-password" required
+              class="w-full bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1 text-sm outline-none focus:border-[#4d69a2] font-mono text-slate-800"
+              placeholder="••••••••">
+          </div>
+
+          <!-- Login Execution Row -->
+          <div class="flex items-center justify-between pt-2">
+            <button type="button" onclick="autofillCredentials()" class="text-xs text-[#1e3a79] hover:underline flex items-center gap-1 font-semibold">
+              <i class="fa-solid fa-magic text-[10px]"></i> Autofill Keys
+            </button>
+            <button type="submit" 
+              class="xp-btn-default text-xs font-bold text-[#3a3a3a] px-5 py-1.5 flex items-center gap-2 active:scale-95 transition-transform">
+              <span>Log On</span>
+              <i class="fa-solid fa-arrow-right text-emerald-600"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bottom Blue Band -->
+    <div class="h-[12%] bg-[#00309c] border-t-2 border-[#3169e6] flex items-center justify-between px-12 text-white/70 text-xs">
+      <div class="flex items-center gap-3">
+        <button onclick="showAlert('Shutdown Safe', 'Local computer is locked inside safety vault.')" class="hover:text-white flex items-center gap-1">
+          <span class="w-4 h-4 rounded-full bg-red-600 flex items-center justify-center text-[10px] text-white"><i class="fa-solid fa-power-off"></i></span>
+          <span>Turn off computer</span>
+        </button>
+      </div>
+      <p class="italic text-[11px]">Microsoft</p>
+    </div>
+  </div>
+
+
+  <!-- ================= WINDOWS XP BOOT SCREEN (20 Seconds Loop) ================= -->
+  <div id="boot-screen" class="hidden fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+    <div class="w-full max-w-sm flex flex-col items-center">
+      <!-- Classic Windows XP Logo in SVG (No external asset dependency) -->
+      <div class="flex items-center justify-center mb-10 gap-3">
+        <div class="grid grid-cols-2 gap-1 w-12 h-11 transform -skew-x-12">
+          <div class="bg-[#f25f22] w-5 h-5 rounded-tl-md rounded-br-md"></div>
+          <div class="bg-[#7fba00] w-5 h-5 rounded-tr-md rounded-bl-md"></div>
+          <div class="bg-[#00a4ef] w-5 h-5 rounded-bl-md rounded-tr-md"></div>
+          <div class="bg-[#ffb900] w-5 h-5 rounded-br-md rounded-tl-md"></div>
+        </div>
+        <div class="text-left">
+          <h2 class="text-white text-2xl font-black tracking-tight leading-none">Microsoft</h2>
+          <h3 class="text-white text-lg font-bold leading-none tracking-widest italic text-blue-400">Windows<span class="text-orange-500 font-extrabold text-xl ml-1">xp</span></h3>
+        </div>
+      </div>
+
+      <!-- XP Loading Bar Frame (Scrolling blue blocks) -->
+      <div class="w-48 h-4 border-2 border-[#9b9b9b] rounded-sm p-0.5 flex items-center overflow-hidden bg-black relative">
+        <div id="boot-scroller" class="absolute flex whitespace-nowrap transition-all duration-300">
+          <span class="boot-segment"></span>
+          <span class="boot-segment"></span>
+          <span class="boot-segment"></span>
+        </div>
+      </div>
+
+      <div class="mt-8 text-[11px] text-zinc-500 font-mono text-center space-y-1">
+        <p>Loading Registry Databases...</p>
+        <p id="boot-progress-percentage" class="text-blue-500 font-bold">0%</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= WINDOWS XP TASKBAR HEADER (Control Desk) ================= -->
+  <header class="bg-[#ece9d8] border-b border-[#808080] px-3 py-1 flex items-center justify-between z-10 text-xs">
+    <div class="flex items-center gap-1.5">
+      <i class="fa-solid fa-network-wired text-[#0053e2]"></i>
+      <span class="font-bold text-slate-800">Connection:</span>
+      <span class="text-emerald-700 font-bold font-mono">ESTABLISHED (Secure Tunnel)</span>
+    </div>
+
+    <!-- Active Account Details -->
+    <div class="flex items-center gap-3">
+      <div class="bg-white border border-[#808080] px-2 py-0.5 font-mono text-[11px] text-blue-800 rounded-sm">
+        <i class="fa-solid fa-user-circle"></i> <span id="desktop-username">Japanboys0099@gmail.com</span>
+      </div>
+      <button onclick="logoutSystem()" class="text-red-700 hover:underline font-bold">
+        <i class="fa-solid fa-right-from-bracket"></i> Disconnect
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ================= MAIN DESKTOP ENVIRONMENT ================= -->
+  <main class="flex-1 xp-bliss-bg flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+    
+    <!-- CLASSIC LUNA APPS WINDOW (Target Decoder) -->
+    <div class="w-full max-w-4xl bg-[#ece9d8] xp-window rounded-t-8px overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Classic Blue Window Title Bar -->
+      <div class="xp-titlebar px-2.5 py-1.5 flex items-center justify-between text-white select-none">
+        <div class="flex items-center gap-2">
+          <!-- Small XP Key Icon -->
+          <i class="fa-solid fa-key text-[11px] text-yellow-300"></i>
+          <span class="text-xs font-bold leading-none tracking-wide text-white">Target Feed Unlocking Terminal - XP Service Pack 3</span>
+        </div>
+        <!-- Window Control Buttons (Classic Icons) -->
+        <div class="flex items-center gap-1">
+          <!-- Minimize -->
+          <button class="w-[21px] h-[21px] bg-[#245dd7] border border-[#ffffff]/60 rounded-sm flex items-center justify-center hover:brightness-110 active:brightness-90 text-[10px] font-bold text-white leading-none">
+            _
+          </button>
+          <!-- Maximize -->
+          <button class="w-[21px] h-[21px] bg-[#245dd7] border border-[#ffffff]/60 rounded-sm flex items-center justify-center hover:brightness-110 active:brightness-90 text-[10px] font-bold text-white leading-none">
+            ■
+          </button>
+          <!-- Close -->
+          <button onclick="resetConsole()" class="xp-close-btn w-[21px] h-[21px] border border-[#ffffff]/60 rounded-sm flex items-center justify-center text-[10px] font-bold text-white leading-none">
+            X
+          </button>
+        </div>
+      </div>
+
+      <!-- Classic File Menu Bar -->
+      <div class="bg-[#ece9d8] border-b border-[#a0a0a0] px-3 py-1 flex gap-4 text-[11px] text-slate-800">
+        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">File</span>
+        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Edit</span>
+        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">View</span>
+        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Tools</span>
+        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Help</span>
+      </div>
+
+      <!-- Two-Pane Layout Explorer Style -->
+      <div class="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
+        
+        <!-- Left Side Bar: Common Tasks (Classic XP Blue Folder Taskbar) -->
+        <div class="w-full md:w-52 bg-[#7b9ed6] p-3 flex flex-col gap-3 overflow-y-auto border-b md:border-b-0 md:border-r border-[#002d96]">
+          
+          <!-- Folder Tasks Box -->
+          <div class="bg-white rounded-t-lg overflow-hidden border border-[#002d96]/40 shadow-sm">
+            <div class="bg-gradient-to-r from-[#e7f1f9] to-[#bfdbff] px-2.5 py-1.5 flex items-center justify-between border-b border-[#002d96]/30">
+              <span class="text-[11px] font-bold text-[#0c2470]">Feed Categories</span>
+              <i class="fa-solid fa-folder-open text-[#0c2470] text-xs"></i>
+            </div>
+            <div class="p-2 space-y-1 bg-[#d6e3f7]">
+              <!-- Live Feed button -->
+              <button onclick="changeCategory('live')" id="btn-cat-live" 
+                class="w-full text-left px-2 py-1 text-xs text-[#0c2470] hover:underline flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-bold">
+                  <i class="fa-solid fa-tower-broadcast text-red-600"></i> Live Feed
+                </span>
+                <span class="text-[9px] bg-red-100 text-red-700 px-1 rounded border border-red-300">MUTED</span>
+              </button>
+              
+              <!-- Video Feed button -->
+              <button onclick="changeCategory('video')" id="btn-cat-video" 
+                class="w-full text-left px-2 py-1 text-xs text-[#0c2470] hover:underline flex items-center justify-between bg-white/40 border border-[#4a84d4]/50 rounded-sm">
+                <span class="flex items-center gap-1.5 font-bold">
+                  <i class="fa-solid fa-film text-blue-700"></i> Video Feed
+                </span>
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-1 rounded border border-emerald-300">ACTIVE</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Other Places Box -->
+          <div class="bg-white rounded-t-lg overflow-hidden border border-[#002d96]/40 shadow-sm">
+            <div class="bg-gradient-to-r from-[#e7f1f9] to-[#bfdbff] px-2.5 py-1.5 flex items-center justify-between border-b border-[#002d96]/30">
+              <span class="text-[11px] font-bold text-[#0c2470]">System Links</span>
+              <i class="fa-solid fa-server text-[#0c2470] text-[10px]"></i>
+            </div>
+            <div class="p-2 space-y-1.5 bg-[#d6e3f7] text-[11px] text-[#0c2470]">
+              <div class="flex items-center gap-2"><i class="fa-solid fa-computer"></i> My Computer</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-folder-tree"></i> Shared Media</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-network-wired"></i> Workgroup</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Main Recovery Window -->
-        <div class="xp-window">
+        <!-- Right Side Bar: Work Area / Console -->
+        <div class="flex-1 bg-[#f1efe2] p-4 sm:p-5 flex flex-col min-h-0 overflow-y-auto">
+          
+          <!-- Warn screen when Live Feed category is clicked -->
+          <div id="live-feed-alert" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center">
+            <div class="w-12 h-12 bg-[#ece9d8] xp-window rounded flex items-center justify-center mb-3">
+              <i class="fa-solid fa-circle-exclamation text-3xl text-amber-500"></i>
+            </div>
+            <h4 class="font-bold text-sm text-[#002d96]">Live Feed Protocol Access Denied</h4>
+            <p class="text-xs text-slate-600 max-w-sm mt-1.5">You must run the injection vectors on the active <b class="text-blue-700 hover:underline cursor-pointer" onclick="changeCategory('video')">Video Feed</b> category first to bypass standard security filters.</p>
+          </div>
+
+          <!-- Active Workspace: Video Feed Panel -->
+          <div id="video-feed-panel" class="flex-1 flex flex-col gap-4">
             
-            <!-- Window Title bar -->
-            <div class="xp-titlebar">
-                <div class="xp-titlebar-left">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 3v5h2V9h-2zm0 6v2h2v-2h-2z"/>
-                    </svg>
-                    <span>TikTok Recovery Console v3.3 (Emergency Lock Enabled)</span>
+            <!-- Step 1: Input target link -->
+            <div class="bg-[#ece9d8] xp-window p-4 flex flex-col gap-3">
+              <h3 class="text-xs font-bold text-[#0c2470] uppercase border-b border-[#c0c0c0] pb-1">
+                Step 1: Enter Targeted Feed Bypass Address
+              </h3>
+              
+              <div class="flex flex-col sm:flex-row gap-2.5">
+                <div class="flex-1 flex gap-2">
+                  <input type="text" id="target-link-input"
+                    class="flex-1 bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1.5 text-xs font-mono text-slate-800 outline-none"
+                    placeholder="Enter link: e.g., allah.kingdom.fam">
+                  <button onclick="autofillTargetLink()" 
+                    class="xp-btn-default px-2.5 py-1 text-xs text-slate-700 font-bold">
+                    Default
+                  </button>
                 </div>
-                <div class="xp-titlebar-right">
-                    <div class="xp-btn-control xp-btn-minimize" onclick="showStandardAlert('Minimize Action', 'Critical security intrusion handling is active. System utility cannot be minimized.')">0</div>
-                    <div class="xp-btn-control xp-btn-close" onclick="showStandardAlert('Operation Locked', 'Intrusion isolation script running. Do not shut down to avoid remote database sync disruption.')">X</div>
-                </div>
-            </div>
-
-            <div class="xp-window-content">
                 
-                <!-- Graphic Brand Header -->
-                <div class="brand-header">
-                    <div class="brand-title">
-                        <h1>TikTok Recovery Console</h1>
-                        <p>Intrusion payload isolator & downloaded physical memory backup console.</p>
-                    </div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" opacity="0.8">
-                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
-                    </svg>
-                </div>
-
-                <!-- Account profile and identity -->
-                <div class="account-card">
-                    <div class="avatar-container">
-                        <img id="zogAvatar" src="zog.png" alt="zog" onerror="handleZogFallback()">
-                        <div id="zogFallback" class="avatar-placeholder" style="display: none;">👤</div>
-                    </div>
-                    <div class="account-info">
-                        <div class="account-username">@the.ultimatewarriors</div>
-                        <div class="account-meta">Connection: <strong style="color: #0054e3;">Direct Physical USB Bridge (COM3)</strong></div>
-                        <div id="badgeLive" class="live-status-indicator active" style="background-color: #d32f2f;">LOCAL LOCKOUT STATE / EMERGENCY EXTRUSION</div>
-                    </div>
-                </div>
-
-                <!-- CRITICAL SECURITY BREACH REPORT BANNER -->
-                <div class="incident-report-banner">
-                    <svg class="incident-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#b71c1c"/>
-                    </svg>
-                    <div>
-                        <strong>⚠️ CRITICAL SECURITY BREACH (UNEXPECTED login):</strong>
-                        Bypasses had <strong>fully completed</strong>, but right before lockdown could finish, a serious mistake occurred: an unauthorized session logged in on a <strong>Google Pixel 9</strong> located in <strong>Bushenyi</strong>.
-                        Because of this external login, the online system is suspended. You must <strong>immediately back up</strong> the downloaded profile data locally.
-                    </div>
-                </div>
-
-                <!-- PERSISTENT STRICT LOCKOUT ADVISORY FOR EXPOSURE STAGE -->
-                <div class="strict-lockout-banner">
-                    <strong>⚠️ DO NOT USE MOBILE DEVICES OR WEB LOGINS:</strong>
-                    Do not log back in to the profile on your phone. Any attempt to sync online with the Google Pixel 9 active in Bushenyi could completely corrupt or delete your downloaded video database and drafting libraries.
-                </div>
-
-                <!-- REBUILD WARNING BANNER -->
-                <div class="rebuild-warning-banner">
-                    <svg class="warning-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 22h20L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z" fill="#d01010"/>
-                    </svg>
-                    <div class="warning-text-box">
-                        <strong>EMERGENCY DUMP PROTOCOL ENFORCED:</strong><br>
-                        Since everything was completed successfully right before the Bushenyi intruder login, your file indices are sitting in local cache. <span class="highlight">Backup now to write them safely to COM3 storage!</span>
-                    </div>
-                </div>
-
-                <!-- USB Warning Checklist status -->
-                <div class="usb-status-card">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#d32f2f" style="flex-shrink: 0;">
-                        <path d="M15 7v4h1v2h-3v8h2v1h-6v-1h2v-8H8v-2h1V7h6zm-2-5v3h-2V2h2z"/>
-                    </svg>
-                    <span><strong>USB Safe Mode COM3:</strong> Isolating profile buffers. Do not detach USB!</span>
-                </div>
-
-                <!-- Operation controls grid -->
-                <div class="action-grid">
-                    
-                    <!-- Live Status (Completed but compromised) -->
-                    <div class="action-panel" style="background-color: #ffebee; border: 1px solid #ff8a80;">
-                        <div>
-                            <div class="action-title" style="color: #c62828;">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                                </svg>
-                                <span>Bypass Integrity Status</span>
-                            </div>
-                            <div class="action-desc" style="color: #b71c1c;">
-                                Age restrictions and live broad privileges bypass was <strong>100% completed</strong>, but the active state is now compromised by the Google Pixel 9 login session.
-                            </div>
-                        </div>
-                        <button class="xp-button" disabled style="color: #b71c1c; font-weight: bold; background: #ffcdd2;">COMPROMISED</button>
-                    </div>
-
-                    <!-- Intruder Origin Analysis -->
-                    <div class="action-panel" style="background-color: #fffde6; border: 1px solid #ffe57f;">
-                        <div>
-                            <div class="action-title" style="color: #ff8f00;">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                </svg>
-                                <span>Intruder Geolocation</span>
-                            </div>
-                            <div class="action-desc">
-                                Session Intercept: <strong style="color: #d84315;">Google Pixel 9</strong><br>
-                                Login Geopoint: <strong style="color: #d84315;">Bushenyi</strong><br>
-                                Handshake: Disrupted before terminal lockdown.
-                            </div>
-                        </div>
-                        <button class="xp-button" style="background: #fff9c4; border-color: #fbc02d; color: #f57f17;" onclick="showIntruderTrace()">Trace Incident</button>
-                    </div>
-
-                </div>
-
-                <!-- Primary Data Backup Integration Section -->
-                <div class="action-panel" id="backupActionPanel" style="border: 2px solid #d32f2f; background-color: #fafafa;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <div class="action-title" style="font-size: 12px; color: #b71c1c;">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
-                                </svg>
-                                <span>Emergency Action: Local Physical Safeguard Extraction</span>
-                            </div>
-                            <p style="margin-top: 4px; line-height: 1.3; color: #444;">
-                                Authorize full physical write sequence to transfer completed files, profile assets, message index databases, and draft files onto COM3 block storage before the remote intrusion updates lock you out completely.
-                            </p>
-                        </div>
-                        <span id="backupBadge" class="status-badge-inline" style="background: #ffcdd2; color: #b71c1c; font-weight: bold;">EMERGENCY STANDBY</span>
-                    </div>
-                    <div style="margin-top: 8px; display: flex; justify-content: flex-end;">
-                        <button id="btnInitBackup" class="xp-button xp-button-accent" style="border-color: #d32f2f; color: #b71c1c;" onclick="startBackupFlow()">Add Verification Code</button>
-                    </div>
-                </div>
-
-                <!-- Custom Progress bar -->
-                <div class="progress-container">
-                    <div class="progress-header">
-                        <span id="labelState">Status: Emergency stand-by. Authorize code to pull completed data buffers.</span>
-                        <span id="labelPct">0.00%</span>
-                    </div>
-                    <div class="xp-progress-channel">
-                        <div id="fillProgress" class="xp-progress-bar"></div>
-                        <div class="xp-progress-text" id="labelOverlay">Idle</div>
-                    </div>
-                </div>
-
-                <!-- Countdown ETA strip (Dynamic state hide/show) -->
-                <div class="countdown-strip" id="countdownStripContainer">
-                    <span>Estimated Emergency Data Salvage Transfer Time (COM3):</span>
-                    <div id="timerDisplay" class="countdown-clock">Calculating...</div>
-                </div>
-
-                <!-- Interactive CMD Console -->
-                <div class="diagnostic-terminal" id="terminalConsole">
-                    <div class="terminal-line">Microsoft(R) Windows XP [Version 5.1.2600]</div>
-                    <div class="terminal-line">(C) Copyright 1985-2001 Microsoft Corp.</div>
-                    <div class="terminal-line success">-- COM3 Secure physical USB interface active --</div>
-                </div>
-
+                <button onclick="verifyTargetAccount()"
+                  class="xp-btn-default px-6 py-1.5 text-xs font-bold text-slate-800 flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-magnifying-glass text-blue-700"></i>
+                  <span>Find Account</span>
+                </button>
+              </div>
+              <p class="text-[10px] text-slate-500 font-mono">Ensure link is structured exactly as registered in system directories.</p>
             </div>
+
+            <!-- Step 2: Show Verified Target Account Details with 'zon.png' profile -->
+            <div id="account-details-panel" class="hidden bg-white xp-inset p-4 flex flex-col sm:flex-row gap-5 relative">
+              <!-- Watermark pattern of classic XP dialog -->
+              <div class="absolute right-3 top-3 opacity-10 text-slate-300 pointer-events-none">
+                <i class="fa-solid fa-user-shield text-7xl"></i>
+              </div>
+
+              <!-- zon.png Profile Avatar Area -->
+              <div class="flex flex-col items-center">
+                <div class="w-28 h-28 border-2 border-[#0053e2] bg-[#ece9d8] p-1.5 shadow-md flex flex-col justify-between items-center rounded-sm">
+                  <!-- The Profile photo graphics calling real zon.png -->
+                  <div class="flex-1 w-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-400 relative">
+                    <!-- Real image workspace link -->
+                    <img src="zon.png" alt="Profile" id="target-profile-image" class="w-full h-full object-cover" onerror="handleImageLoadError(this)">
+                  </div>
+                  <span class="text-[10px] font-bold text-[#0c2470] mt-1 font-mono">zon.png</span>
+                </div>
+                <div class="mt-2 bg-emerald-100 border border-emerald-500 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-sm">
+                  TARGET VERIFIED
+                </div>
+              </div>
+
+              <!-- Account Details Text Grid -->
+              <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">User ID</span>
+                  <span class="font-bold text-slate-800 font-mono">7633340561102472210</span>
+                </div>
+
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Private Channel</span>
+                  <span class="font-bold text-red-600 font-mono">No (Public Bypass Available)</span>
+                </div>
+
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Created Timestamp</span>
+                  <span class="font-bold text-slate-700 font-mono">2026-04-27 07:40:29</span>
+                </div>
+
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Nickname Edited At</span>
+                  <span class="font-bold text-slate-700 font-mono">2026-04-27 07:40:48</span>
+                </div>
+
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Username Changed At</span>
+                  <span class="font-bold text-slate-400 font-mono">N/A</span>
+                </div>
+
+                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
+                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Support/Gift Level</span>
+                  <span class="font-bold text-amber-600 flex items-center gap-1 font-mono">
+                    <i class="fa-solid fa-gift text-xs"></i> Lv.2 (Tier Access)
+                  </span>
+                </div>
+
+                <!-- Injection Trigger Action -->
+                <div class="sm:col-span-2 pt-2 border-t border-slate-200 flex justify-end">
+                  <button id="btn-inject" onclick="startPacketInjection()"
+                    class="xp-btn-default px-6 py-2 text-xs font-bold text-slate-800 flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform">
+                    <i class="fa-solid fa-syringe text-purple-700"></i>
+                    <span>Inject Bypass Packets</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Step 3: Injection Terminal & Countdown (60 seconds progress) -->
+            <div id="injection-terminal-panel" class="hidden bg-black border border-[#808080] p-4 text-xs">
+              <div class="flex items-center justify-between border-b border-zinc-700 pb-2 mb-3">
+                <span class="font-mono text-emerald-500 flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
+                  XP SECURE INJECT MODULE ACTIVE
+                </span>
+                <span id="injection-countdown" class="font-mono text-red-500 font-bold bg-zinc-900 px-2.5 py-0.5 rounded border border-zinc-800">
+                  60.00s
+                </span>
+              </div>
+
+              <!-- Terminal scrolling commands log -->
+              <div id="injection-console" class="h-44 bg-[#050505] p-3 rounded border border-zinc-800 font-mono text-[11px] text-emerald-400 space-y-1.5 overflow-y-auto mb-3">
+                <!-- Log feed lines added dynamically -->
+              </div>
+
+              <!-- Custom Windows XP Progress Bar Blue Segments style -->
+              <div class="space-y-1 bg-zinc-950 p-2.5 border border-zinc-800 rounded">
+                <div class="flex items-center justify-between font-mono text-[10px] text-zinc-400 mb-1">
+                  <span id="inject-status-desc">Hooking memory threads...</span>
+                  <span id="inject-percentage-text">0%</span>
+                </div>
+                <!-- XP classic progress track -->
+                <div class="w-full h-5 bg-zinc-900 border border-zinc-700 rounded-sm p-0.5 flex gap-1 overflow-hidden" id="inject-progress-track">
+                  <!-- Segments added dynamically via JS -->
+                </div>
+              </div>
+
+              <!-- Decompiler Button Trigger (Hidden until injection finished) -->
+              <div id="decompiler-trigger-box" class="hidden mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between">
+                <span class="text-emerald-500 font-mono text-[11px]">✔ Bypass memory buffers fully established!</span>
+                <button onclick="startCodeDecompilation()"
+                  class="xp-btn-default px-5 py-2 text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i class="fa-solid fa-rotate-left text-blue-700 animate-spin"></i>
+                  <span>Decompile</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Decompile Progress Matrix -->
+            <div id="decompile-panel" class="hidden bg-[#ece9d8] xp-window p-4 flex flex-col gap-3">
+              <h3 class="text-xs font-bold text-[#0c2470] uppercase border-b border-[#c0c0c0] pb-1">
+                Step 3: Source Code Recomposition Machine
+              </h3>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-[10px] text-slate-600 bg-white/50 p-2 border border-slate-300 rounded">
+                <div>Offset Address: <span id="decompile-offset" class="font-bold text-blue-700">0x00FF8E</span></div>
+                <div>CRC Integrity: <span class="font-bold text-emerald-600">VERIFIED</span></div>
+                <div>Vector Class: <span class="font-bold text-purple-700">BYPASS_STREAM</span></div>
+                <div>Matrix Load: <span class="font-bold text-slate-700">SUCCESS</span></div>
+              </div>
+
+              <!-- Loading progress of decompression -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-[10px] font-bold text-slate-600">
+                  <span id="decompile-status-desc">Parsing compiler signatures...</span>
+                  <span id="decompile-percent-text">0%</span>
+                </div>
+                <div class="w-full h-3 bg-white border border-slate-400 p-0.5 rounded-sm">
+                  <div id="decompile-progress-bar" class="h-full bg-blue-600 transition-all duration-150" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- File generation node result (manifest) -->
+              <div id="manifest-result-box" class="hidden mt-3 bg-white border border-slate-400 p-3.5 flex items-center justify-between gap-3 shadow-inner rounded-sm">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-[#ece9d8] border border-slate-400 flex items-center justify-center text-slate-600 shadow-sm">
+                    <i class="fa-solid fa-file-invoice text-xl text-blue-700"></i>
+                  </div>
+                  <div>
+                    <h5 class="text-xs font-bold text-slate-800">decompiled_access_nodes.txt</h5>
+                    <p class="text-[10px] text-slate-500 font-mono">Size: 4.8 KB | Generated: 2026-06-04</p>
+                  </div>
+                </div>
+                <button onclick="launchCrackedNotepad()"
+                  class="xp-btn-default px-4 py-2 text-xs font-bold text-slate-800 flex items-center gap-1">
+                  <i class="fa-solid fa-code text-emerald-600"></i>
+                  <span>View and Crack</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
         </div>
+
+      </div>
 
     </div>
 
-    <!-- WINDOWS XP VERIFICATION CODE DIALOG -->
-    <div id="verifyModal" class="xp-overlay">
-        <div class="xp-dialog" style="width: 410px;">
-            <div class="xp-dialog-header">
-                <span>Emergency Token Handshake Verification</span>
-                <span style="cursor:pointer;" onclick="closeVerification()">X</span>
-            </div>
-            <div class="xp-dialog-body" style="gap: 12px;">
-                <div style="display: flex; gap: 10px; align-items: center; border-bottom: 1px dashed #c0c0c0; padding-bottom: 8px;">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="#0054e3" style="flex-shrink:0;">
-                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
-                    </svg>
-                    <div>
-                        <strong style="font-size: 12px; color: #003399;">Prove Secure Device Authentication</strong>
-                        <div style="font-size: 10px; color: #555555; margin-top: 1px;">Isolating remote intrusion attempt from Bushenyi device...</div>
-                    </div>
-                </div>
+  </main>
 
-                <div class="verify-instructions">
-                    To pull completed offline backups from profile <strong style="color: #0000c0;">@the.ultimatewarriors</strong> directly to COM3 hardware drives, please enter your **6-Digit Secure Verification Code**:
-                </div>
 
-                <div class="verify-field-wrapper">
-                    <span style="font-size: 10px; font-weight: bold; color: #333333;">Enter Verification/MFA Token Code:</span>
-                    <div class="verify-input-row">
-                        <input type="text" id="inputVerifyCode" class="verify-input" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <span id="verifyStatusBadge" class="status-badge-inline">AWAITING CODE</span>
-                    </div>
-                </div>
-
-                <div style="font-size: 10px; color: #666; line-height: 1.3;">
-                    ℹ️ Verification will complete locally, safely blocking the Google Pixel 9 connection stream during extraction.
-                </div>
-            </div>
-            <div class="xp-dialog-footer">
-                <button class="xp-button xp-button-accent" style="min-width: 80px;" onclick="submitVerification()">Validate Token</button>
-                <button class="xp-button" style="min-width: 80px;" onclick="closeVerification()">Cancel</button>
-            </div>
+  <!-- ================= WINDOWS XP NOTEPAD DECRYPTER OVERLAY ================= -->
+  <div id="notepad-overlay" class="hidden fixed inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
+    <div class="w-full max-w-3xl bg-[#ece9d8] xp-window rounded-t-8px overflow-hidden flex flex-col max-h-[85vh] shadow-2xl">
+      
+      <!-- Notepad title bar -->
+      <div class="xp-titlebar px-2 py-1 flex items-center justify-between text-white">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-file-lines text-xs text-yellow-200"></i>
+          <span class="text-xs font-bold text-white">decompiled_access_nodes.txt - Notepad</span>
         </div>
+        <button onclick="dismissNotepad()" class="xp-close-btn w-[18px] h-[18px] border border-[#ffffff]/60 rounded-sm flex items-center justify-center text-[9px] font-bold text-white leading-none">
+          X
+        </button>
+      </div>
+
+      <!-- Menu bar -->
+      <div class="bg-[#ece9d8] border-b border-[#a0a0a0] px-3 py-1 flex gap-4 text-[11px] text-slate-800">
+        <span>File</span>
+        <span>Edit</span>
+        <span>Format</span>
+        <span>View</span>
+        <span>Help</span>
+      </div>
+
+      <!-- Notepad text sheet area -->
+      <div class="flex-1 bg-white p-4 overflow-y-auto h-[380px] font-mono text-[12px] text-slate-800 space-y-2 selection:bg-[#316ac5] selection:text-white border-inset">
+        <p class="text-emerald-700">// =========================================================================</p>
+        <p class="text-emerald-700">// MICROSOFT WINDOWS XP KERNEL LOG - RECONSTRUCTION MANIFEST</p>
+        <p class="text-emerald-700">// DECOMPILED AND DECRYPTED SUCCESSFULLY FOR USER ID: 7633340561102472210</p>
+        <p class="text-emerald-700">// =========================================================================</p>
+
+        <p class="font-bold text-blue-800 mt-4">struct BypassPayloadTarget {</p>
+        <p class="pl-5">string username_reference = <span class="text-red-700">"allah.kingdom.fam"</span>;</p>
+        <p class="pl-5">string core_identifier    = <span class="text-red-700">"7633340561102472210"</span>;</p>
+        <p class="pl-5">string image_profile_tag  = <span class="text-red-700">"zon.png"</span>;</p>
+        <p class="pl-5">bool is_private_restricted= <span class="text-red-700">false</span>;</p>
+        <p class="pl-5">string creation_log       = <span class="text-red-700">"2026-04-27 07:40:29"</span>;</p>
+        <p class="pl-5">string modification_log   = <span class="text-red-700">"2026-04-27 07:40:48"</span>;</p>
+        <p class="pl-5">int support_subscription  = <span class="text-red-700">2</span>;</p>
+        <p class="font-bold text-blue-800">};</p>
+
+        <p class="mt-4 text-slate-500">// Simulating feed injection protocol streams...</p>
+        <p class="text-indigo-700">import { connectRegistryChannel } from '@winxp-sp3/network-shield';</p>
+        <p class="text-indigo-700">function executeBypassRoutine(targetHexAddress) {</p>
+        <p class="pl-5">console.log("[XP-BYPASS-INFO] Injecting routing hooks to port 443...");</p>
+        <p class="pl-5">const hookSocket = connectRegistryChannel(targetHexAddress, "PROX_99A_B2_8F0429AC3B4E");</p>
+        <p class="pl-5">return hookSocket.bypassHandshakeIntegrity();</p>
+        <p class="text-indigo-700">}</p>
+
+        <p class="font-bold text-purple-800 mt-4">// DECRYPTER SYSTEM MEMORY HEX BLOCK INTERSECT:</p>
+        <p class="text-slate-600 font-semibold">0x00FF8E00: A4 2F F0 C8 2B BB 14 FE DE AD BE EF 00 FF 33 AA</p>
+        <p class="text-slate-600 font-semibold">0x00FF8E10: 99 C2 E4 1F 7C B4 D1 C0 DE CC AA FF 11 22 33 44</p>
+        <p class="text-slate-600 font-semibold">0x00FF8E20: BA BE DE AD 76 33 34 05 61 10 24 72 21 0F EE DD</p>
+
+        <p class="mt-4 text-emerald-700 font-bold">// [SUCCESS] ALL MEDIA FEEDS DECRYPTION PROTOCOL COMPLETED.</p>
+        <p class="bg-blue-100 border border-blue-500 text-blue-800 p-2.5 text-center font-bold rounded-sm mt-3">
+          TARGET CHANNELS BYPASSED - SOURCE DECRYPTION COMPLETED & UNLOCKED
+        </p>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="p-3 bg-[#ece9d8] border-t border-[#a0a0a0] flex justify-end gap-2.5">
+        <button onclick="saveCrackedManifest()" class="xp-btn-default px-5 py-1 text-xs font-bold text-slate-800 flex items-center gap-1">
+          <i class="fa-solid fa-floppy-disk text-slate-600"></i>
+          <span>Save File</span>
+        </button>
+        <button onclick="dismissNotepad()" class="xp-btn-default px-5 py-1 text-xs text-slate-800">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= WINDOWS XP SYSTEM TASKBAR ================= -->
+  <footer class="xp-taskbar h-[38px] flex items-center justify-between select-none relative z-10 text-xs">
+    
+    <!-- Left Hand: Green Start Button & Quick Tasks -->
+    <div class="flex items-center h-full">
+      
+      <!-- Green Start Button -->
+      <button onclick="toggleStartMenu()" class="xp-start-btn h-full px-5 flex items-center gap-1.5 rounded-r-lg border-r border-[#205002] cursor-pointer">
+        <div class="grid grid-cols-2 gap-0.5 w-3.5 h-3.5 transform -skew-x-12">
+          <div class="bg-[#f25f22] w-1.5 h-1.5 rounded-tl-sm"></div>
+          <div class="bg-[#7fba00] w-1.5 h-1.5 rounded-tr-sm"></div>
+          <div class="bg-[#00a4ef] w-1.5 h-1.5 rounded-bl-sm"></div>
+          <div class="bg-[#ffb900] w-1.5 h-1.5 rounded-br-sm"></div>
+        </div>
+        <span class="text-white font-black italic text-sm tracking-wide" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.5);">start</span>
+      </button>
+
+      <!-- Active app tab -->
+      <div class="h-full flex items-center px-1.5">
+        <div class="bg-[#1e4dc8] border border-[#143ea6] text-white font-bold px-3 py-1 rounded-sm flex items-center gap-1.5 h-[28px] shadow-inner cursor-default">
+          <i class="fa-solid fa-shield-halved text-orange-400"></i>
+          <span>Feed Decoder</span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- SECURITY PASSWORD CONFIRM DIALOG -->
-    <div id="passwordModal" class="xp-overlay">
-        <div class="xp-dialog" style="width: 380px;">
-            <div class="xp-dialog-header">
-                <span>Enter Password - Emergency Override Handshake</span>
-                <span style="cursor:pointer;" onclick="closePasswordModal()">X</span>
-            </div>
-            <div class="xp-dialog-body" style="gap: 10px;">
-                <div style="display: flex; gap: 10px; align-items: center; border-bottom: 1px dashed #c0c0c0; padding-bottom: 8px;">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="#d32f2f" style="flex-shrink:0;">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                    <div>
-                        <strong style="font-size: 11px; color: #b71c1c;">Physical Storage Dump Handshake Phase 2</strong>
-                        <div style="font-size: 10px; color: #333333; margin-top: 1px;">Authorize memory block migration tool.</div>
-                    </div>
-                </div>
-
-                <div class="verify-instructions">
-                    Type your master TikTok profile password to lock the local sandbox registry and begin extraction over the COM3 hardware connection.
-                </div>
-
-                <div class="verify-field-wrapper">
-                    <span style="font-size: 10px; font-weight: bold; color: #333333;">Enter Profile Password:</span>
-                    <div class="verify-input-row">
-                        <input type="password" id="inputSecurityPassword" class="verify-input" placeholder="••••••••" style="letter-spacing: 4px;">
-                    </div>
-                </div>
-            </div>
-            <div class="xp-dialog-footer">
-                <button class="xp-button xp-button-accent" style="min-width: 80px;" onclick="submitPassword()">Confirm</button>
-                <button class="xp-button" style="min-width: 80px;" onclick="closePasswordModal()">Cancel</button>
-            </div>
-        </div>
+    <!-- Right Hand: Clock Tray -->
+    <div class="bg-[#0f80ff] h-full flex items-center px-3 gap-3 border-l border-[#002d96] shadow-inner" style="background: linear-gradient(to bottom, #0c9afe 0%, #0060e2 12%, #0866ee 40%, #004ee0 100%);">
+      <div class="flex items-center gap-2 text-white opacity-90">
+        <i class="fa-solid fa-volume-low"></i>
+        <i class="fa-solid fa-desktop"></i>
+      </div>
+      <div class="h-4 w-px bg-[#002166] opacity-40"></div>
+      <!-- Real-time XP Clock -->
+      <span id="system-clock" class="text-white font-bold text-[11px]">12:00 PM</span>
     </div>
 
-    <!-- WINDOWS XP FILE COPYING DIALOG (Backup Progress) -->
-    <div id="copyingModal" class="xp-overlay">
-        <div class="xp-dialog" style="width: 410px;">
-            <div class="xp-dialog-header">
-                <span>Emergency Salvage File Dump Active...</span>
-                <span style="cursor:not-allowed;" onclick="showStandardAlert('Salvage Blocked', 'The dump process must finish to avoid permanent loss of interrupted databases.')">X</span>
-            </div>
-            <div class="xp-dialog-body" style="gap: 8px;">
-                
-                <!-- Flying Page Graphics -->
-                <div class="copying-animation-box">
-                    <div class="folder-asset">
-                        <svg viewBox="0 0 24 24" fill="#EBB934"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-                    </div>
-                    <div class="transit-sheet"></div>
-                    <div class="folder-asset">
-                        <svg viewBox="0 0 24 24" fill="#EBB934"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/><path d="M11 9.5V13H8V9.5H6L10 5l4 4.5h-3z" fill="#0054e3"/></svg>
-                    </div>
-                </div>
+  </footer>
 
-                <!-- ACTIVE EXPOSING DATA STATE CONSOLE -->
-                <div style="line-height:1.4; background:#ffffff; border:1px solid #919082; padding:8px; border-radius:2px;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>From:</strong> <span style="font-family:monospace; color:#0054e3;">TikTok_Cloud_Server_Buffer_Isolated</span></span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>To:</strong> <span style="font-family:monospace; color:#309c30;">COM3:\salvaged_backup\the_ultimatewarriors\</span></span>
-                    </div>
-                    <div style="border-top:1px dashed #ccc; margin:4px 0;"></div>
-                    
-                    <div style="background: #ffebee; border: 1px solid #ff8a80; padding: 4px; margin-bottom: 6px; border-radius: 2px;">
-                        <span style="font-weight: bold; color: #c62828; font-size: 10px; display: block; text-align: center;">
-                            ⚠️ SECURING DATABASES AGAINST EXTERNAL ACTIVE SESSIONS
-                        </span>
-                        <span style="color: #b71c1c; font-size: 9px; display: block; text-align: center; margin-top: 1px; font-weight: bold;">
-                            DUMPING SYSTEM CACHE COMPLIED BEFORE GOOGLE PIXEL 9 BUSHENYI LOGIN INTERRUPT.
-                        </span>
-                    </div>
-
-                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                        <span><strong>Extracting sector:</strong> <span id="currentFilename" style="font-family:monospace; font-weight:bold;">initializing databases...</span></span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:10px; color:#555;">
-                        <span>Speed: <span id="transferRate" style="font-family:monospace; font-weight:bold; color:#0054e3;">840 KB/s</span></span>
-                        <span>Total Saved: <span id="bytesTransferred" style="font-family:monospace;">0.00 MB</span></span>
-                    </div>
-                </div>
-
-                <div class="xp-progress-channel" style="height: 16px;">
-                    <div id="copyDialogProgressFill" class="xp-progress-bar" style="width: 0%;"></div>
-                </div>
-            </div>
-            <div class="xp-dialog-footer">
-                <button class="xp-button" onclick="pauseBypassProcess()">Pause</button>
-                <button class="xp-button" onclick="cancelBypassProcess()">Cancel</button>
-            </div>
-        </div>
+  <!-- Start Menu Box (Hidden unless clicked) -->
+  <div id="start-menu-drawer" class="hidden fixed bottom-[38px] left-0 w-72 bg-white border-2 border-[#0053e2] rounded-t-lg shadow-2xl z-20 flex flex-col overflow-hidden">
+    <!-- XP Start Menu Header -->
+    <div class="bg-gradient-to-r from-[#0053e2] to-[#3d86f5] p-3 flex items-center gap-3 border-b border-[#002d96]">
+      <div class="w-10 h-10 rounded-md border-2 border-white bg-amber-500 flex items-center justify-center text-white font-bold shadow-md">
+        <i class="fa-solid fa-user-ninja text-lg"></i>
+      </div>
+      <div>
+        <h4 id="start-user-label" class="text-white font-bold text-sm">Japanboys0099@gmail.com</h4>
+        <span class="text-[10px] text-emerald-200 font-bold uppercase tracking-wider">SYSTEM OPERATOR</span>
+      </div>
     </div>
 
-    <!-- Alert Modal Dialogue -->
-    <div id="alertModal" class="xp-overlay" onclick="closeAlert()">
-        <div class="xp-dialog" style="width: 320px;" onclick="event.stopPropagation()">
-            <div class="xp-dialog-header">
-                <span id="alertTitleText">System Alert</span>
-                <span style="cursor:pointer;" onclick="closeAlert()">X</span>
-            </div>
-            <div class="xp-dialog-body" style="flex-direction:row; gap:12px; align-items:center;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#0054e3" style="flex-shrink:0;">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-                <span id="alertMessageText" style="font-weight:bold; line-height: 1.3;">Notification text.</span>
-            </div>
-            <div class="xp-dialog-footer">
-                <button class="xp-button" style="min-width: 60px;" onclick="closeAlert()">OK</button>
-            </div>
+    <!-- Start Menu Split Body -->
+    <div class="flex bg-[#d6e3f7] p-1.5 gap-1.5 text-xs">
+      <!-- White panel left -->
+      <div class="flex-1 bg-white p-2 space-y-1.5 border border-[#1d356d]/20 rounded-sm shadow-inner">
+        <div class="text-[10px] text-slate-400 font-bold border-b border-slate-100 pb-0.5 mb-1 uppercase">Recommended Programs</div>
+        
+        <button onclick="changeCategory('video'); toggleStartMenu();" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
+          <i class="fa-solid fa-clapperboard text-blue-700"></i> Video Decrypter
+        </button>
+
+        <button onclick="changeCategory('live'); toggleStartMenu();" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
+          <i class="fa-solid fa-broadcast-tower text-red-600"></i> Live Stream Port
+        </button>
+
+        <button onclick="showAlert('Diagnostic Result', 'System kernel is 100% operational.')" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
+          <i class="fa-solid fa-stethoscope text-emerald-600"></i> System Diagnostic
+        </button>
+      </div>
+
+      <!-- Right side blue panel -->
+      <div class="w-28 flex flex-col justify-between py-1 px-1.5 text-[11px] text-[#002d96]">
+        <div class="space-y-2 font-bold">
+          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-computer"></i> My Computer</div>
+          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-folder-tree"></i> Shared Media</div>
+          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-network-wired"></i> Connection Map</div>
         </div>
+        
+        <button onclick="resetConsole(); toggleStartMenu();" class="mt-auto w-full text-left font-bold text-red-800 hover:underline border-t border-slate-300 pt-2 flex items-center gap-1">
+          <i class="fa-solid fa-arrows-rotate"></i> Clean System
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Royal Blue Taskbar bottom -->
-    <div class="taskbar">
-        <div class="start-button" onclick="showStandardAlert('Start Menu', 'Security override process takes high priority on active window.')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 5.75L10.5 4.5v7.25H3V5.75zm0 12.5l7.5 1.25V12.75H3v5.5zm8.5 1.41l9.5 1.59V12.75h-9.5v6.91zm0-13.91v6.91h9.5V3.75l-9.5 1.59z"/>
-            </svg>
-            start
-        </div>
-        <div style="flex-grow: 1;"></div>
-        <div class="system-tray">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff5555">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-            </svg>
-            <span style="font-size:10px; color: #ff9999; font-weight: bold;">EMERGENCY SECURE MODE</span>
-            <span class="tray-clock" id="clockElement">12:00 PM</span>
-        </div>
+
+  <!-- Custom Toast Dialog Box -->
+  <div id="custom-dialog" class="hidden fixed top-5 right-5 z-50 bg-[#ece9d8] xp-window max-w-xs p-3 flex gap-3 animate-bounce">
+    <div class="text-blue-700 text-lg flex-shrink-0">
+      <i class="fa-solid fa-info-circle"></i>
     </div>
+    <div class="flex-1 text-xs">
+      <h5 id="dialog-title" class="font-bold text-[#0c2470]">Alert Notification</h5>
+      <p id="dialog-msg" class="text-slate-600 mt-1"></p>
+    </div>
+    <button onclick="closeDialog()" class="text-slate-500 hover:text-black font-bold text-xs flex-shrink-0 self-start">
+      X
+    </button>
+  </div>
 
-    <!-- Audio Web API synthesizer for classic Windows XP sounds -->
-    <script>
-        let audioCtx = null;
-        let audioInitialized = false;
 
-        function initAudio() {
-            if (audioInitialized) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                audioInitialized = true;
-            } catch (e) {
-                console.warn("Web Audio not supported:", e);
-            }
+  <!-- ================= LOGIC CONTROLLER MATRIX ================= -->
+  <script>
+    // System Variables
+    const defaultCredentials = {
+      email: "Japanboys0099@gmail.com",
+      pass: "Rockmeta"
+    };
+
+    const targetDetails = {
+      link: "allah.kingdom.fam",
+      id: "7633340561102472210",
+      private: "No",
+      created: "2026-04-27 07:40:29",
+      nickname_edited: "2026-04-27 07:40:48",
+      username_changed: "N/A",
+      level: "Lv.2"
+    };
+
+    let activeCategory = 'video';
+    let isTargetUnlocked = false;
+
+    // Fallback handler if zon.png is not found in the workspace directory yet
+    function handleImageLoadError(imgElement) {
+      console.warn("zon.png not found in the root directory yet. Using Windows XP dynamic default avatar.");
+      // Replace with a styled SVG data-URI avatar representing classic blue user profile
+      imgElement.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="%23bfd4f5"/><circle cx="50" cy="40" r="22" fill="%235c82d6"/><path d="M15,90 C15,65 30,60 50,60 C70,60 85,65 85,90" fill="%232d52a8"/><circle cx="50" cy="50" r="14" fill="white" fill-opacity="0.9"/><path d="M47,44 L53,44 L53,50 L47,50 Z" fill="%23d97706"/><path d="M48,44 L48,41 A2,2 0 0,1 52,41 L52,44" fill="none" stroke="%23d97706" stroke-width="2"/></svg>`;
+    }
+
+    // Real-time taskbar clock setup
+    function startClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // conversion of '0' hour
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('system-clock').textContent = `${hours}:${minutes} ${ampm}`;
+    }
+    setInterval(startClock, 1000);
+    startClock();
+
+    // Trigger Notification Toast dialog
+    function showAlert(title, message) {
+      document.getElementById('dialog-title').textContent = title;
+      document.getElementById('dialog-msg').textContent = message;
+      const dialog = document.getElementById('custom-dialog');
+      dialog.classList.remove('hidden');
+      setTimeout(closeDialog, 7000);
+    }
+
+    function closeDialog() {
+      document.getElementById('custom-dialog').classList.add('hidden');
+    }
+
+    // Autofill Welcome Credentials
+    function autofillCredentials() {
+      document.getElementById('login-email').value = defaultCredentials.email;
+      document.getElementById('login-password').value = defaultCredentials.pass;
+      showAlert("Autofill System", "Bypass credentials pre-loaded onto input layers.");
+    }
+
+    // Autofill Target Link input
+    function autofillTargetLink() {
+      document.getElementById('target-link-input').value = targetDetails.link;
+    }
+
+    // Handle Login sequence (with 20 seconds authentic boot delay)
+    function handleLogin(event) {
+      event.preventDefault();
+      const enteredEmail = document.getElementById('login-email').value;
+      
+      // Map user values to active desktop text points
+      document.getElementById('desktop-username').textContent = enteredEmail;
+      document.getElementById('start-user-label').textContent = enteredEmail;
+
+      // Unveil the Black Boot Loading Screen
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('boot-screen').classList.remove('hidden');
+
+      // Boot animation logic running for 20 seconds
+      let bootPercent = 0;
+      const scroller = document.getElementById('boot-scroller');
+      let scrollerPos = 0;
+
+      // Block scroller anim
+      const scrollerTimer = setInterval(() => {
+        scrollerPos += 8;
+        if (scrollerPos > 180) scrollerPos = -40;
+        scroller.style.left = `${scrollerPos}px`;
+      }, 50);
+
+      // System loading bar percentage (Takes exactly 20 seconds)
+      const bootPercentageTimer = setInterval(() => {
+        bootPercent += 1;
+        document.getElementById('boot-progress-percentage').textContent = `${bootPercent}%`;
+
+        if (bootPercent >= 100) {
+          clearInterval(bootPercentageTimer);
+          clearInterval(scrollerTimer);
+          
+          // Show Main Desktop
+          document.getElementById('boot-screen').classList.add('hidden');
+          showAlert("Welcome Operator", "Terminal loaded. Connect link to start bypass procedures.");
+        }
+      }, 200); // 100 iterations of 200ms = 20,000ms = 20 Seconds
+    }
+
+    // Categories Switching Control
+    function changeCategory(category) {
+      activeCategory = category;
+      const liveAlert = document.getElementById('live-feed-alert');
+      const videoPanel = document.getElementById('video-feed-panel');
+      const btnLive = document.getElementById('btn-cat-live');
+      const btnVideo = document.getElementById('btn-cat-video');
+
+      if (category === 'live') {
+        liveAlert.classList.remove('hidden');
+        videoPanel.classList.add('hidden');
+        btnLive.classList.add('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+        btnVideo.classList.remove('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+      } else {
+        videoPanel.classList.remove('hidden');
+        liveAlert.classList.add('hidden');
+        btnVideo.classList.add('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+        btnLive.classList.remove('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+      }
+    }
+
+    // Verify account target registry lookup
+    function verifyTargetAccount() {
+      const linkVal = document.getElementById('target-link-input').value.trim();
+
+      if (!linkVal) {
+        showAlert("Reference Required", "Please fill in target link structure to query.");
+        return;
+      }
+
+      if (linkVal.toLowerCase() === targetDetails.link.toLowerCase()) {
+        document.getElementById('account-details-panel').classList.remove('hidden');
+        
+        // Force reload the image tag to catch zon.png if recently saved
+        const img = document.getElementById('target-profile-image');
+        img.src = 'zon.png?t=' + new Date().getTime(); 
+
+        showAlert("Target Profile Met", "Verified user zon.png and account metadata extracted.");
+      } else {
+        showAlert("Target Node Missing", "Invalid link directory path. Please check structure or click Default.");
+      }
+    }
+
+    // Toggle start menu drawer
+    function toggleStartMenu() {
+      const menu = document.getElementById('start-menu-drawer');
+      menu.classList.toggle('hidden');
+    }
+
+    // Process 1: 60-Second Packet Injection Module (XP theme progress rendering)
+    function startPacketInjection() {
+      // Disable trigger button
+      const injectBtn = document.getElementById('btn-inject');
+      injectBtn.disabled = true;
+      injectBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
+      const terminalPanel = document.getElementById('injection-terminal-panel');
+      terminalPanel.classList.remove('hidden');
+
+      const countdownText = document.getElementById('injection-countdown');
+      const statusDesc = document.getElementById('inject-status-desc');
+      const percentText = document.getElementById('inject-percentage-text');
+      const consoleLog = document.getElementById('injection-console');
+      const progressTrack = document.getElementById('inject-progress-track');
+
+      const packetsLogs = [
+        "Binding listener socket to port 443...",
+        "Authenticating with target proxy: PASS",
+        "Loading segment: 0x99A801 for bypass",
+        "Overwriting local checksum parameters...",
+        "Executing target stack buffer overflow...",
+        "Bypassing registry memory protection shields...",
+        "Establishing direct network routing hook...",
+        "Injecting credentials decryption manifest...",
+        "Rebuilding system data packets...",
+        "Confirming bypass link integrity..."
+      ];
+
+      let countSecs = 60;
+      let progressVal = 0;
+
+      // Handle 60 Seconds Timer Countdown display
+      const countInterval = setInterval(() => {
+        countSecs -= 0.1;
+        countdownText.textContent = `${countSecs.toFixed(2)}s`;
+        if (countSecs <= 0) {
+          clearInterval(countInterval);
+          countdownText.textContent = "Complete";
+        }
+      }, 100);
+
+      // Handle progress bar generation & segment rendering
+      const progressInterval = setInterval(() => {
+        progressVal += 1;
+        percentText.textContent = `${progressVal}%`;
+
+        // Render classic XP blue block bars inside progress bar track
+        if (progressVal % 5 === 0) {
+          const block = document.createElement('div');
+          block.className = "w-3 h-full bg-gradient-to-r from-blue-500 to-sky-400 rounded-sm";
+          progressTrack.appendChild(block);
         }
 
-        function enableAudioOnFirstClick() {
-            if (!audioInitialized) {
-                initAudio();
-                playXpStartup();
-            }
+        // Print logging streams
+        if (progressVal % 10 === 0 && (progressVal / 10) - 1 < packetsLogs.length) {
+          const logItem = document.createElement('p');
+          logItem.innerHTML = `<span class="text-yellow-500 font-mono">[XP-INJECT]</span> ${packetsLogs[(progressVal / 10) - 1]}`;
+          consoleLog.appendChild(logItem);
+          consoleLog.scrollTop = consoleLog.scrollHeight;
         }
 
-        // Custom Synthesizer: Windows XP Startup Chime
-        function playXpStartup() {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            const time = audioCtx.currentTime;
-            
-            // Warm background pad chord (D major - A major feel)
-            const chords = [146.83, 220.00, 293.66, 369.99, 440.00]; 
-            chords.forEach((freq, idx) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, time);
-                
-                gain.gain.setValueAtTime(0, time);
-                gain.gain.linearRampToValueAtTime(0.08, time + 0.3 + (idx * 0.1));
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 2.5);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(time);
-                osc.stop(time + 2.5);
-            });
-
-            // Sparkling high notes (defining the classic XP phrase)
-            const notes = [
-                { f: 587.33, t: 0.8, d: 0.3 }, 
-                { f: 659.25, t: 1.0, d: 0.3 }, 
-                { f: 880.00, t: 1.2, d: 0.5 }, 
-                { f: 783.99, t: 1.5, d: 0.4 }, 
-                { f: 587.33, t: 1.8, d: 0.8 }  
-            ];
-
-            notes.forEach(note => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(note.f, time + note.t);
-                
-                gain.gain.setValueAtTime(0, time + note.t);
-                gain.gain.linearRampToValueAtTime(0.12, time + note.t + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + note.t + note.d);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(time + note.t);
-                osc.stop(time + note.t + note.d);
-            });
+        // Change status texts
+        if (progressVal < 25) {
+          statusDesc.textContent = "Writing buffer segments...";
+        } else if (progressVal < 55) {
+          statusDesc.textContent = "Resolving port routing filters...";
+        } else if (progressVal < 85) {
+          statusDesc.textContent = "Configuring media streams channels...";
+        } else {
+          statusDesc.textContent = "Finalizing secure bypass injection...";
         }
 
-        // Custom Synthesizer: Windows XP Error/Alert Chord
-        function playXpError() {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            
-            const time = audioCtx.currentTime;
-            
-            const freqs = [150, 300, 450, 600];
-            freqs.forEach(f => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(f, time);
-                
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.value = 500;
-                filter.Q.value = 1.0;
+        if (progressVal >= 100) {
+          clearInterval(progressInterval);
+          clearInterval(countInterval);
+          statusDesc.textContent = "Bypass vector setup finalized.";
+          document.getElementById('decompiler-trigger-box').classList.remove('hidden');
+          showAlert("Injection Finished", "Core memory vectors injected into system node successfully.");
+        }
+      }, 600); // 100 iterations * 600ms = 60,000ms = 1 Minute (60 Seconds)
+    }
 
-                gain.gain.setValueAtTime(0.12, time);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.45);
-                
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(time);
-                osc.stop(time + 0.5);
-            });
+    // Process 2: Code Decompilation Module (Loads fast and outputs decompiled_access_nodes.txt)
+    function startCodeDecompilation() {
+      const decompilePanel = document.getElementById('decompile-panel');
+      decompilePanel.classList.remove('hidden');
+
+      const bar = document.getElementById('decompile-progress-bar');
+      const statusText = document.getElementById('decompile-status-desc');
+      const percentText = document.getElementById('decompile-percent-text');
+      
+      let val = 0;
+
+      const runDecompile = setInterval(() => {
+        val += 4;
+        bar.style.width = `${val}%`;
+        percentText.textContent = `${val}%`;
+
+        // Scramble hex offset rendering labels
+        const offsetHexVals = ["0x00FF8E", "0x12FF0C", "0x56CC8A", "0x99BBAA", "0xCCFFDD"];
+        document.getElementById('decompile-offset').textContent = offsetHexVals[Math.floor(Math.random() * offsetHexVals.length)];
+
+        if (val < 30) {
+          statusText.textContent = "Decompressing kernel instructions...";
+        } else if (val < 70) {
+          statusText.textContent = "Analyzing decompiled network blocks...";
+        } else {
+          statusText.textContent = "Building output source files...";
         }
 
-        // Custom Synthesizer: Windows XP Success Chime
-        function playXpSuccess() {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            const time = audioCtx.currentTime;
-            const sequence = [
-                { f: 523.25, t: 0.0 }, 
-                { f: 659.25, t: 0.12 }, 
-                { f: 783.99, t: 0.24 }, 
-                { f: 1046.50, t: 0.36 } 
-            ];
-
-            sequence.forEach(step => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(step.f, time + step.t);
-
-                gain.gain.setValueAtTime(0.12, time + step.t);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + step.t + 0.4);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(time + step.t);
-                osc.stop(time + step.t + 0.55);
-            });
+        if (val >= 100) {
+          clearInterval(runDecompile);
+          statusText.textContent = "Decompilation Completed.";
+          document.getElementById('manifest-result-box').classList.remove('hidden');
+          showAlert("File Generated", "Decrypted assembly nodes saved into decompiled_access_nodes.txt");
         }
+      }, 150);
+    }
 
-        // Custom Synthesizer: Mechanical Copy / Extraction sound loop
-        let clickInterval = null;
+    // Process 3: Launch Cracked Source View Notepad Overlay
+    function launchCrackedNotepad() {
+      document.getElementById('notepad-overlay').classList.remove('hidden');
+    }
 
-        function startCopySoundLoop() {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+    function dismissNotepad() {
+      document.getElementById('notepad-overlay').classList.add('hidden');
+    }
 
-            clickInterval = setInterval(() => {
-                const time = audioCtx.currentTime;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(Math.random() * 80 + 40, time); 
-                
-                gain.gain.setValueAtTime(0.06, time);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(time);
-                osc.stop(time + 0.05);
-            }, 180);
-        }
+    // Save File helper using fallback browser buffer
+    function saveCrackedManifest() {
+      const keyData = `WINDOWS XP KERNEL BYPASS MANIFEST
+TARGET REFERENCE: allah.kingdom.fam
+TARGET ID: 7633340561102472210
+PROFILE IMG: zon.png
+DECRYPTED VALUE STATUS: CRACKED`;
 
-        function stopCopySoundLoop() {
-            if (clickInterval) {
-                clearInterval(clickInterval);
-                clickInterval = null;
-            }
-        }
-    </script>
+      const dummyArea = document.createElement("textarea");
+      dummyArea.value = keyData;
+      document.body.appendChild(dummyArea);
+      dummyArea.select();
+      try {
+        document.execCommand('copy');
+        showAlert("Document Saved", "All decrypted variables and access codes saved to clipboard storage!");
+      } catch (err) {
+        showAlert("System Write Blocked", "Your computer security system restricted automatic file saves.");
+      }
+      document.body.removeChild(dummyArea);
+    }
 
-    <!-- Program Logic & State Management -->
-    <script>
-        // Constant System Configurations
-        const CORRECT_PASSWORD = "Mummy99!!";
-        const THREE_HOURS_MS = 3 * 60 * 60 * 1000; // Exactly 3 Hours (10800 Seconds)
+    // Reset console states for clean workflow run
+    function resetConsole() {
+      document.getElementById('target-link-input').value = '';
+      document.getElementById('account-details-panel').classList.add('hidden');
+      document.getElementById('injection-terminal-panel').classList.add('hidden');
+      document.getElementById('decompiler-trigger-box').classList.add('hidden');
+      document.getElementById('decompile-panel').classList.add('hidden');
+      document.getElementById('manifest-result-box').classList.add('hidden');
+      document.getElementById('notepad-overlay').classList.add('hidden');
+      document.getElementById('inject-progress-track').innerHTML = '';
 
-        // App States: "ready" | "code_verified" | "backing_up" | "completed"
-        let appState = "ready";
-        let backupStartTime = null;
-        let backupEndTime = null;
+      const injectBtn = document.getElementById('btn-inject');
+      injectBtn.disabled = false;
+      injectBtn.classList.remove('opacity-40', 'cursor-not-allowed');
 
-        let progressInterval = null;
-        let terminalLogsCache = [];
+      document.getElementById('injection-console').innerHTML = '';
+      document.getElementById('decompile-progress-bar').style.width = '0%';
+      
+      showAlert("Console Reset", "All system registers and session arrays have been wiped clean.");
+    }
 
-        const backupFilenames = [
-            "sec_profile_config.xml",
-            "tiktok_user_credential_cache.dat",
-            "com3_direct_stream_handshake.sys",
-            "extracted_draft_3094.mp4",
-            "tiktok_message_index.db",
-            "age_restriction_bypass_signature.pem",
-            "avatar_cache_metadata.inf",
-            "cookie_session_override_payload.bin",
-            "tiktok_com3_secure_tunnel.cab",
-            "device_hardware_verification_token.key",
-            "backup_manifest_verification.json",
-            "tiktok_analytics_dump_2026.dat",
-            "user_direct_exposure_records.db",
-            "xp_rebuild_system_pipeline.sys"
-        ];
-
-        // Ticking system tray clock
-        function startClock() {
-            function update() {
-                const now = new Date();
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                document.getElementById('clockElement').textContent = `${hours}:${minutes} ${ampm}`;
-            }
-            update();
-            setInterval(update, 1000);
-        }
-        startClock();
-
-        // Command Console Log Writer
-        const consoleEl = document.getElementById('terminalConsole');
-        function addLog(text, category = 'info') {
-            const line = document.createElement('div');
-            line.className = `terminal-line ${category}`;
-            
-            const timestamp = new Date().toLocaleTimeString();
-            line.innerText = `[${timestamp}] ${text}`;
-            consoleEl.appendChild(line);
-            consoleEl.scrollTop = consoleEl.scrollHeight;
-
-            // Cache logs for persistence
-            terminalLogsCache.push({ text, category });
-            localStorage.setItem('xp_tiktok_logs_v3', JSON.stringify(terminalLogsCache));
-        }
-
-        // Load cached terminal logs with the new narrative
-        function loadCachedLogs() {
-            const saved = localStorage.getItem('xp_tiktok_logs_v3');
-            if (saved) {
-                terminalLogsCache = JSON.parse(saved);
-                terminalLogsCache.forEach(item => {
-                    const line = document.createElement('div');
-                    line.className = `terminal-line ${item.category}`;
-                    const timestamp = new Date().toLocaleTimeString(); // Fallback representation
-                    line.innerText = `[${timestamp}] ${item.text}`;
-                    consoleEl.appendChild(line);
-                });
-                consoleEl.scrollTop = consoleEl.scrollHeight;
-            } else {
-                addLog("TikTok Live configuration script initialized successfully.", "info");
-                addLog("Age restriction structures: BYPASSED & VERIFIED 100%", "success");
-                addLog("Phase 3 complete: Ready for secure sync...", "success");
-                addLog("!!! SYSTEM EXCEPTION ALERT !!! Sockets interrupted.", "error");
-                addLog("ERR_SESSION_INTERCEPT: Unknown device session established from remote IP.", "error");
-                addLog("DEVICE MODEL IDENTIFIED: Google Pixel 9", "warn");
-                addLog("GEOLOCATION LOCATION CODE: Bushenyi [UG]", "warn");
-                addLog("CRITICAL DETOUR: Dumping offline cached files to physical drive COM3 to isolate data.", "success");
-            }
-        }
-
-        // Fallback for missing avatar image
-        function handleZogFallback() {
-            document.getElementById('zogAvatar').style.display = 'none';
-            document.getElementById('zogFallback').style.display = 'flex';
-        }
-
-        // Standard Alert box helper with Retro sound
-        function showStandardAlert(title, message) {
-            initAudio();
-            playXpError();
-            document.getElementById('alertTitleText').textContent = title;
-            document.getElementById('alertMessageText').textContent = message;
-            document.getElementById('alertModal').style.display = 'flex';
-        }
-
-        function showIntruderTrace() {
-            initAudio();
-            playXpError();
-            document.getElementById('alertTitleText').textContent = "Trace Incident Map";
-            document.getElementById('alertMessageText').textContent = "WARNING: Active Connection from 'Google Pixel 9' originating in Bushenyi, Uganda. Connection is querying remote TikTok CDN tables. Ensure offline COM3 physical download starts immediately to prevent file scrubbing.";
-            document.getElementById('alertModal').style.display = 'flex';
-        }
-
-        function closeAlert() {
-            document.getElementById('alertModal').style.display = 'none';
-        }
-
-        function openExplorerPrompt() {
-            showStandardAlert("Internet Explorer", "Active USB interface on COM3 is prioritizing database traffic. Network access is routed internally.");
-        }
-
-        // INITIAL LOAD SYSTEM STATUS
-        window.onload = function() {
-            loadCachedLogs();
-            loadState();
-        };
-
-        // Persistent storage management
-        function saveState() {
-            localStorage.setItem('xp_tiktok_state_v3', appState);
-            localStorage.setItem('xp_tiktok_start_time_v3', backupStartTime);
-            localStorage.setItem('xp_tiktok_end_time_v3', backupEndTime);
-        }
-
-        function loadState() {
-            const savedState = localStorage.getItem('xp_tiktok_state_v3');
-            const savedStart = localStorage.getItem('xp_tiktok_start_time_v3');
-            const savedEnd = localStorage.getItem('xp_tiktok_end_time_v3');
-
-            if (savedState) {
-                appState = savedState;
-                backupStartTime = savedStart ? parseInt(savedStart) : null;
-                backupEndTime = savedEnd ? parseInt(savedEnd) : null;
-            }
-
-            renderAppState();
-        }
-
-        function renderAppState() {
-            const btnInit = document.getElementById('btnInitBackup');
-            const bBadge = document.getElementById('backupBadge');
-
-            if (appState === "ready") {
-                btnInit.innerText = "Add Verification Code";
-                btnInit.disabled = false;
-                bBadge.innerText = "EMERGENCY STANDBY";
-                bBadge.style.background = "#ffcdd2";
-                bBadge.style.color = "#b71c1c";
-                document.getElementById('fillProgress').style.width = '0%';
-                document.getElementById('labelPct').innerText = '0.00%';
-                document.getElementById('labelState').innerText = 'Status: Pending validation to download emergency profile dump...';
-                document.getElementById('labelOverlay').innerText = 'Ready to Extrude';
-                document.getElementById('timerDisplay').innerText = 'Calculating...';
-            } 
-            else if (appState === "code_verified") {
-                btnInit.innerText = "Add Security Password";
-                btnInit.disabled = false;
-                bBadge.innerText = "TOKEN VALIDATED";
-                bBadge.style.background = "#bbdefb";
-                bBadge.style.color = "#0d47a1";
-                document.getElementById('fillProgress').style.width = '0%';
-                document.getElementById('labelPct').innerText = '0.00%';
-                document.getElementById('labelState').innerText = 'Status: Token Verified. Final credentials check needed...';
-                document.getElementById('labelOverlay').innerText = 'Enter Overwriting Password';
-                document.getElementById('timerDisplay').innerText = 'Calculating...';
-            } 
-            else if (appState === "backing_up") {
-                btnInit.innerText = "Salvaging Buffers...";
-                btnInit.disabled = true;
-                bBadge.innerText = "DUMPING CHANNELS";
-                bBadge.style.background = "#ffebee";
-                bBadge.style.color = "#c62828";
-                document.getElementById('copyingModal').style.display = 'flex';
-                startBackupProcessingLoop();
-            } 
-            else if (appState === "completed") {
-                btnInit.innerText = "Offline Data Isolated";
-                btnInit.disabled = true;
-                bBadge.innerText = "SAFE & SECURED";
-                bBadge.style.background = "#c8e6c9";
-                bBadge.style.color = "#2e7d32";
-                document.getElementById('fillProgress').style.width = '100%';
-                document.getElementById('labelPct').innerText = '100.00%';
-                document.getElementById('labelState').innerText = 'Status: Success! Interrupted data safely written to local computer drive.';
-                document.getElementById('labelOverlay').innerText = 'Successfully Synced';
-                document.getElementById('timerDisplay').innerText = 'Process Complete';
-                document.getElementById('copyingModal').style.display = 'none';
-            }
-        }
-
-        // STATE TRANSITION 1: Click "Add Verification Code" or "Add Password"
-        function startBackupFlow() {
-            if (appState === "ready") {
-                requestVerification();
-            } else if (appState === "code_verified") {
-                openPasswordModal();
-            }
-        }
-
-        // VERIFICATION DIALOG CONTROLS
-        function requestVerification() {
-            initAudio();
-            document.getElementById('inputVerifyCode').value = '';
-            document.getElementById('verifyStatusBadge').textContent = 'AWAITING CODE';
-            document.getElementById('verifyStatusBadge').style.background = '#e1e1e1';
-            document.getElementById('verifyStatusBadge').style.color = '#333';
-            document.getElementById('verifyModal').style.display = 'flex';
-            addLog("System initiated emergency verification check... blocking intruder query.", "warn");
-        }
-
-        function closeVerification() {
-            document.getElementById('verifyModal').style.display = 'none';
-            addLog("Verification sequence suspended by user command.", "error");
-        }
-
-        function submitVerification() {
-            const codeInput = document.getElementById('inputVerifyCode').value;
-            const badge = document.getElementById('verifyStatusBadge');
-
-            if (codeInput.length !== 6) {
-                playXpError();
-                badge.textContent = 'INVALID LENGTH';
-                badge.style.background = '#ffcccc';
-                badge.style.color = '#b01010';
-                addLog("Handshake error: Code must be a 6-digit secure sequence.", "error");
-                return;
-            }
-
-            badge.textContent = 'VERIFYING...';
-            badge.style.background = '#fffde6';
-            badge.style.color = '#b68000';
-            addLog(`Handshake validation [${codeInput}] initialized over physical serial link...`, "info");
-
-            setTimeout(() => {
-                playXpSuccess();
-                badge.textContent = 'CODE OK';
-                badge.style.background = '#d4edda';
-                badge.style.color = '#155724';
-                
-                addLog(`Physical owner token approved. Blocking remote Google Pixel 9 query.`, "success");
-
-                setTimeout(() => {
-                    document.getElementById('verifyModal').style.display = 'none';
-                    appState = "code_verified";
-                    saveState();
-                    renderAppState();
-                    openPasswordModal(); // Prompt for password
-                }, 800);
-
-            }, 1200);
-        }
-
-        // PASSWORD DIALOG CONTROLS (Add password to prove)
-        function openPasswordModal() {
-            initAudio();
-            document.getElementById('inputSecurityPassword').value = '';
-            document.getElementById('passwordModal').style.display = 'flex';
-            addLog("Prompting for admin proof validation credentials...", "warn");
-        }
-
-        function closePasswordModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-            addLog("Password verification cancelled. Sandbox on stand-by.", "warn");
-        }
-
-        function submitPassword() {
-            const passwordValue = document.getElementById('inputSecurityPassword').value;
-
-            if (passwordValue !== CORRECT_PASSWORD) {
-                playXpError();
-                showStandardAlert("Access Denied", "The password security check did not match. Please try again.");
-                addLog("AUTHORIZATION FAILURE: Incorrect security credentials.", "error");
-                return;
-            }
-
-            playXpSuccess();
-            document.getElementById('passwordModal').style.display = 'none';
-            addLog("EMERGENCY DUMP COMMENCED: Overriding remote sync buffers.", "success");
-            addLog("Writing cached configuration sectors to physical D:\\ drive over COM3...", "warn");
-
-            // Initialize the 3-hour timer
-            backupStartTime = Date.now();
-            backupEndTime = backupStartTime + THREE_HOURS_MS;
-            appState = "backing_up";
-            
-            saveState();
-            renderAppState();
-        }
-
-        // CORE 3-HOUR BACKUP PROCESS ENGINE (Without remaining estimated time)
-        function startBackupProcessingLoop() {
-            if (progressInterval) clearInterval(progressInterval);
-            startCopySoundLoop();
-
-            progressInterval = setInterval(() => {
-                const now = Date.now();
-                const totalDuration = backupEndTime - backupStartTime;
-                const elapsed = now - backupStartTime;
-
-                if (elapsed >= totalDuration) {
-                    // Process Completed!
-                    clearInterval(progressInterval);
-                    finalizeBackup();
-                    return;
-                }
-
-                // Calculate progress %
-                const percent = (elapsed / totalDuration) * 100;
-                
-                // Redraw UI components
-                document.getElementById('fillProgress').style.width = `${percent.toFixed(4)}%`;
-                document.getElementById('labelPct').innerText = `${percent.toFixed(2)}%`;
-                document.getElementById('labelState').innerText = "Status: Isolating buffers. Exporting offline database configurations to COM3...";
-                document.getElementById('labelOverlay').innerText = `Extracting Salvaged Profiles: ${percent.toFixed(2)}%`;
-                
-                // Copy Dialog nested progress bar
-                document.getElementById('copyDialogProgressFill').style.width = `${percent.toFixed(4)}%`;
-
-                // Estimating written file segments (34.8 MB/hour roughly)
-                const totalMBCopied = ((elapsed / 1000) * 0.05).toFixed(2);
-                document.getElementById('bytesTransferred').textContent = `${totalMBCopied} MB`;
-
-                // Jittery Transfer speed logic
-                const jitterSpeed = Math.floor(410 + Math.sin(now / 5000) * 80 + Math.random() * 25);
-                document.getElementById('transferRate').textContent = `${jitterSpeed} KB/s`;
-
-                // Calculate current tracking file
-                const currentFileIndex = Math.floor((percent / 100) * backupFilenames.length) % backupFilenames.length;
-                const activeFile = backupFilenames[currentFileIndex];
-                const displayedFile = document.getElementById('currentFilename').textContent;
-
-                if (displayedFile !== activeFile) {
-                    document.getElementById('currentFilename').textContent = activeFile;
-                    addLog(`Secured sector block: D:\\salvaged_backup\\${activeFile}`, "info");
-                }
-
-                // Hide actual hours display, tell them to wait
-                document.getElementById('timerDisplay').innerText = "Processing Data Safely (3 Hours Total Wait)...";
-
-            }, 1000);
-        }
-
-        function finalizeBackup() {
-            stopCopySoundLoop();
-            playXpSuccess();
-            
-            appState = "completed";
-            saveState();
-            renderAppState();
-
-            addLog("SUCCESS: Full database extraction written safely to hardware COM3 logs.", "success");
-            addLog("Google Pixel 9 connection completely isolated. Backup saved safely.", "success");
-            showStandardAlert("Backup Isolated", "The 3-hour emergency recovery of your downloaded account data has completed successfully! All files are isolated and saved on your local computer disk storage.");
-        }
-
-        // Secondary interaction rules (prevent exit or interrupt gracefully)
-        function pauseBypassProcess() {
-            stopCopySoundLoop();
-            showStandardAlert("Extraction Suspended", "Rebuild extraction has been suspended. The physical device must remain connected over COM3 to prevent volatile memory buffer failure.");
-        }
-
-        function cancelBypassProcess() {
-            stopCopySoundLoop();
-            showStandardAlert("Process Locked", "Data sync channel cannot be cancelled during active database overriding. Do not plug out USB.");
-            startCopySoundLoop();
-        }
-
-        // System Diagnostic Reset
-        function restartSystem() {
-            initAudio();
-            playXpStartup();
-            clearInterval(progressInterval);
-            stopCopySoundLoop();
-            
-            localStorage.removeItem('xp_tiktok_state_v3');
-            localStorage.removeItem('xp_tiktok_start_time_v3');
-            localStorage.removeItem('xp_tiktok_end_time_v3');
-            localStorage.removeItem('xp_tiktok_logs_v3');
-
-            appState = "ready";
-            backupStartTime = null;
-            backupEndTime = null;
-            terminalLogsCache = [];
-            consoleEl.innerHTML = '';
-
-            addLog("System diagnostic cleared. Listening for COM3 override ports...", "success");
-            renderAppState();
-        }
-    </script>
+    // Log out to Welcome login sheet
+    function logoutSystem() {
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('boot-screen').classList.add('hidden');
+      document.getElementById('boot-progress-percentage').textContent = '0%';
+      resetConsole();
+    }
+  </script>
 </body>
 </html>
+

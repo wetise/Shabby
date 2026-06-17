@@ -1,540 +1,355 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Microsoft Windows XP - Secure Terminal</title>
-  <!-- Tailwind CSS for utility rendering -->
+  <title>SHAWIK SMM Booster Panel - Responsive & Secure</title>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons for system icons -->
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    /* Classic Tahoma XP Font setup */
-    @import url('https://fonts.googleapis.com/css2?family=Courier+New&family=Tahoma&display=swap');
-    
-    body {
-      font-family: 'Tahoma', 'Segoe UI', sans-serif;
-      background-color: #000000;
-      -webkit-font-smoothing: antialiased;
+    /* High visual quality style tokens */
+    .glow-purple {
+      box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.45);
     }
-    
-    .xp-font-mono {
-      font-family: 'Courier New', Courier, monospace;
+    .glow-red {
+      box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.45);
     }
-
-    /* Classic Windows XP Inset & Outset Borders */
-    .xp-window {
-      box-shadow: inset -1px -1px #1a1a1a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
-      border: 1px solid #000000;
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.45);
     }
-
-    .xp-inset {
-      border: 2px solid;
-      border-color: #808080 #ffffff #ffffff #808080;
+    .gradient-bg {
+      background: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%);
     }
-
-    .xp-outset {
-      border: 2px solid;
-      border-color: #ffffff #808080 #808080 #ffffff;
+    .gradient-text {
+      background: linear-gradient(135deg, #c084fc 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
-    /* Windows XP Luna Blue Titlebar Gradient */
-    .xp-titlebar {
-      background: linear-gradient(to right, #0053e2 0%, #0756eb 12%, #2c72f1 79%, #3d86f5 94%, #0053e2 100%);
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.08); }
     }
-
-    /* Windows XP Green Start Button Gradient */
-    .xp-start-btn {
-      background: linear-gradient(to bottom, #388a08 0%, #62b31a 10%, #4da20a 50%, #307404 90%, #205002 100%);
-      box-shadow: 0px 1px 1px rgba(0,0,0,0.4), inset 1px 1px 1px rgba(255,255,255,0.4);
-    }
-    
-    .xp-start-btn:active {
-      background: linear-gradient(to bottom, #205002 0%, #307404 10%, #4da20a 50%, #62b31a 90%, #388a08 100%);
-    }
-
-    /* Windows XP Taskbar Blue Gradient */
-    .xp-taskbar {
-      background: linear-gradient(to bottom, #245dd7 0%, #0e3ebd 12%, #114df3 40%, #1145d8 88%, #0a2eb3 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-    }
-
-    /* XP Button styling (Default dialog button) */
-    .xp-btn-default {
-      background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
-      border: 1px solid #003c74;
-      border-radius: 3px;
-      box-shadow: inset 1px 1px 0px #ffffff;
-    }
-    .xp-btn-default:hover {
-      background: linear-gradient(to bottom, #ece9d8 0%, #e0e0d0 100%);
-    }
-    .xp-btn-default:active {
-      box-shadow: inset -1px -1px 1px #ffffff, inset 1px 1px 2px #808080;
-    }
-
-    /* Simulated Bliss Background gradient */
-    .xp-bliss-bg {
-      background: radial-gradient(circle at top, #7fa8e3 0%, #3a6ea5 100%);
-      background-size: cover;
-      position: relative;
-    }
-    
-    /* Classic XP Boot Loading bars */
-    .boot-segment {
-      width: 10px;
-      height: 10px;
-      background: linear-gradient(to right, #3862ff, #7ca1ff, #3862ff);
-      display: inline-block;
-      margin-right: 2px;
-      border-radius: 1px;
-    }
-
-    /* Scrollbars retro look */
-    ::-webkit-scrollbar {
-      width: 16px;
-      height: 16px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1efe2;
-      box-shadow: inset 1px 1px #808080;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #ece9d8;
-      border: 2px solid #f1efe2;
-      box-shadow: inset -1px -1px #808080, inset 1px 1px #ffffff;
-    }
-
-    /* Close Button Style */
-    .xp-close-btn {
-      background: linear-gradient(to bottom, #f3765a 0%, #e0431f 40%, #c41e00 100%);
-      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 1px 1px 2px rgba(0,0,0,0.5);
-    }
-    .xp-close-btn:hover {
-      background: linear-gradient(to bottom, #f68a72 0%, #ea522f 40%, #dd2a0a 100%);
+    .animate-pulse-slow {
+      animation: pulse-slow 10s infinite ease-in-out;
     }
   </style>
 </head>
-<body class="h-screen overflow-hidden select-none flex flex-col justify-between bg-black text-slate-800">
+<body class="font-sans min-h-screen flex flex-col justify-between overflow-x-hidden relative">
 
-  <!-- ================= WINDOWS XP WELCOME / LOGIN SCREEN ================= -->
-  <div id="login-screen" class="fixed inset-0 z-50 flex flex-col justify-between bg-[#5b7edc]">
-    <!-- Top Blue Band -->
-    <div class="h-[15%] bg-[#00309c] border-b-2 border-[#1852d4] flex items-center justify-end px-12">
-      <div class="text-white opacity-80 text-xs text-right">
-        <p class="font-bold">Windows XP Professional</p>
-        <p>Remote Decryption Terminal</p>
-      </div>
-    </div>
+  <!-- Ambient glowing decorative backgrounds -->
+  <div class="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-purple-600/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none animate-pulse-slow"></div>
+  <div class="absolute bottom-10 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-cyan-600/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none animate-pulse-slow" style="animation-delay: 3s;"></div>
 
-    <!-- Center Content Belt -->
-    <div class="flex-1 flex flex-col md:flex-row bg-[#7a96df] border-t-2 border-[#a2bced] border-b-2 border-[#1852d4] relative">
-      <!-- Left side: Welcome label -->
-      <div class="w-full md:w-1/2 flex items-center justify-center md:justify-end px-12 py-8 border-b md:border-b-0 md:border-r border-[#506fbc]">
-        <div class="text-center md:text-right">
-          <h1 class="text-white text-4xl font-normal italic tracking-wider" style="text-shadow: 2px 2px 3px rgba(0,0,0,0.4);">welcome</h1>
-          <p class="text-white text-xs mt-2 opacity-90">To begin, verify your authentication keys</p>
-        </div>
-      </div>
-
-      <!-- Right side: User Login Selection panel -->
-      <div class="w-full md:w-1/2 flex flex-col justify-center px-12 py-8">
-        <form id="login-form" class="max-w-xs space-y-4" onsubmit="handleLogin(event)">
-          <!-- Dynamic User Account Selection Grid -->
-          <div class="flex items-center gap-4 mb-4">
-            <!-- Classic User Icon Frame -->
-            <div class="w-12 h-12 border-2 border-white rounded-md bg-[#245dd7] flex items-center justify-center text-white shadow-md">
-              <i class="fa-solid fa-chess-knight text-2xl"></i>
-            </div>
-            <div>
-              <h2 class="text-white font-bold text-lg leading-tight" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.3);">Japanboys</h2>
-              <p class="text-[#203a74] text-[11px] font-semibold">System Operator</p>
-            </div>
-          </div>
-
-          <!-- Email Input Field -->
-          <div class="space-y-1">
-            <label class="block text-xs font-bold text-[#1d356d]">E-mail Address</label>
-            <input type="email" id="login-email" required
-              class="w-full bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1 text-sm outline-none focus:border-[#4d69a2] font-mono text-slate-800"
-              placeholder="Japanboys0099@gmail.com">
-          </div>
-
-          <!-- Password Input Field -->
-          <div class="space-y-1">
-            <label class="block text-xs font-bold text-[#1d356d]">Password</label>
-            <input type="password" id="login-password" required
-              class="w-full bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1 text-sm outline-none focus:border-[#4d69a2] font-mono text-slate-800"
-              placeholder="••••••••">
-          </div>
-
-          <!-- Login Execution Row -->
-          <div class="flex items-center justify-between pt-2">
-            <button type="button" onclick="autofillCredentials()" class="text-xs text-[#1e3a79] hover:underline flex items-center gap-1 font-semibold">
-              <i class="fa-solid fa-magic text-[10px]"></i> Autofill Keys
-            </button>
-            <button type="submit" 
-              class="xp-btn-default text-xs font-bold text-[#3a3a3a] px-5 py-1.5 flex items-center gap-2 active:scale-95 transition-transform">
-              <span>Log On</span>
-              <i class="fa-solid fa-arrow-right text-emerald-600"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Bottom Blue Band -->
-    <div class="h-[12%] bg-[#00309c] border-t-2 border-[#3169e6] flex items-center justify-between px-12 text-white/70 text-xs">
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-40 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <button onclick="showAlert('Shutdown Safe', 'Local computer is locked inside safety vault.')" class="hover:text-white flex items-center gap-1">
-          <span class="w-4 h-4 rounded-full bg-red-600 flex items-center justify-center text-[10px] text-white"><i class="fa-solid fa-power-off"></i></span>
-          <span>Turn off computer</span>
-        </button>
-      </div>
-      <p class="italic text-[11px]">Microsoft</p>
-    </div>
-  </div>
-
-
-  <!-- ================= WINDOWS XP BOOT SCREEN (20 Seconds Loop) ================= -->
-  <div id="boot-screen" class="hidden fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
-    <div class="w-full max-w-sm flex flex-col items-center">
-      <!-- Classic Windows XP Logo in SVG (No external asset dependency) -->
-      <div class="flex items-center justify-center mb-10 gap-3">
-        <div class="grid grid-cols-2 gap-1 w-12 h-11 transform -skew-x-12">
-          <div class="bg-[#f25f22] w-5 h-5 rounded-tl-md rounded-br-md"></div>
-          <div class="bg-[#7fba00] w-5 h-5 rounded-tr-md rounded-bl-md"></div>
-          <div class="bg-[#00a4ef] w-5 h-5 rounded-bl-md rounded-tr-md"></div>
-          <div class="bg-[#ffb900] w-5 h-5 rounded-br-md rounded-tl-md"></div>
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/20 shrink-0">
+          <i class="fa-solid fa-bolt text-lg text-white"></i>
         </div>
-        <div class="text-left">
-          <h2 class="text-white text-2xl font-black tracking-tight leading-none">Microsoft</h2>
-          <h3 class="text-white text-lg font-bold leading-none tracking-widest italic text-blue-400">Windows<span class="text-orange-500 font-extrabold text-xl ml-1">xp</span></h3>
+        <div>
+          <span class="font-display font-extrabold text-lg sm:text-2xl tracking-tight text-white block">SHAWIK</span>
+          <span class="text-[10px] sm:text-xs block text-cyan-400 font-bold tracking-wider uppercase leading-none">Free SMM Booster</span>
         </div>
       </div>
 
-      <!-- XP Loading Bar Frame (Scrolling blue blocks) -->
-      <div class="w-48 h-4 border-2 border-[#9b9b9b] rounded-sm p-0.5 flex items-center overflow-hidden bg-black relative">
-        <div id="boot-scroller" class="absolute flex whitespace-nowrap transition-all duration-300">
-          <span class="boot-segment"></span>
-          <span class="boot-segment"></span>
-          <span class="boot-segment"></span>
+      <!-- Server Status Indicators -->
+      <div class="flex items-center gap-3 sm:gap-6">
+        <div class="hidden sm:flex items-center gap-2 bg-slate-900/80 px-3.5 py-1.5 rounded-xl border border-slate-800 text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span class="text-slate-400">Server:</span>
+          <span class="text-emerald-400 font-bold">100% Online</span>
+        </div>
+        <div class="bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20 text-purple-300 px-3 py-1.5 rounded-xl text-xs font-bold tracking-wide shrink-0">
+          <i class="fa-solid fa-circle-nodes mr-1 text-cyan-400 animate-pulse"></i> FREE PORTAL
         </div>
       </div>
-
-      <div class="mt-8 text-[11px] text-zinc-500 font-mono text-center space-y-1">
-        <p>Loading Registry Databases...</p>
-        <p id="boot-progress-percentage" class="text-blue-500 font-bold">0%</p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ================= WINDOWS XP TASKBAR HEADER (Control Desk) ================= -->
-  <header class="bg-[#ece9d8] border-b border-[#808080] px-3 py-1 flex items-center justify-between z-10 text-xs">
-    <div class="flex items-center gap-1.5">
-      <i class="fa-solid fa-network-wired text-[#0053e2]"></i>
-      <span class="font-bold text-slate-800">Connection:</span>
-      <span class="text-emerald-700 font-bold font-mono">ESTABLISHED (Secure Tunnel)</span>
-    </div>
-
-    <!-- Active Account Details -->
-    <div class="flex items-center gap-3">
-      <div class="bg-white border border-[#808080] px-2 py-0.5 font-mono text-[11px] text-blue-800 rounded-sm">
-        <i class="fa-solid fa-user-circle"></i> <span id="desktop-username">Japanboys0099@gmail.com</span>
-      </div>
-      <button onclick="logoutSystem()" class="text-red-700 hover:underline font-bold">
-        <i class="fa-solid fa-right-from-bracket"></i> Disconnect
-      </button>
     </div>
   </header>
 
-
-  <!-- ================= MAIN DESKTOP ENVIRONMENT ================= -->
-  <main class="flex-1 xp-bliss-bg flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+  <!-- Main Container -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 w-full z-10">
     
-    <!-- CLASSIC LUNA APPS WINDOW (Target Decoder) -->
-    <div class="w-full max-w-4xl bg-[#ece9d8] xp-window rounded-t-8px overflow-hidden flex flex-col max-h-[90vh]">
+    <!-- Permanent Blocked Banner (Displayed only if order already placed) -->
+    <div id="order-blocked-top-banner" class="hidden mb-8 bg-gradient-to-r from-red-500/15 to-rose-600/15 border border-red-500/40 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-start gap-4">
+        <div class="bg-red-500/20 text-red-400 p-3 rounded-xl shrink-0">
+          <i class="fa-solid fa-ban text-2xl"></i>
+        </div>
+        <div>
+          <h4 class="font-display font-extrabold text-red-300 text-base">FREE QUEUE CLOSED</h4>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1">
+            <strong class="text-white">SHAWIK HAS STOPPED ANOTHER ORDER.</strong> You are restricted to exactly one free boost session per browser instance. 
+          </p>
+        </div>
+      </div>
+      <button onclick="triggerOrderStopAlert()" class="w-full md:w-auto bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition duration-150">
+        View Network Lock Info
+      </button>
+    </div>
+
+    <!-- Free Tier Warning Banner -->
+    <div id="free-tier-info-banner" class="mb-8 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="flex gap-3.5">
+        <div class="bg-amber-500/20 text-amber-400 p-2.5 rounded-xl shrink-0">
+          <i class="fa-solid fa-circle-exclamation text-xl"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-amber-200">Free Tier Limit Rule</h4>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1">You can request a maximum of <strong class="text-amber-400 font-semibold">100 followers</strong> on this portal. Attempting to input larger values will trigger safety blockades.</p>
+        </div>
+      </div>
+      <button onclick="showNoticeModal('System Capacity Info', 'This portal is restricted to 100 followers maximum. Upgrading removes all safety blocks.')" class="w-full md:w-auto text-center bg-slate-900 border border-slate-800 hover:bg-slate-850 text-slate-300 font-bold text-xs px-4 py-2.5 rounded-xl transition-all">
+        Learn More
+      </button>
+    </div>
+
+    <!-- Responsive Layout Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
       
-      <!-- Classic Blue Window Title Bar -->
-      <div class="xp-titlebar px-2.5 py-1.5 flex items-center justify-between text-white select-none">
-        <div class="flex items-center gap-2">
-          <!-- Small XP Key Icon -->
-          <i class="fa-solid fa-key text-[11px] text-yellow-300"></i>
-          <span class="text-xs font-bold leading-none tracking-wide text-white">Target Feed Unlocking Terminal - XP Service Pack 3</span>
-        </div>
-        <!-- Window Control Buttons (Classic Icons) -->
-        <div class="flex items-center gap-1">
-          <!-- Minimize -->
-          <button class="w-[21px] h-[21px] bg-[#245dd7] border border-[#ffffff]/60 rounded-sm flex items-center justify-center hover:brightness-110 active:brightness-90 text-[10px] font-bold text-white leading-none">
-            _
-          </button>
-          <!-- Maximize -->
-          <button class="w-[21px] h-[21px] bg-[#245dd7] border border-[#ffffff]/60 rounded-sm flex items-center justify-center hover:brightness-110 active:brightness-90 text-[10px] font-bold text-white leading-none">
-            ■
-          </button>
-          <!-- Close -->
-          <button onclick="resetConsole()" class="xp-close-btn w-[21px] h-[21px] border border-[#ffffff]/60 rounded-sm flex items-center justify-center text-[10px] font-bold text-white leading-none">
-            X
-          </button>
-        </div>
-      </div>
-
-      <!-- Classic File Menu Bar -->
-      <div class="bg-[#ece9d8] border-b border-[#a0a0a0] px-3 py-1 flex gap-4 text-[11px] text-slate-800">
-        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">File</span>
-        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Edit</span>
-        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">View</span>
-        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Tools</span>
-        <span class="cursor-pointer hover:bg-[#316ac5] hover:text-white px-2 py-0.5 rounded-sm">Help</span>
-      </div>
-
-      <!-- Two-Pane Layout Explorer Style -->
-      <div class="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
+      <!-- Left side: Form controls -->
+      <div class="lg:col-span-2 space-y-6 sm:space-y-8">
         
-        <!-- Left Side Bar: Common Tasks (Classic XP Blue Folder Taskbar) -->
-        <div class="w-full md:w-52 bg-[#7b9ed6] p-3 flex flex-col gap-3 overflow-y-auto border-b md:border-b-0 md:border-r border-[#002d96]">
+        <!-- Platform Selection Grid -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 sm:p-6 backdrop-blur-sm">
+          <h3 class="text-xs sm:text-sm font-semibold tracking-wider text-slate-400 uppercase mb-4">1. Choose Social Platform</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <button onclick="selectPlatform('instagram')" id="platform-instagram" class="platform-btn group p-3.5 sm:p-5 rounded-xl border border-slate-800 bg-slate-950/40 hover:border-purple-500/40 text-center transition-all flex flex-col items-center justify-center gap-2">
+              <i class="fa-brands fa-instagram text-2xl sm:text-3xl text-pink-500 group-hover:scale-110 transition-transform"></i>
+              <span class="text-xs font-bold text-slate-300">Instagram</span>
+            </button>
+            <button onclick="selectPlatform('tiktok')" id="platform-tiktok" class="platform-btn group p-3.5 sm:p-5 rounded-xl border border-slate-800 bg-slate-950/40 hover:border-purple-500/40 text-center transition-all flex flex-col items-center justify-center gap-2">
+              <i class="fa-brands fa-tiktok text-2xl sm:text-3xl text-cyan-400 group-hover:scale-110 transition-transform"></i>
+              <span class="text-xs font-bold text-slate-300">TikTok</span>
+            </button>
+            <button onclick="selectPlatform('twitter')" id="platform-twitter" class="platform-btn group p-3.5 sm:p-5 rounded-xl border border-slate-800 bg-slate-950/40 hover:border-purple-500/40 text-center transition-all flex flex-col items-center justify-center gap-2">
+              <i class="fa-brands fa-x-twitter text-2xl sm:text-3xl text-white group-hover:scale-110 transition-transform"></i>
+              <span class="text-xs font-bold text-slate-300">X / Twitter</span>
+            </button>
+            <button onclick="selectPlatform('youtube')" id="platform-youtube" class="platform-btn group p-3.5 sm:p-5 rounded-xl border border-slate-800 bg-slate-950/40 hover:border-purple-500/40 text-center transition-all flex flex-col items-center justify-center gap-2">
+              <i class="fa-brands fa-youtube text-2xl sm:text-3xl text-red-500 group-hover:scale-110 transition-transform"></i>
+              <span class="text-xs font-bold text-slate-300">YouTube</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- The Control Board -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 sm:p-8 backdrop-blur-sm relative overflow-hidden">
           
-          <!-- Folder Tasks Box -->
-          <div class="bg-white rounded-t-lg overflow-hidden border border-[#002d96]/40 shadow-sm">
-            <div class="bg-gradient-to-r from-[#e7f1f9] to-[#bfdbff] px-2.5 py-1.5 flex items-center justify-between border-b border-[#002d96]/30">
-              <span class="text-[11px] font-bold text-[#0c2470]">Feed Categories</span>
-              <i class="fa-solid fa-folder-open text-[#0c2470] text-xs"></i>
+          <!-- Loading Overlay -->
+          <div id="execution-overlay" class="hidden absolute inset-0 bg-slate-950/98 z-30 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-300">
+            <div class="w-20 h-20 relative mb-6">
+              <div class="absolute inset-0 rounded-full border-2 border-purple-500/20 animate-ping"></div>
+              <div class="absolute inset-2 rounded-full border-2 border-cyan-400/40 animate-pulse"></div>
+              <div class="absolute inset-4 rounded-full bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center">
+                <i class="fa-solid fa-circle-nodes text-xl text-white animate-spin"></i>
+              </div>
             </div>
-            <div class="p-2 space-y-1 bg-[#d6e3f7]">
-              <!-- Live Feed button -->
-              <button onclick="changeCategory('live')" id="btn-cat-live" 
-                class="w-full text-left px-2 py-1 text-xs text-[#0c2470] hover:underline flex items-center justify-between">
-                <span class="flex items-center gap-1.5 font-bold">
-                  <i class="fa-solid fa-tower-broadcast text-red-600"></i> Live Feed
-                </span>
-                <span class="text-[9px] bg-red-100 text-red-700 px-1 rounded border border-red-300">MUTED</span>
-              </button>
-              
-              <!-- Video Feed button -->
-              <button onclick="changeCategory('video')" id="btn-cat-video" 
-                class="w-full text-left px-2 py-1 text-xs text-[#0c2470] hover:underline flex items-center justify-between bg-white/40 border border-[#4a84d4]/50 rounded-sm">
-                <span class="flex items-center gap-1.5 font-bold">
-                  <i class="fa-solid fa-film text-blue-700"></i> Video Feed
-                </span>
-                <span class="text-[9px] bg-emerald-100 text-emerald-800 px-1 rounded border border-emerald-300">ACTIVE</span>
-              </button>
+            
+            <h3 class="text-xl font-display font-bold text-white mb-2" id="loader-status">Boot Sequence Initializing</h3>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-sm mb-6" id="loader-subtitle">Connecting to SHAWIK SMM dispatch systems...</p>
+            
+            <!-- Realtime simulated logs -->
+            <div class="w-full max-w-md bg-slate-950 rounded-xl p-3 text-left font-mono text-[11px] text-cyan-400 border border-slate-800 h-28 overflow-y-auto mb-6 space-y-1" id="process-logs">
+              <div>[SYSTEM] Awaiting push trigger...</div>
+            </div>
+
+            <!-- Progress Info -->
+            <div class="w-full max-w-md bg-slate-800 rounded-full h-3 overflow-hidden mb-2">
+              <div id="loader-bar" class="bg-gradient-to-r from-purple-500 to-cyan-400 h-full w-0 transition-all duration-300 ease-out"></div>
+            </div>
+            <div class="flex justify-between w-full max-w-md text-[11px] font-semibold text-slate-400">
+              <span id="loader-percentage">0% Transferred</span>
+              <span id="loader-eta">ETA: Calculating...</span>
             </div>
           </div>
 
-          <!-- Other Places Box -->
-          <div class="bg-white rounded-t-lg overflow-hidden border border-[#002d96]/40 shadow-sm">
-            <div class="bg-gradient-to-r from-[#e7f1f9] to-[#bfdbff] px-2.5 py-1.5 flex items-center justify-between border-b border-[#002d96]/30">
-              <span class="text-[11px] font-bold text-[#0c2470]">System Links</span>
-              <i class="fa-solid fa-server text-[#0c2470] text-[10px]"></i>
+          <h3 class="text-xs sm:text-sm font-semibold tracking-wider text-slate-400 uppercase mb-6">2. Configure Booster Parameters</h3>
+
+          <div class="space-y-6">
+            
+            <!-- Link Field -->
+            <div>
+              <label for="target-link" class="block text-sm font-bold text-slate-300 mb-2 flex items-center justify-between">
+                <span>Social Link URL</span>
+                <span class="text-xs text-purple-400 font-normal"><i class="fa-solid fa-globe mr-1"></i> Public profile only</span>
+              </label>
+              <div class="relative rounded-xl shadow-sm">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <i id="link-icon" class="fa-solid fa-link text-slate-400"></i>
+                </div>
+                <input 
+                  type="url" 
+                  name="target-link" 
+                  id="target-link" 
+                  class="block w-full rounded-xl border border-slate-800 bg-slate-950/80 py-4 pl-11 pr-4 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 text-sm sm:text-base" 
+                  placeholder="https://instagram.com/username"
+                  required
+                >
+              </div>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span class="text-xs text-slate-500">Quick template:</span>
+                <button type="button" onclick="insertSample('inst')" class="text-[11px] text-slate-300 bg-slate-800/40 px-2.5 py-1 rounded-lg hover:bg-slate-800 transition">Instagram Sample</button>
+                <button type="button" onclick="insertSample('tt')" class="text-[11px] text-slate-300 bg-slate-800/40 px-2.5 py-1 rounded-lg hover:bg-slate-800 transition">TikTok Sample</button>
+              </div>
             </div>
-            <div class="p-2 space-y-1.5 bg-[#d6e3f7] text-[11px] text-[#0c2470]">
-              <div class="flex items-center gap-2"><i class="fa-solid fa-computer"></i> My Computer</div>
-              <div class="flex items-center gap-2"><i class="fa-solid fa-folder-tree"></i> Shared Media</div>
-              <div class="flex items-center gap-2"><i class="fa-solid fa-network-wired"></i> Workgroup</div>
+
+            <!-- Parameters Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Quantity Selector -->
+              <div>
+                <label for="quantity" class="block text-sm font-bold text-slate-300 mb-2 flex items-center justify-between">
+                  <span>Followers Quantity</span>
+                  <span class="text-xs text-amber-400 font-bold"><i class="fa-solid fa-shield-halved"></i> Max 100</span>
+                </label>
+                <div class="relative rounded-xl shadow-sm">
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    id="quantity" 
+                    min="1" 
+                    max="10000" 
+                    value="100" 
+                    oninput="validateQuantity(this.value)"
+                    class="block w-full rounded-xl border border-slate-800 bg-slate-950/80 py-3.5 px-4 text-slate-100 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 text-lg font-bold"
+                  >
+                  <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <button type="button" onclick="setToMaxLimit()" class="bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                      Set 100
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Live alert block if quantity > 100 -->
+                <div id="limit-warning" class="hidden mt-2.5 p-3 bg-red-950/40 border border-red-500/30 text-red-300 rounded-xl text-xs flex gap-2">
+                  <i class="fa-solid fa-triangle-exclamation text-red-400 mt-0.5"></i>
+                  <span><strong>Limit Blocked:</strong> Only <strong>SHAWIK</strong> allows more than 100. Reduce quantity to continue.</span>
+                </div>
+              </div>
+
+              <!-- Toast timers -->
+              <div>
+                <label for="dismiss-delay" class="block text-sm font-bold text-slate-300 mb-2 flex items-center justify-between">
+                  <span>Success Alert Close Timer</span>
+                  <span class="text-xs text-cyan-400"><i class="fa-regular fa-clock"></i> Auto-disappears</span>
+                </label>
+                <select 
+                  id="dismiss-delay" 
+                  class="block w-full rounded-xl border border-slate-800 bg-slate-950/80 py-4 px-4 text-slate-100 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 text-sm"
+                >
+                  <option value="3">3 Seconds</option>
+                  <option value="5" selected>5 Seconds (Recommended)</option>
+                  <option value="8">8 Seconds</option>
+                  <option value="12">12 Seconds</option>
+                </select>
+              </div>
+
             </div>
+
+            <!-- Lock and Block warnings -->
+            <div id="lock-warning-card" class="hidden p-4 rounded-xl bg-gradient-to-br from-red-950/40 to-slate-900 border border-red-500/30 space-y-3">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-lock text-red-400 text-lg animate-pulse"></i>
+                <h4 class="font-bold text-red-200 text-sm">Follower Target Locked!</h4>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                You entered more than 100 followers. Only premium systems powered by SHAWIK allow limitless social delivery transactions.
+              </p>
+              <button type="button" onclick="setToMaxLimit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-2 px-3 rounded-lg transition">
+                Reset to Safe Limit (100)
+              </button>
+            </div>
+
+            <!-- Push Trigger Button -->
+            <button 
+              id="push-button" 
+              onclick="triggerBoosterPush()" 
+              class="w-full py-4 rounded-xl font-display font-extrabold text-base tracking-wide bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white shadow-lg shadow-cyan-500/15 hover:shadow-cyan-500/25 transition-all transform active:scale-[0.99] flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-bolt text-lg"></i> PUSH BOOSTER TO TARGET
+            </button>
+
           </div>
 
         </div>
 
-        <!-- Right Side Bar: Work Area / Console -->
-        <div class="flex-1 bg-[#f1efe2] p-4 sm:p-5 flex flex-col min-h-0 overflow-y-auto">
+      </div>
+
+      <!-- Right side: Network Monitors & Session history logs -->
+      <div class="space-y-6 sm:space-y-8">
+        
+        <!-- Network Monitor Widget -->
+        <div class="bg-gradient-to-b from-slate-900/60 to-slate-900/20 border border-slate-800/80 rounded-2xl p-5 backdrop-blur-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-display font-bold text-xs tracking-wider uppercase text-slate-400">SHAWIK Core Telemetry</h4>
+            <span class="inline-flex items-center rounded-md bg-cyan-500/10 px-2.5 py-1 text-xs font-semibold text-cyan-400 ring-1 ring-inset ring-cyan-500/20">STABLE</span>
+          </div>
           
-          <!-- Warn screen when Live Feed category is clicked -->
-          <div id="live-feed-alert" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center">
-            <div class="w-12 h-12 bg-[#ece9d8] xp-window rounded flex items-center justify-center mb-3">
-              <i class="fa-solid fa-circle-exclamation text-3xl text-amber-500"></i>
+          <div class="space-y-4 text-xs">
+            <div class="flex justify-between items-center">
+              <span class="text-slate-400">Proxy Gateway load</span>
+              <span class="text-cyan-400 font-bold font-mono">18.4%</span>
             </div>
-            <h4 class="font-bold text-sm text-[#002d96]">Live Feed Protocol Access Denied</h4>
-            <p class="text-xs text-slate-600 max-w-sm mt-1.5">You must run the injection vectors on the active <b class="text-blue-700 hover:underline cursor-pointer" onclick="changeCategory('video')">Video Feed</b> category first to bypass standard security filters.</p>
+            <div class="w-full bg-slate-800/60 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-cyan-500 h-full w-[18.4%]"></div>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-slate-400">Delivery cluster queue latency</span>
+              <span class="text-purple-400 font-bold font-mono">112ms</span>
+            </div>
+            <div class="w-full bg-slate-800/60 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-purple-500 h-full w-[30%]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Persistent session history tracker -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 backdrop-blur-sm flex flex-col min-h-[280px]">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-purple-400"></i>
+              <h4 class="font-display font-semibold text-sm text-slate-200">Local Session Log</h4>
+            </div>
+            <button onclick="clearSessionHistory()" class="text-[10px] uppercase font-extrabold text-slate-500 hover:text-slate-300 transition">
+              <i class="fa-solid fa-trash mr-1"></i> Clear
+            </button>
           </div>
 
-          <!-- Active Workspace: Video Feed Panel -->
-          <div id="video-feed-panel" class="flex-1 flex flex-col gap-4">
-            
-            <!-- Step 1: Input target link -->
-            <div class="bg-[#ece9d8] xp-window p-4 flex flex-col gap-3">
-              <h3 class="text-xs font-bold text-[#0c2470] uppercase border-b border-[#c0c0c0] pb-1">
-                Step 1: Enter Targeted Feed Bypass Address
-              </h3>
-              
-              <div class="flex flex-col sm:flex-row gap-2.5">
-                <div class="flex-1 flex gap-2">
-                  <input type="text" id="target-link-input"
-                    class="flex-1 bg-white border border-[#7f9db9] rounded-sm px-2.5 py-1.5 text-xs font-mono text-slate-800 outline-none"
-                    placeholder="Enter link: e.g., allah.kingdom.fam">
-                  <button onclick="autofillTargetLink()" 
-                    class="xp-btn-default px-2.5 py-1 text-xs text-slate-700 font-bold">
-                    Default
-                  </button>
-                </div>
-                
-                <button onclick="verifyTargetAccount()"
-                  class="xp-btn-default px-6 py-1.5 text-xs font-bold text-slate-800 flex items-center justify-center gap-1">
-                  <i class="fa-solid fa-magnifying-glass text-blue-700"></i>
-                  <span>Find Account</span>
-                </button>
-              </div>
-              <p class="text-[10px] text-slate-500 font-mono">Ensure link is structured exactly as registered in system directories.</p>
+          <!-- Empty History State -->
+          <div id="history-empty" class="flex-grow flex flex-col items-center justify-center text-center p-6 space-y-2">
+            <div class="w-10 h-10 rounded-full bg-slate-850 flex items-center justify-center text-slate-500">
+              <i class="fa-solid fa-receipt text-sm"></i>
             </div>
-
-            <!-- Step 2: Show Verified Target Account Details with 'zon.png' profile -->
-            <div id="account-details-panel" class="hidden bg-white xp-inset p-4 flex flex-col sm:flex-row gap-5 relative">
-              <!-- Watermark pattern of classic XP dialog -->
-              <div class="absolute right-3 top-3 opacity-10 text-slate-300 pointer-events-none">
-                <i class="fa-solid fa-user-shield text-7xl"></i>
-              </div>
-
-              <!-- zon.png Profile Avatar Area -->
-              <div class="flex flex-col items-center">
-                <div class="w-28 h-28 border-2 border-[#0053e2] bg-[#ece9d8] p-1.5 shadow-md flex flex-col justify-between items-center rounded-sm">
-                  <!-- The Profile photo graphics calling real zon.png -->
-                  <div class="flex-1 w-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-400 relative">
-                    <!-- Real image workspace link -->
-                    <img src="zon.png" alt="Profile" id="target-profile-image" class="w-full h-full object-cover" onerror="handleImageLoadError(this)">
-                  </div>
-                  <span class="text-[10px] font-bold text-[#0c2470] mt-1 font-mono">zon.png</span>
-                </div>
-                <div class="mt-2 bg-emerald-100 border border-emerald-500 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-sm">
-                  TARGET VERIFIED
-                </div>
-              </div>
-
-              <!-- Account Details Text Grid -->
-              <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">User ID</span>
-                  <span class="font-bold text-slate-800 font-mono">7633340561102472210</span>
-                </div>
-
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Private Channel</span>
-                  <span class="font-bold text-red-600 font-mono">No (Public Bypass Available)</span>
-                </div>
-
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Created Timestamp</span>
-                  <span class="font-bold text-slate-700 font-mono">2026-04-27 07:40:29</span>
-                </div>
-
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Nickname Edited At</span>
-                  <span class="font-bold text-slate-700 font-mono">2026-04-27 07:40:48</span>
-                </div>
-
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Username Changed At</span>
-                  <span class="font-bold text-slate-400 font-mono">N/A</span>
-                </div>
-
-                <div class="bg-[#f1efe2] p-2 border border-slate-300 rounded-sm">
-                  <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Support/Gift Level</span>
-                  <span class="font-bold text-amber-600 flex items-center gap-1 font-mono">
-                    <i class="fa-solid fa-gift text-xs"></i> Lv.2 (Tier Access)
-                  </span>
-                </div>
-
-                <!-- Injection Trigger Action -->
-                <div class="sm:col-span-2 pt-2 border-t border-slate-200 flex justify-end">
-                  <button id="btn-inject" onclick="startPacketInjection()"
-                    class="xp-btn-default px-6 py-2 text-xs font-bold text-slate-800 flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform">
-                    <i class="fa-solid fa-syringe text-purple-700"></i>
-                    <span>Inject Bypass Packets</span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Step 3: Injection Terminal & Countdown (60 seconds progress) -->
-            <div id="injection-terminal-panel" class="hidden bg-black border border-[#808080] p-4 text-xs">
-              <div class="flex items-center justify-between border-b border-zinc-700 pb-2 mb-3">
-                <span class="font-mono text-emerald-500 flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
-                  XP SECURE INJECT MODULE ACTIVE
-                </span>
-                <span id="injection-countdown" class="font-mono text-red-500 font-bold bg-zinc-900 px-2.5 py-0.5 rounded border border-zinc-800">
-                  60.00s
-                </span>
-              </div>
-
-              <!-- Terminal scrolling commands log -->
-              <div id="injection-console" class="h-44 bg-[#050505] p-3 rounded border border-zinc-800 font-mono text-[11px] text-emerald-400 space-y-1.5 overflow-y-auto mb-3">
-                <!-- Log feed lines added dynamically -->
-              </div>
-
-              <!-- Custom Windows XP Progress Bar Blue Segments style -->
-              <div class="space-y-1 bg-zinc-950 p-2.5 border border-zinc-800 rounded">
-                <div class="flex items-center justify-between font-mono text-[10px] text-zinc-400 mb-1">
-                  <span id="inject-status-desc">Hooking memory threads...</span>
-                  <span id="inject-percentage-text">0%</span>
-                </div>
-                <!-- XP classic progress track -->
-                <div class="w-full h-5 bg-zinc-900 border border-zinc-700 rounded-sm p-0.5 flex gap-1 overflow-hidden" id="inject-progress-track">
-                  <!-- Segments added dynamically via JS -->
-                </div>
-              </div>
-
-              <!-- Decompiler Button Trigger (Hidden until injection finished) -->
-              <div id="decompiler-trigger-box" class="hidden mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between">
-                <span class="text-emerald-500 font-mono text-[11px]">✔ Bypass memory buffers fully established!</span>
-                <button onclick="startCodeDecompilation()"
-                  class="xp-btn-default px-5 py-2 text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <i class="fa-solid fa-rotate-left text-blue-700 animate-spin"></i>
-                  <span>Decompile</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 4: Decompile Progress Matrix -->
-            <div id="decompile-panel" class="hidden bg-[#ece9d8] xp-window p-4 flex flex-col gap-3">
-              <h3 class="text-xs font-bold text-[#0c2470] uppercase border-b border-[#c0c0c0] pb-1">
-                Step 3: Source Code Recomposition Machine
-              </h3>
-
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-[10px] text-slate-600 bg-white/50 p-2 border border-slate-300 rounded">
-                <div>Offset Address: <span id="decompile-offset" class="font-bold text-blue-700">0x00FF8E</span></div>
-                <div>CRC Integrity: <span class="font-bold text-emerald-600">VERIFIED</span></div>
-                <div>Vector Class: <span class="font-bold text-purple-700">BYPASS_STREAM</span></div>
-                <div>Matrix Load: <span class="font-bold text-slate-700">SUCCESS</span></div>
-              </div>
-
-              <!-- Loading progress of decompression -->
-              <div class="space-y-1">
-                <div class="flex justify-between text-[10px] font-bold text-slate-600">
-                  <span id="decompile-status-desc">Parsing compiler signatures...</span>
-                  <span id="decompile-percent-text">0%</span>
-                </div>
-                <div class="w-full h-3 bg-white border border-slate-400 p-0.5 rounded-sm">
-                  <div id="decompile-progress-bar" class="h-full bg-blue-600 transition-all duration-150" style="width: 0%"></div>
-                </div>
-              </div>
-
-              <!-- File generation node result (manifest) -->
-              <div id="manifest-result-box" class="hidden mt-3 bg-white border border-slate-400 p-3.5 flex items-center justify-between gap-3 shadow-inner rounded-sm">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 bg-[#ece9d8] border border-slate-400 flex items-center justify-center text-slate-600 shadow-sm">
-                    <i class="fa-solid fa-file-invoice text-xl text-blue-700"></i>
-                  </div>
-                  <div>
-                    <h5 class="text-xs font-bold text-slate-800">decompiled_access_nodes.txt</h5>
-                    <p class="text-[10px] text-slate-500 font-mono">Size: 4.8 KB | Generated: 2026-06-04</p>
-                  </div>
-                </div>
-                <button onclick="launchCrackedNotepad()"
-                  class="xp-btn-default px-4 py-2 text-xs font-bold text-slate-800 flex items-center gap-1">
-                  <i class="fa-solid fa-code text-emerald-600"></i>
-                  <span>View and Crack</span>
-                </button>
-              </div>
-            </div>
-
+            <p class="text-xs font-semibold text-slate-400">No Boost Transactions Recorded</p>
+            <p class="text-[10px] text-slate-500">Only 1 free push sequence is permitted.</p>
           </div>
 
+          <!-- Filled History State -->
+          <div id="history-list" class="hidden flex-grow overflow-y-auto max-h-[300px] space-y-3">
+            <!-- Dynamic transactions go here -->
+          </div>
         </div>
 
       </div>
@@ -543,521 +358,555 @@
 
   </main>
 
-
-  <!-- ================= WINDOWS XP NOTEPAD DECRYPTER OVERLAY ================= -->
-  <div id="notepad-overlay" class="hidden fixed inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
-    <div class="w-full max-w-3xl bg-[#ece9d8] xp-window rounded-t-8px overflow-hidden flex flex-col max-h-[85vh] shadow-2xl">
+  <!-- Disappearing Success Toast -->
+  <div id="success-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-500 ease-out max-w-sm w-full px-4 sm:px-0">
+    <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl p-5 shadow-2xl shadow-emerald-500/10 glow-cyan overflow-hidden relative">
+      <div id="toast-dim-progress" class="absolute bottom-0 left-0 h-1 bg-emerald-500 w-full transition-all duration-100 ease-linear"></div>
       
-      <!-- Notepad title bar -->
-      <div class="xp-titlebar px-2 py-1 flex items-center justify-between text-white">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-file-lines text-xs text-yellow-200"></i>
-          <span class="text-xs font-bold text-white">decompiled_access_nodes.txt - Notepad</span>
+      <div class="flex gap-4">
+        <div class="bg-emerald-500/20 text-emerald-400 p-2.5 rounded-xl shrink-0 h-11 w-11 flex items-center justify-center">
+          <i class="fa-solid fa-check-double text-xl animate-bounce"></i>
         </div>
-        <button onclick="dismissNotepad()" class="xp-close-btn w-[18px] h-[18px] border border-[#ffffff]/60 rounded-sm flex items-center justify-center text-[9px] font-bold text-white leading-none">
-          X
-        </button>
+        <div class="flex-grow min-w-0">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-white text-sm">Boost Completed!</h4>
+            <span class="text-[9px] font-mono text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded" id="toast-target-platform">INSTAGRAM</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            Successfully pushed <strong id="toast-followers-count" class="text-emerald-400 font-extrabold">100</strong> free tier followers to your link.
+          </p>
+          <div class="mt-2 text-[10px] text-slate-400 flex items-center justify-between font-mono">
+            <span id="toast-ref-id">TX: #SK-001</span>
+            <span id="toast-countdown-text" class="italic">Closing in 5s</span>
+          </div>
+        </div>
       </div>
-
-      <!-- Menu bar -->
-      <div class="bg-[#ece9d8] border-b border-[#a0a0a0] px-3 py-1 flex gap-4 text-[11px] text-slate-800">
-        <span>File</span>
-        <span>Edit</span>
-        <span>Format</span>
-        <span>View</span>
-        <span>Help</span>
-      </div>
-
-      <!-- Notepad text sheet area -->
-      <div class="flex-1 bg-white p-4 overflow-y-auto h-[380px] font-mono text-[12px] text-slate-800 space-y-2 selection:bg-[#316ac5] selection:text-white border-inset">
-        <p class="text-emerald-700">// =========================================================================</p>
-        <p class="text-emerald-700">// MICROSOFT WINDOWS XP KERNEL LOG - RECONSTRUCTION MANIFEST</p>
-        <p class="text-emerald-700">// DECOMPILED AND DECRYPTED SUCCESSFULLY FOR USER ID: 7633340561102472210</p>
-        <p class="text-emerald-700">// =========================================================================</p>
-
-        <p class="font-bold text-blue-800 mt-4">struct BypassPayloadTarget {</p>
-        <p class="pl-5">string username_reference = <span class="text-red-700">"allah.kingdom.fam"</span>;</p>
-        <p class="pl-5">string core_identifier    = <span class="text-red-700">"7633340561102472210"</span>;</p>
-        <p class="pl-5">string image_profile_tag  = <span class="text-red-700">"zon.png"</span>;</p>
-        <p class="pl-5">bool is_private_restricted= <span class="text-red-700">false</span>;</p>
-        <p class="pl-5">string creation_log       = <span class="text-red-700">"2026-04-27 07:40:29"</span>;</p>
-        <p class="pl-5">string modification_log   = <span class="text-red-700">"2026-04-27 07:40:48"</span>;</p>
-        <p class="pl-5">int support_subscription  = <span class="text-red-700">2</span>;</p>
-        <p class="font-bold text-blue-800">};</p>
-
-        <p class="mt-4 text-slate-500">// Simulating feed injection protocol streams...</p>
-        <p class="text-indigo-700">import { connectRegistryChannel } from '@winxp-sp3/network-shield';</p>
-        <p class="text-indigo-700">function executeBypassRoutine(targetHexAddress) {</p>
-        <p class="pl-5">console.log("[XP-BYPASS-INFO] Injecting routing hooks to port 443...");</p>
-        <p class="pl-5">const hookSocket = connectRegistryChannel(targetHexAddress, "PROX_99A_B2_8F0429AC3B4E");</p>
-        <p class="pl-5">return hookSocket.bypassHandshakeIntegrity();</p>
-        <p class="text-indigo-700">}</p>
-
-        <p class="font-bold text-purple-800 mt-4">// DECRYPTER SYSTEM MEMORY HEX BLOCK INTERSECT:</p>
-        <p class="text-slate-600 font-semibold">0x00FF8E00: A4 2F F0 C8 2B BB 14 FE DE AD BE EF 00 FF 33 AA</p>
-        <p class="text-slate-600 font-semibold">0x00FF8E10: 99 C2 E4 1F 7C B4 D1 C0 DE CC AA FF 11 22 33 44</p>
-        <p class="text-slate-600 font-semibold">0x00FF8E20: BA BE DE AD 76 33 34 05 61 10 24 72 21 0F EE DD</p>
-
-        <p class="mt-4 text-emerald-700 font-bold">// [SUCCESS] ALL MEDIA FEEDS DECRYPTION PROTOCOL COMPLETED.</p>
-        <p class="bg-blue-100 border border-blue-500 text-blue-800 p-2.5 text-center font-bold rounded-sm mt-3">
-          TARGET CHANNELS BYPASSED - SOURCE DECRYPTION COMPLETED & UNLOCKED
-        </p>
-      </div>
-
-      <!-- Action Footer -->
-      <div class="p-3 bg-[#ece9d8] border-t border-[#a0a0a0] flex justify-end gap-2.5">
-        <button onclick="saveCrackedManifest()" class="xp-btn-default px-5 py-1 text-xs font-bold text-slate-800 flex items-center gap-1">
-          <i class="fa-solid fa-floppy-disk text-slate-600"></i>
-          <span>Save File</span>
-        </button>
-        <button onclick="dismissNotepad()" class="xp-btn-default px-5 py-1 text-xs text-slate-800">
-          Cancel
-        </button>
-      </div>
-
     </div>
   </div>
 
-
-  <!-- ================= WINDOWS XP SYSTEM TASKBAR ================= -->
-  <footer class="xp-taskbar h-[38px] flex items-center justify-between select-none relative z-10 text-xs">
-    
-    <!-- Left Hand: Green Start Button & Quick Tasks -->
-    <div class="flex items-center h-full">
+  <!-- Custom Alert Warning Modal for blocked duplicate orders -->
+  <div id="alert-lock-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md hidden">
+    <div class="bg-slate-900 border border-red-500/30 rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl shadow-red-500/5 glow-red relative overflow-hidden">
+      <!-- Top banner design -->
+      <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 to-rose-600"></div>
       
-      <!-- Green Start Button -->
-      <button onclick="toggleStartMenu()" class="xp-start-btn h-full px-5 flex items-center gap-1.5 rounded-r-lg border-r border-[#205002] cursor-pointer">
-        <div class="grid grid-cols-2 gap-0.5 w-3.5 h-3.5 transform -skew-x-12">
-          <div class="bg-[#f25f22] w-1.5 h-1.5 rounded-tl-sm"></div>
-          <div class="bg-[#7fba00] w-1.5 h-1.5 rounded-tr-sm"></div>
-          <div class="bg-[#00a4ef] w-1.5 h-1.5 rounded-bl-sm"></div>
-          <div class="bg-[#ffb900] w-1.5 h-1.5 rounded-br-sm"></div>
+      <div class="text-center space-y-4">
+        <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center mx-auto text-3xl animate-pulse">
+          <i class="fa-solid fa-ban"></i>
         </div>
-        <span class="text-white font-black italic text-sm tracking-wide" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.5);">start</span>
-      </button>
+        
+        <h3 class="font-display font-extrabold text-xl text-red-200 tracking-tight leading-tight">
+          SHAWIK HAS STOPPED ANOTHER ORDER<br class="hidden sm:inline">YOU CANT MAKE AN ORDER
+        </h3>
+        
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          The SHAWIK free server nodes have detected that you already processed your free booster transaction limit of <span class="text-white font-bold">100 followers</span> on this profile. Subsequent delivery requests have been blocked.
+        </p>
 
-      <!-- Active app tab -->
-      <div class="h-full flex items-center px-1.5">
-        <div class="bg-[#1e4dc8] border border-[#143ea6] text-white font-bold px-3 py-1 rounded-sm flex items-center gap-1.5 h-[28px] shadow-inner cursor-default">
-          <i class="fa-solid fa-shield-halved text-orange-400"></i>
-          <span>Feed Decoder</span>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 text-left space-y-2">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>Security Rule:</span>
+            <span class="text-red-400 font-bold font-mono">Strict 1-Free-Boost Limit</span>
+          </div>
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>Authorization Status:</span>
+            <span class="text-amber-400 font-bold">Locked (Sandbox Tier)</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 pt-2">
+          <button onclick="closeLockModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-4 rounded-xl text-xs transition">
+            Close Warning
+          </button>
+          <button onclick="resetOrderLockDevTool()" class="w-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg shadow-purple-500/20 transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Dont click ant button you will cause danger 
+          </button>
         </div>
       </div>
-
     </div>
+  </div>
 
-    <!-- Right Hand: Clock Tray -->
-    <div class="bg-[#0f80ff] h-full flex items-center px-3 gap-3 border-l border-[#002d96] shadow-inner" style="background: linear-gradient(to bottom, #0c9afe 0%, #0060e2 12%, #0866ee 40%, #004ee0 100%);">
-      <div class="flex items-center gap-2 text-white opacity-90">
-        <i class="fa-solid fa-volume-low"></i>
-        <i class="fa-solid fa-desktop"></i>
+  <!-- Global notice modal -->
+  <div id="notice-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+      <h3 id="modal-title" class="font-display font-extrabold text-lg text-white mb-3">Notice</h3>
+      <p id="modal-body" class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6"></p>
+      <div class="flex justify-end">
+        <button onclick="closeNoticeModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-5 py-2.5 rounded-lg transition-all">
+          Close Notice
+        </button>
       </div>
-      <div class="h-4 w-px bg-[#002166] opacity-40"></div>
-      <!-- Real-time XP Clock -->
-      <span id="system-clock" class="text-white font-bold text-[11px]">12:00 PM</span>
     </div>
+  </div>
 
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950 py-6 sm:py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-xs text-slate-500 text-center md:text-left">
+        &copy; 2026 SHAWIK SMM Panel Core. Built for extreme responsiveness & fast social deployment.
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 text-xs text-slate-400">
+        <a href="#" onclick="event.preventDefault(); showNoticeModal('Usage Agreement', 'This testing booster respects SMM cluster limits. Abuse, spamming, and double submissions are actively filtered by server heuristics.')" class="hover:text-purple-400 transition">Terms & Filters</a>
+        <span class="text-slate-800">|</span>
+        <a href="#" onclick="event.preventDefault(); showNoticeModal('Network Architecture', 'High priority delivery nodes are reserved for enterprise integrations. System logs shown here trace standard cloud dispatch queues.')" class="hover:text-cyan-400 transition">Cluster Node Info</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- Start Menu Box (Hidden unless clicked) -->
-  <div id="start-menu-drawer" class="hidden fixed bottom-[38px] left-0 w-72 bg-white border-2 border-[#0053e2] rounded-t-lg shadow-2xl z-20 flex flex-col overflow-hidden">
-    <!-- XP Start Menu Header -->
-    <div class="bg-gradient-to-r from-[#0053e2] to-[#3d86f5] p-3 flex items-center gap-3 border-b border-[#002d96]">
-      <div class="w-10 h-10 rounded-md border-2 border-white bg-amber-500 flex items-center justify-center text-white font-bold shadow-md">
-        <i class="fa-solid fa-user-ninja text-lg"></i>
-      </div>
-      <div>
-        <h4 id="start-user-label" class="text-white font-bold text-sm">Japanboys0099@gmail.com</h4>
-        <span class="text-[10px] text-emerald-200 font-bold uppercase tracking-wider">SYSTEM OPERATOR</span>
-      </div>
-    </div>
-
-    <!-- Start Menu Split Body -->
-    <div class="flex bg-[#d6e3f7] p-1.5 gap-1.5 text-xs">
-      <!-- White panel left -->
-      <div class="flex-1 bg-white p-2 space-y-1.5 border border-[#1d356d]/20 rounded-sm shadow-inner">
-        <div class="text-[10px] text-slate-400 font-bold border-b border-slate-100 pb-0.5 mb-1 uppercase">Recommended Programs</div>
-        
-        <button onclick="changeCategory('video'); toggleStartMenu();" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
-          <i class="fa-solid fa-clapperboard text-blue-700"></i> Video Decrypter
-        </button>
-
-        <button onclick="changeCategory('live'); toggleStartMenu();" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
-          <i class="fa-solid fa-broadcast-tower text-red-600"></i> Live Stream Port
-        </button>
-
-        <button onclick="showAlert('Diagnostic Result', 'System kernel is 100% operational.')" class="w-full flex items-center gap-2 px-2 py-1 hover:bg-[#316ac5] hover:text-white rounded-sm text-left font-bold text-slate-700">
-          <i class="fa-solid fa-stethoscope text-emerald-600"></i> System Diagnostic
-        </button>
-      </div>
-
-      <!-- Right side blue panel -->
-      <div class="w-28 flex flex-col justify-between py-1 px-1.5 text-[11px] text-[#002d96]">
-        <div class="space-y-2 font-bold">
-          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-computer"></i> My Computer</div>
-          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-folder-tree"></i> Shared Media</div>
-          <div class="cursor-pointer hover:underline"><i class="fa-solid fa-network-wired"></i> Connection Map</div>
-        </div>
-        
-        <button onclick="resetConsole(); toggleStartMenu();" class="mt-auto w-full text-left font-bold text-red-800 hover:underline border-t border-slate-300 pt-2 flex items-center gap-1">
-          <i class="fa-solid fa-arrows-rotate"></i> Clean System
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Custom Toast Dialog Box -->
-  <div id="custom-dialog" class="hidden fixed top-5 right-5 z-50 bg-[#ece9d8] xp-window max-w-xs p-3 flex gap-3 animate-bounce">
-    <div class="text-blue-700 text-lg flex-shrink-0">
-      <i class="fa-solid fa-info-circle"></i>
-    </div>
-    <div class="flex-1 text-xs">
-      <h5 id="dialog-title" class="font-bold text-[#0c2470]">Alert Notification</h5>
-      <p id="dialog-msg" class="text-slate-600 mt-1"></p>
-    </div>
-    <button onclick="closeDialog()" class="text-slate-500 hover:text-black font-bold text-xs flex-shrink-0 self-start">
-      X
-    </button>
-  </div>
-
-
-  <!-- ================= LOGIC CONTROLLER MATRIX ================= -->
+  <!-- Script Logic -->
   <script>
-    // System Variables
-    const defaultCredentials = {
-      email: "Japanboys0099@gmail.com",
-      pass: "Rockmeta"
+    // App State Configuration
+    const state = {
+      selectedPlatform: 'instagram',
+      sessionLogs: [],
+      hasOrdered: false, // Core logical blocker rule
+      activeBoostsCount: 0
     };
 
-    const targetDetails = {
-      link: "allah.kingdom.fam",
-      id: "7633340561102472210",
-      private: "No",
-      created: "2026-04-27 07:40:29",
-      nickname_edited: "2026-04-27 07:40:48",
-      username_changed: "N/A",
-      level: "Lv.2"
+    const platformConfigs = {
+      instagram: {
+        iconClass: 'fa-brands fa-instagram text-pink-500',
+        placeholder: 'https://instagram.com/username',
+        sampleLink: 'https://instagram.com/shawik.official'
+      },
+      tiktok: {
+        iconClass: 'fa-brands fa-tiktok text-cyan-400',
+        placeholder: 'https://tiktok.com/@username/video/1234567890',
+        sampleLink: 'https://tiktok.com/@shawik.growth/video/9876543210'
+      },
+      twitter: {
+        iconClass: 'fa-brands fa-x-twitter text-white',
+        placeholder: 'https://x.com/username',
+        sampleLink: 'https://x.com/shawiksmm'
+      },
+      youtube: {
+        iconClass: 'fa-brands fa-youtube text-red-500',
+        placeholder: 'https://youtube.com/c/ChannelName',
+        sampleLink: 'https://youtube.com/c/ShawikMarketing'
+      }
     };
 
-    let activeCategory = 'video';
-    let isTargetUnlocked = false;
+    window.onload = function() {
+      // 1. Check order persistence state from storage to lock user permanently if they already ordered
+      const alreadyOrderedLocal = localStorage.getItem('shawik_booster_already_ordered');
+      if (alreadyOrderedLocal === 'true') {
+        state.hasOrdered = true;
+      }
 
-    // Fallback handler if zon.png is not found in the workspace directory yet
-    function handleImageLoadError(imgElement) {
-      console.warn("zon.png not found in the root directory yet. Using Windows XP dynamic default avatar.");
-      // Replace with a styled SVG data-URI avatar representing classic blue user profile
-      imgElement.src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="%23bfd4f5"/><circle cx="50" cy="40" r="22" fill="%235c82d6"/><path d="M15,90 C15,65 30,60 50,60 C70,60 85,65 85,90" fill="%232d52a8"/><circle cx="50" cy="50" r="14" fill="white" fill-opacity="0.9"/><path d="M47,44 L53,44 L53,50 L47,50 Z" fill="%23d97706"/><path d="M48,44 L48,41 A2,2 0 0,1 52,41 L52,44" fill="none" stroke="%23d97706" stroke-width="2"/></svg>`;
-    }
-
-    // Real-time taskbar clock setup
-    function startClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // conversion of '0' hour
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      document.getElementById('system-clock').textContent = `${hours}:${minutes} ${ampm}`;
-    }
-    setInterval(startClock, 1000);
-    startClock();
-
-    // Trigger Notification Toast dialog
-    function showAlert(title, message) {
-      document.getElementById('dialog-title').textContent = title;
-      document.getElementById('dialog-msg').textContent = message;
-      const dialog = document.getElementById('custom-dialog');
-      dialog.classList.remove('hidden');
-      setTimeout(closeDialog, 7000);
-    }
-
-    function closeDialog() {
-      document.getElementById('custom-dialog').classList.add('hidden');
-    }
-
-    // Autofill Welcome Credentials
-    function autofillCredentials() {
-      document.getElementById('login-email').value = defaultCredentials.email;
-      document.getElementById('login-password').value = defaultCredentials.pass;
-      showAlert("Autofill System", "Bypass credentials pre-loaded onto input layers.");
-    }
-
-    // Autofill Target Link input
-    function autofillTargetLink() {
-      document.getElementById('target-link-input').value = targetDetails.link;
-    }
-
-    // Handle Login sequence (with 20 seconds authentic boot delay)
-    function handleLogin(event) {
-      event.preventDefault();
-      const enteredEmail = document.getElementById('login-email').value;
-      
-      // Map user values to active desktop text points
-      document.getElementById('desktop-username').textContent = enteredEmail;
-      document.getElementById('start-user-label').textContent = enteredEmail;
-
-      // Unveil the Black Boot Loading Screen
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('boot-screen').classList.remove('hidden');
-
-      // Boot animation logic running for 20 seconds
-      let bootPercent = 0;
-      const scroller = document.getElementById('boot-scroller');
-      let scrollerPos = 0;
-
-      // Block scroller anim
-      const scrollerTimer = setInterval(() => {
-        scrollerPos += 8;
-        if (scrollerPos > 180) scrollerPos = -40;
-        scroller.style.left = `${scrollerPos}px`;
-      }, 50);
-
-      // System loading bar percentage (Takes exactly 20 seconds)
-      const bootPercentageTimer = setInterval(() => {
-        bootPercent += 1;
-        document.getElementById('boot-progress-percentage').textContent = `${bootPercent}%`;
-
-        if (bootPercent >= 100) {
-          clearInterval(bootPercentageTimer);
-          clearInterval(scrollerTimer);
-          
-          // Show Main Desktop
-          document.getElementById('boot-screen').classList.add('hidden');
-          showAlert("Welcome Operator", "Terminal loaded. Connect link to start bypass procedures.");
+      // 2. Load previous session history list
+      const localStoreData = localStorage.getItem('shawik_booster_history');
+      if (localStoreData) {
+        try {
+          state.sessionLogs = JSON.parse(localStoreData);
+          updateSessionLogsUI();
+        } catch(e) {
+          state.sessionLogs = [];
         }
-      }, 200); // 100 iterations of 200ms = 20,000ms = 20 Seconds
-    }
+      }
 
-    // Categories Switching Control
-    function changeCategory(category) {
-      activeCategory = category;
-      const liveAlert = document.getElementById('live-feed-alert');
-      const videoPanel = document.getElementById('video-feed-panel');
-      const btnLive = document.getElementById('btn-cat-live');
-      const btnVideo = document.getElementById('btn-cat-video');
+      // 3. Initialize UI configuration
+      selectPlatform('instagram');
+      refreshOrderLogicState();
+    };
 
-      if (category === 'live') {
-        liveAlert.classList.remove('hidden');
-        videoPanel.classList.add('hidden');
-        btnLive.classList.add('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
-        btnVideo.classList.remove('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+    // Helper to reflect order locks across UI elements
+    function refreshOrderLogicState() {
+      const pushBtn = document.getElementById('push-button');
+      const bannerBlock = document.getElementById('order-blocked-top-banner');
+      const freeBanner = document.getElementById('free-tier-info-banner');
+
+      if (state.hasOrdered) {
+        // Show permanent block banner
+        bannerBlock.classList.remove('hidden');
+        freeBanner.classList.add('hidden');
+
+        // Alter primary Action Button styling and block clicks
+        pushBtn.disabled = true;
+        pushBtn.className = "w-full py-4 rounded-xl font-display font-extrabold text-base tracking-wide bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-500/10 cursor-not-allowed opacity-80 flex items-center justify-center gap-2";
+        pushBtn.innerHTML = `<i class="fa-solid fa-lock mr-2 text-white"></i> ANOTHER ORDER STOPPED BY SHAWIK`;
       } else {
-        videoPanel.classList.remove('hidden');
-        liveAlert.classList.add('hidden');
-        btnVideo.classList.add('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
-        btnLive.classList.remove('bg-white/40', 'border', 'border-[#4a84d4]/50', 'rounded-sm');
+        bannerBlock.classList.add('hidden');
+        freeBanner.classList.remove('hidden');
+
+        // Restore normal booster state
+        pushBtn.disabled = false;
+        pushBtn.className = "w-full py-4 rounded-xl font-display font-extrabold text-base tracking-wide bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white shadow-lg shadow-cyan-500/15 hover:shadow-cyan-500/25 transition-all transform active:scale-[0.99] flex items-center justify-center gap-2";
+        pushBtn.innerHTML = `<i class="fa-solid fa-bolt text-lg"></i> PUSH BOOSTER TO TARGET`;
       }
     }
 
-    // Verify account target registry lookup
-    function verifyTargetAccount() {
-      const linkVal = document.getElementById('target-link-input').value.trim();
+    // Save logs to browser storage
+    function saveSessionData() {
+      localStorage.setItem('shawik_booster_history', JSON.stringify(state.sessionLogs));
+    }
 
-      if (!linkVal) {
-        showAlert("Reference Required", "Please fill in target link structure to query.");
+    // Handle platform selector toggle actions
+    function selectPlatform(platformKey) {
+      state.selectedPlatform = platformKey;
+      
+      document.querySelectorAll('.platform-btn').forEach(btn => {
+        btn.classList.remove('border-purple-500/80', 'bg-purple-950/20', 'glow-purple', 'active');
+        btn.classList.add('border-slate-800', 'bg-slate-950/40');
+      });
+
+      const activeBtn = document.getElementById(`platform-${platformKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-slate-800', 'bg-slate-950/40');
+        activeBtn.classList.add('border-purple-500/80', 'bg-purple-950/20', 'glow-purple', 'active');
+      }
+
+      // Sync form input fields
+      const config = platformConfigs[platformKey];
+      const linkInput = document.getElementById('target-link');
+      const iconElement = document.getElementById('link-icon');
+      
+      if (linkInput && config) {
+        linkInput.placeholder = config.placeholder;
+      }
+      if (iconElement && config) {
+        iconElement.className = config.iconClass;
+      }
+    }
+
+    function insertSample(type) {
+      const linkInput = document.getElementById('target-link');
+      if (type === 'inst') {
+        selectPlatform('instagram');
+        linkInput.value = platformConfigs.instagram.sampleLink;
+      } else if (type === 'tt') {
+        selectPlatform('tiktok');
+        linkInput.value = platformConfigs.tiktok.sampleLink;
+      }
+    }
+
+    // Quantity parameter validations (cap at 100 maximum)
+    function validateQuantity(value) {
+      if (state.hasOrdered) {
+        refreshOrderLogicState();
         return;
       }
 
-      if (linkVal.toLowerCase() === targetDetails.link.toLowerCase()) {
-        document.getElementById('account-details-panel').classList.remove('hidden');
-        
-        // Force reload the image tag to catch zon.png if recently saved
-        const img = document.getElementById('target-profile-image');
-        img.src = 'zon.png?t=' + new Date().getTime(); 
+      const parsedVal = parseInt(value, 10);
+      const limitWarning = document.getElementById('limit-warning');
+      const lockWarningCard = document.getElementById('lock-warning-card');
+      const pushBtn = document.getElementById('push-button');
 
-        showAlert("Target Profile Met", "Verified user zon.png and account metadata extracted.");
+      if (isNaN(parsedVal) || parsedVal <= 0) {
+        limitWarning.classList.add('hidden');
+        lockWarningCard.classList.add('hidden');
+        pushBtn.disabled = false;
+        pushBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        return;
+      }
+
+      if (parsedVal > 100) {
+        limitWarning.classList.remove('hidden');
+        lockWarningCard.classList.remove('hidden');
+        
+        pushBtn.disabled = true;
+        pushBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        pushBtn.innerHTML = `<i class="fa-solid fa-lock mr-2 text-red-400"></i> REMOVE RESTRICTIONS`;
       } else {
-        showAlert("Target Node Missing", "Invalid link directory path. Please check structure or click Default.");
+        limitWarning.classList.add('hidden');
+        lockWarningCard.classList.add('hidden');
+        
+        pushBtn.disabled = false;
+        pushBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        pushBtn.innerHTML = `<i class="fa-solid fa-bolt text-lg"></i> PUSH BOOSTER TO TARGET`;
       }
     }
 
-    // Toggle start menu drawer
-    function toggleStartMenu() {
-      const menu = document.getElementById('start-menu-drawer');
-      menu.classList.toggle('hidden');
+    function setToMaxLimit() {
+      const quantityInput = document.getElementById('quantity');
+      quantityInput.value = 100;
+      validateQuantity(100);
     }
 
-    // Process 1: 60-Second Packet Injection Module (XP theme progress rendering)
-    function startPacketInjection() {
-      // Disable trigger button
-      const injectBtn = document.getElementById('btn-inject');
-      injectBtn.disabled = true;
-      injectBtn.classList.add('opacity-40', 'cursor-not-allowed');
+    // Modal alerts
+    function showNoticeModal(title, body) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').textContent = body;
+      document.getElementById('notice-modal').classList.remove('hidden');
+    }
 
-      const terminalPanel = document.getElementById('injection-terminal-panel');
-      terminalPanel.classList.remove('hidden');
+    function closeNoticeModal() {
+      document.getElementById('notice-modal').classList.add('hidden');
+    }
 
-      const countdownText = document.getElementById('injection-countdown');
-      const statusDesc = document.getElementById('inject-status-desc');
-      const percentText = document.getElementById('inject-percentage-text');
-      const consoleLog = document.getElementById('injection-console');
-      const progressTrack = document.getElementById('inject-progress-track');
+    function triggerOrderStopAlert() {
+      document.getElementById('alert-lock-modal').classList.remove('hidden');
+    }
 
-      const packetsLogs = [
-        "Binding listener socket to port 443...",
-        "Authenticating with target proxy: PASS",
-        "Loading segment: 0x99A801 for bypass",
-        "Overwriting local checksum parameters...",
-        "Executing target stack buffer overflow...",
-        "Bypassing registry memory protection shields...",
-        "Establishing direct network routing hook...",
-        "Injecting credentials decryption manifest...",
-        "Rebuilding system data packets...",
-        "Confirming bypass link integrity..."
+    function closeLockModal() {
+      document.getElementById('alert-lock-modal').classList.add('hidden');
+    }
+
+    // DEV TOOL: Unlocks state manually so developers can test it over again
+    function resetOrderLockDevTool() {
+      state.hasOrdered = false;
+      localStorage.removeItem('shawik_booster_already_ordered');
+      refreshOrderLogicState();
+      closeLockModal();
+      showNoticeModal('Development Override Successful', 'Free order count cleared! You are now allowed to run exactly one more free booster testing session.');
+    }
+
+    // Trigger main delivery push sequence
+    function triggerBoosterPush() {
+      // 1. Logical security double-check
+      if (state.hasOrdered) {
+        triggerOrderStopAlert();
+        return;
+      }
+
+      const linkInput = document.getElementById('target-link').value.trim();
+      const quantityInput = document.getElementById('quantity').value;
+      const quantity = parseInt(quantityInput, 10);
+
+      if (!linkInput) {
+        showNoticeModal('Invalid Input', 'Please paste a valid SMM link target to process followers.');
+        return;
+      }
+
+      if (isNaN(quantity) || quantity <= 0) {
+        showNoticeModal('Invalid Quantity', 'Please choose a booster volume greater than 0.');
+        return;
+      }
+
+      // 2. 100 follower check protection
+      if (quantity > 100) {
+        showNoticeModal(
+          'Security Cap Breached', 
+          'You configured ' + quantity + ' followers. Only SHAWIK operators have high throughput credentials to deliver batches over 100 followers.'
+        );
+        return;
+      }
+
+      // Process and launch
+      launchSMMSequence(linkInput, quantity);
+    }
+
+    // Processing simulations
+    function launchSMMSequence(targetLink, amount) {
+      const overlay = document.getElementById('execution-overlay');
+      const loaderStatus = document.getElementById('loader-status');
+      const loaderSubtitle = document.getElementById('loader-subtitle');
+      const loaderBar = document.getElementById('loader-bar');
+      const percentageText = document.getElementById('loader-percentage');
+      const etaText = document.getElementById('loader-eta');
+      const logContainer = document.getElementById('process-logs');
+
+      logContainer.innerHTML = '';
+      overlay.classList.remove('hidden');
+
+      const logs = [
+        { time: 100, text: `[SYSTEM] Contacting cluster proxy gateway...` },
+        { time: 500, text: `[RESOLVER] Verifying link signature integrity: ${targetLink.substring(0, 30)}...` },
+        { time: 1000, text: `[SMM CORE] Identified target Profile ID: @${extractProfileUser(targetLink)}` },
+        { time: 1500, text: `[TUNNEL] Connected safely via residential ISP servers...` },
+        { time: 2000, text: `[DISPATCH] Broadcasting parcel: ${amount} retention-backed profiles...` },
+        { time: 2600, text: `[CONFIRM] Synchronizing delivery tables: Pending -> Completed` },
+        { time: 3200, text: `[SYSTEM] Injecting secure metadata signatures...` },
+        { time: 3800, text: `[OK] Boost transaction completed successfully!` }
       ];
 
-      let countSecs = 60;
-      let progressVal = 0;
+      logs.forEach(log => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.textContent = log.text;
+          logContainer.appendChild(div);
+          logContainer.scrollTop = logContainer.scrollHeight;
+        }, log.time);
+      });
 
-      // Handle 60 Seconds Timer Countdown display
-      const countInterval = setInterval(() => {
-        countSecs -= 0.1;
-        countdownText.textContent = `${countSecs.toFixed(2)}s`;
-        if (countSecs <= 0) {
-          clearInterval(countInterval);
-          countdownText.textContent = "Complete";
-        }
-      }, 100);
-
-      // Handle progress bar generation & segment rendering
+      let percentage = 0;
       const progressInterval = setInterval(() => {
-        progressVal += 1;
-        percentText.textContent = `${progressVal}%`;
+        percentage += 5;
+        if (percentage > 100) percentage = 100;
+        
+        loaderBar.style.width = `${percentage}%`;
+        percentageText.textContent = `${percentage}% Transferred`;
+        
+        const secondsRemaining = Math.max(0, Math.ceil((100 - percentage) * 4 / 100));
+        etaText.textContent = secondsRemaining > 0 ? `ETA: ~${secondsRemaining}s` : 'Finalizing...';
 
-        // Render classic XP blue block bars inside progress bar track
-        if (progressVal % 5 === 0) {
-          const block = document.createElement('div');
-          block.className = "w-3 h-full bg-gradient-to-r from-blue-500 to-sky-400 rounded-sm";
-          progressTrack.appendChild(block);
-        }
-
-        // Print logging streams
-        if (progressVal % 10 === 0 && (progressVal / 10) - 1 < packetsLogs.length) {
-          const logItem = document.createElement('p');
-          logItem.innerHTML = `<span class="text-yellow-500 font-mono">[XP-INJECT]</span> ${packetsLogs[(progressVal / 10) - 1]}`;
-          consoleLog.appendChild(logItem);
-          consoleLog.scrollTop = consoleLog.scrollHeight;
-        }
-
-        // Change status texts
-        if (progressVal < 25) {
-          statusDesc.textContent = "Writing buffer segments...";
-        } else if (progressVal < 55) {
-          statusDesc.textContent = "Resolving port routing filters...";
-        } else if (progressVal < 85) {
-          statusDesc.textContent = "Configuring media streams channels...";
+        if (percentage < 30) {
+          loaderStatus.textContent = "Negotiating Clusters";
+          loaderSubtitle.textContent = "Initializing residential distribution routers...";
+        } else if (percentage < 75) {
+          loaderStatus.textContent = "Dispatched Followers";
+          loaderSubtitle.textContent = `Delivering ${amount} high-retention profiles...`;
         } else {
-          statusDesc.textContent = "Finalizing secure bypass injection...";
+          loaderStatus.textContent = "Verifying Delivery Logs";
+          loaderSubtitle.textContent = "Applying persistent validation checks...";
         }
 
-        if (progressVal >= 100) {
+        if (percentage >= 100) {
           clearInterval(progressInterval);
-          clearInterval(countInterval);
-          statusDesc.textContent = "Bypass vector setup finalized.";
-          document.getElementById('decompiler-trigger-box').classList.remove('hidden');
-          showAlert("Injection Finished", "Core memory vectors injected into system node successfully.");
+          setTimeout(() => {
+            overlay.classList.add('hidden');
+            
+            // 1. Force the permanent block state immediately
+            state.hasOrdered = true;
+            localStorage.setItem('shawik_booster_already_ordered', 'true');
+            refreshOrderLogicState();
+
+            // 2. Alert success toast and record transaction
+            showSuccessNotice(targetLink, amount);
+            recordTransaction(targetLink, amount);
+
+            // 3. Immediately bring up the blocker warning modal alerting them they cannot order again
+            setTimeout(() => {
+              triggerOrderStopAlert();
+            }, 1000);
+
+          }, 400);
         }
-      }, 600); // 100 iterations * 600ms = 60,000ms = 1 Minute (60 Seconds)
+      }, 200);
     }
 
-    // Process 2: Code Decompilation Module (Loads fast and outputs decompiled_access_nodes.txt)
-    function startCodeDecompilation() {
-      const decompilePanel = document.getElementById('decompile-panel');
-      decompilePanel.classList.remove('hidden');
-
-      const bar = document.getElementById('decompile-progress-bar');
-      const statusText = document.getElementById('decompile-status-desc');
-      const percentText = document.getElementById('decompile-percent-text');
-      
-      let val = 0;
-
-      const runDecompile = setInterval(() => {
-        val += 4;
-        bar.style.width = `${val}%`;
-        percentText.textContent = `${val}%`;
-
-        // Scramble hex offset rendering labels
-        const offsetHexVals = ["0x00FF8E", "0x12FF0C", "0x56CC8A", "0x99BBAA", "0xCCFFDD"];
-        document.getElementById('decompile-offset').textContent = offsetHexVals[Math.floor(Math.random() * offsetHexVals.length)];
-
-        if (val < 30) {
-          statusText.textContent = "Decompressing kernel instructions...";
-        } else if (val < 70) {
-          statusText.textContent = "Analyzing decompiled network blocks...";
-        } else {
-          statusText.textContent = "Building output source files...";
-        }
-
-        if (val >= 100) {
-          clearInterval(runDecompile);
-          statusText.textContent = "Decompilation Completed.";
-          document.getElementById('manifest-result-box').classList.remove('hidden');
-          showAlert("File Generated", "Decrypted assembly nodes saved into decompiled_access_nodes.txt");
-        }
-      }, 150);
-    }
-
-    // Process 3: Launch Cracked Source View Notepad Overlay
-    function launchCrackedNotepad() {
-      document.getElementById('notepad-overlay').classList.remove('hidden');
-    }
-
-    function dismissNotepad() {
-      document.getElementById('notepad-overlay').classList.add('hidden');
-    }
-
-    // Save File helper using fallback browser buffer
-    function saveCrackedManifest() {
-      const keyData = `WINDOWS XP KERNEL BYPASS MANIFEST
-TARGET REFERENCE: allah.kingdom.fam
-TARGET ID: 7633340561102472210
-PROFILE IMG: zon.png
-DECRYPTED VALUE STATUS: CRACKED`;
-
-      const dummyArea = document.createElement("textarea");
-      dummyArea.value = keyData;
-      document.body.appendChild(dummyArea);
-      dummyArea.select();
+    function extractProfileUser(link) {
       try {
-        document.execCommand('copy');
-        showAlert("Document Saved", "All decrypted variables and access codes saved to clipboard storage!");
-      } catch (err) {
-        showAlert("System Write Blocked", "Your computer security system restricted automatic file saves.");
+        const url = new URL(link);
+        let path = url.pathname;
+        if (path.endsWith('/')) {
+          path = path.slice(0, -1);
+        }
+        const segments = path.split('/');
+        return segments[segments.length - 1] || 'target_profile';
+      } catch (e) {
+        return 'target_profile';
       }
-      document.body.removeChild(dummyArea);
     }
 
-    // Reset console states for clean workflow run
-    function resetConsole() {
-      document.getElementById('target-link-input').value = '';
-      document.getElementById('account-details-panel').classList.add('hidden');
-      document.getElementById('injection-terminal-panel').classList.add('hidden');
-      document.getElementById('decompiler-trigger-box').classList.add('hidden');
-      document.getElementById('decompile-panel').classList.add('hidden');
-      document.getElementById('manifest-result-box').classList.add('hidden');
-      document.getElementById('notepad-overlay').classList.add('hidden');
-      document.getElementById('inject-progress-track').innerHTML = '';
+    // Success notice logic
+    let toastTimeout = null;
+    let toastInterval = null;
 
-      const injectBtn = document.getElementById('btn-inject');
-      injectBtn.disabled = false;
-      injectBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-
-      document.getElementById('injection-console').innerHTML = '';
-      document.getElementById('decompile-progress-bar').style.width = '0%';
+    function showSuccessNotice(targetLink, amount) {
+      const toast = document.getElementById('success-toast');
+      const toastTarget = document.getElementById('toast-target-platform');
+      const toastCount = document.getElementById('toast-followers-count');
+      const toastRef = document.getElementById('toast-ref-id');
+      const toastCountdown = document.getElementById('toast-countdown-text');
+      const progressElement = document.getElementById('toast-dim-progress');
+      const delaySelect = document.getElementById('dismiss-delay');
       
-      showAlert("Console Reset", "All system registers and session arrays have been wiped clean.");
+      const secondsToDismiss = parseInt(delaySelect.value, 10);
+      const uniqueId = `SK-${Math.floor(10000 + Math.random() * 90000)}`;
+
+      toastTarget.textContent = state.selectedPlatform.toUpperCase();
+      toastCount.textContent = amount;
+      toastRef.textContent = `TX: #${uniqueId}`;
+      
+      if (toastTimeout) clearTimeout(toastTimeout);
+      if (toastInterval) clearInterval(toastInterval);
+
+      toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+      progressElement.style.width = '100%';
+
+      let timeLeft = secondsToDismiss;
+      toastCountdown.textContent = `Closing in ${timeLeft}s`;
+
+      const tickRateMs = 100;
+      let totalTicks = secondsToDismiss * 10;
+      let ticksPassed = 0;
+
+      toastInterval = setInterval(() => {
+        ticksPassed++;
+        const percentLeft = 100 - (ticksPassed / totalTicks * 100);
+        progressElement.style.width = `${percentLeft}%`;
+
+        if (ticksPassed % 10 === 0) {
+          timeLeft--;
+          toastCountdown.textContent = `Closing in ${timeLeft}s`;
+        }
+
+        if (ticksPassed >= totalTicks) {
+          clearInterval(toastInterval);
+        }
+      }, tickRateMs);
+
+      toastTimeout = setTimeout(() => {
+        dismissSuccessNotice();
+      }, secondsToDismiss * 1000);
     }
 
-    // Log out to Welcome login sheet
-    function logoutSystem() {
-      document.getElementById('login-screen').classList.remove('hidden');
-      document.getElementById('boot-screen').classList.add('hidden');
-      document.getElementById('boot-progress-percentage').textContent = '0%';
-      resetConsole();
+    function dismissSuccessNotice() {
+      const toast = document.getElementById('success-toast');
+      toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+      if (toastInterval) clearInterval(toastInterval);
+    }
+
+    // In-memory logs
+    function recordTransaction(targetLink, amount) {
+      const newTransaction = {
+        id: `SK-${Math.floor(10000 + Math.random() * 90000)}`,
+        platform: state.selectedPlatform,
+        link: targetLink,
+        quantity: amount,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      };
+
+      state.sessionLogs.unshift(newTransaction);
+      if (state.sessionLogs.length > 10) {
+        state.sessionLogs.pop();
+      }
+
+      saveSessionData();
+      updateSessionLogsUI();
+    }
+
+    function updateSessionLogsUI() {
+      const emptyState = document.getElementById('history-empty');
+      const listState = document.getElementById('history-list');
+
+      if (state.sessionLogs.length === 0) {
+        emptyState.classList.remove('hidden');
+        listState.classList.add('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      listState.classList.remove('hidden');
+      listState.innerHTML = '';
+
+      state.sessionLogs.forEach(log => {
+        let platIcon = 'fa-solid fa-link text-purple-400';
+        if (log.platform === 'instagram') platIcon = 'fa-brands fa-instagram text-pink-500';
+        if (log.platform === 'tiktok') platIcon = 'fa-brands fa-tiktok text-cyan-400';
+        if (log.platform === 'twitter') platIcon = 'fa-brands fa-x-twitter text-white';
+        if (log.platform === 'youtube') platIcon = 'fa-brands fa-youtube text-red-500';
+
+        const row = document.createElement('div');
+        row.className = 'bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 hover:border-slate-700 transition flex items-center justify-between gap-3 text-xs';
+        row.innerHTML = `
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center shrink-0">
+              <i class="${platIcon}"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-slate-200 truncate">@${extractProfileUser(log.link)}</span>
+                <span class="text-[9px] font-mono text-slate-500">${log.timestamp}</span>
+              </div>
+              <p class="text-[10px] text-slate-400 truncate max-w-[130px] sm:max-w-[160px]">${log.link}</p>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="block text-xs font-bold text-emerald-400 font-mono">+${log.quantity}</span>
+            <span class="inline-flex items-center rounded bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-bold text-emerald-400">SUCCESS</span>
+          </div>
+        `;
+        listState.appendChild(row);
+      });
+    }
+
+    function clearSessionHistory() {
+      state.sessionLogs = [];
+      saveSessionData();
+      updateSessionLogsUI();
     }
   </script>
 </body>
 </html>
-

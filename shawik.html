@@ -1,0 +1,948 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Studio - Rico Animations</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #030303;
+            color: #f1f1f1;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282828;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f3f;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* Google Custom Spinner */
+        .google-spinner {
+            border: 3px stroke transparent;
+            border-radius: 50%;
+            border-top: 3px solid #ff0000;
+            border-right: 3px solid #f1f1f1;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-[#030303] text-[#f1f1f1] min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- LOGIN SCREEN (Displays by default) -->
+    <div id="login-screen" class="fixed inset-0 bg-[#030303] z-50 flex items-center justify-center p-4">
+        
+        <!-- INITIAL FORM VIEW -->
+        <div id="login-card" class="w-full max-w-md bg-[#0f0f0f] border border-zinc-800/80 rounded-3xl p-8 shadow-2xl relative overflow-hidden animate-fade-in">
+            <!-- Subtle accent glow -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-600/5 rounded-full filter blur-2xl"></div>
+            
+            <!-- YouTube Studio Branding Header -->
+            <div class="text-center space-y-3 mb-8">
+                <div class="inline-flex bg-red-600 text-white rounded-2xl p-3.5 shadow-lg shadow-red-950/20">
+                    <i class="fa-brands fa-youtube text-3xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white tracking-tight">YouTube Studio</h2>
+                    <p class="text-zinc-400 text-xs mt-1">Sign in with your Creator Partner Account to continue</p>
+                </div>
+            </div>
+
+            <!-- Login Credentials Input Form -->
+            <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <!-- Validation Error Banner -->
+                <div id="login-error" class="hidden bg-red-950/40 border border-red-900/40 text-red-400 p-3.5 rounded-xl text-xs flex items-center space-x-2 animate-fade-in">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Incorrect email or password. Please try again.</span>
+                </div>
+
+                <!-- Email Input -->
+                <div class="space-y-1.5">
+                    <label for="login-email" class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider">Email address</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-zinc-500">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>
+                        <input id="login-email" type="email" required placeholder="name@example.com" class="w-full bg-zinc-950/80 text-white text-sm py-3 pl-11 pr-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition-all placeholder-zinc-600">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <label for="login-password" class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider">Password</label>
+                        <button type="button" onclick="handleForgotPassword()" class="text-xs text-zinc-500 hover:text-red-400 transition">Forgot?</button>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-zinc-500">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input id="login-password" type="password" required placeholder="Enter your password" class="w-full bg-zinc-950/80 text-white text-sm py-3 pl-11 pr-12 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition-all placeholder-zinc-600">
+                        <!-- Password Visibility Toggle -->
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-3.5 text-zinc-500 hover:text-zinc-300 transition" aria-label="Toggle password visibility">
+                            <i id="password-toggle-icon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sign In Button -->
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 active:bg-red-700 text-white font-bold text-sm py-3.5 rounded-xl transition duration-150 shadow-lg shadow-red-950/20 flex items-center justify-center space-x-2">
+                    <span>Sign in to Studio</span>
+                    <i class="fa-solid fa-arrow-right-to-bracket text-xs opacity-80"></i>
+                </button>
+            </form>
+
+            <!-- Bottom Navigation Utilities -->
+            <div class="mt-8 pt-6 border-t border-zinc-800/60 flex items-center justify-between text-xs">
+                <span class="text-zinc-500">New partner?</span>
+                <button onclick="handleCreateAccount()" class="text-red-400 hover:text-red-300 font-semibold transition">Create account</button>
+            </div>
+        </div>
+
+        <!-- DELAYED NETWORK LOADING VIEW (Initially Hidden) -->
+        <div id="loader-card" class="hidden w-full max-w-sm bg-[#0f0f0f] border border-zinc-800/80 rounded-3xl p-8 shadow-2xl text-center space-y-6 animate-fade-in">
+            <div class="flex justify-center">
+                <div class="google-spinner"></div>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-lg font-bold text-white tracking-tight">Signing in...</h3>
+                <p class="text-xs text-zinc-400">Please wait...</p>
+            </div>
+            <div class="flex items-center justify-center space-x-2 bg-zinc-900/60 py-2.5 px-4 rounded-xl border border-zinc-800/40 w-fit mx-auto">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                <span class="text-[10px] font-mono tracking-widest text-zinc-400">Welcome Rico Animations</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN PORTAL CONTAINER (Initially Hidden) -->
+    <div id="main-portal" class="hidden min-h-screen flex flex-col">
+        <!-- Top Navigation Bar -->
+        <header class="bg-[#0f0f0f] border-b border-zinc-800/80 sticky top-0 z-50 px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="bg-red-600 text-white rounded-lg px-2.5 py-1.5 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-lg"></i>
+                    </div>
+                    <span class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center">
+                        Studio <span class="text-xs font-normal text-zinc-400 ml-2 px-2 py-0.5 bg-zinc-800 rounded">Partner Portal</span>
+                    </span>
+                </div>
+                
+                <!-- Desktop Top Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-1 text-sm font-medium text-zinc-400">
+                    <button onclick="switchView('dashboard')" class="px-4 py-2 rounded-lg hover:bg-zinc-800 hover:text-white transition-all text-white font-semibold">Dashboard</button>
+                    <button onclick="switchView('analytics')" class="px-4 py-2 rounded-lg hover:bg-zinc-800 hover:text-white transition-all">Analytics</button>
+                    <button onclick="switchView('payments')" class="px-4 py-2 rounded-lg bg-zinc-800/60 text-white transition-all">Revenue & Payouts</button>
+                </nav>
+            </div>
+
+            <!-- Creator Profile Action Element -->
+            <div class="flex items-center space-x-4">
+                <div class="hidden sm:flex flex-col text-right">
+                    <span class="text-sm font-semibold text-white">Matovu Shawik</span>
+                    <span class="text-xs text-red-500 font-medium">Rico Animations</span>
+                </div>
+                <!-- Clickable Profile Trigger -->
+                <button onclick="toggleProfileModal()" class="relative focus:outline-none focus:ring-2 focus:ring-red-500 rounded-full transition duration-150" aria-label="Open Creator Settings">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-zinc-700 bg-zinc-800 hover:border-zinc-500 transition">
+                        <img id="profile-pic" src="uh.png" alt="Creator Profile" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&auto=format&fit=crop&q=80'" class="w-full h-full object-cover">
+                    </div>
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0f0f0f] rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- LEFT/CENTER PANEL: Revenue Dashboard -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Page Title Block -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Earnings & Settlements</h1>
+                        <p class="text-zinc-400 text-sm mt-1">Manage and track your YouTube Partner Program payouts, taxes, and bank transfers.</p>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-800 self-start">
+                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-semibold text-zinc-300">Live Partner Account</span>
+                    </div>
+                </div>
+
+                <!-- Main High-Level Analytics Metrics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Card 1: 5-Month Estimated Earnings -->
+                    <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 rounded-2xl border border-zinc-800/80 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition duration-300">
+                            <i class="fa-solid fa-chart-line text-6xl text-red-500"></i>
+                        </div>
+                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider block">Total Est. Earnings (Past 5 Months)</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white mt-2 tracking-tight">UGX 500,000,000</h2>
+                        
+                        <!-- Progress / Target Bar -->
+                        <div class="mt-4 space-y-1.5">
+                            <div class="flex justify-between text-xs font-semibold text-zinc-400">
+                                <span>Target: UGX 600M</span>
+                                <span class="text-red-400">83.3% Achieved</span>
+                            </div>
+                            <div class="w-full bg-zinc-800 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-red-600 to-amber-500 h-2 rounded-full" style="width: 83.3%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Sparkline Stats -->
+                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-4 border-t border-zinc-800/60 text-center">
+                            <div>
+                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 1</span>
+                                <span class="text-xs font-bold text-zinc-300">80M</span>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 2</span>
+                                <span class="text-xs font-bold text-zinc-300">95M</span>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 3</span>
+                                <span class="text-xs font-bold text-zinc-300">105M</span>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 4</span>
+                                <span class="text-xs font-bold text-zinc-300">110M</span>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 5</span>
+                                <span class="text-xs font-bold text-red-400">110M</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Current Account Balance -->
+                    <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 rounded-2xl border border-zinc-800/80 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition duration-300">
+                            <i class="fa-solid fa-wallet text-6xl text-emerald-500"></i>
+                        </div>
+                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider block">Current Account Balance</span>
+                        <h2 id="current-balance-display" class="text-3xl sm:text-4xl font-black text-emerald-400 mt-2 tracking-tight">UGX 46,400,000</h2>
+                        <p class="text-xs text-zinc-400 mt-2">Available for immediate withdrawal to your linked bank account.</p>
+
+                        <div class="mt-6">
+                            <button onclick="scrollToWithdraw()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl transition duration-150 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-950/20">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                <span>Initiate Bank Withdrawal</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Detailed Breakdown & Previous Months Performance -->
+                <div class="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-800/80">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Earnings & Deductions Breakdown</h3>
+                            <p class="text-xs text-zinc-400 mt-0.5">Most recent YouTube partner clearing statement</p>
+                        </div>
+                        <span class="bg-zinc-800 text-zinc-300 text-xs px-3 py-1.5 rounded-lg border border-zinc-700/60 font-semibold">
+                            July 2, 2026
+                        </span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Stat Segment 1 -->
+                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
+                                    <i class="fa-solid fa-clapperboard text-sm"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-semibold text-zinc-200 block">Gross Video Monetization</span>
+                                    <span class="text-[10px] text-zinc-500">AdSense & Premium Earnings</span>
+                                </div>
+                            </div>
+                            <span class="text-base font-bold text-white">UGX 50,000,000</span>
+                        </div>
+
+                        <!-- Stat Segment 2 -->
+                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500/20">
+                                    <i class="fa-solid fa-percent text-sm text-red-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-semibold text-zinc-200 block">Withholding Tax (WHT 6%)</span>
+                                    <span class="text-[10px] text-zinc-500">Government statutory deduction</span>
+                                </div>
+                            </div>
+                            <span class="text-base font-bold text-red-400">- UGX 3,000,000</span>
+                        </div>
+
+                        <!-- Stat Segment 3 -->
+                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500/20">
+                                    <i class="fa-solid fa-vault text-sm text-red-400"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-semibold text-zinc-200 block">Bank Transfer & Platform Fees</span>
+                                    <span class="text-[10px] text-zinc-500">International wire processing commission</span>
+                                </div>
+                            </div>
+                            <span class="text-base font-bold text-red-400">- UGX 600,000</span>
+                        </div>
+
+                        <!-- Final Net Total -->
+                        <div class="flex justify-between items-center pt-4">
+                            <div>
+                                <span class="text-sm font-bold text-emerald-400 block">Current Available Balance</span>
+                                <span class="text-[10px] text-zinc-500">Ready to transfer to Matovu Shawik</span>
+                            </div>
+                            <div class="text-right">
+                                <span id="summary-balance-display" class="text-2xl font-black text-white">UGX 46,400,000</span>
+                                <span class="text-[10px] text-emerald-400 block font-medium"><i class="fa-solid fa-check-double mr-1"></i>Cleared & Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL: Bank Selector and Withdrawal Widget -->
+            <div class="space-y-6">
+                
+                <!-- Linked Bank Card & Transfer Action Panel -->
+                <div id="withdrawal-panel" class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 relative overflow-hidden shadow-xl">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-600/5 rounded-full filter blur-2xl"></div>
+
+                    <h3 class="text-lg font-bold text-white mb-1">Transfer to Local Bank</h3>
+                    <p class="text-xs text-zinc-400 mb-6">Withdraw funds instantly using secure local bank clearing protocols.</p>
+
+                    <!-- Bank Card Layout -->
+                    <div id="active-bank-card" class="bg-gradient-to-br from-blue-900 via-indigo-950 to-zinc-950 rounded-2xl p-5 border border-indigo-500/20 shadow-md relative overflow-hidden mb-6">
+                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-blue-500/15 rounded-full filter blur-lg"></div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span id="bank-badge" class="text-[10px] bg-indigo-500/20 text-indigo-300 font-bold px-2 py-1 rounded tracking-widest uppercase">
+                                    Primary Linked Account
+                                </span>
+                                <h4 id="bank-title-display" class="text-sm font-bold text-white mt-2">dfcu BANK UGANDA</h4>
+                            </div>
+                            <i id="bank-icon-display" class="fa-solid fa-building-columns text-2xl text-indigo-400"></i>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-[9px] text-zinc-400 block uppercase tracking-wider">Account Holder</span>
+                                <span id="bank-holder-display" class="text-sm font-semibold text-white tracking-wide">Matovu Shawik</span>
+                            </div>
+
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <span class="text-[9px] text-zinc-400 block uppercase tracking-wider">Account Number</span>
+                                    <span id="bank-number-display" class="text-sm font-bold text-white tracking-widest">•••• •••• ••84 19</span>
+                                </div>
+                                <span class="text-xs font-bold text-indigo-400 bg-indigo-950 px-2.5 py-1 rounded border border-indigo-900/40">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input / Random Transfer Value Picker -->
+                    <div class="space-y-4" id="withdraw-flow-container">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider">Select Transfer Amount</label>
+                                <button onclick="toggleProfileModal()" class="text-xs text-red-400 hover:text-red-300 font-medium">
+                                    <i class="fa-solid fa-plus mr-1"></i> Switch Bank
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute left-4 top-3.5 text-zinc-400 font-bold text-sm">UGX</span>
+                                <input id="withdraw-amount-input" type="text" value="30,000,000" class="w-full bg-zinc-950 text-white font-extrabold text-lg py-3 pl-14 pr-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-emerald-500 transition-all">
+                            </div>
+                            <!-- Presets helper -->
+                            <div class="grid grid-cols-3 gap-2 mt-2">
+                                <button onclick="setAmount(10000000)" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">10M</button>
+                                <button onclick="setAmount(30000000)" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">30M</button>
+                                <button onclick="setAmount(activeBalance)" id="max-amount-btn" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">Max</button>
+                            </div>
+                        </div>
+
+                        <!-- Fee Summary Box -->
+                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs space-y-2">
+                            <div class="flex justify-between text-zinc-400">
+                                <span>Transfer fee (0.15% fixed)</span>
+                                <span id="transfer-fee-display" class="text-white font-medium">UGX 45,000</span>
+                            </div>
+                            <div class="flex justify-between text-zinc-400">
+                                <span>Processing timeframe</span>
+                                <span class="text-emerald-400 font-medium">1 - 3 Business Days</span>
+                            </div>
+                        </div>
+
+                        <!-- Primary Action Button -->
+                        <button onclick="processWithdrawal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-4 rounded-xl transition duration-150 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-950/20">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span>Confirm Transfer to Bank</span>
+                        </button>
+                    </div>
+
+                    <!-- Transaction Success Statement Panel (Revealed dynamically) -->
+                    <div id="transfer-success-panel" class="hidden space-y-5 animate-fadeIn">
+                        <div class="w-16 h-16 bg-emerald-950/60 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-800/80 shadow-md">
+                            <i class="fa-solid fa-circle-check text-3xl"></i>
+                        </div>
+
+                        <div class="text-center">
+                            <h4 class="text-white font-bold text-base">Dispatched to Bank</h4>
+                            <p class="text-xs text-zinc-400 mt-1">Transaction Ref: <span class="font-mono text-zinc-300 font-semibold">YT-UG-98317-X</span></p>
+                        </div>
+
+                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs space-y-3">
+                            <div class="flex justify-between text-zinc-400">
+                                <span>Account Holder</span>
+                                <span id="success-holder-display" class="text-white font-semibold">Matovu Shawik</span>
+                            </div>
+                            <div class="flex justify-between text-zinc-400">
+                                <span>Bank Name</span>
+                                <span id="success-bank-display" class="text-white font-semibold">dfcu Bank Uganda</span>
+                            </div>
+                            <div class="flex justify-between text-zinc-400">
+                                <span>Amount Transferred</span>
+                                <span id="success-amount-display" class="text-emerald-400 font-bold">UGX 30,000,000</span>
+                            </div>
+                            <div class="flex justify-between text-zinc-400 pt-2 border-t border-zinc-800">
+                                <span>Estimated Arrival</span>
+                                <span class="text-amber-400 font-semibold">1 - 3 Business Days</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-950/40 p-3.5 rounded-xl border border-indigo-900/30 text-[11px] text-zinc-300 leading-relaxed text-center">
+                            <i class="fa-solid fa-clock-rotate-left mr-1.5 text-indigo-400"></i>
+                            The transfer will take 1-3 business days to safely clear and post to your account.
+                        </div>
+
+                        <button onclick="resetWithdrawForm()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs py-3 rounded-xl transition">
+                            Perform Another Transaction
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- YouTube Studio Support Info Box -->
+                <div class="bg-zinc-900/60 rounded-2xl p-5 border border-zinc-800/80 text-xs space-y-3">
+                    <h4 class="font-bold text-white flex items-center">
+                        <i class="fa-solid fa-shield-halved text-red-500 mr-2"></i>
+                        Partner Security Advisory
+                    </h4>
+                    <p class="text-zinc-400 leading-relaxed">
+                        Always review bank routing details prior to transferring large amounts. Payments cleared to dfcu Bank Uganda are monitored and processed under global guidelines of Partner Protection.
+                    </p>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SLIDEOUT DIALOG PANEL: Creator Profile Panel -->
+    <div id="profile-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
+        
+        <!-- Outside click dismissal -->
+        <div class="absolute inset-0" onclick="toggleProfileModal()"></div>
+
+        <!-- Sidebar Panel Container -->
+        <div class="relative w-full max-w-md bg-zinc-900 h-full shadow-2xl flex flex-col border-l border-zinc-800/80 transform translate-x-full transition-transform duration-300" id="profile-panel-inner">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-zinc-800/80 flex justify-between items-center bg-zinc-950">
+                <h3 class="text-lg font-bold text-white">Creator Settings</h3>
+                <button onclick="toggleProfileModal()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                
+                <!-- Account Header Card -->
+                <div class="bg-zinc-950 p-5 rounded-2xl border border-zinc-800/80 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-red-600/5 rounded-full filter blur-xl"></div>
+                    <div class="relative w-20 h-20 rounded-full overflow-hidden border-2 border-red-500 mx-auto bg-zinc-800 mb-3 shadow-md">
+                        <img src="uh.png" alt="Creator Profile large" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&auto=format&fit=crop&q=80'" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Rico Animations</h4>
+                    <span class="inline-block bg-red-950/80 text-red-400 font-semibold text-xs px-3 py-1 rounded-full border border-red-900/40 mt-1">
+                        YouTube Partner
+                    </span>
+                </div>
+
+                <!-- Registration Details -->
+                <div class="space-y-4">
+                    <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Registered Credentials</h5>
+                    
+                    <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 space-y-3">
+                        <div class="flex justify-between items-center py-1 border-b border-zinc-900">
+                            <span class="text-xs text-zinc-400">Legal Name</span>
+                            <span class="text-sm font-bold text-white">Matovu Shawik</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-zinc-900">
+                            <span class="text-xs text-zinc-400">Phone Number</span>
+                            <span class="text-sm font-bold text-white tracking-wide">+25675846754</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1">
+                            <span class="text-xs text-zinc-400">Tax Identification</span>
+                            <span class="text-xs font-mono text-zinc-300">URA-UG-941829-X</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Management Section -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Linked Financial Institutions</h5>
+                        <span class="text-[10px] text-zinc-400">Select Active</span>
+                    </div>
+
+                    <div id="bank-list-container" class="space-y-2">
+                        <!-- Card 1: DFCU -->
+                        <div onclick="selectBank('dfcu')" class="flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all" id="bank-item-dfcu">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded bg-indigo-950/60 flex items-center justify-center text-indigo-400">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-white">dfcu Bank Uganda</p>
+                                    <p class="text-[10px] text-zinc-500">Account: •••• 19</p>
+                                </div>
+                            </div>
+                            <span class="w-4 h-4 rounded-full border-2 border-indigo-500 flex items-center justify-center" id="radio-dfcu">
+                                <span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                            </span>
+                        </div>
+
+                        <!-- Card 2: Stanbic -->
+                        <div id="additional-bank-card" class="hidden flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all" onclick="selectBank('stanbic')">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded bg-amber-950/40 flex items-center justify-center text-amber-400">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-xs font-bold text-white">Stanbic Bank Uganda</p>
+                                    <p class="text-[10px] text-zinc-500">Account: •••• 56</p>
+                                </div>
+                            </div>
+                            <span class="w-4 h-4 rounded-full border border-zinc-700 flex items-center justify-center" id="radio-stanbic">
+                                <span class="w-2 h-2 bg-transparent rounded-full"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Add Bank Interactive Trigger Button -->
+                    <button id="add-bank-btn" onclick="triggerAddBank()" class="w-full py-3 bg-zinc-950 hover:bg-zinc-800 rounded-xl border border-dashed border-zinc-700 text-xs text-zinc-300 font-semibold flex items-center justify-center space-x-2 transition">
+                        <i class="fa-solid fa-plus-circle text-red-500"></i>
+                        <span>Link Another Bank Account</span>
+                    </button>
+
+                    <!-- Add Bank Form fields -->
+                    <div id="add-bank-form" class="hidden bg-zinc-950 p-4 rounded-xl border border-zinc-800 space-y-3 animate-fade-in">
+                        <p class="text-xs font-bold text-white">Enter Bank Account Details</p>
+                        <div>
+                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Bank Name</label>
+                            <select id="new-bank-name" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none focus:border-red-500">
+                                <option value="Stanbic Bank Uganda">Stanbic Bank Uganda</option>
+                                <option value="Centenary Bank">Centenary Bank</option>
+                                <option value="Absa Bank Uganda">Absa Bank Uganda</option>
+                                <option value="Standard Chartered">Standard Chartered</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Account Holder Legal Name</label>
+                            <input id="new-bank-holder" type="text" value="Matovu Shawik" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Account Number</label>
+                            <input id="new-bank-num" type="text" placeholder="e.g. 9030001827456" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none focus:border-red-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-2">
+                            <button onclick="cancelAddBank()" class="py-2 bg-zinc-900 hover:bg-zinc-800 text-xs text-zinc-400 rounded">Cancel</button>
+                            <button onclick="confirmAddBank()" class="py-2 bg-red-600 hover:bg-red-500 text-xs text-white font-bold rounded">Add Account</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer Controls -->
+            <div class="p-6 border-t border-zinc-800/80 bg-zinc-950">
+                <button onclick="handleLogOut()" class="w-full py-3.5 bg-red-600/10 hover:bg-red-600/20 text-red-500 border border-red-500/20 font-bold text-xs rounded-xl flex items-center justify-center space-x-2 transition">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Log Out of Studio Account</span>
+                </button>
+                <p class="text-center text-[10px] text-zinc-500 mt-3">YouTube Partner ID: UID-849175390-A</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- UTILITY MODAL -->
+    <div id="utility-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-55 flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl max-w-sm w-full text-center space-y-4">
+            <div id="utility-icon-container" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl"></div>
+            <div>
+                <h3 id="utility-title" class="text-base font-bold text-white">Title</h3>
+                <p id="utility-description" class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Description</p>
+            </div>
+            <button onclick="closeUtilityModal()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white text-xs py-2.5 rounded-lg transition font-medium">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <!-- LOGOUT OVERLAY DIALOG -->
+    <div id="logout-overlay" class="hidden fixed inset-0 bg-[#030303]/95 z-55 flex items-center justify-center p-4 backdrop-blur-md animate-fade-in">
+        <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl max-w-sm w-full text-center space-y-5">
+            <div class="w-16 h-16 bg-red-950/40 border border-red-800 text-red-500 rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white">Signed Out Successfully</h3>
+                <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+                    You have successfully signed out of the Partner Portal session for Matovu Shawik.
+                </p>
+            </div>
+            <button onclick="reloadPortal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition text-xs">
+                Log Back In
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Screen Toast Notifications -->
+    <div id="action-toast" class="fixed bottom-6 right-6 bg-emerald-950 border border-emerald-800 text-emerald-400 px-5 py-4 rounded-xl text-xs font-semibold flex items-center space-x-3 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 shadow-2xl z-50">
+        <i class="fa-solid fa-circle-check text-base"></i>
+        <span id="action-toast-msg">Success</span>
+    </div>
+
+    <!-- Script Implementations -->
+    <script>
+        // Store balances and configuration dynamically
+        let activeBalance = 46400000;
+        let selectedBankId = 'dfcu';
+
+        // Bank Profiles
+        const bankProfiles = {
+            dfcu: {
+                title: "dfcu Bank Uganda",
+                iconClass: "fa-solid fa-building-columns",
+                holder: "Matovu Shawik",
+                number: "•••• •••• ••84 19",
+                badge: "Primary Linked Account"
+            },
+            stanbic: {
+                title: "Stanbic Bank Uganda",
+                iconClass: "fa-solid fa-building-columns text-amber-400",
+                holder: "Matovu Shawik",
+                number: "•••• •••• ••27 56",
+                badge: "Secondary Account"
+            }
+        };
+
+        // LOGIN VALIDATION & NETWORK DELAY LOOP
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('login-email').value.trim();
+            const passwordInput = document.getElementById('login-password').value;
+            const errorBanner = document.getElementById('login-error');
+
+            const targetEmail = "Japanboys0099@gmail.com";
+            const targetPassword = "Rockmeta@256";
+
+            if (emailInput.toLowerCase() === targetEmail.toLowerCase() && passwordInput === targetPassword) {
+                // Clear any previous error layouts
+                errorBanner.classList.add('hidden');
+                
+                // Toggle login view, reveal 4-second loading loop
+                document.getElementById('login-card').classList.add('hidden');
+                document.getElementById('loader-card').classList.remove('hidden');
+
+                // Simulate Google Network delay (4000 milliseconds)
+                setTimeout(() => {
+                    // Hide overall login screen frame & show the Studio dashboard
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('main-portal').classList.remove('hidden');
+                    
+                    showLocalNotification("Authenticated as Matovu Shawik");
+                }, 4000);
+
+            } else {
+                errorBanner.classList.remove('hidden');
+                document.getElementById('login-password').value = ""; // Clear incorrect password
+            }
+        }
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('login-password');
+            const toggleIcon = document.getElementById('password-toggle-icon');
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.className = "fa-regular fa-eye-slash";
+            } else {
+                passwordField.type = "password";
+                toggleIcon.className = "fa-regular fa-eye";
+            }
+        }
+
+        // Forgot Password Simulated Helper
+        function handleForgotPassword() {
+            showUtilityModal(
+                "fa-solid fa-key bg-amber-950/40 border border-amber-900/60 text-amber-400",
+                "Reset Password Requested",
+                "A secure password recovery instructions link is being compiled for dispatch to your registered backup systems. Check your secure inbox shortly."
+            );
+        }
+
+        // Create Account Simulated Helper
+        function handleCreateAccount() {
+            showUtilityModal(
+                "fa-solid fa-signature bg-indigo-950/40 border border-indigo-900/60 text-indigo-400",
+                "Creator Application",
+                "New YouTube Partner accounts require a manual traffic validation review. Please contact your regional content support executive to request channel invitations."
+            );
+        }
+
+        // Utility Modals Control
+        function showUtilityModal(classes, title, description) {
+            document.getElementById('utility-icon-container').className = `w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl ${classes}`;
+            document.getElementById('utility-title').innerText = title;
+            document.getElementById('utility-description').innerText = description;
+            document.getElementById('utility-modal').classList.remove('hidden');
+        }
+
+        function closeUtilityModal() {
+            document.getElementById('utility-modal').classList.add('hidden');
+        }
+
+        // Numeric withdrawal validations
+        const inputField = document.getElementById('withdraw-amount-input');
+        inputField.addEventListener('input', function(e) {
+            let val = e.target.value.replace(/\D/g, "");
+            if (val === "") val = "0";
+            let numericVal = parseInt(val, 10);
+            
+            if (numericVal > activeBalance) {
+                numericVal = activeBalance;
+                showLocalNotification("Max amount restricted to available account balance!");
+            }
+            
+            e.target.value = numericVal.toLocaleString('en-US');
+            updateEstimatedFee(numericVal);
+        });
+
+        function setAmount(num) {
+            let actualValue = Math.min(num, activeBalance);
+            inputField.value = actualValue.toLocaleString('en-US');
+            updateEstimatedFee(actualValue);
+        }
+
+        function updateEstimatedFee(amount) {
+            const feeField = document.getElementById('transfer-fee-display');
+            const fee = Math.floor(amount * 0.0015);
+            feeField.innerText = "UGX " + fee.toLocaleString('en-US');
+        }
+
+        // Process Withdrawal Logic (Subtracts exact amount entered)
+        function processWithdrawal() {
+            const rawVal = inputField.value.replace(/,/g, "");
+            const numVal = parseInt(rawVal, 10);
+
+            if (isNaN(numVal) || numVal <= 0) {
+                showLocalNotification("Please enter a valid transfer amount!");
+                return;
+            }
+
+            if (numVal > activeBalance) {
+                showLocalNotification("Insufficient balance to execute this withdrawal.");
+                return;
+            }
+
+            // Deduct the dynamic amount
+            activeBalance -= numVal;
+
+            // Re-render balances dynamically across all target panels
+            document.getElementById('current-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
+            document.getElementById('summary-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
+
+            // Format displays for successful receipts
+            document.getElementById('success-amount-display').innerText = "UGX " + numVal.toLocaleString('en-US');
+            document.getElementById('success-holder-display').innerText = bankProfiles[selectedBankId].holder;
+            document.getElementById('success-bank-display').innerText = bankProfiles[selectedBankId].title;
+
+            // Swap visual card layout states
+            document.getElementById('withdraw-flow-container').classList.add('hidden');
+            document.getElementById('transfer-success-panel').classList.remove('hidden');
+
+            showLocalNotification(`UGX ${numVal.toLocaleString('en-US')} dispatched successfully!`);
+        }
+
+        function resetWithdrawForm() {
+            document.getElementById('withdraw-flow-container').classList.remove('hidden');
+            document.getElementById('transfer-success-panel').classList.add('hidden');
+            // Re-sync Max button parameters
+            setAmount(30000000);
+        }
+
+        function scrollToWithdraw() {
+            document.getElementById('withdrawal-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Switch active bank accounts dynamically
+        function selectBank(bankId) {
+            selectedBankId = bankId;
+            const profile = bankProfiles[bankId];
+            
+            document.getElementById('bank-title-display').innerText = profile.title;
+            document.getElementById('bank-holder-display').innerText = profile.holder;
+            document.getElementById('bank-number-display').innerText = profile.number;
+            document.getElementById('bank-badge').innerText = profile.badge;
+            
+            const borderDfcu = document.getElementById('bank-item-dfcu');
+            const borderStanbic = document.getElementById('additional-bank-card');
+            const radioDfcu = document.getElementById('radio-dfcu');
+            const radioStanbic = document.getElementById('radio-stanbic');
+
+            if (bankId === 'dfcu') {
+                borderDfcu.className = "flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
+                borderStanbic.className = "flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
+                radioDfcu.innerHTML = '<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>';
+                radioStanbic.innerHTML = '<span class="w-2 h-2 bg-transparent rounded-full"></span>';
+            } else {
+                borderDfcu.className = "flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
+                borderStanbic.className = "flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
+                radioDfcu.innerHTML = '<span class="w-2 h-2 bg-transparent rounded-full"></span>';
+                radioStanbic.innerHTML = '<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>';
+            }
+
+            showLocalNotification(`Switched transfer output to ${profile.title}`);
+        }
+
+        // Add bank accounts dynamically
+        function triggerAddBank() {
+            document.getElementById('add-bank-btn').classList.add('hidden');
+            document.getElementById('add-bank-form').classList.remove('hidden');
+        }
+
+        function cancelAddBank() {
+            document.getElementById('add-bank-btn').classList.remove('hidden');
+            document.getElementById('add-bank-form').classList.add('hidden');
+        }
+
+        function confirmAddBank() {
+            const num = document.getElementById('new-bank-num').value.trim();
+            if(!num) {
+                showLocalNotification("Please enter a valid bank account number!");
+                return;
+            }
+            
+            const selectedName = document.getElementById('new-bank-name').value;
+            const lastTwoDigits = num.slice(-2);
+            
+            bankProfiles.stanbic.title = selectedName;
+            bankProfiles.stanbic.number = `•••• •••• ••${num.slice(0, 2)} ${lastTwoDigits}`;
+
+            document.getElementById('additional-bank-card').classList.remove('hidden');
+            cancelAddBank();
+            
+            showLocalNotification(`${selectedName} linked successfully!`);
+        }
+
+        // Slideout Profile Drawer Controls
+        function toggleProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            const panel = document.getElementById('profile-panel-inner');
+
+            if (modal.classList.contains('pointer-events-none')) {
+                modal.classList.remove('pointer-events-none', 'opacity-0');
+                modal.classList.add('opacity-100');
+                panel.classList.remove('translate-x-full');
+            } else {
+                modal.classList.add('pointer-events-none', 'opacity-0');
+                modal.classList.remove('opacity-100');
+                panel.classList.add('translate-x-full');
+            }
+        }
+
+        // Log out clean reset session loop
+        function handleLogOut() {
+            toggleProfileModal();
+            document.getElementById('logout-overlay').classList.remove('hidden');
+        }
+
+        function reloadPortal() {
+            document.getElementById('logout-overlay').classList.add('hidden');
+            document.getElementById('main-portal').classList.add('hidden');
+            
+            // Re-reveal initial login input form card, hiding old dynamic loaders
+            document.getElementById('loader-card').classList.add('hidden');
+            document.getElementById('login-card').classList.remove('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            
+            document.getElementById('login-password').value = "";
+            
+            // Restores the starting balance variables on logoff
+            activeBalance = 46400000;
+            document.getElementById('current-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
+            document.getElementById('summary-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
+            resetWithdrawForm();
+        }
+
+        // Global Screen Toast alerts
+        function showLocalNotification(message) {
+            const toast = document.getElementById('action-toast');
+            const msgSpan = document.getElementById('action-toast-msg');
+            msgSpan.innerText = message;
+            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        function switchView(view) {
+            showLocalNotification(`Mapsd to active ${view} room.`);
+        }
+    </script>
+</body>
+</html>
+
+

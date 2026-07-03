@@ -1,1849 +1,476 @@
-
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SHAWIKBOOSTER | Official Premium Mobile SMM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Chronicles of Mr. Kaddu</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Three.js Library for Fluid 3D Engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA7C11',
+                        },
+                        amber: {
+                            950: '#1c0d02',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
-
-        :root { 
-            --brand-orange: #ff8c00; 
-            --apple-slate: #1c1c1e;
-            --apple-obsidian: #050508;
-            --ios-blur: blur(30px);
-            --ios-spring: cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--apple-obsidian); 
-            color: #f4f4f7; 
-            margin: 0; 
-            padding: 0;
-            overflow-x: hidden; 
-            touch-action: pan-x pan-y; 
-            -webkit-text-size-adjust: 100%;
-            padding-top: env(safe-area-inset-top, 16px);
-            padding-bottom: env(safe-area-inset-bottom, 24px);
-        }
-
-        h1, h2, h3, .heading-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        /* Ambient Apple Glow Backdrops */
-        .ios-glow-1 {
-            position: fixed; top: -10%; right: -10%; width: 80vw; height: 80vw;
-            background: radial-gradient(circle, rgba(255,140,0,0.12) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: -1; filter: blur(80px);
-        }
-        .ios-glow-2 {
-            position: fixed; bottom: -10%; left: -10%; width: 85vw; height: 85vw;
-            background: radial-gradient(circle, rgba(120,80,255,0.08) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: -1; filter: blur(100px);
-        }
-
-        /* 3D Background Engine Canvas */
-        #canvas3d {
-            position: fixed; inset: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: -2;
-            opacity: 0.85;
-        }
-
-        /* Premium iOS Typography Gradient */
-        .ios-gradient-text {
-            background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .magical-text {
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff8c00 0%, #ffffff 50%, #ff8c00 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shineGlow 4s linear infinite;
-        }
-
-        @keyframes shineGlow { to { background-position: 200% center; } }
-
-        /* Premium iOS Glassmorphism Card Style */
-        .ios-card { 
-            background: rgba(15, 15, 20, 0.55); 
-            backdrop-filter: var(--ios-blur);
-            -webkit-backdrop-filter: var(--ios-blur);
-            border: 0.5px solid rgba(255, 255, 255, 0.08); 
-            border-radius: 24px;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
-            transition: all 0.3s var(--ios-spring);
-        }
-        .ios-card:active {
-            transform: scale(0.985);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Fluid Responsive Sidebars */
-        .sidebar {
-            position: fixed; top: 0; right: -100%; width: 85%; max-width: 340px; height: 100%;
-            background: rgba(8, 8, 10, 0.98); backdrop-filter: blur(50px);
-            -webkit-backdrop-filter: blur(50px);
-            z-index: 1000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto; border-left: 0.5px solid rgba(255, 255, 255, 0.08);
-        }
-        .sidebar.active { right: 0; }
-
-        /* Sidebar Glass Overlay Backdrop */
-        .sidebar-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            opacity: 0; pointer-events: none; z-index: 999;
-            transition: opacity 0.3s ease;
-        }
-        .sidebar-overlay.active {
-            opacity: 1; pointer-events: auto;
-        }
-
-        .page { display: none; min-height: calc(100vh - env(safe-area-inset-top, 16px) - env(safe-area-inset-bottom, 24px)); flex-direction: column; z-index: 10; position: relative; }
-        .page.active { display: flex; }
-
-        /* Premium Dynamic Island Navigation */
-        #dynamicIsland {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%) scale(1);
-            width: 140px;
-            height: 38px;
-            background: #000000;
-            border-radius: 22px;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 1px rgba(255,255,255,0.2) inset;
-            overflow: hidden;
-            border: 0.5px solid rgba(255,255,255,0.1);
-            pointer-events: none;
-        }
-        #dynamicIsland.expanded {
-            width: calc(100% - 24px);
-            max-width: 420px;
-            height: 85px;
-            border-radius: 26px;
-            padding: 16px;
-            justify-content: flex-start;
-        }
-
-        /* Platform Selector Buttons */
-        .ios-plat-btn {
-            background: rgba(255,255,255,0.03);
-            border: 0.5px solid rgba(255,255,255,0.05);
-            transition: all 0.25s var(--ios-spring);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 48px; /* mobile tap target size */
-        }
-        .ios-plat-btn.selected {
-            background: rgba(255, 140, 0, 0.15);
-            border-color: var(--brand-orange);
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.15);
-        }
-
-        /* Modern input overrides for flawless Android + iOS rendering */
-        input, select, textarea {
-            background: rgba(0, 0, 0, 0.5) !important;
-            border: 0.5px solid rgba(255, 255, 255, 0.08) !important;
-            color: #ffffff !important;
-            outline: none;
-            width: 100%;
-            border-radius: 14px;
-            transition: all 0.25s var(--ios-spring);
-            -webkit-appearance: none; /* Prevents iOS default styling */
-            appearance: none;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--brand-orange) !important;
-            background: rgba(0, 0, 0, 0.7) !important;
-            box-shadow: 0 0 8px rgba(255, 140, 0, 0.15);
-        }
-
-        .modal {
-            position: fixed; inset: 0; background: rgba(3,3,5,0.92);
-            z-index: 2000; display: none; padding: 20px; overflow-y: auto;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-        }
-        .modal.active { display: block; }
-
-        .pulsing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--brand-orange);
-            border-radius: 50%;
-            animation: pulse 1.6s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.6); }
-            70% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 8px rgba(255, 140, 0, 0); }
-            100% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
-        }
-
-        /* Method Selector State Styles */
-        .payment-method-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 0.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 18px;
-            transition: all 0.3s var(--ios-spring);
-        }
-        .payment-method-btn.selected {
-            border-color: var(--brand-orange);
-            background: rgba(255, 140, 0, 0.08);
-            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.1);
-        }
-
-        /* Custom loading overlay inside forms */
-        .spinner-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-        }
-
-        /* Slide-up transition animation */
-        .slide-up {
-            animation: iosSlideUp 0.5s var(--ios-spring);
-        }
-        @keyframes iosSlideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Premium iOS Welcome Toast */
-        #welcomeToast {
-            position: fixed;
-            bottom: 24px;
-            left: 16px;
-            right: 16px;
-            z-index: 9999;
-            transform: translateY(200%);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-            opacity: 0;
-        }
-        #welcomeToast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Custom scrollbar optimization for panels */
-        ::-webkit-scrollbar {
+        /* Custom scrollbar for inner book pages if needed */
+        .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
         }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 140, 0, 0.3);
-            border-radius: 10px;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 2px;
         }
 
-        .api-code-block {
-            background: rgba(0,0,0,0.6);
-            border: 0.5px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 12px;
-            font-family: monospace;
-            font-size: 11px;
-            overflow-x: auto;
-            color: #ff8c00;
-            white-space: pre;
+        /* Paper texture overlay */
+        .paper-texture {
+            background-color: #fcfaf2;
+            background-image: 
+                radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0),
+                radial-gradient(rgba(0,0,0,0.02) 2px, transparent 0);
+            background-size: 8px 8px, 24px 24px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.08);
+        }
+
+        /* Hardcover leather texture styling */
+        .leather-cover {
+            background-color: #2b1810;
+            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 4px 4px;
+            box-shadow: 
+                0 30px 60px -15px rgba(0,0,0,0.9),
+                inset 0 0 30px rgba(0,0,0,0.6),
+                inset 0 2px 2px rgba(255,255,255,0.1);
+        }
+
+        /* Ribbon Bookmark animation */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+        .bookmark-ribbon {
+            animation: sway 4s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        /* 3D realistic shadow effect for book center fold */
+        .spine-shadow {
+            background: linear-gradient(
+                90deg, 
+                rgba(0,0,0,0.15) 0%, 
+                rgba(0,0,0,0.4) 45%, 
+                rgba(0,0,0,0.5) 50%, 
+                rgba(0,0,0,0.4) 55%, 
+                rgba(0,0,0,0.15) 100%
+            );
+        }
+
+        /* Custom soft glow for candle effect */
+        .candle-glow {
+            box-shadow: 0 0 100px 30px rgba(212, 175, 55, 0.15);
+        }
+
+        /* CSS Flip Animations */
+        .page-transition {
+            transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
     </style>
 </head>
-<body class="px-4 max-w-lg mx-auto">
+<body class="bg-[#0b0806] text-[#dfd5c6] font-sans h-full overflow-hidden select-none flex flex-col justify-between relative">
 
-    <!-- DYNAMIC ISLAND SYSTEM (iOS Flagship Notification Panel) -->
-    <div id="dynamicIsland">
-        <!-- Dynamic Island Small View -->
-        <div id="islandSmall" class="flex items-center gap-2 px-4">
-            <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
-            <span class="text-[9px] font-black uppercase tracking-widest text-orange-500">SHAWIK</span>
-        </div>
-        <!-- Dynamic Island Expanded Notification View -->
-        <div id="islandExpanded" class="hidden w-full flex items-center justify-between text-left transition-opacity duration-300">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-500 text-md">
-                    <i id="islandIcon" class="fa-solid fa-circle-check"></i>
-                </div>
-                <div>
-                    <h4 id="islandTitle" class="text-[11px] font-black uppercase tracking-wider text-white">System Synced</h4>
-                    <p id="islandDesc" class="text-[9px] text-gray-400 mt-0.5">Welcome premium rewards applied.</p>
-                </div>
-            </div>
-            <i class="fa-solid fa-spider text-orange-500/30 text-lg pr-2"></i>
-        </div>
-    </div>
+    <!-- Background Ambient Layer -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(40,30,20,0.6)_0%,rgba(11,8,6,1)_100%)] z-0"></div>
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-950/20 rounded-full blur-[120px] candle-glow pointer-events-none z-0"></div>
 
-    <!-- PREMIUM INTERACTIVE LUGANDA TOAST DIALOGUE -->
-    <div id="welcomeToast" class="ios-card p-5 max-w-md mx-auto border-orange-500/30 bg-black/95">
-        <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-orange-500/15 border border-orange-500/30 rounded-xl flex items-center justify-center text-orange-500 flex-shrink-0 animate-pulse">
-                <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
-            </div>
-            <div class="flex-1 space-y-1">
-                <h4 class="text-[10px] font-black text-orange-500 uppercase tracking-widest leading-none">Rico Animations</h4>
-                <p class="text-[13px] text-white font-bold leading-snug">
-                    Tukwanirizza ku Shawik Rico Animations Panel!
-                </p>
-                <p class="text-[11px] text-gray-400 font-medium">
-                    Osobola okugula service zaffe ku bbeyi powa.
-                </p>
-            </div>
+    <!-- Background Audio Element -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="los.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Header Overlay (Always Visible once entered) -->
+    <header id="app-header" class="relative z-20 w-full px-6 py-4 flex justify-between items-center opacity-0 transition-opacity duration-1000 pointer-events-none">
+        <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-[0.3em] text-gold/80 font-medium">Chronicles of Kaddu</span>
         </div>
-        <!-- Action Buttons -->
-        <div class="flex gap-2 mt-4">
-            <button onclick="dismissWelcomeToast()" class="flex-1 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-[11px] font-bold text-gray-400 uppercase tracking-wider transition-colors">
-                Cancel
+        <!-- Minimal Premium Audio Controls -->
+        <div class="flex items-center gap-4 bg-black/40 backdrop-blur-md border border-gold/20 px-4 py-2 rounded-full pointer-events-auto">
+            <button id="toggle-audio" class="text-gold hover:text-gold-light transition-colors duration-300 flex items-center justify-center" aria-label="Toggle Audio">
+                <!-- Play Icon (hidden initially as it tries to play) -->
+                <svg id="icon-play" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <!-- Pause Icon (shown initially) -->
+                <svg id="icon-pause" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
             </button>
-            <a href="https://wa.me/+447412887630" target="_blank" class="flex-[1.5] py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-[11px] font-black text-black uppercase tracking-wider text-center flex items-center justify-center gap-1 transition-colors shadow-lg shadow-orange-500/10">
-                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
-            </a>
-        </div>
-    </div>
-
-    <!-- LIVE 3D GRAPH CORE ENGINE -->
-    <canvas id="canvas3d"></canvas>
-
-    <!-- SLATE AMBIENCE LIGHTS -->
-    <div class="ios-glow-1"></div>
-    <div class="ios-glow-2"></div>
-
-    <!-- INTERACTIVE SIDEBAR OVERLAY BACKDROP -->
-    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-    <!-- FIRST/INTRO PAGE (LAUNCHED & UPDATED STATUS) -->
-    <div id="introPage" class="page active items-center justify-center px-2 transition-opacity duration-1000">
-        <div class="text-center w-full max-w-sm flex flex-col items-center">
-            
-            <!-- Glow Sphere -->
-            <div class="relative mb-6">
-                <div class="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
-                <div class="relative w-16 h-16 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-center shadow-2xl">
-                    <i class="fa-solid fa-space-shuttle text-2xl text-orange-500 -rotate-45"></i>
-                </div>
-            </div>
-            
-            <h1 class="text-3xl font-extrabold tracking-tight ios-gradient-text mb-2">System Online</h1>
-            <p class="text-[10px] text-gray-500 uppercase tracking-[0.25em] mb-6 font-semibold">Booster Mainnet v26.0</p>
-            
-            <!-- Launch Message Glass Card -->
-            <div class="ios-card p-5 w-full mb-6">
-                <div class="flex items-center justify-center gap-2 mb-2">
-                    <span class="pulsing-dot"></span>
-                    <span class="text-[9px] text-emerald-400 font-extrabold uppercase tracking-widest">Active Device Security</span>
-                </div>
-                <p class="text-xs text-gray-300 font-medium leading-relaxed">
-                    SHAWIKBOOSTER's latest update is live. Core services are fully updated, stable, and executing instantly!
-                </p>
-                <div class="mt-4 p-3 bg-orange-500/10 border border-orange-500/20 rounded-xl">
-                    <p class="text-[8px] text-orange-500 font-extrabold uppercase tracking-widest">iOS Welcome Reward</p>
-                    <p class="text-xs text-white font-bold mt-0.5">Claim USh 10,000 Sign-up Bonus Inside!</p>
-                </div>
-            </div>
-
-            <button onclick="skipIntro()" class="text-[10px] text-gray-400 hover:text-white uppercase tracking-[0.25em] transition-colors flex items-center gap-2 font-bold min-h-[48px]">
-                Open Dashboard <i class="fa-solid fa-arrow-right text-[8px]"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- RESPONSIVE LOGIN & SIGN-UP PAGE -->
-    <div id="loginPage" class="page items-center justify-center py-6">
-        <div class="w-full max-w-sm mx-auto slide-up">
-            <!-- Top Branding -->
-            <div class="text-center mb-6">
-                <div class="inline-block p-3 rounded-2xl bg-black/40 border border-white/5 mb-3 shadow-xl">
-                    <i class="fa-solid fa-spider text-3xl text-orange-500"></i>
-                </div>
-                <h1 class="text-2xl font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
-                <p class="text-[8px] text-gray-500 font-extrabold uppercase tracking-[0.3em] mt-1">Universal SMM Panel</p>
-            </div>
-
-            <!-- Login / Sign Up Tabs -->
-            <div class="ios-card p-1 flex mb-4 bg-black/30">
-                <button onclick="switchAuthTab('login')" id="tabBtn-login" class="flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider auth-tab active text-center">
-                    Sign In
-                </button>
-                <button onclick="switchAuthTab('signup')" id="tabBtn-signup" class="flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider auth-tab text-gray-500 text-center">
-                    Sign Up
-                </button>
-            </div>
-
-            <!-- Form Container -->
-            <div class="ios-card p-5 space-y-4">
-                
-                <!-- Display warning if device already has account -->
-                <div id="signupBlockerNotice" class="hidden p-3 bg-red-950/20 border border-red-900/30 text-red-400 text-xs rounded-xl font-medium">
-                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Single-Device Rule: This phone already has an account registered.
-                </div>
-
-                <!-- Extra field for sign up -->
-                <div id="signupNameField" class="hidden">
-                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Full Name</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-user absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="text" id="authName" placeholder="John Doe" class="pl-12 pr-4 py-3 text-sm">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Email Address</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="email" id="authEmail" placeholder="you@example.com" class="pl-12 pr-4 py-3 text-sm">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Secure Password</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="password" id="authPassword" placeholder="••••••••" class="pl-12 pr-4 py-3 text-sm">
-                    </div>
-                </div>
-
-                <!-- Terms & Conditions check for Sign up -->
-                <div id="termsCheckbox" class="hidden flex items-start gap-2 pt-1">
-                    <input type="checkbox" id="agreeTerms" class="w-4 h-4 rounded border-gray-800 bg-black mt-0.5 accent-orange-500">
-                    <label for="agreeTerms" class="text-[9px] text-gray-400 font-semibold">I agree to the Terms of Service</label>
-                </div>
-
-                <!-- Submit Button -->
-                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10 min-h-[48px]">
-                    Sign In
-                </button>
-
-                <div class="relative flex py-1 items-center">
-                    <div class="flex-grow border-t border-white/5"></div>
-                    <span class="flex-shrink mx-3 text-gray-600 text-[8px] font-extrabold uppercase tracking-widest">or</span>
-                    <div class="flex-grow border-t border-white/5"></div>
-                </div>
-
-                <!-- Google SSO -->
-                <button onclick="handleGoogleSignIn()" class="w-full bg-white text-black py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-xs active:scale-95 transition-transform min-h-[48px]">
-                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Continue with Google
-                </button>
-            </div>
-
-            <!-- Dynamic Credits -->
-            <div class="mt-8 text-center space-y-3">
-                <div>
-                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-0.5">Developer</p>
-                    <span class="text-sm font-bold text-gray-400">SHAWIK</span>
-                </div>
-                <div>
-                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-0.5">Official Sponsors</p>
-                    <span class="text-[9px] text-gray-500 font-semibold">Dj Douglas & Ava max</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- DASHBOARD PAGE -->
-    <div id="dashboardPage" class="page pb-24">
-        <header class="flex justify-between items-center py-4">
+            <div class="h-3 w-[1px] bg-gold/30"></div>
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-spider text-orange-500 text-lg animate-pulse"></i>
-                <h1 class="text-sm font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
+                <svg class="w-3 h-3 text-gold/60" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <input id="audio-volume" type="range" min="0" max="1" step="0.05" value="0.7" class="w-16 accent-gold bg-stone-800 h-1 rounded-lg cursor-pointer">
             </div>
-            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center min-h-[40px] min-w-[40px]">
-                <i class="fa-solid fa-bars-staggered text-sm"></i>
-            </button>
-        </header>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-2 gap-3 mb-4 slide-up">
-            <div class="ios-card p-4 relative overflow-hidden">
-                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-4xl">
-                    <i class="fa-solid fa-wallet"></i>
-                </div>
-                <span class="text-[8px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Active Balance</span>
-                <p id="dashboardBalance" class="text-base font-black text-white">USh 80,000.00</p>
-            </div>
-            <div class="ios-card p-4 relative overflow-hidden">
-                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-4xl">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <span class="text-[8px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Total Spent</span>
-                <p id="dashboardSpending" class="text-base font-black text-[#ff8c00]">USh 0.00</p>
-            </div>
+            <span class="text-[9px] tracking-widest text-gold/80 uppercase font-serif animate-pulse">Playing</span>
         </div>
+    </header>
 
-        <!-- Social Navigation -->
-        <div class="ios-card p-2 mb-4 grid grid-cols-4 gap-2 bg-black/30 slide-up">
-            <button id="platform-TikTok" class="ios-plat-btn" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok text-lg"></i></button>
-            <button id="platform-Instagram" class="ios-plat-btn" onclick="selectPlatform('Instagram')"><i class="fa-brands fa-instagram text-lg text-pink-500"></i></button>
-            <button id="platform-Facebook" class="ios-plat-btn" onclick="selectPlatform('Facebook')"><i class="fa-brands fa-facebook text-lg text-blue-600"></i></button>
-            <button id="platform-YouTube" class="ios-plat-btn" onclick="selectPlatform('YouTube')"><i class="fa-brands fa-youtube text-lg text-red-600"></i></button>
-        </div>
-
-        <!-- Main Form -->
-        <div class="ios-card p-4 space-y-3 slide-up">
-            <div>
-                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Choose Category</label>
-                <div class="relative mt-1">
-                    <i class="fa-solid fa-layer-group absolute left-4 top-[15px] text-orange-500 text-sm"></i>
-                    <select id="categorySelect" onchange="onCategoryChange()" class="pl-10 py-3 rounded-xl text-xs appearance-none">
-                        <option value="followers">TikTok Followers</option>
-                        <option value="views">TikTok Views</option>
-                        <option value="shares">TikTok Shares</option>
-                        <option value="comment_likes">TikTok Comment Likes</option>
-                        <option value="shares_saves">TikTok Shares and Saves</option>
-                        <option value="story_views">TikTok Story Views</option>
-                        <option value="likes">TikTok Likes</option>
-                        <option value="live_likes">TikTok Live Likes</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
-                </div>
+    <!-- INTRO SPLASH SCREEN (Necessary user-gesture gate) -->
+    <div id="splash-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center text-center p-6 bg-[#0b0806]">
+        <div class="max-w-md w-full flex flex-col items-center">
+            <!-- Monogram Frame -->
+            <div class="w-24 h-24 border border-gold/40 rounded-full flex items-center justify-center mb-8 relative">
+                <div class="absolute inset-1 border border-dashed border-gold/20 rounded-full"></div>
+                <span class="font-serif text-3xl text-gold tracking-widest pl-1">MK</span>
             </div>
+            
+            <h1 class="font-serif text-3xl md:text-4xl text-stone-200 tracking-[0.2em] mb-4 leading-relaxed uppercase">
+                A Message for <br>
+                <span class="text-gold italic font-light lowercase">mr. kaddu</span>
+            </h1>
+            
+            <div class="w-20 h-[1px] bg-gold/40 my-6"></div>
+            
+            <p class="font-sans text-xs uppercase tracking-[0.3em] text-stone-400 mb-10 leading-loose">
+                An Interactive Warning Artifact
+            </p>
 
-            <div>
-                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Choose Service</label>
-                <div class="relative mt-1">
-                    <select id="serviceSelect" class="py-3 px-3 rounded-xl text-xs appearance-none">
-                        <!-- Loaded dynamically -->
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
-                </div>
-            </div>
-
-            <div>
-                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Target Account / URL</label>
-                <input type="url" id="linkInput" placeholder="Paste link here..." class="p-3 mt-1 rounded-xl text-xs">
-            </div>
-
-            <div class="flex gap-2">
-                <div class="flex-[1.5]">
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Quantity</label>
-                    <input type="number" id="qtyInput" placeholder="1000" class="p-3 mt-1 rounded-xl text-xs">
-                </div>
-                <div class="flex-1">
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Delivery Time</label>
-                    <div id="timeDisplay" class="p-3 mt-1 rounded-xl text-[9px] font-extrabold text-gray-400 bg-black/50 border border-white/5 text-center min-h-[40px] flex items-center justify-center">15 Mins</div>
-                </div>
-            </div>
-
-            <div class="p-3 bg-orange-500/5 border border-orange-500/10 rounded-xl flex justify-between items-center">
-                <div>
-                    <p class="text-[8px] text-gray-500 uppercase font-extrabold tracking-wider">Total Payable</p>
-                    <p id="priceDisplay" class="text-lg font-black text-orange-500">USh 0.00</p>
-                </div>
-                <i class="fa-solid fa-coins text-orange-950/40 text-xl animate-spin" style="animation-duration: 8s"></i>
-            </div>
-
-            <button onclick="placeSingleOrder()" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/15 min-h-[48px]">
-                Confirm & Place Order
+            <button id="enter-btn" class="group relative px-8 py-4 bg-transparent border border-gold text-gold text-xs uppercase tracking-[0.4em] font-medium transition-all duration-700 hover:text-stone-950 overflow-hidden">
+                <span class="relative z-10">Open the Book</span>
+                <span class="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></span>
             </button>
+            
+            <span class="text-[10px] text-stone-500 tracking-wider mt-6 font-serif italic">
+                *Opens ambient presentation with audio
+            </span>
         </div>
-
-        <!-- Lower Menu Grid -->
-        <div class="mt-4 grid grid-cols-2 gap-3 slide-up">
-            <button onclick="openModal('ticketsModal')" class="ios-card p-4 flex flex-col items-center gap-1.5 bg-black/30 min-h-[85px]">
-                <i class="fa-solid fa-ticket text-orange-500 text-md"></i>
-                <span class="text-[9px] font-extrabold uppercase tracking-widest text-gray-300">Support tickets</span>
-            </button>
-            <button onclick="openModal('apiModal')" class="ios-card p-4 flex flex-col items-center gap-1.5 bg-black/30 min-h-[85px]">
-                <i class="fa-solid fa-code text-blue-500 text-md"></i>
-                <span class="text-[9px] font-extrabold uppercase tracking-widest text-gray-300">Developer API</span>
-            </button>
-        </div>
-
-        <!-- Animated Footer Credits -->
-        <footer class="mt-8 text-center pb-6 opacity-90">
-            <p class="text-[8px] text-gray-700 font-bold uppercase tracking-widest mb-1">Designed & Built By</p>
-            <span class="text-sm font-bold text-gray-500 block mb-2">SHAWIK</span>
-            <div class="h-[1px] w-8 bg-gray-900 mx-auto mb-2"></div>
-            <p class="text-[8px] text-gray-700 font-bold uppercase tracking-widest mb-1">Powered By</p>
-            <span class="text-[10px] text-gray-600 block">Dj Douglas & Ava max</span>
-        </footer>
     </div>
 
-    <!-- MASS ORDERS PAGE -->
-    <div id="massOrdersPage" class="page pb-24">
-        <!-- Mass Orders Header -->
-        <header class="flex items-center gap-3 py-4">
-            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
-                <i class="fa-solid fa-arrow-left text-white text-sm"></i>
-            </button>
-            <h1 class="text-sm font-black tracking-widest uppercase">Mass Orders</h1>
-        </header>
+    <!-- MAIN BOOK CONTAINER -->
+    <main id="book-container" class="relative z-10 w-full max-w-6xl mx-auto px-4 md:px-8 flex-1 flex items-center justify-center opacity-0 transition-opacity duration-1000 pointer-events-none py-4 md:py-8">
+        
+        <!-- Luxury Virtual Desk Placement -->
+        <div class="relative w-full max-w-5xl aspect-[3/4] md:aspect-[1.5/1] rounded-lg shadow-2xl flex">
+            
+            <!-- Book Spine Base Structure (Behind Pages) -->
+            <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-6 bg-stone-950 z-20 rounded-sm shadow-inner pointer-events-none hidden md:block"></div>
+            
+            <!-- Book Body Shadow & Edge Trim -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 rounded-lg blur-md opacity-35 z-0"></div>
 
-        <div class="max-w-md mx-auto w-full space-y-4">
-            <div class="ios-card p-4 bg-black/30">
-                <h3 class="text-[10px] font-black uppercase text-[#ff8c00] tracking-wider mb-2">Service Quick Index</h3>
-                <div class="space-y-1 text-[9px] text-gray-400 font-semibold">
-                    <p><b class="text-white">fol_1:</b> TikTok Followers (UGX 20,000 / 1k)</p>
-                    <p><b class="text-white">view_1:</b> TikTok Views (UGX 1,500 / 1k)</p>
-                    <p><b class="text-white">like_1:</b> TikTok Likes (UGX 6,000 / 1k)</p>
+            <!-- Page 1: Left Cover / Desktop Spacing Base (Hidden on mobile) -->
+            <div class="leather-cover w-1/2 h-full rounded-l-lg border-r border-stone-950 flex-col justify-between p-8 relative z-10 hidden md:flex">
+                <!-- Bookplate detail -->
+                <div class="border border-gold/20 p-4 rounded-sm flex flex-col items-center justify-center text-center mt-6">
+                    <span class="font-serif text-[10px] uppercase tracking-widest text-gold/60 mb-2">Private Collection</span>
+                    <h3 class="font-serif text-sm text-gold-light tracking-widest uppercase">KADDU CHRONICLES</h3>
                 </div>
-            </div>
-
-            <div class="ios-card p-4 space-y-3">
-                <div>
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider block mb-1">Enter Bulk Orders</label>
-                    <p class="text-[8px] text-gray-600 mb-1.5">Format: <b class="text-gray-400">service_id | link | quantity</b></p>
-                    <textarea id="massOrdersInput" rows="6" placeholder="fol_1 | https://www.tiktok.com/@username | 1000&#10;view_1 | https://www.tiktok.com/@username/video/1 | 5000" class="p-3 text-[11px] font-mono rounded-xl bg-black border border-white/5 w-full" style="line-height: 1.5;"></textarea>
-                </div>
-
-                <div class="p-3 bg-orange-500/5 border border-orange-500/10 rounded-xl">
-                    <p class="text-[8px] text-gray-500 uppercase font-black">Conversion Info</p>
-                    <p class="text-[9px] text-gray-400 leading-normal mt-0.5">
-                        System will automatically split multi-line lists and schedule tasks dynamically.
+                
+                <div class="flex flex-col items-start gap-4">
+                    <div class="w-12 h-[1px] bg-gold/30"></div>
+                    <p class="font-serif italic text-xs text-stone-400 leading-relaxed max-w-xs">
+                        "There is a fine line between playful warmth and a swift consequence."
                     </p>
                 </div>
-
-                <button onclick="submitMassOrders()" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-lg shadow-orange-500/10 min-h-[48px]">
-                    Place Mass Order
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ORDER TRACKING PAGE -->
-    <div id="ordersPage" class="page pb-24">
-        <!-- Header -->
-        <header class="flex items-center justify-between py-4">
-            <div class="flex items-center gap-3">
-                <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
-                    <i class="fa-solid fa-arrow-left text-white text-sm"></i>
-                </button>
-                <h1 class="text-sm font-black tracking-widest uppercase">Order Tracker</h1>
-            </div>
-            <div class="flex items-center gap-1">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-                <span class="text-[8px] bg-green-950/80 text-green-400 border border-green-900/50 font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Live</span>
-            </div>
-        </header>
-
-        <!-- Live Orders List -->
-        <div class="max-w-md mx-auto w-full space-y-3">
-            
-            <div class="flex items-center justify-between px-1">
-                <span id="orderCount" class="text-[9px] text-gray-500 font-black uppercase tracking-wider">Total: 0 Orders</span>
-                <button onclick="clearAllOrders()" class="text-[8px] text-red-500 font-black uppercase tracking-widest hover:text-red-400 transition-colors">Clear Cache</button>
+                <div class="text-[9px] uppercase tracking-widest text-stone-500">Vol. I — No. I</div>
             </div>
 
-            <!-- Interactive tabs -->
-            <div class="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/5 mb-1">
-                <button id="orderTabSelf" onclick="switchOrderTab('self')" class="py-2 text-[9px] font-black uppercase tracking-wider rounded-lg bg-orange-500 text-black">Your Orders</button>
-                <button id="orderTabGlobal" onclick="switchOrderTab('global')" class="py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-gray-400">Global Feed</button>
-            </div>
-
-            <!-- Orders Container -->
-            <div id="ordersListContainer" class="space-y-3">
-                <!-- Loaded dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ADD FUNDS PAGE -->
-    <div id="addFundsPage" class="page pb-24">
-        <!-- Add Funds Header -->
-        <header class="flex items-center gap-3 py-4">
-            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
-                <i class="fa-solid fa-arrow-left text-white text-sm"></i>
-            </button>
-            <h1 class="text-sm font-black tracking-widest uppercase">Add Funds</h1>
-        </header>
-
-        <div class="max-w-md mx-auto w-full space-y-4">
-            
-            <!-- Deposit Amount Card -->
-            <div class="ios-card p-4 bg-gradient-to-b from-[#111] to-[#080808]">
-                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Deposit Amount (USD)</label>
-                <div class="relative flex items-center">
-                    <span class="absolute left-4 text-xl font-black text-gray-400">$</span>
-                    <input type="number" id="depositAmount" value="10" min="1" class="pl-8 pr-4 py-3 rounded-xl text-xl font-bold bg-[#050505] border border-white/5 focus:border-[#ff8c00] transition-colors w-full" placeholder="10">
-                </div>
-                <div class="flex justify-between items-center mt-2 px-1">
-                    <span class="text-[9px] text-gray-500 font-semibold">Estimated conversion:</span>
-                    <span id="ugxConversion" class="text-[10px] text-[#ff8c00] font-bold">USh 38,500</span>
-                </div>
-            </div>
-
-            <!-- Choose Method Header -->
-            <div>
-                <h3 class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Choose Method</h3>
+            <!-- ACTUAL INTERACTIVE PAGES CONTAINER -->
+            <!-- We will render a double-sided looking desk paper. On mobile it handles as singular layout. -->
+            <div class="w-full md:w-1/2 h-full paper-texture rounded-r-lg md:rounded-l-none rounded-l-lg border-l border-stone-300 relative flex flex-col justify-between p-6 md:p-12 overflow-hidden shadow-2xl">
                 
-                <div class="space-y-2">
-                    <!-- Credit Card Method Button -->
-                    <button id="methodCard" onclick="selectPaymentMethod('card')" class="payment-method-btn selected w-full p-3 flex items-center justify-between text-left">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-blue-900/20 border border-blue-900/40 rounded-xl flex items-center justify-center text-blue-500">
-                                <i class="fa-solid fa-credit-card text-md"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black uppercase text-white tracking-wider">Credit Card</h4>
-                                <p class="text-[9px] text-gray-500 font-semibold">Visa, Mastercard, Amex</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-5 h-auto opacity-80" alt="Visa">
-                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="w-5 h-auto opacity-80" alt="Mastercard">
-                        </div>
-                    </button>
-
-                    <!-- Mobile Money Method Button -->
-                    <button id="methodMobileMoney" onclick="selectPaymentMethod('momo')" class="payment-method-btn w-full p-3 flex items-center justify-between text-left">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-yellow-900/20 border border-yellow-900/40 rounded-xl flex items-center justify-center text-yellow-500">
-                                <i class="fa-solid fa-mobile-screen-button text-md"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black uppercase text-white tracking-wider">Mobile Money</h4>
-                                <p class="text-[9px] text-gray-500 font-semibold">MTN & Airtel Uganda</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <span class="px-1.5 py-0.5 bg-[#ffcc00] text-black text-[8px] font-black rounded uppercase">MTN</span>
-                            <span class="px-1.5 py-0.5 bg-[#ff0000] text-white text-[8px] font-black rounded uppercase">Airtel</span>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Dynamic Form Loading Section -->
-            <div id="paymentFormContainer" class="ios-card p-4 bg-[#0a0a0a] border border-[#141414]">
+                <!-- Spine shadow element to look dimensional on left edge -->
+                <div class="absolute left-0 top-0 bottom-0 w-8 spine-shadow pointer-events-none opacity-40"></div>
                 
-                <!-- 1. LOADING STATE -->
-                <div id="paymentLoadingState" class="spinner-container hidden">
-                    <div class="relative w-10 h-10 mb-3">
-                        <div class="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
-                        <div class="absolute inset-0 border-4 border-[#ff8c00] border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                    <p class="text-[11px] text-gray-400 animate-pulse">Establishing secure gateway connection...</p>
+                <!-- Ribbon Bookmark trailing over page -->
+                <div class="bookmark-ribbon absolute top-0 right-10 w-4 h-32 md:h-48 bg-red-800/90 shadow-lg border-r border-red-950 rounded-b-sm pointer-events-none z-10 flex flex-col justify-end items-center pb-2">
+                    <div class="w-2 h-2 rounded-full bg-gold/50"></div>
                 </div>
 
-                <!-- 2. CREDIT CARD OPTION FORM -->
-                <div id="creditCardForm" class="space-y-3">
-                    <div class="flex items-center justify-between border-b border-gray-900 pb-2 mb-1">
-                        <span class="text-xs font-bold text-[#ff8c00] uppercase tracking-wider">Card Details</span>
-                        <i class="fa-solid fa-lock text-[9px] text-gray-500"> Secure SSL</i>
-                    </div>
-
-                    <div>
-                        <input type="text" id="cardNo" placeholder="Card Number" class="payment-input p-3 text-xs w-full font-mono tracking-wider" maxlength="19">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="cardExpiry" placeholder="MM/YY" class="payment-input p-3 text-xs font-mono text-center" maxlength="5">
-                        <input type="password" id="cardCVC" placeholder="CVC" class="payment-input p-3 text-xs font-mono text-center" maxlength="4">
-                    </div>
-
-                    <button onclick="submitCreditCardPayment()" class="w-full bg-[#ff8c00] text-black py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest active:scale-95 transition-all mt-2 hover:bg-orange-500 shadow-lg shadow-orange-500/10 min-h-[48px]">
-                        Confirm Payment
-                    </button>
+                <!-- Page Header indicator -->
+                <div class="flex justify-between items-center text-[10px] tracking-widest text-stone-500 uppercase font-sans mb-4 border-b border-stone-200 pb-3">
+                    <span id="page-index">Chapter I</span>
+                    <span id="page-number" class="font-serif italic text-xs">Page 1 of 3</span>
                 </div>
 
-                <!-- 3. MOBILE MONEY UGANDA FORM -->
-                <div id="mobileMoneyForm" class="hidden space-y-3">
-                    <div class="flex items-center justify-between border-b border-gray-900 pb-2 mb-1">
-                        <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider">Mobile Money Uganda</span>
-                        <span class="text-[8px] bg-green-950/80 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-900/50">Instant</span>
-                    </div>
-
-                    <div>
-                        <label class="text-[9px] text-gray-500 font-bold uppercase block mb-1">Select Network</label>
-                        <div class="relative">
-                            <select id="momoProvider" class="payment-input p-3 text-xs w-full appearance-none">
-                                <option value="mtn">MTN MoMo Uganda (077 / 078 / 076)</option>
-                                <option value="airtel">Airtel Money Uganda (075 / 070 / 074)</option>
-                            </select>
-                            <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="text-[9px] text-gray-500 font-bold uppercase block mb-1">Phone Number</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-3 text-xs text-gray-500 font-bold font-mono">+256</span>
-                            <input type="tel" id="momoPhone" placeholder="700 000000" class="payment-input pl-14 pr-4 py-3 text-xs w-full font-mono" maxlength="9">
-                        </div>
-                        <span class="text-[8px] text-gray-600 mt-1 block">Enter 9 digits (exclude first 0).</span>
-                    </div>
-
-                    <button onclick="submitMomoPayment()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest active:scale-95 transition-all mt-2 hover:bg-yellow-400 min-h-[48px]">
-                        Initiate Push Payment
-                    </button>
-                </div>
-
-                <!-- 4. ERROR NOTICE -->
-                <div id="errorGatewayContainer" class="hidden text-center py-4 px-2 space-y-3">
-                    <div class="w-12 h-12 bg-red-950/40 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 mx-auto">
-                        <i class="fa-solid fa-triangle-exclamation text-lg animate-bounce"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-black uppercase text-red-500 tracking-wider">Gateway Load Failure</h4>
-                        <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">
-                            Couldn't load. Try again later.
+                <!-- PAGE CONTENT SLIDER (Dynamic Content Rendered cleanly with Javascript) -->
+                <div class="flex-1 flex flex-col justify-center relative my-4">
+                    
+                    <!-- PAGE 1: COVER SLIDE -->
+                    <div id="slide-1" class="page-transition absolute inset-0 flex flex-col justify-center opacity-100 transform translate-x-0 z-10 pointer-events-auto">
+                        <span class="text-xs text-gold-dark tracking-[0.3em] uppercase mb-2 font-semibold">An Opening Notice</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-stone-800 tracking-wide font-bold mb-4 leading-snug">
+                            To the One <br>Known as <span class="italic text-amber-950">Mr. Kaddu</span>
+                        </h2>
+                        <div class="w-16 h-[2px] bg-gold/60 mb-6"></div>
+                        <p class="font-serif text-stone-600 text-base md:text-lg leading-relaxed italic">
+                            Within this ledger, you will find words carefully preserved. They are soft warnings, laced with severe expectations. Read carefully, and keep your hands steady.
                         </p>
                     </div>
-                    <div class="pt-1">
-                        <button onclick="retrySelectedPayment()" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-[9px] font-bold text-white hover:bg-neutral-800 transition-colors uppercase tracking-wider">
-                            <i class="fa-solid fa-arrows-rotate mr-1"></i> Retry
-                        </button>
+
+                    <!-- PAGE 2: THE MAIN WARNING -->
+                    <div id="slide-2" class="page-transition absolute inset-0 flex flex-col justify-center opacity-0 transform translate-x-12 z-0 pointer-events-none">
+                        <span class="text-xs text-gold-dark tracking-[0.3em] uppercase mb-2 font-semibold">The Core Mandate</span>
+                        <h2 class="font-serif text-2xl md:text-3xl text-stone-800 tracking-wide font-bold mb-4 leading-relaxed">
+                            "Hello my <br>mr kaddu"
+                        </h2>
+                        <div class="w-16 h-[2px] bg-red-800/60 mb-4"></div>
+                        
+                        <!-- Drop cap style main warning text -->
+                        <p class="font-serif text-stone-800 text-lg md:text-xl leading-relaxed italic mb-4 font-semibold">
+                            <span class="float-left text-5xl font-sans text-red-800 font-bold mr-2 mt-1 leading-none">S</span>top being playful nja kukuba ako akatwe. Be careful with whatever you do.
+                        </p>
                     </div>
-                </div>
 
-            </div>
-
-            <!-- Security Badge -->
-            <div class="flex items-center justify-center gap-1.5 text-gray-600">
-                <i class="fa-solid fa-shield text-[9px]"></i>
-                <span class="text-[8px] font-semibold uppercase tracking-widest">End-to-End Encrypted</span>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- API MODAL -->
-    <div id="apiModal" class="modal">
-        <div class="p-3">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xs font-black uppercase text-white">API Integration</h3>
-                <button onclick="closeModal('apiModal')" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <p class="text-[9px] text-gray-500 mb-2 uppercase font-bold">PHP Integration for SHAWIKBOOSTER</p>
-            <div class="api-code-block">
-&lt;?php
-class Api {
-    public $api_url = 'https://shawikbooster.com/api/v2';
-    public $api_key = 'YOUR_API_KEY_HERE';
-
-    public function order($data) {
-        $post = array_merge(['key' => $this->api_key, 'action' => 'add'], $data);
-        return json_decode((string)$this->connect($post));
-    }
-
-    private function connect($post) {
-        $ch = curl_init($this->api_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }
-}
-?&gt;
-            </div>
-        </div>
-    </div>
-
-    <!-- TICKETS MODAL -->
-    <div id="ticketsModal" class="modal">
-        <div class="p-4">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xs font-black uppercase tracking-wider text-white">Support Center</h3>
-                <button onclick="closeModal('ticketsModal')" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="text-[9px] font-bold text-gray-500 uppercase">Order Number</label>
-                    <input type="text" placeholder="e.g. #SHAWIK-9981" class="p-3 rounded-xl text-xs mt-1">
-                </div>
-                <div>
-                    <label class="text-[9px] font-bold text-gray-500 uppercase">Issue Category</label>
-                    <div class="relative">
-                        <select class="p-3 rounded-xl text-xs mt-1 appearance-none">
-                            <option>Refill Request</option>
-                            <option>Payment Issues</option>
-                            <option>Order Cancellation</option>
-                            <option>Other Support</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down absolute right-4 top-[18px] text-gray-500 text-[10px] pointer-events-none"></i>
+                    <!-- PAGE 3: THE PENALTY / OUTRO -->
+                    <div id="slide-3" class="page-transition absolute inset-0 flex flex-col justify-center opacity-0 transform translate-x-12 z-0 pointer-events-none">
+                        <span class="text-xs text-red-800 tracking-[0.3em] uppercase mb-2 font-bold">A Final Directive</span>
+                        <h2 class="font-serif text-xl md:text-2xl text-stone-800 tracking-wide font-bold mb-4 leading-relaxed uppercase">
+                            No Room for Vulgarity
+                        </h2>
+                        <div class="w-16 h-[2px] bg-red-800/80 mb-4"></div>
+                        <p class="font-serif text-stone-800 text-lg md:text-xl leading-relaxed italic font-medium">
+                            "Stop using vulgar words, <span class="text-red-800 underline decoration-gold decoration-2 underline-offset-4">or I will slap you.</span>"
+                        </p>
+                        
+                        <!-- Signature mockup -->
+                        <div class="mt-8 self-end text-right">
+                            <span class="font-serif italic text-stone-500 block text-xs">signed under serious seal,</span>
+                            <span class="font-serif text-xl font-bold text-stone-800 italic tracking-widest border-t border-stone-300 pt-1 mt-1 inline-block">The Authority.</span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label class="text-[9px] font-bold text-gray-500 uppercase">Detailed Message</label>
-                    <textarea rows="3" placeholder="Explain your issue here..." class="p-3 rounded-xl text-xs mt-1"></textarea>
-                </div>
-                <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-3 rounded-xl font-black uppercase text-[10px] tracking-widest min-h-[48px]">Submit Ticket</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- WELCOME APPRECIATION BONUS MODAL -->
-    <div id="bonusModal" class="modal bg-black/95 flex items-center justify-center p-4 select-none" style="display: none; align-items: center; justify-content: center; z-index: 9999;">
-        <div class="ios-card w-full max-w-sm p-6 text-center border-orange-500/30 bg-gradient-to-b from-[#111] to-black relative">
-            
-            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center border-4 border-black animate-bounce">
-                <i class="fa-solid fa-gift text-black text-2xl"></i>
+                </div>
+
+                <!-- Page Footer with controls -->
+                <div class="flex justify-between items-center mt-4 pt-3 border-t border-stone-200">
+                    <button id="prev-btn" class="flex items-center gap-2 text-[10px] tracking-widest text-stone-400 hover:text-gold-dark transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none" disabled>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        PREVIOUS
+                    </button>
+                    
+                    <!-- Aesthetic center page separation binding element -->
+                    <div class="flex gap-1.5 items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gold"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-stone-300"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-stone-300"></div>
+                    </div>
+
+                    <button id="next-btn" class="flex items-center gap-2 text-[10px] tracking-widest text-stone-700 hover:text-gold-dark transition-all duration-300">
+                        NEXT
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+
             </div>
             
-            <div class="pt-6">
-                <h3 class="text-base font-black text-white uppercase tracking-tight mb-2">Welcome First-Time Reward</h3>
-                <p class="text-[11px] text-gray-400 mb-3 leading-relaxed">
-                    Thank you for choosing SHAWIKBOOSTER! Your account is being processed for an appreciation reward.
-                </p>
-
-                <!-- Processing Counter Container -->
-                <div class="bg-black border border-gray-900 rounded-xl p-3 my-4 relative">
-                    <p class="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Processing Security Reward</p>
-                    <div class="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden mb-2">
-                        <div id="bonusProgressBar" class="h-full bg-gradient-to-r from-[#ff8c00] to-yellow-400 w-0 transition-all duration-1000"></div>
-                    </div>
-                    <div id="timerNumber" class="text-2xl font-black text-[#ff8c00]">Claiming...</div>
-                </div>
-
-                <p id="appreciationClaimText" class="text-[9px] text-gray-500 uppercase tracking-widest font-black">Hold on, verifying session...</p>
-            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- SIDEBAR MENU -->
-    <div id="sidebar" class="sidebar p-6">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-md font-black text-white uppercase tracking-wider">SHAWIK MENU</h2>
-            <button onclick="toggleSidebar()" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <nav class="space-y-2">
-            <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg bg-white/5 text-[#ff8c00] font-bold text-xs"><i class="fa-solid fa-plus-circle mr-3"></i> New Order</a>
-            <a href="#" onclick="showPage('massOrdersPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-layer-group mr-3 text-orange-500"></i> Mass Orders</a>
-            <a href="#" onclick="showPage('ordersPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-receipt mr-3 text-blue-400"></i> Order Tracker</a>
-            <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-wallet mr-3 text-emerald-500"></i> Add Funds</a>
-            <a href="#" onclick="openModal('apiModal')" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-link mr-3 text-purple-500"></i> API Access</a>
-            <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-3 rounded-lg text-green-500 font-bold border border-green-900/20 text-xs"><i class="fa-brands fa-whatsapp mr-3 text-sm"></i> WhatsApp Support</a>
-            <hr class="border-gray-900 my-4">
-            <a href="#" onclick="logout()" class="flex items-center p-3 rounded-lg text-red-500 font-bold text-xs"><i class="fa-solid fa-power-off mr-3"></i> Logout</a>
-        </nav>
-    </div>
+    <!-- Footer Copyright overlay info -->
+    <footer id="app-footer" class="relative z-20 w-full px-6 py-6 text-center text-[10px] text-stone-500 uppercase tracking-widest opacity-0 transition-opacity duration-1000 pointer-events-none">
+        © 2026 Sovereign Warnings • Reserved strictly for Kaddu
+    </footer>
 
+    <!-- INTERACTION LOGIC -->
     <script>
-        const USH_RATE = 3850;
-        let selectedMethod = 'card';
-        let currentAuthTab = 'login';
-        let activeOrderTab = 'self';
+        const splashScreen = document.getElementById('splash-screen');
+        const enterBtn = document.getElementById('enter-btn');
+        const bookContainer = document.getElementById('book-container');
+        const appHeader = document.getElementById('app-header');
+        const appFooter = document.getElementById('app-footer');
         
-        // Dynamic Services Catalogue matching requested pricing architecture directly in UGX
-        const categoryServices = {
-            followers: [
-                { id: "fol_1", name: "Premium Instant Followers (UGX 20,000 / 1k)", rate: 20000, time: "Instant" },
-                { id: "fol_2", name: "Real Active Followers (UGX 18,000 / 1k)", rate: 18000, time: "5-10 Mins" }
-            ],
-            views: [
-                { id: "view_1", name: "Super High-Speed Video Views (UGX 1,500 / 1k)", rate: 1500, time: "Instant" },
-                { id: "view_2", name: "Slow Drip Real Account Views (UGX 1,000 / 1k)", rate: 1000, time: "1-2 Hours" }
-            ],
-            shares: [
-                { id: "share_1", name: "Organic Shared Profiles / Re-posts (UGX 3,000 / 1k)", rate: 3000, time: "Instant" }
-            ],
-            comment_likes: [
-                { id: "cl_1", name: "Top-Comment Heart Likes (UGX 4,500 / 1k)", rate: 4500, time: "5 Mins" }
-            ],
-            shares_saves: [
-                { id: "ss_1", name: "Engagement Boost Combo: Shares + Saves (UGX 5,500 / 1k)", rate: 5500, time: "10 Mins" }
-            ],
-            story_views: [
-                { id: "sv_1", name: "Interactive 24h Story Video Views (UGX 2,500 / 1k)", rate: 2500, time: "Instant" }
-            ],
-            likes: [
-                { id: "like_1", name: "Real Video Hearts (UGX 6,000 / 1k)", rate: 6000, time: "Instant" },
-                { id: "like_2", name: "Super cheap automated likes (UGX 4,000 / 1k)", rate: 4000, time: "15 Mins" }
-            ],
-            live_likes: [
-                { id: "ll_1", name: "Active Live-Stream Heart Streams (UGX 3,500 / 1k)", rate: 3500, time: "Instant" }
-            ]
-        };
+        const audio = document.getElementById('bg-audio');
+        const toggleAudioBtn = document.getElementById('toggle-audio');
+        const iconPlay = document.getElementById('icon-play');
+        const iconPause = document.getElementById('icon-pause');
+        const volumeSlider = document.getElementById('audio-volume');
 
-        // System memory with initial premium pre-funded credit
-        let userSession = {
-            active: false,
-            balance: 80000,
-            spending: 0,
-            hasReceivedBonus: false,
-            name: 'Guest User',
-            email: ''
-        };
+        // Book Navigation elements
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const pageIndexLabel = document.getElementById('page-index');
+        const pageNumberLabel = document.getElementById('page-number');
+        
+        // Navigation dot markers
+        const pageIndicators = document.querySelectorAll('.flex.gap-1\\.5.items-center.justify-center div');
 
-        let registeredAccounts = [];
-        let ordersList = [
-            { id: "SHAWIK-1052", date: "Just now", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@shawik", qty: 1000, cost: 20000, status: "Pending" }
+        const slides = [
+            { id: 'slide-1', title: 'Chapter I', number: 'Page 1 of 3' },
+            { id: 'slide-2', title: 'Chapter II', number: 'Page 2 of 3' },
+            { id: 'slide-3', title: 'Chapter III', number: 'Page 3 of 3' }
         ];
-
-        let globalSimulatedOrders = [
-            { id: "SHAWIK-8842", date: "2 mins ago", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@sheilah_gashumba", qty: 5000, cost: 100000, status: "Completed" },
-            { id: "SHAWIK-7231", date: "4 mins ago", serviceName: "TikTok Likes [Real Hearts]", link: "https://www.tiktok.com/@mcbaba_ug", qty: 2500, cost: 15000, status: "Completed" },
-            { id: "SHAWIK-1250", date: "8 mins ago", serviceName: "TikTok Views [Super High-Speed]", link: "https://www.tiktok.com/@kansiime_anne", qty: 10000, cost: 15000, status: "Completed" }
-        ];
-
-        const ugandanTikTokHandles = [
-            "@bobi_wine", "@eddyleenzo", "@SpiceDianaUg", "@martha_kay", "@realkenzo", "@zarithebosslady", "@sheebahricher", "@jovial_ug", "@mr_mosh", "@uncle_mo_ug"
-        ];
-
-        /* --- CONSTELLATION 3D BACKGROUND ENGINE --- */
-        let scene, camera, renderer, starGeometry, starMaterial, starParticles;
-        let mouseX = 0, mouseY = 0;
-
-        function init3DEngine() {
-            const canvas = document.getElementById('canvas3d');
-            scene = new THREE.Scene();
-
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-            camera.position.z = 150;
-
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            // Create Particles
-            starGeometry = new THREE.BufferGeometry();
-            const starsCount = window.innerWidth < 640 ? 250 : 450; // Optimized particle count for lighter mobile loads
-            const positions = new Float32Array(starsCount * 3);
-            const colors = new Float32Array(starsCount * 3);
-
-            for(let i = 0; i < starsCount * 3; i += 3) {
-                const u = Math.random();
-                const v = Math.random();
-                const theta = u * 2.0 * Math.PI;
-                const phi = Math.acos(2.0 * v - 1.0);
-                const r = 90 + Math.random() * 110;
-
-                positions[i] = r * Math.sin(phi) * Math.cos(theta);
-                positions[i+1] = r * Math.sin(phi) * Math.sin(theta);
-                positions[i+2] = r * Math.cos(phi);
-
-                const rand = Math.random();
-                if(rand < 0.4) {
-                    colors[i] = 1.0; colors[i+1] = 0.55; colors[i+2] = 0.0; // Amber Orange
-                } else if(rand < 0.7) {
-                    colors[i] = 0.5; colors[i+1] = 0.5; colors[i+2] = 0.6; // Cyber Slate
-                } else {
-                    colors[i] = 1.0; colors[i+1] = 1.0; colors[i+2] = 1.0; // Pearl White
-                }
-            }
-
-            starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            const pCanvas = document.createElement('canvas');
-            pCanvas.width = 16; pCanvas.height = 16;
-            const ctx = pCanvas.getContext('2d');
-            const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
-            grad.addColorStop(0, 'rgba(255,255,255,1)');
-            grad.addColorStop(1, 'rgba(255,255,255,0)');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, 16, 16);
-            const pTexture = new THREE.CanvasTexture(pCanvas);
-
-            starMaterial = new THREE.PointsMaterial({
-                size: window.innerWidth < 640 ? 3.5 : 2.5,
-                map: pTexture,
-                vertexColors: true,
-                transparent: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-
-            starParticles = new THREE.Points(starGeometry, starMaterial);
-            scene.add(starParticles);
-
-            window.addEventListener('resize', onWindowResize);
-            document.addEventListener('mousemove', onDocumentMouseMove);
-            document.addEventListener('touchmove', onDocumentTouchMove, { passive: true });
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        function onDocumentMouseMove(event) {
-            mouseX = (event.clientX - window.innerWidth / 2) * 0.03;
-            mouseY = (event.clientY - window.innerHeight / 2) * 0.03;
-        }
-
-        function onDocumentTouchMove(event) {
-            if(event.touches.length > 0) {
-                mouseX = (event.touches[0].clientX - window.innerWidth / 2) * 0.03;
-                mouseY = (event.touches[0].clientY - window.innerHeight / 2) * 0.03;
-            }
-        }
-
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            starParticles.rotation.y += 0.0006;
-            starParticles.rotation.x += 0.0003;
-
-            starParticles.rotation.y += (mouseX * 0.001 - starParticles.rotation.y) * 0.05;
-            starParticles.rotation.x += (mouseY * 0.001 - starParticles.rotation.x) * 0.05;
-
-            renderer.render(scene, camera);
-        }
-
-        /* --- iOS DYNAMIC ISLAND ALERTS SYSTEM --- */
-        function triggerIslandAlert(title, desc, iconClass = "fa-solid fa-bell", isSuccess = true) {
-            const island = document.getElementById('dynamicIsland');
-            const small = document.getElementById('islandSmall');
-            const expanded = document.getElementById('islandExpanded');
-            const icon = document.getElementById('islandIcon');
-            const titleEl = document.getElementById('islandTitle');
-            const descEl = document.getElementById('islandDesc');
-
-            titleEl.innerText = title;
-            descEl.innerText = desc;
-            icon.className = iconClass + (isSuccess ? " text-orange-500" : " text-red-500");
-
-            small.classList.add('hidden');
-            expanded.classList.remove('hidden');
-            island.classList.add('expanded');
-
-            setTimeout(() => {
-                island.classList.remove('expanded');
-                setTimeout(() => {
-                    expanded.classList.add('hidden');
-                    small.classList.remove('hidden');
-                }, 300);
-            }, 4500);
-        }
-
-        // Dropdown options populator
-        function onCategoryChange() {
-            const categorySelect = document.getElementById('categorySelect');
-            const serviceSelect = document.getElementById('serviceSelect');
-            const selectedCat = categorySelect.value;
-            
-            const services = categoryServices[selectedCat] || [];
-            
-            serviceSelect.innerHTML = services.map(srv => `
-                <option value="${srv.rate}" data-id="${srv.id}" data-name="${srv.name}" data-time="${srv.time}">
-                    ${srv.name}
-                </option>
-            `).join('');
-
-            document.getElementById('qtyInput').value = "1000";
-            calculateRealtimeCost();
-        }
-
-        function calculateRealtimeCost() {
-            const qtyInput = document.getElementById('qtyInput');
-            const serviceSelect = document.getElementById('serviceSelect');
-            const priceDisplay = document.getElementById('priceDisplay');
-            const timeDisplay = document.getElementById('timeDisplay');
-
-            const qtyVal = parseFloat(qtyInput.value) || 0;
-            const rateVal = parseFloat(serviceSelect.value) || 0;
-            
-            const totalUshCost = (qtyVal / 1000) * rateVal;
-
-            priceDisplay.innerText = "USh " + totalUshCost.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-
-            if(serviceSelect.options[serviceSelect.selectedIndex]) {
-                const targetTime = serviceSelect.options[serviceSelect.selectedIndex].dataset.time;
-                timeDisplay.innerText = targetTime;
-            }
-        }
-
-        function showWelcomeToast() {
-            const toast = document.getElementById('welcomeToast');
-            toast.classList.add('show');
-        }
-
-        function dismissWelcomeToast() {
-            const toast = document.getElementById('welcomeToast');
-            toast.classList.remove('show');
-        }
-
-        window.onload = () => {
-            init3DEngine();
-            // Start the 3D rendering loop
-            animate3D();
-
-            const savedAccounts = localStorage.getItem('shawik_registered_accounts');
-            if (savedAccounts) {
-                registeredAccounts = JSON.parse(savedAccounts);
-            }
-
-            const savedSession = localStorage.getItem('shawik_active_session_v2');
-            if (savedSession) {
-                userSession = JSON.parse(savedSession);
-            } else {
-                userSession.balance = 80000; 
-            }
-
-            // Exits intro screen safely with dynamic fallback
-            setTimeout(() => {
-                exitIntro();
-            }, 2500); 
-
-            onCategoryChange();
-            setupInputs();
-            renderOrders();
-            updateBalanceDisplays();
-
-            setInterval(simulateGlobalOrderFeed, 7500);
-        };
-
-        function exitIntro() {
-            const intro = document.getElementById('introPage');
-            intro.style.opacity = '0';
-            
-            setTimeout(() => {
-                intro.classList.remove('active');
-                if (userSession.active) {
-                    showPage('dashboardPage');
-                    triggerIslandAlert("Mainnet Connected", "iOS profile securely synced to cloud logs.", "fa-solid fa-shield-halved");
-                    setTimeout(showWelcomeToast, 1200);
-                } else {
-                    showPage('loginPage');
-                    switchAuthTab('login'); 
-                }
-            }, 500);
-        }
-
-        function skipIntro() {
-            exitIntro();
-        }
-
-        function switchAuthTab(tab) {
-            currentAuthTab = tab;
-            const deviceHasAccount = localStorage.getItem('shawik_device_has_account');
-
-            document.getElementById('tabBtn-login').classList.remove('active', 'text-white');
-            document.getElementById('tabBtn-login').classList.add('text-gray-500');
-            document.getElementById('tabBtn-signup').classList.remove('active', 'text-white');
-            document.getElementById('tabBtn-signup').classList.add('text-gray-500');
-
-            document.getElementById(`tabBtn-${tab}`).classList.add('active', 'text-white');
-
-            const signupField = document.getElementById('signupNameField');
-            const termsBox = document.getElementById('termsCheckbox');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            const signupBlockerNotice = document.getElementById('signupBlockerNotice');
-
-            if (tab === 'signup') {
-                if (deviceHasAccount === 'true') {
-                    signupField.classList.add('hidden');
-                    termsBox.classList.add('hidden');
-                    signupBlockerNotice.classList.remove('hidden');
-                    submitBtn.classList.add('opacity-50', 'pointer-events-none');
-                    submitBtn.innerText = "Locked";
-                } else {
-                    signupField.classList.remove('hidden');
-                    termsBox.classList.remove('hidden');
-                    signupBlockerNotice.classList.add('hidden');
-                    submitBtn.classList.remove('opacity-50', 'pointer-events-none');
-                    submitBtn.innerText = "Register Account";
-                }
-            } else {
-                signupField.classList.add('hidden');
-                termsBox.classList.add('hidden');
-                signupBlockerNotice.classList.add('hidden');
-                submitBtn.classList.remove('opacity-50', 'pointer-events-none');
-                submitBtn.innerText = "Sign In";
-            }
-        }
-
-        function handleAuthSubmit() {
-            const email = document.getElementById('authEmail').value.trim().toLowerCase();
-            const password = document.getElementById('authPassword').value.trim();
-            const name = document.getElementById('authName').value.trim();
-
-            if (!email || !password) {
-                triggerIslandAlert("Auth Error", "Please provide a valid email and password.", "fa-solid fa-triangle-exclamation", false);
-                return;
-            }
-
-            if (currentAuthTab === 'signup') {
-                if (localStorage.getItem('shawik_device_has_account') === 'true') {
-                    triggerIslandAlert("Blocked", "This phone is already bound to an account.", "fa-solid fa-circle-xmark", false);
-                    return;
-                }
-
-                if (!name) {
-                    triggerIslandAlert("Name Missing", "Please fill in your full name.", "fa-solid fa-user-xmark", false);
-                    return;
-                }
-                if (!document.getElementById('agreeTerms').checked) {
-                    triggerIslandAlert("Terms Refused", "You must accept our Terms of Service.", "fa-solid fa-circle-info", false);
-                    return;
-                }
-
-                const newAccount = { email, password, name, balance: 80000, spending: 0, hasReceivedBonus: false };
-                registeredAccounts.push(newAccount);
-                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
-                localStorage.setItem('shawik_device_has_account', 'true');
-
-                userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: name, email: email };
-                saveAndProceed();
-
-            } else {
-                const matchedAccount = registeredAccounts.find(acc => acc.email === email && acc.password === password);
-
-                if (!matchedAccount) {
-                    // Fail-safe default user matching for convenient mobile demo
-                    if (email.includes("@") && password.length >= 4) {
-                        userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: "Premium Booster", email: email };
-                        saveAndProceed();
-                        return;
-                    }
-                    triggerIslandAlert("Login Failed", "Incorrect credentials.", "fa-solid fa-circle-xmark", false);
-                    return;
-                }
-
-                userSession = {
-                    active: true,
-                    balance: matchedAccount.balance,
-                    spending: matchedAccount.spending,
-                    hasReceivedBonus: matchedAccount.hasReceivedBonus,
-                    name: matchedAccount.name,
-                    email: matchedAccount.email
-                };
-
-                saveAndProceed();
-            }
-        }
-
-        function handleGoogleSignIn() {
-            const hasDeviceAccount = localStorage.getItem('shawik_device_has_account');
-            
-            if (hasDeviceAccount === 'true' && registeredAccounts.length > 0) {
-                const primaryAccount = registeredAccounts[0];
-                userSession = {
-                    active: true,
-                    balance: primaryAccount.balance,
-                    spending: primaryAccount.spending,
-                    hasReceivedBonus: primaryAccount.hasReceivedBonus,
-                    name: primaryAccount.name,
-                    email: primaryAccount.email
-                };
-                triggerIslandAlert("Google Synced", `Welcome, ${primaryAccount.name}!`, "fa-brands fa-google");
-            } else {
-                const googleEmail = "booster." + Math.floor(100+Math.random()*900) + "@gmail.com";
-                const googleAcc = { email: googleEmail, password: "GoogleSSO_Verified", name: "Google Booster", balance: 80000, spending: 0, hasReceivedBonus: false };
-                
-                registeredAccounts.push(googleAcc);
-                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
-                localStorage.setItem('shawik_device_has_account', 'true');
-
-                userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: "Google Booster", email: googleEmail };
-            }
-            saveAndProceed();
-        }
-
-        function saveAndProceed() {
-            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
-            showPage('dashboardPage');
-            setTimeout(showWelcomeToast, 2000);
-
-            if (!userSession.hasReceivedBonus) {
-                triggerAppreciationBonusSequence();
-            }
-        }
-
-        function syncSessionToDatabase() {
-            if (userSession.email) {
-                const accIndex = registeredAccounts.findIndex(acc => acc.email === userSession.email);
-                if (accIndex !== -1) {
-                    registeredAccounts[accIndex].balance = userSession.balance;
-                    registeredAccounts[accIndex].spending = userSession.spending;
-                    registeredAccounts[accIndex].hasReceivedBonus = userSession.hasReceivedBonus;
-                    localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
-                }
-            }
-            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
-        }
-
-        function logout() {
-            localStorage.removeItem('shawik_active_session_v2');
-            userSession = { active: false, balance: 80000, spending: 0, hasReceivedBonus: false, name: 'Guest User', email: '' };
-            location.reload();
-        }
-
-        function triggerAppreciationBonusSequence() {
-            const modal = document.getElementById('bonusModal');
-            const progressBar = document.getElementById('bonusProgressBar');
-            const timerNumber = document.getElementById('timerNumber');
-            const claimText = document.getElementById('appreciationClaimText');
-
-            modal.style.display = 'flex';
-            setTimeout(() => modal.style.opacity = "1", 50);
-
-            let progress = 0;
-            let count = 4;
-
-            timerNumber.innerText = `${count} Seconds`;
-            claimText.innerText = "Verifying secure device fingerprint...";
-
-            const interval = setInterval(() => {
-                count--;
-                progress += 25;
-                progressBar.style.width = `${progress}%`;
-
-                if (count > 0) {
-                    timerNumber.innerText = `${count} Seconds`;
-                    if(count === 2) claimText.innerText = "Processing launch promo reward credit...";
-                    if(count === 1) claimText.innerText = "Adding USh 10,000 into balance...";
-                } else {
-                    clearInterval(interval);
-                    timerNumber.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i> USh 10,000';
-                    claimText.innerHTML = '<span class="text-[#ff8c00] font-black">CREDITED SUCCESSFULLY!</span>';
-                    
-                    userSession.balance += 10000;
-                    userSession.hasReceivedBonus = true;
-                    syncSessionToDatabase();
-
-                    updateBalanceDisplays();
-
-                    setTimeout(() => {
-                        modal.style.opacity = "0";
-                        setTimeout(() => modal.style.display = 'none', 500);
-                        triggerIslandAlert("Bonus Credited", "USh 10,000 added as loyalty bonus.", "fa-solid fa-gift");
-                    }, 1500);
-                }
-            }, 1000);
-        }
-
-        function updateBalanceDisplays() {
-            document.getElementById('dashboardBalance').innerText = "USh " + userSession.balance.toLocaleString(undefined, {minimumFractionDigits: 2});
-            document.getElementById('dashboardSpending').innerText = "USh " + userSession.spending.toLocaleString(undefined, {minimumFractionDigits: 2});
-        }
-
-        function selectPlatform(platform) {
-            document.querySelectorAll('.ios-plat-btn').forEach(btn => btn.classList.remove('selected'));
-            
-            if (platform === 'TikTok') {
-                document.getElementById('platform-TikTok').classList.add('selected');
-                triggerIslandAlert("TikTok Synced", "Executing under TikTok speed v26 nodes.", "fa-brands fa-tiktok");
-            } else {
-                document.getElementById('platform-TikTok').classList.add('selected');
-                triggerIslandAlert("Beta Release", `${platform} node launches May 2026. Auto-fallback to active TikTok node.`, "fa-solid fa-clock");
-            }
-        }
-
-        function simulateGlobalOrderFeed() {
-            const randomHandle = ugandanTikTokHandles[Math.floor(Math.random() * ugandanTikTokHandles.length)];
-            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
-            const quantities = [1000, 2500, 5000];
-            const randomQty = quantities[Math.floor(Math.random() * quantities.length)];
-            
-            const cats = Object.keys(categoryServices);
-            const randomCat = cats[Math.floor(Math.random() * cats.length)];
-            const serviceList = categoryServices[randomCat];
-            const randomService = serviceList[Math.floor(Math.random() * serviceList.length)];
-            
-            const calculatedCost = (randomQty / 1000) * randomService.rate;
-
-            const newSimulatedOrder = {
-                id: randomId,
-                date: "Just now",
-                serviceName: randomService.name,
-                link: `https://www.tiktok.com/${randomHandle}`,
-                qty: randomQty,
-                cost: calculatedCost,
-                status: "Completed"
-            };
-
-            globalSimulatedOrders.unshift(newSimulatedOrder);
-            if (globalSimulatedOrders.length > 15) globalSimulatedOrders.pop(); 
-
-            if (document.getElementById('ordersPage').classList.contains('active')) {
-                renderOrders();
-            }
-        }
-
-        function switchOrderTab(tab) {
-            activeOrderTab = tab;
-            
-            document.getElementById('orderTabSelf').className = "py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-center transition-colors";
-            document.getElementById('orderTabGlobal').className = "py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-center transition-colors";
-
-            if (tab === 'self') {
-                document.getElementById('orderTabSelf').classList.add('bg-orange-500', 'text-black');
-                document.getElementById('orderTabGlobal').classList.add('text-gray-400');
-            } else {
-                document.getElementById('orderTabGlobal').classList.add('bg-orange-500', 'text-black');
-                document.getElementById('orderTabSelf').classList.add('text-gray-400');
-            }
-
-            renderOrders();
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const targetPage = document.getElementById(id);
-            targetPage.classList.add('active');
-            targetPage.style.opacity = '1';
-            window.scrollTo(0,0);
-
-            if(id === 'addFundsPage') {
-                resetForms();
-                triggerMethodTransition('card');
-            } else if (id === 'ordersPage') {
-                renderOrders();
-            }
-        }
-
-        function toggleSidebar() { 
-            const side = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            side.classList.toggle('active'); 
-            overlay.classList.toggle('active');
-        }
-
-        function openModal(id) { 
-            document.getElementById(id).classList.add('active'); 
-            toggleSidebar(); 
-        }
-
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('active'); 
-        }
-
-        function placeSingleOrder() {
-            const link = document.getElementById('linkInput').value.trim();
-            const qty = parseInt(document.getElementById('qtyInput').value) || 0;
-            const selectEl = document.getElementById('serviceSelect');
-            const serviceRate = parseFloat(selectEl.value);
-            const serviceName = selectEl.options[selectEl.selectedIndex].dataset.name;
-
-            if (!link) {
-                triggerIslandAlert("Link Missing", "Paste your link to start.", "fa-solid fa-link-slash", false);
-                return;
-            }
-            if (qty < 100) {
-                triggerIslandAlert("Qty Warning", "Minimum order must be at least 100 units.", "fa-solid fa-triangle-exclamation", false);
-                return;
-            }
-
-            const cost = (qty / 1000) * serviceRate;
-
-            if (userSession.balance < cost) {
-                triggerIslandAlert("No Balance", "Total cost exceeds your balance.", "fa-solid fa-credit-card", false);
-                return;
-            }
-
-            userSession.balance -= cost;
-            userSession.spending += cost;
-            syncSessionToDatabase();
-            updateBalanceDisplays();
-
-            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
-            ordersList.unshift({
-                id: randomId,
-                date: "Just now",
-                serviceName: serviceName,
-                link: link,
-                qty: qty,
-                cost: cost,
-                status: "Pending"
-            });
-
-            document.getElementById('linkInput').value = "";
-            document.getElementById('qtyInput').value = "1000";
-            document.getElementById('priceDisplay').innerText = "USh 0.00";
-
-            triggerIslandAlert("Order Placed", `ID: #${randomId}`, "fa-solid fa-circle-check");
-            switchOrderTab('self');
-            showPage('ordersPage');
-        }
-
-        function submitMassOrders() {
-            const bulkText = document.getElementById('massOrdersInput').value.trim();
-            if(!bulkText) {
-                triggerIslandAlert("No Input", "Mass queue is empty.", "fa-solid fa-triangle-exclamation", false);
-                return;
-            }
-
-            const lines = bulkText.split('\n');
-            let successCount = 0;
-            let totalCost = 0;
-            let tempOrders = [];
-
-            for (let line of lines) {
-                if(!line.trim()) continue;
-                
-                const parts = line.split('|');
-                if(parts.length < 3) continue;
-
-                const serviceId = parts[0].trim().toLowerCase();
-                const link = parts[1].trim();
-                const qty = parseInt(parts[2].trim());
-
-                if(isNaN(qty) || !link) continue;
-
-                let foundService = null;
-                for (let cat in categoryServices) {
-                    const match = categoryServices[cat].find(s => s.id === serviceId);
-                    if (match) {
-                        foundService = match;
-                        break;
-                    }
-                }
-
-                let rate = foundService ? foundService.rate : 20000;
-                let sName = foundService ? foundService.name : "Premium Instant Followers";
-
-                const lineCost = (qty / 1000) * rate;
-                totalCost += lineCost;
-
-                tempOrders.push({
-                    id: "SHAWIK-" + Math.floor(1000 + Math.random() * 9000),
-                    date: "Bulk Action",
-                    serviceName: sName,
-                    link: link,
-                    qty: qty,
-                    cost: lineCost,
-                    status: "Pending"
-                });
-                successCount++;
-            }
-
-            if(successCount === 0) {
-                triggerIslandAlert("Parsing Failed", "Format required: service_id | link | quantity", "fa-solid fa-triangle-exclamation", false);
-                return;
-            }
-
-            if(userSession.balance < totalCost) {
-                triggerIslandAlert("No Balance", "Total cost exceeds balance.", "fa-solid fa-circle-xmark", false);
-                return;
-            }
-
-            userSession.balance -= totalCost;
-            userSession.spending += totalCost;
-            syncSessionToDatabase();
-            updateBalanceDisplays();
-
-            for(let parsedOrder of tempOrders) {
-                ordersList.unshift(parsedOrder);
-            }
-
-            document.getElementById('massOrdersInput').value = "";
-            triggerIslandAlert("Queue Processed", `Successfully launched ${successCount} tasks.`, "fa-solid fa-rectangle-list");
-            switchOrderTab('self');
-            showPage('ordersPage');
-        }
-
-        function renderOrders() {
-            const container = document.getElementById('ordersListContainer');
-            const countEl = document.getElementById('orderCount');
-            
-            const activeList = (activeOrderTab === 'self') ? ordersList : globalSimulatedOrders;
-            countEl.innerText = `Total: ${activeList.length} Orders (${activeOrderTab === 'self' ? 'Your Logs' : 'Global Feed'})`;
-
-            if(activeList.length === 0) {
-                container.innerHTML = `
-                    <div class="ios-card p-6 text-center text-gray-600">
-                        <i class="fa-solid fa-folder-open text-xl mb-2"></i>
-                        <p class="text-xs">No active orders found.</p>
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = activeList.map(item => `
-                <div class="ios-card p-4 border-l-4 ${activeOrderTab === 'self' ? 'border-l-[#ff8c00]' : 'border-l-cyan-500'} bg-gradient-to-r from-black/45 to-black/60 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-[9px] text-gray-500 font-black uppercase tracking-wider">${item.id}</span>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[8px] text-gray-600 font-bold uppercase">${item.date}</span>
-                            <span class="text-[8px] font-black px-2 py-0.5 rounded-full ${
-                                item.status === 'Completed' ? 'bg-green-950/80 text-green-400 border border-green-900/40' : 'bg-orange-950/40 text-orange-400 border border-orange-900/30'
-                            }">${item.status}</span>
-                        </div>
+        
+        let currentSlideIndex = 0;
+
+        // Custom modal implementation to replace alerts
+        const showSlapAlert = () => {
+            const warningOverlay = document.createElement('div');
+            warningOverlay.className = 'fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-6 transition-all duration-500 opacity-0';
+            warningOverlay.innerHTML = `
+                <div class="max-w-md w-full bg-[#1c0d02] border border-red-800 p-8 rounded-lg text-center shadow-2xl transform scale-95 transition-transform duration-500">
+                    <div class="w-16 h-16 bg-red-950/40 border border-red-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl text-red-500">✋</span>
                     </div>
-                    <h4 class="text-xs font-bold text-white mb-1.5 leading-snug">${item.serviceName}</h4>
-                    
-                    <div class="space-y-1.5 text-[10px] text-gray-400">
-                        <div class="flex items-center gap-1.5">
-                            <i class="fa-solid fa-link text-gray-600 text-[8px]"></i>
-                            <a href="${item.link}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[220px]">${item.link}</a>
-                        </div>
-                        <div class="flex justify-between items-center text-gray-500 font-semibold mt-1">
-                            <span>Qty: <b class="text-gray-300">${item.qty.toLocaleString()}</b></span>
-                            <span>Cost: <b class="text-[#ff8c00]">USh ${item.cost.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></span>
-                        </div>
-                    </div>
+                    <h3 class="font-serif text-2xl text-red-500 tracking-wider mb-4 uppercase">Let it be clear</h3>
+                    <p class="font-serif text-stone-300 leading-relaxed italic mb-8">
+                        "Stop being playful, stop using vulgar words, and be careful with your actions. Consider yourself strictly noticed."
+                    </p>
+                    <button id="warning-ack-btn" class="px-8 py-3 bg-red-800 hover:bg-red-700 text-stone-100 text-xs uppercase tracking-[0.3em] font-medium transition-colors duration-300">
+                        I am Careful
+                    </button>
                 </div>
-            `).join('');
-        }
+            `;
+            document.body.appendChild(warningOverlay);
+            
+            setTimeout(() => {
+                warningOverlay.classList.remove('opacity-0');
+                warningOverlay.querySelector('.transform').classList.remove('scale-95');
+                warningOverlay.querySelector('.transform').classList.add('scale-100');
+            }, 50);
 
-        function clearAllOrders() {
-            if (activeOrderTab === 'self') {
-                ordersList = [];
-            } else {
-                globalSimulatedOrders = [];
-            }
-            renderOrders();
-        }
+            document.getElementById('warning-ack-btn').addEventListener('click', () => {
+                warningOverlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    warningOverlay.remove();
+                }, 500);
+            });
+        };
 
-        /* --- ADD FUNDS INTERACTIVE LOGIC --- */
-        const depositAmtInput = document.getElementById('depositAmount');
-        const ugxConv = document.getElementById('ugxConversion');
+        // Splash Gate & Audio Trigger
+        enterBtn.addEventListener('click', () => {
+            // Attempt to play immediately upon interaction
+            audio.play().then(() => {
+                console.log("Audio playing successfully.");
+            }).catch(e => {
+                console.warn("Audio autoplay blocked or failed.", e);
+            });
 
-        depositAmtInput.addEventListener('input', () => {
-            const val = parseFloat(depositAmtInput.value) || 0;
-            const converted = val * USH_RATE;
-            ugxConv.innerText = "USh " + converted.toLocaleString(undefined, { maximumFractionDigits: 0 });
+            // Smoothly dismiss splash screen
+            splashScreen.classList.add('transition-all', 'duration-[1200ms]', 'opacity-0', 'pointer-events-none');
+            
+            // Reveal App Interface with custom layout animations
+            setTimeout(() => {
+                splashScreen.remove();
+                
+                bookContainer.classList.remove('opacity-0', 'pointer-events-none');
+                bookContainer.classList.add('opacity-100', 'pointer-events-auto');
+
+                appHeader.classList.remove('opacity-0', 'pointer-events-none');
+                appHeader.classList.add('opacity-100', 'pointer-events-auto');
+
+                appFooter.classList.remove('opacity-0', 'pointer-events-none');
+                appFooter.classList.add('opacity-100', 'pointer-events-auto');
+            }, 1000);
         });
 
-        function resetForms() {
-            document.getElementById('creditCardForm').classList.add('hidden');
-            document.getElementById('mobileMoneyForm').classList.add('hidden');
-            document.getElementById('paymentLoadingState').classList.add('hidden');
-            document.getElementById('errorGatewayContainer').classList.add('hidden');
-        }
-
-        function selectPaymentMethod(method) {
-            selectedMethod = method;
-            document.getElementById('methodCard').classList.remove('selected');
-            document.getElementById('methodMobileMoney').classList.remove('selected');
-
-            if(method === 'card') {
-                document.getElementById('methodCard').classList.add('selected');
-                triggerMethodTransition('card');
-            } else {
-                document.getElementById('methodMobileMoney').classList.add('selected');
-                triggerMethodTransition('momo');
-            }
-        }
-
-        function triggerMethodTransition(method) {
-            resetForms();
-            document.getElementById('paymentLoadingState').classList.remove('hidden');
-
-            if (method === 'card') {
-                setTimeout(() => {
-                    document.getElementById('paymentLoadingState').classList.add('hidden');
-                    document.getElementById('creditCardForm').classList.remove('hidden');
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    document.getElementById('paymentLoadingState').classList.add('hidden');
-                    document.getElementById('mobileMoneyForm').classList.remove('hidden');
-                }, 1000);
-            }
-        }
-
-        function submitCreditCardPayment() {
-            const cardVal = document.getElementById('cardNo').value.trim();
-            const expiryVal = document.getElementById('cardExpiry').value.trim();
-            const cvcVal = document.getElementById('cardCVC').value.trim();
-
-            if (!cardVal || !expiryVal || !cvcVal) {
-                triggerIslandAlert("Fields Empty", "Complete your card details.", "fa-solid fa-triangle-exclamation", false);
-                return;
-            }
-
-            resetForms();
-            document.getElementById('paymentLoadingState').classList.remove('hidden');
+        // Slide Update function
+        function updatePage(direction) {
+            const currentSlide = document.getElementById(slides[currentSlideIndex].id);
             
-            setTimeout(() => {
-                document.getElementById('paymentLoadingState').classList.add('hidden');
-                document.getElementById('errorGatewayContainer').classList.remove('hidden');
-                triggerIslandAlert("Gateway Error", "Direct debit gateway load mismatch.", "fa-solid fa-circle-exclamation", false);
-            }, 2000);
-        }
-
-        function submitMomoPayment() {
-            const phone = document.getElementById('momoPhone').value.trim();
-            if(phone.length < 9) {
-                triggerIslandAlert("Phone Invalid", "Must contain 9 digits.", "fa-solid fa-mobile-button", false);
-                return;
+            if (direction === 'next' && currentSlideIndex < slides.length - 1) {
+                // Transition active out to the left
+                currentSlide.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                currentSlide.classList.add('opacity-0', '-translate-x-12', 'pointer-events-none');
+                
+                currentSlideIndex++;
+                
+                const nextSlide = document.getElementById(slides[currentSlideIndex].id);
+                nextSlide.classList.remove('opacity-0', 'translate-x-12', 'pointer-events-none');
+                nextSlide.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                
+            } else if (direction === 'prev' && currentSlideIndex > 0) {
+                // Transition active out to the right
+                currentSlide.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+                currentSlide.classList.add('opacity-0', 'translate-x-12', 'pointer-events-none');
+                
+                currentSlideIndex--;
+                
+                const prevSlide = document.getElementById(slides[currentSlideIndex].id);
+                prevSlide.classList.remove('opacity-0', '-translate-x-12', 'pointer-events-none');
+                prevSlide.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
             }
 
-            resetForms();
-            document.getElementById('paymentLoadingState').classList.remove('hidden');
+            // Update Header labels & controls
+            pageIndexLabel.textContent = slides[currentSlideIndex].title;
+            pageNumberLabel.textContent = slides[currentSlideIndex].number;
 
-            setTimeout(() => {
-                document.getElementById('paymentLoadingState').classList.add('hidden');
-                document.getElementById('errorGatewayContainer').classList.remove('hidden');
-                triggerIslandAlert("Momo Timeout", "Response code: 503 Server Unavailable", "fa-solid fa-triangle-exclamation", false);
-            }, 2000);
-        }
+            // Update Nav dots indicators
+            pageIndicators.forEach((dot, index) => {
+                if (index === currentSlideIndex) {
+                    dot.classList.remove('bg-stone-300');
+                    dot.classList.add('bg-gold');
+                } else {
+                    dot.classList.remove('bg-gold');
+                    dot.classList.add('bg-stone-300');
+                }
+            });
 
-        function retrySelectedPayment() {
-            triggerMethodTransition(selectedMethod);
-        }
-
-        function setupInputs() {
-            const cardNoInput = document.getElementById('cardNo');
-            if (cardNoInput) {
-                cardNoInput.addEventListener('input', (e) => {
-                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                    let matches = val.match(/\d{4,16}/g);
-                    let match = matches && matches[0] || '';
-                    let parts = [];
-
-                    for (let i=0, len=match.length; i<len; i+=4) {
-                        parts.push(match.substring(i, i+4));
-                    }
-
-                    if (parts.length > 0) {
-                        e.target.value = parts.join(' ');
-                    } else {
-                        e.target.value = val;
-                    }
-                });
-            }
-
-            const expiryInput = document.getElementById('cardExpiry');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', (e) => {
-                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                    if (val.length >= 2) {
-                        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
-                    } else {
-                        e.target.value = val;
-                    }
-                });
-            }
-
-            const cvcInput = document.getElementById('cardCVC');
-            if (cvcInput) {
-                cvcInput.addEventListener('input', (e) => {
-                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                });
-            }
-
-            const momoPhoneInput = document.getElementById('momoPhone');
-            if (momoPhoneInput) {
-                momoPhoneInput.addEventListener('input', (e) => {
-                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                });
-            }
-
-            const qtyInput = document.getElementById('qtyInput');
-            const serviceSelect = document.getElementById('serviceSelect');
-
-            if(qtyInput && serviceSelect) {
-                qtyInput.addEventListener('input', calculateRealtimeCost);
-                serviceSelect.addEventListener('change', calculateRealtimeCost);
-            }
-        }
-
-        function triggerNotice(type) {
-            if (type === 'platform') {
-                triggerIslandAlert("Beta platform", "Switched to optimized TikTok nodes.", "fa-solid fa-clock");
+            // Handle button accessibility states
+            prevBtn.disabled = currentSlideIndex === 0;
+            if (currentSlideIndex === slides.length - 1) {
+                nextBtn.innerHTML = `
+                    ACKNOWLEDGE
+                    <svg class="w-4 h-4 text-red-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                `;
             } else {
-                triggerIslandAlert("System Notice", "Direct push payment nodes active.", "fa-solid fa-wallet");
+                nextBtn.innerHTML = `
+                    NEXT
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                `;
             }
         }
+
+        // Navigation button events
+        nextBtn.addEventListener('click', () => {
+            if (currentSlideIndex === slides.length - 1) {
+                showSlapAlert();
+            } else {
+                updatePage('next');
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            updatePage('prev');
+        });
+
+        // Audio controls logic
+        toggleAudioBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                iconPlay.classList.add('hidden');
+                iconPause.classList.remove('hidden');
+            } else {
+                audio.pause();
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
     </script>
 </body>
 </html>
 
+```

@@ -1,16 +1,15 @@
-```html
-<!DOCTYPE html>
+<doctype html!>
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Chronicles of Mr. Kaddu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Solemn Notice to Mr. Kaddu</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for Premium Typography -->
+    <!-- Google Fonts for High-End Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -18,16 +17,15 @@
                 extend: {
                     fontFamily: {
                         serif: ['"Cormorant Garamond"', 'serif'],
+                        display: ['"Cinzel"', 'serif'],
                         sans: ['"Montserrat"', 'sans-serif'],
                     },
                     colors: {
                         gold: {
-                            DEFAULT: '#D4AF37',
-                            light: '#F3E5AB',
-                            dark: '#AA7C11',
-                        },
-                        amber: {
-                            950: '#1c0d02',
+                            light: '#F5E6C4',
+                            DEFAULT: '#C5A880',
+                            dark: '#9A7B56',
+                            bright: '#D4AF37',
                         }
                     }
                 }
@@ -35,249 +33,187 @@
         }
     </script>
     <style>
-        /* Custom scrollbar for inner book pages if needed */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+        /* Textured premium paper */
+        .premium-parchment {
+            background-color: #fcfbf7;
+            background-image: 
+                radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0),
+                radial-gradient(rgba(197, 168, 128, 0.05) 2px, transparent 0);
+            background-size: 12px 12px, 30px 30px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.8),
+                inset 0 0 60px rgba(139, 94, 60, 0.15);
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
+
+        /* Ambient desk background */
+        .desk-bg {
+            background-color: #0d0a08;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(54, 41, 33, 0.35) 0%, rgba(13, 10, 8, 1) 80%);
+        }
+
+        /* Elegant custom scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.05);
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #D4AF37;
-            border-radius: 2px;
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #C5A880;
+            border-radius: 99px;
         }
 
-        /* Paper texture overlay */
-        .paper-texture {
-            background-color: #fcfaf2;
-            background-image: 
-                radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0),
-                radial-gradient(rgba(0,0,0,0.02) 2px, transparent 0);
-            background-size: 8px 8px, 24px 24px;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.08);
+        /* Wax Seal Breathing Pulse */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 10px rgba(185, 28, 28, 0.4)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 6px 20px rgba(185, 28, 28, 0.7)); }
+        }
+        .wax-pulse {
+            animation: pulse-slow 3s ease-in-out infinite;
         }
 
-        /* Hardcover leather texture styling */
-        .leather-cover {
-            background-color: #2b1810;
-            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0);
-            background-size: 4px 4px;
-            box-shadow: 
-                0 30px 60px -15px rgba(0,0,0,0.9),
-                inset 0 0 30px rgba(0,0,0,0.6),
-                inset 0 2px 2px rgba(255,255,255,0.1);
-        }
-
-        /* Ribbon Bookmark animation */
+        /* Ribbon animation */
         @keyframes sway {
-            0%, 100% { transform: rotate(-1deg); }
-            50% { transform: rotate(1deg); }
+            0%, 100% { transform: rotate(-0.5deg); }
+            50% { transform: rotate(0.5deg); }
         }
-        .bookmark-ribbon {
-            animation: sway 4s ease-in-out infinite;
+        .ribbon-sway {
+            animation: sway 5s ease-in-out infinite;
             transform-origin: top center;
-        }
-
-        /* 3D realistic shadow effect for book center fold */
-        .spine-shadow {
-            background: linear-gradient(
-                90deg, 
-                rgba(0,0,0,0.15) 0%, 
-                rgba(0,0,0,0.4) 45%, 
-                rgba(0,0,0,0.5) 50%, 
-                rgba(0,0,0,0.4) 55%, 
-                rgba(0,0,0,0.15) 100%
-            );
-        }
-
-        /* Custom soft glow for candle effect */
-        .candle-glow {
-            box-shadow: 0 0 100px 30px rgba(212, 175, 55, 0.15);
-        }
-
-        /* CSS Flip Animations */
-        .page-transition {
-            transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
     </style>
 </head>
-<body class="bg-[#0b0806] text-[#dfd5c6] font-sans h-full overflow-hidden select-none flex flex-col justify-between relative">
+<body class="desk-bg text-stone-300 font-sans h-full overflow-hidden select-none flex flex-col justify-between relative">
 
-    <!-- Background Ambient Layer -->
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(40,30,20,0.6)_0%,rgba(11,8,6,1)_100%)] z-0"></div>
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-950/20 rounded-full blur-[120px] candle-glow pointer-events-none z-0"></div>
-
-    <!-- Background Audio Element -->
+    <!-- Background Audio -->
     <audio id="bg-audio" loop preload="auto">
         <source src="los.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Header Overlay (Always Visible once entered) -->
-    <header id="app-header" class="relative z-20 w-full px-6 py-4 flex justify-between items-center opacity-0 transition-opacity duration-1000 pointer-events-none">
-        <div class="flex items-center gap-2">
-            <span class="text-xs uppercase tracking-[0.3em] text-gold/80 font-medium">Chronicles of Kaddu</span>
+    <!-- Header / Premium Audio Widget (Hidden on entry, fades in) -->
+    <header id="audio-widget" class="absolute top-4 right-4 z-40 flex items-center gap-3 bg-black/60 backdrop-blur-md border border-gold/20 px-3.5 py-2 rounded-full opacity-0 pointer-events-none transition-all duration-1000">
+        <button id="audio-toggle" class="text-gold-bright hover:text-gold-light transition-colors duration-300 flex items-center justify-center" aria-label="Mute/Unmute">
+            <!-- Play Icon (initially hidden) -->
+            <svg id="icon-play" class="w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <!-- Pause Icon -->
+            <svg id="icon-pause" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <div class="h-3 w-[1px] bg-gold/30"></div>
+        <div class="flex items-center gap-1.5">
+            <svg class="w-3 h-3 text-gold/60" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+            <input id="volume-control" type="range" min="0" max="1" step="0.05" value="0.75" class="w-12 md:w-16 accent-gold-bright bg-stone-800 h-1 rounded-lg cursor-pointer">
         </div>
-        <!-- Minimal Premium Audio Controls -->
-        <div class="flex items-center gap-4 bg-black/40 backdrop-blur-md border border-gold/20 px-4 py-2 rounded-full pointer-events-auto">
-            <button id="toggle-audio" class="text-gold hover:text-gold-light transition-colors duration-300 flex items-center justify-center" aria-label="Toggle Audio">
-                <!-- Play Icon (hidden initially as it tries to play) -->
-                <svg id="icon-play" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <!-- Pause Icon (shown initially) -->
-                <svg id="icon-pause" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="h-3 w-[1px] bg-gold/30"></div>
-            <div class="flex items-center gap-2">
-                <svg class="w-3 h-3 text-gold/60" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                <input id="audio-volume" type="range" min="0" max="1" step="0.05" value="0.7" class="w-16 accent-gold bg-stone-800 h-1 rounded-lg cursor-pointer">
-            </div>
-            <span class="text-[9px] tracking-widest text-gold/80 uppercase font-serif animate-pulse">Playing</span>
-        </div>
+        <span class="text-[8px] tracking-[0.2em] text-gold-bright uppercase font-display animate-pulse hidden sm:inline">Ambient</span>
     </header>
 
-    <!-- INTRO SPLASH SCREEN (Necessary user-gesture gate) -->
-    <div id="splash-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center text-center p-6 bg-[#0b0806]">
-        <div class="max-w-md w-full flex flex-col items-center">
-            <!-- Monogram Frame -->
-            <div class="w-24 h-24 border border-gold/40 rounded-full flex items-center justify-center mb-8 relative">
-                <div class="absolute inset-1 border border-dashed border-gold/20 rounded-full"></div>
-                <span class="font-serif text-3xl text-gold tracking-widest pl-1">MK</span>
-            </div>
+    <!-- 1. INTRO / ENVELOPE GATE -->
+    <div id="gate-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#0c0907]">
+        <!-- Ornate Framing decoration -->
+        <div class="absolute inset-4 border border-gold/10 pointer-events-none rounded-sm"></div>
+        <div class="absolute inset-5 border border-dashed border-gold/5 pointer-events-none rounded-sm"></div>
+        
+        <div class="max-w-md w-full text-center flex flex-col items-center">
+            <span class="text-xs uppercase tracking-[0.4em] text-gold-dark mb-2 font-display">Private & Confidential</span>
+            <div class="w-12 h-[1px] bg-gold/30 mb-8"></div>
             
-            <h1 class="font-serif text-3xl md:text-4xl text-stone-200 tracking-[0.2em] mb-4 leading-relaxed uppercase">
-                A Message for <br>
-                <span class="text-gold italic font-light lowercase">mr. kaddu</span>
+            <h1 class="font-display text-2xl md:text-3xl text-stone-200 tracking-widest leading-relaxed mb-10">
+                A MANDATE UNTO<br>
+                <span class="text-gold-bright italic font-light font-serif">Mr. Kaddu</span>
             </h1>
-            
-            <div class="w-20 h-[1px] bg-gold/40 my-6"></div>
-            
-            <p class="font-sans text-xs uppercase tracking-[0.3em] text-stone-400 mb-10 leading-loose">
-                An Interactive Warning Artifact
-            </p>
 
-            <button id="enter-btn" class="group relative px-8 py-4 bg-transparent border border-gold text-gold text-xs uppercase tracking-[0.4em] font-medium transition-all duration-700 hover:text-stone-950 overflow-hidden">
-                <span class="relative z-10">Open the Book</span>
-                <span class="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></span>
+            <!-- Interactive Crimson Wax Seal Button -->
+            <button id="break-seal-btn" class="group relative flex flex-col items-center focus:outline-none mb-12">
+                <!-- Outer glow and ring -->
+                <div class="absolute -inset-4 rounded-full bg-red-900/10 blur-xl group-hover:bg-red-900/20 transition-all duration-700"></div>
+                
+                <!-- SVG Wax Seal representation -->
+                <div class="wax-pulse relative w-24 h-24 bg-red-700 rounded-full flex items-center justify-center shadow-[inset_0_-4px_8px_rgba(0,0,0,0.4),0_8px_20px_rgba(0,0,0,0.6)] border border-red-600 transition-transform duration-500 group-hover:scale-105 active:scale-95">
+                    <!-- Wax seal outer ripples -->
+                    <div class="absolute inset-1 border-2 border-red-800/30 rounded-full"></div>
+                    <div class="absolute inset-2 border border-red-500/20 rounded-full"></div>
+                    <!-- Monogram in the center of the seal -->
+                    <span class="font-display text-2xl text-red-100 tracking-wider font-semibold opacity-85 select-none">M K</span>
+                </div>
+                
+                <span class="text-[10px] text-gold/70 tracking-[0.35em] uppercase mt-6 group-hover:text-gold-bright transition-colors duration-300 font-sans">
+                    Tap to Break Seal
+                </span>
             </button>
             
-            <span class="text-[10px] text-stone-500 tracking-wider mt-6 font-serif italic">
-                *Opens ambient presentation with audio
-            </span>
+            <p class="font-serif italic text-xs text-stone-500 max-w-[280px] leading-relaxed">
+                "Breaking this seal initiates a formal dialogue. Sound will accompany the unveiling."
+            </p>
         </div>
     </div>
 
-    <!-- MAIN BOOK CONTAINER -->
-    <main id="book-container" class="relative z-10 w-full max-w-6xl mx-auto px-4 md:px-8 flex-1 flex items-center justify-center opacity-0 transition-opacity duration-1000 pointer-events-none py-4 md:py-8">
+    <!-- 2. MAIN ENVELOPE / FOLIO CONTENT WRAPPER -->
+    <main id="letter-folio" class="relative z-10 w-full max-w-2xl mx-auto px-4 py-6 md:py-12 flex-1 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-[1500ms] scale-95">
         
-        <!-- Luxury Virtual Desk Placement -->
-        <div class="relative w-full max-w-5xl aspect-[3/4] md:aspect-[1.5/1] rounded-lg shadow-2xl flex">
+        <!-- Deep Velvet/Leather Back Folder -->
+        <div class="relative w-full max-h-[85vh] md:max-h-[80vh] flex flex-col rounded-lg shadow-2xl overflow-hidden border border-gold/10">
             
-            <!-- Book Spine Base Structure (Behind Pages) -->
-            <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-6 bg-stone-950 z-20 rounded-sm shadow-inner pointer-events-none hidden md:block"></div>
-            
-            <!-- Book Body Shadow & Edge Trim -->
-            <div class="absolute -inset-1 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 rounded-lg blur-md opacity-35 z-0"></div>
+            <!-- Elegant hanging ribbon decorative border -->
+            <div class="ribbon-sway absolute top-0 left-8 md:left-12 w-3.5 h-24 md:h-36 bg-red-800/80 shadow-md border-r border-red-950 rounded-b-md z-30 pointer-events-none"></div>
 
-            <!-- Page 1: Left Cover / Desktop Spacing Base (Hidden on mobile) -->
-            <div class="leather-cover w-1/2 h-full rounded-l-lg border-r border-stone-950 flex-col justify-between p-8 relative z-10 hidden md:flex">
-                <!-- Bookplate detail -->
-                <div class="border border-gold/20 p-4 rounded-sm flex flex-col items-center justify-center text-center mt-6">
-                    <span class="font-serif text-[10px] uppercase tracking-widest text-gold/60 mb-2">Private Collection</span>
-                    <h3 class="font-serif text-sm text-gold-light tracking-widest uppercase">KADDU CHRONICLES</h3>
-                </div>
+            <!-- Scrollable parchment page containing the entire high-fidelity letter -->
+            <div class="premium-parchment w-full h-full overflow-y-auto custom-scroll p-8 md:p-14 flex flex-col relative">
                 
-                <div class="flex flex-col items-start gap-4">
-                    <div class="w-12 h-[1px] bg-gold/30"></div>
-                    <p class="font-serif italic text-xs text-stone-400 leading-relaxed max-w-xs">
-                        "There is a fine line between playful warmth and a swift consequence."
+                <!-- Gold Foil Decorative Header Border -->
+                <div class="flex flex-col items-center text-center mb-8 md:mb-12 border-b border-gold/20 pb-6">
+                    <span class="font-display text-[9px] md:text-[10px] tracking-[0.4em] text-gold-dark uppercase mb-1">In Nomine Veritas</span>
+                    <h2 class="font-display text-lg md:text-xl text-stone-800 tracking-[0.2em] font-medium uppercase">NOTICE OF DECREE</h2>
+                    <div class="w-16 h-[1px] bg-gold-dark/40 mt-3"></div>
+                </div>
+
+                <!-- Letter Content Area -->
+                <div class="flex-1 flex flex-col text-[#221c17] font-serif text-base md:text-lg leading-relaxed md:leading-loose text-justify space-y-6 md:space-y-8 max-w-prose mx-auto">
+                    
+                    <!-- Salutation -->
+                    <p class="font-display text-stone-950 text-sm md:text-base tracking-widest uppercase font-semibold border-l-2 border-gold-dark pl-3">
+                        Hello my mr kaddu,
                     </p>
-                </div>
-                <div class="text-[9px] uppercase tracking-widest text-stone-500">Vol. I — No. I</div>
-            </div>
 
-            <!-- ACTUAL INTERACTIVE PAGES CONTAINER -->
-            <!-- We will render a double-sided looking desk paper. On mobile it handles as singular layout. -->
-            <div class="w-full md:w-1/2 h-full paper-texture rounded-r-lg md:rounded-l-none rounded-l-lg border-l border-stone-300 relative flex flex-col justify-between p-6 md:p-12 overflow-hidden shadow-2xl">
-                
-                <!-- Spine shadow element to look dimensional on left edge -->
-                <div class="absolute left-0 top-0 bottom-0 w-8 spine-shadow pointer-events-none opacity-40"></div>
-                
-                <!-- Ribbon Bookmark trailing over page -->
-                <div class="bookmark-ribbon absolute top-0 right-10 w-4 h-32 md:h-48 bg-red-800/90 shadow-lg border-r border-red-950 rounded-b-sm pointer-events-none z-10 flex flex-col justify-end items-center pb-2">
-                    <div class="w-2 h-2 rounded-full bg-gold/50"></div>
+                    <!-- Core Message Content (Heavily elevated and visually premium) -->
+                    <p class="indent-6 md:indent-10 font-medium">
+                        It has come to our immediate and absolute attention that your conduct of late has drifted into unacceptable channels. 
+                        We must address this directly and without delay: <span class="text-red-800 font-bold tracking-tight">Stop being playful.</span> 
+                        Playfulness in moments demanding of serious reverence is a dangerous game. To speak plainly and local to the root of our warning: 
+                        <span class="font-semibold text-stone-950 italic underline decoration-red-700/60 decoration-2 underline-offset-4">Nja kukuba ako akatwe.</span> 
+                        Do not provoke a reaction you are unprepared to bear.
+                    </p>
+
+                    <p class="indent-6 md:indent-10">
+                        Take a heavy moment to consider your position, and <span class="text-stone-950 font-bold">be careful with whatever you do.</span> 
+                        Every movement is observed, and the scale of our patience is rapidly tilting. 
+                        There is no room for negligence, and we advise you to tread with absolute reservation.
+                    </p>
+
+                    <p class="indent-6 md:indent-10 bg-red-50/60 border-l-4 border-red-700 p-4 rounded-r-md italic font-semibold text-stone-900 shadow-sm">
+                        Furthermore, you are strictly commanded to <span class="text-red-800 underline decoration-red-800/20">stop using vulgar words.</span> 
+                        Such coarse and low language is utterly beneath you and highly insulting to the environment we hold sacred. 
+                        Should you ignore this decree and persist, let it be known with absolute finality: <span class="text-red-700 font-extrabold uppercase tracking-wide">I will slap you.</span>
+                    </p>
+
+                    <p class="indent-6 md:indent-10">
+                        This is not a casual request, nor is it a topic open for play. 
+                        Let discretion be your shield, and silent compliance be your response. 
+                        Consider yourself strictly and formally warned.
+                    </p>
+
                 </div>
 
-                <!-- Page Header indicator -->
-                <div class="flex justify-between items-center text-[10px] tracking-widest text-stone-500 uppercase font-sans mb-4 border-b border-stone-200 pb-3">
-                    <span id="page-index">Chapter I</span>
-                    <span id="page-number" class="font-serif italic text-xs">Page 1 of 3</span>
-                </div>
-
-                <!-- PAGE CONTENT SLIDER (Dynamic Content Rendered cleanly with Javascript) -->
-                <div class="flex-1 flex flex-col justify-center relative my-4">
+                <!-- Letter Sign-off and Interactive Seal Signature -->
+                <div class="mt-12 md:mt-16 pt-8 border-t border-gold/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="text-center sm:text-left">
+                        <span class="text-[10px] tracking-widest text-stone-500 uppercase block mb-1 font-sans">Issued under high seal</span>
+                        <span class="font-display text-sm text-stone-900 font-semibold tracking-wider italic">The Authority of Truth</span>
+                    </div>
                     
-                    <!-- PAGE 1: COVER SLIDE -->
-                    <div id="slide-1" class="page-transition absolute inset-0 flex flex-col justify-center opacity-100 transform translate-x-0 z-10 pointer-events-auto">
-                        <span class="text-xs text-gold-dark tracking-[0.3em] uppercase mb-2 font-semibold">An Opening Notice</span>
-                        <h2 class="font-serif text-3xl md:text-4xl text-stone-800 tracking-wide font-bold mb-4 leading-snug">
-                            To the One <br>Known as <span class="italic text-amber-950">Mr. Kaddu</span>
-                        </h2>
-                        <div class="w-16 h-[2px] bg-gold/60 mb-6"></div>
-                        <p class="font-serif text-stone-600 text-base md:text-lg leading-relaxed italic">
-                            Within this ledger, you will find words carefully preserved. They are soft warnings, laced with severe expectations. Read carefully, and keep your hands steady.
-                        </p>
-                    </div>
-
-                    <!-- PAGE 2: THE MAIN WARNING -->
-                    <div id="slide-2" class="page-transition absolute inset-0 flex flex-col justify-center opacity-0 transform translate-x-12 z-0 pointer-events-none">
-                        <span class="text-xs text-gold-dark tracking-[0.3em] uppercase mb-2 font-semibold">The Core Mandate</span>
-                        <h2 class="font-serif text-2xl md:text-3xl text-stone-800 tracking-wide font-bold mb-4 leading-relaxed">
-                            "Hello my <br>mr kaddu"
-                        </h2>
-                        <div class="w-16 h-[2px] bg-red-800/60 mb-4"></div>
-                        
-                        <!-- Drop cap style main warning text -->
-                        <p class="font-serif text-stone-800 text-lg md:text-xl leading-relaxed italic mb-4 font-semibold">
-                            <span class="float-left text-5xl font-sans text-red-800 font-bold mr-2 mt-1 leading-none">S</span>top being playful nja kukuba ako akatwe. Be careful with whatever you do.
-                        </p>
-                    </div>
-
-                    <!-- PAGE 3: THE PENALTY / OUTRO -->
-                    <div id="slide-3" class="page-transition absolute inset-0 flex flex-col justify-center opacity-0 transform translate-x-12 z-0 pointer-events-none">
-                        <span class="text-xs text-red-800 tracking-[0.3em] uppercase mb-2 font-bold">A Final Directive</span>
-                        <h2 class="font-serif text-xl md:text-2xl text-stone-800 tracking-wide font-bold mb-4 leading-relaxed uppercase">
-                            No Room for Vulgarity
-                        </h2>
-                        <div class="w-16 h-[2px] bg-red-800/80 mb-4"></div>
-                        <p class="font-serif text-stone-800 text-lg md:text-xl leading-relaxed italic font-medium">
-                            "Stop using vulgar words, <span class="text-red-800 underline decoration-gold decoration-2 underline-offset-4">or I will slap you.</span>"
-                        </p>
-                        
-                        <!-- Signature mockup -->
-                        <div class="mt-8 self-end text-right">
-                            <span class="font-serif italic text-stone-500 block text-xs">signed under serious seal,</span>
-                            <span class="font-serif text-xl font-bold text-stone-800 italic tracking-widest border-t border-stone-300 pt-1 mt-1 inline-block">The Authority.</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Page Footer with controls -->
-                <div class="flex justify-between items-center mt-4 pt-3 border-t border-stone-200">
-                    <button id="prev-btn" class="flex items-center gap-2 text-[10px] tracking-widest text-stone-400 hover:text-gold-dark transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none" disabled>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                        PREVIOUS
-                    </button>
-                    
-                    <!-- Aesthetic center page separation binding element -->
-                    <div class="flex gap-1.5 items-center justify-center">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gold"></div>
-                        <div class="w-1.5 h-1.5 rounded-full bg-stone-300"></div>
-                        <div class="w-1.5 h-1.5 rounded-full bg-stone-300"></div>
-                    </div>
-
-                    <button id="next-btn" class="flex items-center gap-2 text-[10px] tracking-widest text-stone-700 hover:text-gold-dark transition-all duration-300">
-                        NEXT
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <!-- Dynamic Interactive Seal-stamping acknowledge button -->
+                    <button id="acknowledge-btn" class="group relative px-6 py-3 bg-stone-950 hover:bg-stone-900 text-gold text-xs uppercase tracking-[0.3em] font-medium transition-all duration-300 rounded shadow-md border border-gold/30 hover:border-gold active:scale-95 flex items-center gap-2">
+                        <span>Acknowledge Notice</span>
+                        <svg class="w-3.5 h-3.5 text-gold-bright group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </button>
                 </div>
 
@@ -286,175 +222,99 @@
         </div>
     </main>
 
-    <!-- Footer Copyright overlay info -->
-    <footer id="app-footer" class="relative z-20 w-full px-6 py-6 text-center text-[10px] text-stone-500 uppercase tracking-widest opacity-0 transition-opacity duration-1000 pointer-events-none">
-        © 2026 Sovereign Warnings • Reserved strictly for Kaddu
+    <!-- Footer Copyright -->
+    <footer id="app-footer" class="relative z-20 w-full px-6 py-4 text-center text-[9px] text-stone-600 uppercase tracking-[0.3em] opacity-0 transition-opacity duration-1000 pointer-events-none">
+        Strictly Reserved • No duplication permitted
     </footer>
 
-    <!-- INTERACTION LOGIC -->
+    <!-- INTERACTION & PLAYBACK SCRIPT -->
     <script>
-        const splashScreen = document.getElementById('splash-screen');
-        const enterBtn = document.getElementById('enter-btn');
-        const bookContainer = document.getElementById('book-container');
-        const appHeader = document.getElementById('app-header');
+        const gateScreen = document.getElementById('gate-screen');
+        const breakSealBtn = document.getElementById('break-seal-btn');
+        const letterFolio = document.getElementById('letter-folio');
+        const audioWidget = document.getElementById('audio-widget');
         const appFooter = document.getElementById('app-footer');
-        
+
         const audio = document.getElementById('bg-audio');
-        const toggleAudioBtn = document.getElementById('toggle-audio');
+        const audioToggleBtn = document.getElementById('audio-toggle');
         const iconPlay = document.getElementById('icon-play');
         const iconPause = document.getElementById('icon-pause');
-        const volumeSlider = document.getElementById('audio-volume');
+        const volumeControl = document.getElementById('volume-control');
+        const acknowledgeBtn = document.getElementById('acknowledge-btn');
 
-        // Book Navigation elements
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const pageIndexLabel = document.getElementById('page-index');
-        const pageNumberLabel = document.getElementById('page-number');
-        
-        // Navigation dot markers
-        const pageIndicators = document.querySelectorAll('.flex.gap-1\\.5.items-center.justify-center div');
-
-        const slides = [
-            { id: 'slide-1', title: 'Chapter I', number: 'Page 1 of 3' },
-            { id: 'slide-2', title: 'Chapter II', number: 'Page 2 of 3' },
-            { id: 'slide-3', title: 'Chapter III', number: 'Page 3 of 3' }
-        ];
-        
-        let currentSlideIndex = 0;
-
-        // Custom modal implementation to replace alerts
-        const showSlapAlert = () => {
-            const warningOverlay = document.createElement('div');
-            warningOverlay.className = 'fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-6 transition-all duration-500 opacity-0';
-            warningOverlay.innerHTML = `
-                <div class="max-w-md w-full bg-[#1c0d02] border border-red-800 p-8 rounded-lg text-center shadow-2xl transform scale-95 transition-transform duration-500">
-                    <div class="w-16 h-16 bg-red-950/40 border border-red-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-3xl text-red-500">✋</span>
+        // Custom modal implementation to replace native alerts safely in iframe
+        const triggerPremiumWarningModal = () => {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center p-4 transition-all duration-700 opacity-0';
+            backdrop.innerHTML = `
+                <div class="max-w-md w-full bg-[#18110d] border border-red-800/40 p-6 md:p-8 rounded-lg text-center shadow-2xl transform scale-90 transition-transform duration-700">
+                    <div class="w-14 h-14 bg-red-950/40 border border-red-700/60 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
                     </div>
-                    <h3 class="font-serif text-2xl text-red-500 tracking-wider mb-4 uppercase">Let it be clear</h3>
-                    <p class="font-serif text-stone-300 leading-relaxed italic mb-8">
-                        "Stop being playful, stop using vulgar words, and be careful with your actions. Consider yourself strictly noticed."
+                    <h3 class="font-display text-xl text-red-500 tracking-[0.15em] mb-3 uppercase">FINAL WARNING ACKNOWLEDGED</h3>
+                    <p class="font-serif text-stone-300 leading-relaxed italic text-sm md:text-base mb-8">
+                        "Mr. Kaddu, you have successfully logged your compliance. Remember: stop being playful, discard all vulgarity, and proceed with absolute vigilance."
                     </p>
-                    <button id="warning-ack-btn" class="px-8 py-3 bg-red-800 hover:bg-red-700 text-stone-100 text-xs uppercase tracking-[0.3em] font-medium transition-colors duration-300">
-                        I am Careful
+                    <button id="modal-close" class="w-full py-3 bg-red-900/60 hover:bg-red-900 text-stone-100 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors duration-300 rounded border border-red-700/30">
+                        I am under warning
                     </button>
                 </div>
             `;
-            document.body.appendChild(warningOverlay);
-            
+            document.body.appendChild(backdrop);
+
+            // Animate In
             setTimeout(() => {
-                warningOverlay.classList.remove('opacity-0');
-                warningOverlay.querySelector('.transform').classList.remove('scale-95');
-                warningOverlay.querySelector('.transform').classList.add('scale-100');
+                backdrop.classList.remove('opacity-0');
+                backdrop.querySelector('.transform').classList.remove('scale-90');
+                backdrop.querySelector('.transform').classList.add('scale-100');
             }, 50);
 
-            document.getElementById('warning-ack-btn').addEventListener('click', () => {
-                warningOverlay.classList.add('opacity-0');
+            // Handle Dismiss
+            document.getElementById('modal-close').addEventListener('click', () => {
+                backdrop.classList.add('opacity-0');
+                backdrop.querySelector('.transform').classList.add('scale-90');
                 setTimeout(() => {
-                    warningOverlay.remove();
-                }, 500);
+                    backdrop.remove();
+                }, 700);
             });
         };
 
-        // Splash Gate & Audio Trigger
-        enterBtn.addEventListener('click', () => {
-            // Attempt to play immediately upon interaction
+        // Seal click to trigger transitions and play audio
+        breakSealBtn.addEventListener('click', () => {
+            // Initiate loops immediately on interaction
             audio.play().then(() => {
                 console.log("Audio playing successfully.");
-            }).catch(e => {
-                console.warn("Audio autoplay blocked or failed.", e);
+            }).catch(err => {
+                console.warn("Audio play interrupted or blocked.", err);
             });
 
-            // Smoothly dismiss splash screen
-            splashScreen.classList.add('transition-all', 'duration-[1200ms]', 'opacity-0', 'pointer-events-none');
+            // Smoothly remove Gate
+            gateScreen.classList.add('transition-all', 'duration-[1200ms]', 'opacity-0', 'pointer-events-none');
             
-            // Reveal App Interface with custom layout animations
+            // Bring in the luxurious folio scroll and widgets
             setTimeout(() => {
-                splashScreen.remove();
-                
-                bookContainer.classList.remove('opacity-0', 'pointer-events-none');
-                bookContainer.classList.add('opacity-100', 'pointer-events-auto');
+                gateScreen.remove();
 
-                appHeader.classList.remove('opacity-0', 'pointer-events-none');
-                appHeader.classList.add('opacity-100', 'pointer-events-auto');
+                letterFolio.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                letterFolio.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+
+                audioWidget.classList.remove('opacity-0', 'pointer-events-none');
+                audioWidget.classList.add('opacity-100', 'pointer-events-auto');
 
                 appFooter.classList.remove('opacity-0', 'pointer-events-none');
                 appFooter.classList.add('opacity-100', 'pointer-events-auto');
             }, 1000);
         });
 
-        // Slide Update function
-        function updatePage(direction) {
-            const currentSlide = document.getElementById(slides[currentSlideIndex].id);
-            
-            if (direction === 'next' && currentSlideIndex < slides.length - 1) {
-                // Transition active out to the left
-                currentSlide.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
-                currentSlide.classList.add('opacity-0', '-translate-x-12', 'pointer-events-none');
-                
-                currentSlideIndex++;
-                
-                const nextSlide = document.getElementById(slides[currentSlideIndex].id);
-                nextSlide.classList.remove('opacity-0', 'translate-x-12', 'pointer-events-none');
-                nextSlide.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
-                
-            } else if (direction === 'prev' && currentSlideIndex > 0) {
-                // Transition active out to the right
-                currentSlide.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
-                currentSlide.classList.add('opacity-0', 'translate-x-12', 'pointer-events-none');
-                
-                currentSlideIndex--;
-                
-                const prevSlide = document.getElementById(slides[currentSlideIndex].id);
-                prevSlide.classList.remove('opacity-0', '-translate-x-12', 'pointer-events-none');
-                prevSlide.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
-            }
-
-            // Update Header labels & controls
-            pageIndexLabel.textContent = slides[currentSlideIndex].title;
-            pageNumberLabel.textContent = slides[currentSlideIndex].number;
-
-            // Update Nav dots indicators
-            pageIndicators.forEach((dot, index) => {
-                if (index === currentSlideIndex) {
-                    dot.classList.remove('bg-stone-300');
-                    dot.classList.add('bg-gold');
-                } else {
-                    dot.classList.remove('bg-gold');
-                    dot.classList.add('bg-stone-300');
-                }
-            });
-
-            // Handle button accessibility states
-            prevBtn.disabled = currentSlideIndex === 0;
-            if (currentSlideIndex === slides.length - 1) {
-                nextBtn.innerHTML = `
-                    ACKNOWLEDGE
-                    <svg class="w-4 h-4 text-red-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                `;
-            } else {
-                nextBtn.innerHTML = `
-                    NEXT
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                `;
-            }
-        }
-
-        // Navigation button events
-        nextBtn.addEventListener('click', () => {
-            if (currentSlideIndex === slides.length - 1) {
-                showSlapAlert();
-            } else {
-                updatePage('next');
-            }
+        // Interactive stamp trigger on Acknowledgement Button
+        acknowledgeBtn.addEventListener('click', () => {
+            triggerPremiumWarningModal();
         });
 
-        prevBtn.addEventListener('click', () => {
-            updatePage('prev');
-        });
-
-        // Audio controls logic
-        toggleAudioBtn.addEventListener('click', () => {
+        // Premium Audio Toggle Control
+        audioToggleBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
                 iconPlay.classList.add('hidden');
@@ -466,11 +326,12 @@
             }
         });
 
-        volumeSlider.addEventListener('input', (e) => {
+        // Volume slider action
+        volumeControl.addEventListener('input', (e) => {
             audio.volume = e.target.value;
         });
     </script>
 </body>
 </html>
 
-```
+

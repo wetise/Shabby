@@ -3,943 +3,1817 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Studio - Rico Animations</title>
-    <!-- Tailwind CSS -->
+    <meta nameclass=""="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SHAWIKBOOSTER | Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
+    <!-- Three.js Library for Fluid 3D Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
+        :root { 
+            --brand-orange: #ff8c00; 
+            --apple-slate: #1c1c1e;
+            --apple-obsidian: #050508;
+            --ios-blur: blur(45px);
+            --ios-spring: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #030303;
-            color: #f1f1f1;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--apple-obsidian); 
+            color: #f4f4f7; 
+            margin: 0; 
+            padding: 0;
+            overflow-x: hidden; 
+            touch-action: pan-x pan-y; 
+            -webkit-text-size-adjust: 100%;
+            padding-top: env(safe-area-inset-top, 47px);
+            padding-bottom: env(safe-area-inset-bottom, 34px);
         }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+
+        h1, h2, h3, .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
         }
-        ::-webkit-scrollbar-track {
-            background: #0f0f0f;
+
+        /* Ambient Apple Glow Backdrops */
+        .ios-glow-1 {
+            position: fixed; top: -15%; right: -15%; width: 65vw; height: 65vw;
+            background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; z-index: -1; filter: blur(120px);
         }
-        ::-webkit-scrollbar-thumb {
-            background: #282828;
-            border-radius: 4px;
+        .ios-glow-2 {
+            position: fixed; bottom: -10%; left: -10%; width: 70vw; height: 70vw;
+            background: radial-gradient(circle, rgba(120,80,255,0.06) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; z-index: -1; filter: blur(140px);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f3f;
+
+        /* 3D Background Engine Canvas */
+        #canvas3d {
+            position: fixed; inset: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -2;
+            opacity: 0.8;
         }
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+
+        /* Premium iOS 26 Typography Gradient */
+        .ios-gradient-text {
+            background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .animate-fade-in {
-            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+        .magical-text {
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff8c00 0%, #ffffff 50%, #ff8c00 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineGlow 4s linear infinite;
         }
-        /* Google Custom Spinner */
-        .google-spinner {
-            border: 3px stroke transparent;
+
+        @keyframes shineGlow { to { background-position: 200% center; } }
+
+        /* Premium iOS Glassmorphism Card Style */
+        .ios-card { 
+            background: rgba(15, 15, 20, 0.45); 
+            backdrop-filter: var(--ios-blur);
+            -webkit-backdrop-filter: var(--ios-blur);
+            border: 0.5px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 26px;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s var(--ios-spring);
+        }
+        .ios-card:active {
+            transform: scale(0.995);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        /* Fluid Sidebars & Custom Pages */
+        .sidebar {
+            position: fixed; top: 0; right: -100%; width: 85%; height: 100%;
+            background: rgba(10, 10, 12, 0.95); backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            z-index: 1000; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto; border-left: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+        .sidebar.active { right: 0; }
+
+        .page { display: none; min-height: 100vh; flex-direction: column; z-index: 10; position: relative; }
+        .page.active { display: flex; }
+
+        /* Premium iOS Dynamic Island Notification */
+        #dynamicIsland {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+            width: 140px;
+            height: 38px;
+            background: #000000;
+            border-radius: 22px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.2) inset;
+            overflow: hidden;
+            border: 0.5px solid rgba(255,255,255,0.08);
+            pointer-events: none;
+        }
+        #dynamicIsland.expanded {
+            width: calc(100% - 32px);
+            max-width: 420px;
+            height: 85px;
+            border-radius: 28px;
+            padding: 16px;
+            justify-content: flex-start;
+        }
+
+        /* iOS Platform Selector Button style */
+        .ios-plat-btn {
+            background: rgba(255,255,255,0.04);
+            border: 0.5px solid rgba(255,255,255,0.06);
+            transition: all 0.3s var(--ios-spring);
+            border-radius: 18px;
+        }
+        .ios-plat-btn.selected {
+            background: rgba(255, 140, 0, 0.14);
+            border-color: var(--brand-orange);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+        }
+
+        /* Input overrides for elegant iOS style */
+        input, select, textarea {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 0.5px solid rgba(255, 255, 255, 0.08) !important;
+            color: #ffffff !important;
+            outline: none;
+            width: 100%;
+            border-radius: 16px;
+            transition: all 0.3s var(--ios-spring);
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--brand-orange) !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .modal {
+            position: fixed; inset: 0; background: rgba(5,5,8,0.85);
+            z-index: 2000; display: none; padding: 20px; overflow-y: auto;
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+        }
+        .modal.active { display: block; }
+
+        .pulsing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--brand-orange);
             border-radius: 50%;
-            border-top: 3px solid #ff0000;
-            border-right: 3px solid #f1f1f1;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
+            animation: pulse 1.6s infinite ease-in-out;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        @keyframes pulse {
+            0% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
+            70% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 8px rgba(255, 140, 0, 0); }
+            100% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+        }
+
+        /* Method Selector State Styles */
+        .payment-method-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 0.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            transition: all 0.35s var(--ios-spring);
+        }
+        .payment-method-btn.selected {
+            border-color: var(--brand-orange);
+            background: rgba(255, 140, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.12);
+        }
+
+        /* Custom loading overlay inside forms */
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        /* Apple slide-up transition animation */
+        .slide-up {
+            animation: iosSlideUp 0.6s var(--ios-spring);
+        }
+        @keyframes iosSlideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Premium iOS Welcome Toast */
+        #welcomeToast {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            z-index: 9999;
+            transform: translateY(200%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            opacity: 0;
+        }
+        #welcomeToast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
-<body class="bg-[#030303] text-[#f1f1f1] min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="px-4">
 
-    <!-- LOGIN SCREEN (Displays by default) -->
-    <div id="login-screen" class="fixed inset-0 bg-[#030303] z-50 flex items-center justify-center p-4">
-        
-        <!-- INITIAL FORM VIEW -->
-        <div id="login-card" class="w-full max-w-md bg-[#0f0f0f] border border-zinc-800/80 rounded-3xl p-8 shadow-2xl relative overflow-hidden animate-fade-in">
-            <!-- Subtle accent glow -->
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-600/5 rounded-full filter blur-2xl"></div>
-            
-            <!-- YouTube Studio Branding Header -->
-            <div class="text-center space-y-3 mb-8">
-                <div class="inline-flex bg-red-600 text-white rounded-2xl p-3.5 shadow-lg shadow-red-950/20">
-                    <i class="fa-brands fa-youtube text-3xl"></i>
+    <!-- DYNAMIC ISLAND SYSTEM (iOS 26 Flagship Notification Panel) -->
+    <div id="dynamicIsland">
+        <!-- Dynamic Island Small View -->
+        <div id="islandSmall" class="flex items-center gap-2 px-4">
+            <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
+            <span class="text-[9px] font-black uppercase tracking-widest text-orange-500">SHAWIK</span>
+        </div>
+        <!-- Dynamic Island Expanded Notification View -->
+        <div id="islandExpanded" class="hidden w-full flex items-center justify-between text-left transition-opacity duration-300">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-500 text-lg">
+                    <i id="islandIcon" class="fa-solid fa-circle-check"></i>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-bold text-white tracking-tight">YouTube Studio</h2>
-                    <p class="text-zinc-400 text-xs mt-1">Sign in with your Creator Partner Account to continue</p>
+                    <h4 id="islandTitle" class="text-xs font-black uppercase tracking-wider text-white">System Synced</h4>
+                    <p id="islandDesc" class="text-[10px] text-gray-400 mt-0.5">Welcome premium rewards applied.</p>
                 </div>
             </div>
+            <i class="fa-solid fa-spider text-orange-500/30 text-xl pr-2"></i>
+        </div>
+    </div>
 
-            <!-- Login Credentials Input Form -->
-            <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-                <!-- Validation Error Banner -->
-                <div id="login-error" class="hidden bg-red-950/40 border border-red-900/40 text-red-400 p-3.5 rounded-xl text-xs flex items-center space-x-2 animate-fade-in">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>Incorrect email or password. Please try again.</span>
-                </div>
-
-                <!-- Email Input -->
-                <div class="space-y-1.5">
-                    <label for="login-email" class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider">Email address</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-3.5 text-zinc-500">
-                            <i class="fa-regular fa-envelope"></i>
-                        </span>
-                        <input id="login-email" type="email" required placeholder="name@example.com" class="w-full bg-zinc-950/80 text-white text-sm py-3 pl-11 pr-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition-all placeholder-zinc-600">
-                    </div>
-                </div>
-
-                <!-- Password Input -->
-                <div class="space-y-1.5">
-                    <div class="flex justify-between items-center">
-                        <label for="login-password" class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider">Password</label>
-                        <button type="button" onclick="handleForgotPassword()" class="text-xs text-zinc-500 hover:text-red-400 transition">Forgot?</button>
-                    </div>
-                    <div class="relative">
-                        <span class="absolute left-4 top-3.5 text-zinc-500">
-                            <i class="fa-solid fa-lock"></i>
-                        </span>
-                        <input id="login-password" type="password" required placeholder="Enter your password" class="w-full bg-zinc-950/80 text-white text-sm py-3 pl-11 pr-12 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition-all placeholder-zinc-600">
-                        <!-- Password Visibility Toggle -->
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-3.5 text-zinc-500 hover:text-zinc-300 transition" aria-label="Toggle password visibility">
-                            <i id="password-toggle-icon" class="fa-regular fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Sign In Button -->
-                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 active:bg-red-700 text-white font-bold text-sm py-3.5 rounded-xl transition duration-150 shadow-lg shadow-red-950/20 flex items-center justify-center space-x-2">
-                    <span>Sign in to Studio</span>
-                    <i class="fa-solid fa-arrow-right-to-bracket text-xs opacity-80"></i>
-                </button>
-            </form>
-
-            <!-- Bottom Navigation Utilities -->
-            <div class="mt-8 pt-6 border-t border-zinc-800/60 flex items-center justify-between text-xs">
-                <span class="text-zinc-500">New partner?</span>
-                <button onclick="handleCreateAccount()" class="text-red-400 hover:text-red-300 font-semibold transition">Create account</button>
+    <!-- PREMIUM INTERACTIVE LUGANDA TOAST DIALOGUE -->
+    <div id="welcomeToast" class="ios-card p-5 max-w-md mx-auto border-orange-500/30 bg-black/90">
+        <div class="flex items-start gap-4">
+            <div class="w-11 h-11 bg-orange-500/15 border border-orange-500/30 rounded-2xl flex items-center justify-center text-orange-500 flex-shrink-0 animate-pulse">
+                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+            </div>
+            <div class="flex-1 space-y-1">
+                <h4 class="text-xs font-black text-orange-500 uppercase tracking-widest leading-none">Rico Animations</h4>
+                <p class="text-[14px] text-white font-bold leading-snug">
+                    Tukwanirizza ku Shawik Rico Animations Panel!
+                </p>
+                <p class="text-[12px] text-gray-400 font-medium">
+                    Osobola okugula service zaffe ku bbeyi powa.
+                </p>
             </div>
         </div>
+        <!-- Action Buttons -->
+        <div class="flex gap-2.5 mt-5">
+            <button onclick="dismissWelcomeToast()" class="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-bold text-gray-400 uppercase tracking-widest transition-colors">
+                Cancel
+            </button>
+            <a href="https://wa.me/+447412887630" target="_blank" class="flex-[1.5] py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-xs font-black text-black uppercase tracking-widest text-center flex items-center justify-center gap-1.5 transition-colors shadow-lg shadow-orange-500/10">
+                <i class="fa-brands fa-whatsapp text-sm"></i> Join WhatsApp
+            </a>
+        </div>
+    </div>
 
-        <!-- DELAYED NETWORK LOADING VIEW (Initially Hidden) -->
-        <div id="loader-card" class="hidden w-full max-w-sm bg-[#0f0f0f] border border-zinc-800/80 rounded-3xl p-8 shadow-2xl text-center space-y-6 animate-fade-in">
-            <div class="flex justify-center">
-                <div class="google-spinner"></div>
+    <!-- LIVE 3D GRAPH CORE ENGINE -->
+    <canvas id="canvas3d"></canvas>
+
+    <!-- SLATE AMBIENCE LIGHTS -->
+    <div class="ios-glow-1"></div>
+    <div class="ios-glow-2"></div>
+
+    <!-- FIRST/INTRO PAGE (LAUNCHED & UPDATED STATUS) -->
+    <div id="introPage" class="page active items-center justify-center px-4 transition-opacity duration-1000">
+        <div class="text-center w-full max-w-sm flex flex-col items-center">
+            
+            <!-- iOS Glow Sphere -->
+            <div class="relative mb-8">
+                <div class="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                <div class="relative w-20 h-20 rounded-3xl bg-black/50 border border-white/10 flex items-center justify-center shadow-2xl">
+                    <i class="fa-solid fa-space-shuttle text-3xl text-orange-500 -rotate-45"></i>
+                </div>
             </div>
-            <div class="space-y-2">
-                <h3 class="text-lg font-bold text-white tracking-tight">Signing in...</h3>
-                <p class="text-xs text-zinc-400">Please wait...</p>
+            
+            <h1 class="text-4xl font-extrabold tracking-tight ios-gradient-text mb-3">System Online</h1>
+            <p class="text-xs text-gray-500 uppercase tracking-[0.3em] mb-8 font-semibold">Booster Mainnet v26.0</p>
+            
+            <!-- Launch Message Glass Card -->
+            <div class="ios-card p-6 w-full mb-8">
+                <div class="flex items-center justify-center gap-2 mb-3">
+                    <span class="pulsing-dot"></span>
+                    <span class="text-[9px] text-emerald-400 font-extrabold uppercase tracking-widest">Active Device Security</span>
+                </div>
+                <p class="text-sm text-gray-300 font-medium leading-relaxed">
+                    SHAWIKBOOSTER's latest update is live. Core services are fully updated, stable, and executing instantly!
+                </p>
+                <div class="mt-4 p-3.5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
+                    <p class="text-[9px] text-orange-500 font-extrabold uppercase tracking-widest">iOS Welcome Reward</p>
+                    <p class="text-xs text-white font-bold mt-0.5">Claim USh 10,000 Sign-up Bonus Inside!</p>
+                </div>
             </div>
-            <div class="flex items-center justify-center space-x-2 bg-zinc-900/60 py-2.5 px-4 rounded-xl border border-zinc-800/40 w-fit mx-auto">
-                <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
-                <span class="text-[10px] font-mono tracking-widest text-zinc-400">Welcome Rico Animations</span>
+
+            <button onclick="skipIntro()" class="text-[10px] text-gray-400 hover:text-white uppercase tracking-[0.25em] transition-colors flex items-center gap-2 font-bold">
+                Open Dashboard <i class="fa-solid fa-arrow-right text-[8px]"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- RESPONSIVE LOGIN & SIGN-UP PAGE -->
+    <div id="loginPage" class="page items-center justify-center py-10">
+        <div class="w-full max-w-sm mx-auto slide-up">
+            <!-- Top Branding -->
+            <div class="text-center mb-8">
+                <div class="inline-block p-4 rounded-3xl bg-black/40 border border-white/5 mb-3 shadow-xl">
+                    <i class="fa-solid fa-spider text-4xl text-orange-500"></i>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
+                <p class="text-[9px] text-gray-500 font-extrabold uppercase tracking-[0.35em] mt-1.5">Universal SMM Panel</p>
+            </div>
+
+            <!-- Login / Sign Up Tabs -->
+            <div class="ios-card p-1 flex mb-6 bg-black/30">
+                <button onclick="switchAuthTab('login')" id="tabBtn-login" class="flex-1 py-3 text-xs font-black uppercase tracking-wider auth-tab active text-center">
+                    Sign In
+                </button>
+                <button onclick="switchAuthTab('signup')" id="tabBtn-signup" class="flex-1 py-3 text-xs font-black uppercase tracking-wider auth-tab text-gray-500 text-center">
+                    Sign Up
+                </button>
+            </div>
+
+            <!-- Authentic Form Container -->
+            <div class="ios-card p-6 space-y-4">
+                
+                <!-- Display warning if device already has account -->
+                <div id="signupBlockerNotice" class="hidden p-3.5 bg-red-950/20 border border-red-900/30 text-red-400 text-xs rounded-2xl font-medium">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Single-Device Rule: This iPhone already has an account registered.
+                </div>
+
+                <!-- Extra field for sign up -->
+                <div id="signupNameField" class="hidden">
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Full Name</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-4.5 top-4.5 text-gray-600"></i>
+                        <input type="text" id="authName" placeholder="John Doe" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Email Address</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4.5 top-4.5 text-gray-600"></i>
+                        <input type="email" id="authEmail" placeholder="you@example.com" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Secure Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4.5 top-4.5 text-gray-600"></i>
+                        <input type="password" id="authPassword" placeholder="••••••••" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions check for Sign up -->
+                <div id="termsCheckbox" class="hidden flex items-start gap-2 pt-1">
+                    <input type="checkbox" id="agreeTerms" class="w-4 h-4 rounded border-gray-800 bg-black mt-0.5 accent-orange-500">
+                    <label for="agreeTerms" class="text-[10px] text-gray-400 font-semibold">I agree to the Terms of Service & Privacy Policy</label>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                    Sign In
+                </button>
+
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t border-white/5"></div>
+                    <span class="flex-shrink mx-4 text-gray-600 text-[9px] font-extrabold uppercase tracking-widest">or</span>
+                    <div class="flex-grow border-t border-white/5"></div>
+                </div>
+
+                <!-- Google SSO -->
+                <button onclick="handleGoogleSignIn()" class="w-full bg-white text-black py-3.5 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm active:scale-95 transition-transform">
+                    <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Continue with Google
+                </button>
+            </div>
+
+            <!-- Dynamic Credits -->
+            <div class="mt-10 text-center space-y-4">
+                <div>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Developer</p>
+                    <span class="premium-credit text-lg">SHAWIK</span>
+                </div>
+                <div>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Official Sponsors</p>
+                    <span class="premium-credit text-[10px]">Dj Douglas & Ava max</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN PORTAL CONTAINER (Initially Hidden) -->
-    <div id="main-portal" class="hidden min-h-screen flex flex-col">
-        <!-- Top Navigation Bar -->
-        <header class="bg-[#0f0f0f] border-b border-zinc-800/80 sticky top-0 z-50 px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4 sm:space-x-6">
-                <!-- Brand Logo -->
-                <div class="flex items-center space-x-2">
-                    <div class="bg-red-600 text-white rounded-lg px-2.5 py-1.5 flex items-center justify-center">
-                        <i class="fa-brands fa-youtube text-lg"></i>
-                    </div>
-                    <span class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center">
-                        Studio <span class="text-xs font-normal text-zinc-400 ml-2 px-2 py-0.5 bg-zinc-800 rounded">Partner Portal</span>
-                    </span>
-                </div>
-                
-                <!-- Desktop Top Navigation Menu -->
-                <nav class="hidden md:flex items-center space-x-1 text-sm font-medium text-zinc-400">
-                    <button onclick="switchView('dashboard')" class="px-4 py-2 rounded-lg hover:bg-zinc-800 hover:text-white transition-all text-white font-semibold">Dashboard</button>
-                    <button onclick="switchView('analytics')" class="px-4 py-2 rounded-lg hover:bg-zinc-800 hover:text-white transition-all">Analytics</button>
-                    <button onclick="switchView('payments')" class="px-4 py-2 rounded-lg bg-zinc-800/60 text-white transition-all">Revenue & Payouts</button>
-                </nav>
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page pb-24">
+        <header class="flex justify-between items-center py-6">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-spider text-orange-500 text-xl animate-pulse"></i>
+                <h1 class="text-md font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
             </div>
-
-            <!-- Creator Profile Action Element -->
-            <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex flex-col text-right">
-                    <span class="text-sm font-semibold text-white">Matovu Shawik</span>
-                    <span class="text-xs text-red-500 font-medium">Rico Animations</span>
-                </div>
-                <!-- Clickable Profile Trigger -->
-                <button onclick="toggleProfileModal()" class="relative focus:outline-none focus:ring-2 focus:ring-red-500 rounded-full transition duration-150" aria-label="Open Creator Settings">
-                    <div class="w-10 h-10 rounded-full overflow-hidden border border-zinc-700 bg-zinc-800 hover:border-zinc-500 transition">
-                        <img id="profile-pic" src="uh.png" alt="Creator Profile" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&auto=format&fit=crop&q=80'" class="w-full h-full object-cover">
-                    </div>
-                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0f0f0f] rounded-full"></span>
-                </button>
-            </div>
+            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center">
+                <i class="fa-solid fa-bars-staggered text-sm"></i>
+            </button>
         </header>
 
-        <!-- Main Workspace -->
-        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- LEFT/CENTER PANEL: Revenue Dashboard -->
-            <div class="lg:col-span-2 space-y-6">
-                
-                <!-- Page Title Block -->
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Earnings & Settlements</h1>
-                        <p class="text-zinc-400 text-sm mt-1">Manage and track your YouTube Partner Program payouts, taxes, and bank transfers.</p>
-                    </div>
-                    <div class="flex items-center space-x-2 bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-800 self-start">
-                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                        <span class="text-xs font-semibold text-zinc-300">Live Partner Account</span>
-                    </div>
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-3 mb-4 slide-up">
+            <div class="ios-card p-5 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-5xl">
+                    <i class="fa-solid fa-wallet"></i>
                 </div>
-
-                <!-- Main High-Level Analytics Metrics Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    <!-- Card 1: 5-Month Estimated Earnings -->
-                    <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 rounded-2xl border border-zinc-800/80 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition duration-300">
-                            <i class="fa-solid fa-chart-line text-6xl text-red-500"></i>
-                        </div>
-                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider block">Total Est. Earnings (Past 5 Months)</span>
-                        <h2 class="text-3xl sm:text-4xl font-black text-white mt-2 tracking-tight">UGX 500,000,000</h2>
-                        
-                        <!-- Progress / Target Bar -->
-                        <div class="mt-4 space-y-1.5">
-                            <div class="flex justify-between text-xs font-semibold text-zinc-400">
-                                <span>Target: UGX 600M</span>
-                                <span class="text-red-400">83.3% Achieved</span>
-                            </div>
-                            <div class="w-full bg-zinc-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-red-600 to-amber-500 h-2 rounded-full" style="width: 83.3%"></div>
-                            </div>
-                        </div>
-
-                        <!-- Mini Sparkline Stats -->
-                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-4 border-t border-zinc-800/60 text-center">
-                            <div>
-                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 1</span>
-                                <span class="text-xs font-bold text-zinc-300">80M</span>
-                            </div>
-                            <div>
-                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 2</span>
-                                <span class="text-xs font-bold text-zinc-300">95M</span>
-                            </div>
-                            <div>
-                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 3</span>
-                                <span class="text-xs font-bold text-zinc-300">105M</span>
-                            </div>
-                            <div>
-                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 4</span>
-                                <span class="text-xs font-bold text-zinc-300">110M</span>
-                            </div>
-                            <div>
-                                <span class="text-[9px] text-zinc-500 block uppercase font-bold">Month 5</span>
-                                <span class="text-xs font-bold text-red-400">110M</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Current Account Balance -->
-                    <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 rounded-2xl border border-zinc-800/80 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition duration-300">
-                            <i class="fa-solid fa-wallet text-6xl text-emerald-500"></i>
-                        </div>
-                        <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider block">Current Account Balance</span>
-                        <h2 id="current-balance-display" class="text-3xl sm:text-4xl font-black text-emerald-400 mt-2 tracking-tight">UGX 46,400,000</h2>
-                        <p class="text-xs text-zinc-400 mt-2">Available for immediate withdrawal to your linked bank account.</p>
-
-                        <div class="mt-6">
-                            <button onclick="scrollToWithdraw()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl transition duration-150 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-950/20">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                <span>Initiate Bank Withdrawal</span>
-                            </button>
-                        </div>
-                    </div>
-
+                <span class="text-[9px] font-extrabold text-gray-500 uppercase tracking-widest block mb-1">Active Balance</span>
+                <p id="dashboardBalance" class="text-lg font-black text-white">USh 80,000.00</p>
+            </div>
+            <div class="ios-card p-5 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-5xl">
+                    <i class="fa-solid fa-chart-line"></i>
                 </div>
+                <span class="text-[9px] font-extrabold text-gray-500 uppercase tracking-widest block mb-1">Total Spent</span>
+                <p id="dashboardSpending" class="text-lg font-black text-[#ff8c00]">USh 0.00</p>
+            </div>
+        </div>
 
-                <!-- Detailed Breakdown & Previous Months Performance -->
-                <div class="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-800/80">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h3 class="text-lg font-bold text-white">Earnings & Deductions Breakdown</h3>
-                            <p class="text-xs text-zinc-400 mt-0.5">Most recent YouTube partner clearing statement</p>
-                        </div>
-                        <span class="bg-zinc-800 text-zinc-300 text-xs px-3 py-1.5 rounded-lg border border-zinc-700/60 font-semibold">
-                            July 2, 2026
-                        </span>
-                    </div>
+        <!-- Social Navigation -->
+        <div class="ios-card p-3 mb-4 grid grid-cols-4 gap-2 bg-black/30 slide-up">
+            <button id="platform-TikTok" class="ios-plat-btn p-3 text-white" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok"></i></button>
+            <button id="platform-Instagram" class="ios-plat-btn p-3 text-pink-500" onclick="selectPlatform('Instagram')"><i class="fa-brands fa-instagram"></i></button>
+            <button id="platform-Facebook" class="ios-plat-btn p-3 text-blue-600" onclick="selectPlatform('Facebook')"><i class="fa-brands fa-facebook"></i></button>
+            <button id="platform-YouTube" class="ios-plat-btn p-3 text-red-600" onclick="selectPlatform('YouTube')"><i class="fa-brands fa-youtube"></i></button>
+        </div>
 
-                    <div class="space-y-4">
-                        <!-- Stat Segment 1 -->
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
-                                    <i class="fa-solid fa-clapperboard text-sm"></i>
-                                </div>
-                                <div>
-                                    <span class="text-sm font-semibold text-zinc-200 block">Gross Video Monetization</span>
-                                    <span class="text-[10px] text-zinc-500">AdSense & Premium Earnings</span>
-                                </div>
-                            </div>
-                            <span class="text-base font-bold text-white">UGX 50,000,000</span>
-                        </div>
-
-                        <!-- Stat Segment 2 -->
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500/20">
-                                    <i class="fa-solid fa-percent text-sm text-red-400"></i>
-                                </div>
-                                <div>
-                                    <span class="text-sm font-semibold text-zinc-200 block">Withholding Tax (WHT 6%)</span>
-                                    <span class="text-[10px] text-zinc-500">Government statutory deduction</span>
-                                </div>
-                            </div>
-                            <span class="text-base font-bold text-red-400">- UGX 3,000,000</span>
-                        </div>
-
-                        <!-- Stat Segment 3 -->
-                        <div class="flex justify-between items-center py-2 border-b border-zinc-800">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500/20">
-                                    <i class="fa-solid fa-vault text-sm text-red-400"></i>
-                                </div>
-                                <div>
-                                    <span class="text-sm font-semibold text-zinc-200 block">Bank Transfer & Platform Fees</span>
-                                    <span class="text-[10px] text-zinc-500">International wire processing commission</span>
-                                </div>
-                            </div>
-                            <span class="text-base font-bold text-red-400">- UGX 600,000</span>
-                        </div>
-
-                        <!-- Final Net Total -->
-                        <div class="flex justify-between items-center pt-4">
-                            <div>
-                                <span class="text-sm font-bold text-emerald-400 block">Current Available Balance</span>
-                                <span class="text-[10px] text-zinc-500">Ready to transfer to Matovu Shawik</span>
-                            </div>
-                            <div class="text-right">
-                                <span id="summary-balance-display" class="text-2xl font-black text-white">UGX 46,400,000</span>
-                                <span class="text-[10px] text-emerald-400 block font-medium"><i class="fa-solid fa-check-double mr-1"></i>Cleared & Verified</span>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Main Form -->
+        <div class="ios-card p-5 space-y-4 slide-up">
+            <div>
+                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Choose Category</label>
+                <div class="relative mt-1">
+                    <i class="fa-solid fa-layer-group absolute left-4.5 top-4.5 text-orange-500"></i>
+                    <select id="categorySelect" onchange="onCategoryChange()" class="pl-12 py-3.5 rounded-2xl text-sm appearance-none">
+                        <option value="followers">TikTok Followers</option>
+                        <option value="views">TikTok Views</option>
+                        <option value="shares">TikTok Shares</option>
+                        <option value="comment_likes">TikTok Comment Likes</option>
+                        <option value="shares_saves">TikTok Shares and Saves</option>
+                        <option value="story_views">TikTok Story Views</option>
+                        <option value="likes">TikTok Likes</option>
+                        <option value="live_likes">TikTok Live Likes</option>
+                    </select>
                 </div>
-
             </div>
 
-            <!-- RIGHT PANEL: Bank Selector and Withdrawal Widget -->
-            <div class="space-y-6">
-                
-                <!-- Linked Bank Card & Transfer Action Panel -->
-                <div id="withdrawal-panel" class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 relative overflow-hidden shadow-xl">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-600/5 rounded-full filter blur-2xl"></div>
+            <div>
+                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Choose Service</label>
+                <select id="serviceSelect" class="py-4 px-4 mt-1 rounded-2xl text-sm appearance-none">
+                    <!-- Loaded dynamically via javascript based on selected Category -->
+                </select>
+            </div>
 
-                    <h3 class="text-lg font-bold text-white mb-1">Transfer to Local Bank</h3>
-                    <p class="text-xs text-zinc-400 mb-6">Withdraw funds instantly using secure local bank clearing protocols.</p>
+            <div>
+                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Target Account / URL</label>
+                <input type="url" id="linkInput" placeholder="Paste your TikTok link here..." class="p-4 mt-1 rounded-2xl text-sm">
+            </div>
 
-                    <!-- Bank Card Layout -->
-                    <div id="active-bank-card" class="bg-gradient-to-br from-blue-900 via-indigo-950 to-zinc-950 rounded-2xl p-5 border border-indigo-500/20 shadow-md relative overflow-hidden mb-6">
-                        <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-blue-500/15 rounded-full filter blur-lg"></div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <span id="bank-badge" class="text-[10px] bg-indigo-500/20 text-indigo-300 font-bold px-2 py-1 rounded tracking-widest uppercase">
-                                    Primary Linked Account
-                                </span>
-                                <h4 id="bank-title-display" class="text-sm font-bold text-white mt-2">dfcu BANK UGANDA</h4>
-                            </div>
-                            <i id="bank-icon-display" class="fa-solid fa-building-columns text-2xl text-indigo-400"></i>
-                        </div>
+            <div class="flex gap-3">
+                <div class="flex-[1.5]">
+                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Quantity</label>
+                    <input type="number" id="qtyInput" placeholder="1000" class="p-4 mt-1 rounded-2xl text-sm">
+                </div>
+                <div class="flex-1">
+                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Delivery Time</label>
+                    <div id="timeDisplay" class="p-4 mt-1 rounded-2xl text-[10px] font-extrabold text-gray-400 bg-black/50 border border-white/5 text-center">15 Mins</div>
+                </div>
+            </div>
 
-                        <div class="space-y-3">
-                            <div>
-                                <span class="text-[9px] text-zinc-400 block uppercase tracking-wider">Account Holder</span>
-                                <span id="bank-holder-display" class="text-sm font-semibold text-white tracking-wide">Matovu Shawik</span>
-                            </div>
+            <div class="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl flex justify-between items-center">
+                <div>
+                    <p class="text-[9px] text-gray-500 uppercase font-extrabold tracking-wider">Total Payable</p>
+                    <p id="priceDisplay" class="text-2xl font-black text-orange-500">USh 0.00</p>
+                </div>
+                <i class="fa-solid fa-coins text-orange-950/40 text-2xl animate-spin" style="animation-duration: 8s"></i>
+            </div>
 
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <span class="text-[9px] text-zinc-400 block uppercase tracking-wider">Account Number</span>
-                                    <span id="bank-number-display" class="text-sm font-bold text-white tracking-widest">•••• •••• ••84 19</span>
-                                </div>
-                                <span class="text-xs font-bold text-indigo-400 bg-indigo-950 px-2.5 py-1 rounded border border-indigo-900/40">Active</span>
-                            </div>
-                        </div>
-                    </div>
+            <button onclick="placeSingleOrder()" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/15">
+                Confirm & Place Order
+            </button>
+        </div>
 
-                    <!-- Input / Random Transfer Value Picker -->
-                    <div class="space-y-4" id="withdraw-flow-container">
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider">Select Transfer Amount</label>
-                                <button onclick="toggleProfileModal()" class="text-xs text-red-400 hover:text-red-300 font-medium">
-                                    <i class="fa-solid fa-plus mr-1"></i> Switch Bank
-                                </button>
-                            </div>
-                            <div class="relative">
-                                <span class="absolute left-4 top-3.5 text-zinc-400 font-bold text-sm">UGX</span>
-                                <input id="withdraw-amount-input" type="text" value="30,000,000" class="w-full bg-zinc-950 text-white font-extrabold text-lg py-3 pl-14 pr-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-emerald-500 transition-all">
-                            </div>
-                            <!-- Presets helper -->
-                            <div class="grid grid-cols-3 gap-2 mt-2">
-                                <button onclick="setAmount(10000000)" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">10M</button>
-                                <button onclick="setAmount(30000000)" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">30M</button>
-                                <button onclick="setAmount(activeBalance)" id="max-amount-btn" class="bg-zinc-950 hover:bg-zinc-800 text-zinc-300 py-1.5 rounded-lg border border-zinc-800 text-xs font-medium transition">Max</button>
-                            </div>
-                        </div>
+        <!-- Lower Menu Grid -->
+        <div class="mt-8 grid grid-cols-2 gap-3 slide-up">
+            <button onclick="openModal('ticketsModal')" class="ios-card p-5 flex flex-col items-center gap-2 bg-black/30">
+                <i class="fa-solid fa-ticket text-orange-500 text-lg"></i>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300">Support tickets</span>
+            </button>
+            <button onclick="openModal('apiModal')" class="ios-card p-5 flex flex-col items-center gap-2 bg-black/30">
+                <i class="fa-solid fa-code text-blue-500 text-lg"></i>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300">Developer API</span>
+            </button>
+        </div>
 
-                        <!-- Fee Summary Box -->
-                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs space-y-2">
-                            <div class="flex justify-between text-zinc-400">
-                                <span>Transfer fee (0.15% fixed)</span>
-                                <span id="transfer-fee-display" class="text-white font-medium">UGX 45,000</span>
-                            </div>
-                            <div class="flex justify-between text-zinc-400">
-                                <span>Processing timeframe</span>
-                                <span class="text-emerald-400 font-medium">1 - 3 Business Days</span>
-                            </div>
-                        </div>
+        <!-- Animated Footer Credits -->
+        <footer class="mt-16 text-center pb-12 opacity-90">
+            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Designed & Built By</p>
+            <span class="premium-credit text-lg block mb-4">SHAWIK</span>
+            <div class="h-[1px] w-12 bg-gray-900 mx-auto mb-4"></div>
+            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Powered By</p>
+            <span class="premium-credit text-xs block">Dj Douglas & Ava max</span>
+        </footer>
+    </div>
 
-                        <!-- Primary Action Button -->
-                        <button onclick="processWithdrawal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-4 rounded-xl transition duration-150 flex items-center justify-center space-x-2 shadow-lg shadow-emerald-950/20">
-                            <i class="fa-solid fa-building-columns"></i>
-                            <span>Confirm Transfer to Bank</span>
-                        </button>
-                    </div>
+    <!-- MASS ORDERS PAGE -->
+    <div id="massOrdersPage" class="page px-5 pb-24">
+        <!-- Mass Orders Header -->
+        <header class="flex items-center gap-4 py-6">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+            </button>
+            <h1 class="text-lg font-black tracking-widest uppercase">Mass Orders</h1>
+        </header>
 
-                    <!-- Transaction Success Statement Panel (Revealed dynamically) -->
-                    <div id="transfer-success-panel" class="hidden space-y-5 animate-fadeIn">
-                        <div class="w-16 h-16 bg-emerald-950/60 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-800/80 shadow-md">
-                            <i class="fa-solid fa-circle-check text-3xl"></i>
-                        </div>
+        <div class="max-w-md mx-auto w-full space-y-6">
+            <div class="glass-card p-5 bg-black/30">
+                <h3 class="text-xs font-black uppercase text-[#ff8c00] tracking-wider mb-2">Service Quick Index</h3>
+                <div class="space-y-1.5 text-[10px] text-gray-400 font-semibold">
+                    <p><b class="text-white">fol_1:</b> TikTok Followers (UGX 20,000 / 1k)</p>
+                    <p><b class="text-white">view_1:</b> TikTok Views (UGX 1,500 / 1k)</p>
+                    <p><b class="text-white">like_1:</b> TikTok Likes (UGX 6,000 / 1k)</p>
+                </div>
+            </div>
 
-                        <div class="text-center">
-                            <h4 class="text-white font-bold text-base">Dispatched to Bank</h4>
-                            <p class="text-xs text-zinc-400 mt-1">Transaction Ref: <span class="font-mono text-zinc-300 font-semibold">YT-UG-98317-X</span></p>
-                        </div>
-
-                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs space-y-3">
-                            <div class="flex justify-between text-zinc-400">
-                                <span>Account Holder</span>
-                                <span id="success-holder-display" class="text-white font-semibold">Matovu Shawik</span>
-                            </div>
-                            <div class="flex justify-between text-zinc-400">
-                                <span>Bank Name</span>
-                                <span id="success-bank-display" class="text-white font-semibold">dfcu Bank Uganda</span>
-                            </div>
-                            <div class="flex justify-between text-zinc-400">
-                                <span>Amount Transferred</span>
-                                <span id="success-amount-display" class="text-emerald-400 font-bold">UGX 30,000,000</span>
-                            </div>
-                            <div class="flex justify-between text-zinc-400 pt-2 border-t border-zinc-800">
-                                <span>Estimated Arrival</span>
-                                <span class="text-amber-400 font-semibold">1 - 3 Business Days</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-indigo-950/40 p-3.5 rounded-xl border border-indigo-900/30 text-[11px] text-zinc-300 leading-relaxed text-center">
-                            <i class="fa-solid fa-clock-rotate-left mr-1.5 text-indigo-400"></i>
-                            The transfer will take 1-3 business days to safely clear and post to your account.
-                        </div>
-
-                        <button onclick="resetWithdrawForm()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs py-3 rounded-xl transition">
-                            Perform Another Transaction
-                        </button>
-                    </div>
-
+            <div class="glass-card p-5 space-y-4">
+                <div>
+                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Enter Bulk Orders</label>
+                    <p class="text-[9px] text-gray-600 mb-2">Place each order on a new line in the following format:<br><b class="text-gray-300">service_id | link | quantity</b></p>
+                    <textarea id="massOrdersInput" rows="8" placeholder="fol_1 | https://www.tiktok.com/@username | 1000&#10;view_1 | https://www.tiktok.com/@username/video/1 | 5000" class="p-4 text-xs font-mono rounded-xl bg-black border border-white/5 w-full" style="line-height: 1.6;"></textarea>
                 </div>
 
-                <!-- YouTube Studio Support Info Box -->
-                <div class="bg-zinc-900/60 rounded-2xl p-5 border border-zinc-800/80 text-xs space-y-3">
-                    <h4 class="font-bold text-white flex items-center">
-                        <i class="fa-solid fa-shield-halved text-red-500 mr-2"></i>
-                        Partner Security Advisory
-                    </h4>
-                    <p class="text-zinc-400 leading-relaxed">
-                        Always review bank routing details prior to transferring large amounts. Payments cleared to dfcu Bank Uganda are monitored and processed under global guidelines of Partner Protection.
+                <div class="p-4 bg-orange-500/5 border border-orange-500/10 rounded-xl">
+                    <p class="text-[9px] text-gray-500 uppercase font-black">Conversion Info</p>
+                    <p class="text-[10px] text-gray-400 leading-normal mt-1">
+                        System will automatically split multi-line lists, evaluate total currency balances, and schedule tasks dynamically.
                     </p>
                 </div>
 
-            </div>
-
-        </main>
-    </div>
-
-    <!-- SLIDEOUT DIALOG PANEL: Creator Profile Panel -->
-    <div id="profile-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-        
-        <!-- Outside click dismissal -->
-        <div class="absolute inset-0" onclick="toggleProfileModal()"></div>
-
-        <!-- Sidebar Panel Container -->
-        <div class="relative w-full max-w-md bg-zinc-900 h-full shadow-2xl flex flex-col border-l border-zinc-800/80 transform translate-x-full transition-transform duration-300" id="profile-panel-inner">
-            
-            <!-- Modal Header -->
-            <div class="p-6 border-b border-zinc-800/80 flex justify-between items-center bg-zinc-950">
-                <h3 class="text-lg font-bold text-white">Creator Settings</h3>
-                <button onclick="toggleProfileModal()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition">
-                    <i class="fa-solid fa-xmark"></i>
+                <button onclick="submitMassOrders()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-lg shadow-orange-500/10">
+                    Place Mass Order
                 </button>
             </div>
+        </div>
+    </div>
 
-            <!-- Modal Content (Scrollable) -->
-            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <!-- ORDER TRACKING PAGE -->
+    <div id="ordersPage" class="page px-5 pb-24">
+        <!-- Header -->
+        <header class="flex items-center justify-between py-6">
+            <div class="flex items-center gap-4">
+                <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                    <i class="fa-solid fa-arrow-left text-white text-md"></i>
+                </button>
+                <h1 class="text-lg font-black tracking-widest uppercase">Order Tracker</h1>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span>
+                <span class="text-[9px] bg-green-950/80 text-green-400 border border-green-900/50 font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Global Stream</span>
+            </div>
+        </header>
+
+        <!-- Live Orders List -->
+        <div class="max-w-md mx-auto w-full space-y-4">
+            
+            <div class="flex items-center justify-between px-1">
+                <span id="orderCount" class="text-[10px] text-gray-500 font-black uppercase tracking-wider">Total: 0 Orders</span>
+                <button onclick="clearAllOrders()" class="text-[9px] text-red-500 font-black uppercase tracking-widest hover:text-red-400 transition-colors">Clear Cache</button>
+            </div>
+
+            <!-- Interactive tab inside Tracker (All vs Global Feed) -->
+            <div class="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-2xl border border-white/5 mb-2">
+                <button id="orderTabSelf" onclick="switchOrderTab('self')" class="py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl bg-orange-500 text-black">Your Orders</button>
+                <button id="orderTabGlobal" onclick="switchOrderTab('global')" class="py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl text-gray-400">Live Global Feed</button>
+            </div>
+
+            <!-- Orders Container -->
+            <div id="ordersListContainer" class="space-y-3">
+                <!-- Javascript will render active card items here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD FUNDS PAGE -->
+    <div id="addFundsPage" class="page px-5 pb-24">
+        <!-- Add Funds Header -->
+        <header class="flex items-center gap-4 py-6">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+            </button>
+            <h1 class="text-lg font-black tracking-widest uppercase">Add Funds</h1>
+        </header>
+
+        <div class="max-w-md mx-auto w-full space-y-6">
+            
+            <!-- Deposit Amount Card -->
+            <div class="glass-card p-5 bg-gradient-to-b from-[#111] to-[#080808]">
+                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block mb-2">Deposit Amount (USD)</label>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-2xl font-black text-gray-400">$</span>
+                    <input type="number" id="depositAmount" value="10" min="1" class="pl-10 pr-4 py-4 rounded-xl text-2xl font-bold bg-[#050505] border border-white/5 focus:border-[#ff8c00] transition-colors w-full" placeholder="10">
+                </div>
+                <div class="flex justify-between items-center mt-2 px-1">
+                    <span class="text-[10px] text-gray-500 font-semibold">Estimated conversion:</span>
+                    <span id="ugxConversion" class="text-[11px] text-[#ff8c00] font-bold">USh 38,500</span>
+                </div>
+            </div>
+
+            <!-- Choose Method Header -->
+            <div>
+                <h3 class="text-[11px] text-gray-500 font-extrabold uppercase tracking-[0.2em] mb-3">Choose Method</h3>
                 
-                <!-- Account Header Card -->
-                <div class="bg-zinc-950 p-5 rounded-2xl border border-zinc-800/80 text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-red-600/5 rounded-full filter blur-xl"></div>
-                    <div class="relative w-20 h-20 rounded-full overflow-hidden border-2 border-red-500 mx-auto bg-zinc-800 mb-3 shadow-md">
-                        <img src="uh.png" alt="Creator Profile large" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&auto=format&fit=crop&q=80'" class="w-full h-full object-cover">
-                    </div>
-                    <h4 class="text-lg font-bold text-white">Rico Animations</h4>
-                    <span class="inline-block bg-red-950/80 text-red-400 font-semibold text-xs px-3 py-1 rounded-full border border-red-900/40 mt-1">
-                        YouTube Partner
-                    </span>
-                </div>
-
-                <!-- Registration Details -->
-                <div class="space-y-4">
-                    <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Registered Credentials</h5>
-                    
-                    <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 space-y-3">
-                        <div class="flex justify-between items-center py-1 border-b border-zinc-900">
-                            <span class="text-xs text-zinc-400">Legal Name</span>
-                            <span class="text-sm font-bold text-white">Matovu Shawik</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-zinc-900">
-                            <span class="text-xs text-zinc-400">Phone Number</span>
-                            <span class="text-sm font-bold text-white tracking-wide">+25675846754</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1">
-                            <span class="text-xs text-zinc-400">Tax Identification</span>
-                            <span class="text-xs font-mono text-zinc-300">URA-UG-941829-X</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Financial Management Section -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h5 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Linked Financial Institutions</h5>
-                        <span class="text-[10px] text-zinc-400">Select Active</span>
-                    </div>
-
-                    <div id="bank-list-container" class="space-y-2">
-                        <!-- Card 1: DFCU -->
-                        <div onclick="selectBank('dfcu')" class="flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all" id="bank-item-dfcu">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded bg-indigo-950/60 flex items-center justify-center text-indigo-400">
-                                    <i class="fa-solid fa-building-columns"></i>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-xs font-bold text-white">dfcu Bank Uganda</p>
-                                    <p class="text-[10px] text-zinc-500">Account: •••• 19</p>
-                                </div>
+                <div class="space-y-3">
+                    <!-- Credit Card Method Button -->
+                    <button id="methodCard" onclick="selectPaymentMethod('card')" class="payment-method-btn selected w-full p-4 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-900/20 border border-blue-900/40 rounded-xl flex items-center justify-center text-blue-500">
+                                <i class="fa-solid fa-credit-card text-lg"></i>
                             </div>
-                            <span class="w-4 h-4 rounded-full border-2 border-indigo-500 flex items-center justify-center" id="radio-dfcu">
-                                <span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
-                            </span>
-                        </div>
-
-                        <!-- Card 2: Stanbic -->
-                        <div id="additional-bank-card" class="hidden flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all" onclick="selectBank('stanbic')">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded bg-amber-950/40 flex items-center justify-center text-amber-400">
-                                    <i class="fa-solid fa-building-columns"></i>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-xs font-bold text-white">Stanbic Bank Uganda</p>
-                                    <p class="text-[10px] text-zinc-500">Account: •••• 56</p>
-                                </div>
+                            <div>
+                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Credit Card</h4>
+                                <p class="text-[10px] text-gray-500 font-semibold">Visa, Mastercard, Amex</p>
                             </div>
-                            <span class="w-4 h-4 rounded-full border border-zinc-700 flex items-center justify-center" id="radio-stanbic">
-                                <span class="w-2 h-2 bg-transparent rounded-full"></span>
-                            </span>
                         </div>
-                    </div>
-
-                    <!-- Add Bank Interactive Trigger Button -->
-                    <button id="add-bank-btn" onclick="triggerAddBank()" class="w-full py-3 bg-zinc-950 hover:bg-zinc-800 rounded-xl border border-dashed border-zinc-700 text-xs text-zinc-300 font-semibold flex items-center justify-center space-x-2 transition">
-                        <i class="fa-solid fa-plus-circle text-red-500"></i>
-                        <span>Link Another Bank Account</span>
+                        <div class="flex items-center gap-2">
+                            <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-6 h-auto opacity-80" alt="Visa">
+                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="w-6 h-auto opacity-80" alt="Mastercard">
+                        </div>
                     </button>
 
-                    <!-- Add Bank Form fields -->
-                    <div id="add-bank-form" class="hidden bg-zinc-950 p-4 rounded-xl border border-zinc-800 space-y-3 animate-fade-in">
-                        <p class="text-xs font-bold text-white">Enter Bank Account Details</p>
-                        <div>
-                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Bank Name</label>
-                            <select id="new-bank-name" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none focus:border-red-500">
-                                <option value="Stanbic Bank Uganda">Stanbic Bank Uganda</option>
-                                <option value="Centenary Bank">Centenary Bank</option>
-                                <option value="Absa Bank Uganda">Absa Bank Uganda</option>
-                                <option value="Standard Chartered">Standard Chartered</option>
-                            </select>
+                    <!-- Mobile Money Method Button -->
+                    <button id="methodMobileMoney" onclick="selectPaymentMethod('momo')" class="payment-method-btn w-full p-4 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-yellow-900/20 border border-yellow-900/40 rounded-xl flex items-center justify-center text-yellow-500">
+                                <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Mobile Money</h4>
+                                <p class="text-[10px] text-gray-500 font-semibold">MTN & Airtel Uganda</p>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Account Holder Legal Name</label>
-                            <input id="new-bank-holder" type="text" value="Matovu Shawik" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none" readonly>
+                        <div class="flex items-center gap-1.5">
+                            <span class="px-2 py-1 bg-[#ffcc00] text-black text-[9px] font-black rounded uppercase">MTN</span>
+                            <span class="px-2 py-1 bg-[#ff0000] text-white text-[9px] font-black rounded uppercase">Airtel</span>
                         </div>
-                        <div>
-                            <label class="block text-[10px] text-zinc-400 uppercase font-medium mb-1">Account Number</label>
-                            <input id="new-bank-num" type="text" placeholder="e.g. 9030001827456" class="w-full bg-zinc-900 border border-zinc-800 text-xs p-2.5 rounded text-white focus:outline-none focus:border-red-500">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Form Loading Section -->
+            <div id="paymentFormContainer" class="ios-card p-5 bg-[#0a0a0a] border border-[#141414]">
+                
+                <!-- 1. LOADING STATE -->
+                <div id="paymentLoadingState" class="spinner-container hidden">
+                    <div class="relative w-12 h-12 mb-4">
+                        <div class="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
+                        <div class="absolute inset-0 border-4 border-[#ff8c00] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <p class="text-xs text-gray-400 animate-pulse">Establishing secure gateway connection...</p>
+                    <p class="text-[10px] text-gray-600 mt-1">Please wait, checking parameters...</p>
+                </div>
+
+                <!-- 2. CREDIT CARD OPTION FORM -->
+                <div id="creditCardForm" class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-950 pb-3 mb-2">
+                        <span class="text-xs font-bold text-[#ff8c00] uppercase tracking-wider">Card Details</span>
+                        <i class="fa-solid fa-lock text-[10px] text-gray-500"> Secure 256-bit SSL</i>
+                    </div>
+
+                    <div>
+                        <input type="text" id="cardNo" placeholder="Card Number (0000 0000 0000 0)" class="payment-input p-4 text-sm w-full font-mono tracking-widest" maxlength="19">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" class="payment-input p-4 text-sm font-mono text-center" maxlength="5">
+                        <input type="password" id="cardCVC" placeholder="CVC" class="payment-input p-4 text-sm font-mono text-center" maxlength="4">
+                    </div>
+
+                    <button onclick="submitCreditCardPayment()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-orange-500 shadow-lg shadow-orange-500/10">
+                        Confirm Payment
+                    </button>
+                </div>
+
+                <!-- 3. MOBILE MONEY UGANDA FORM -->
+                <div id="mobileMoneyForm" class="hidden space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-950 pb-3 mb-2">
+                        <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider">Mobile Money Uganda</span>
+                        <span class="text-[9px] bg-green-950/80 text-green-400 px-2.5 py-0.5 rounded-full font-bold border border-green-900/50">Instant Credit</span>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Select Network</label>
+                        <select id="momoProvider" class="payment-input p-4 text-sm w-full appearance-none">
+                            <option value="mtn">MTN MoMo Uganda (077 / 078 / 076)</option>
+                            <option value="airtel">Airtel Money Uganda (075 / 070 / 074)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Phone Number</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-sm text-gray-500 font-bold font-mono">+256</span>
+                            <input type="tel" id="momoPhone" placeholder="700 000000" class="payment-input pl-16 pr-4 py-4 text-sm w-full font-mono" maxlength="9">
                         </div>
-                        <div class="grid grid-cols-2 gap-2 pt-2">
-                            <button onclick="cancelAddBank()" class="py-2 bg-zinc-900 hover:bg-zinc-800 text-xs text-zinc-400 rounded">Cancel</button>
-                            <button onclick="confirmAddBank()" class="py-2 bg-red-600 hover:bg-red-500 text-xs text-white font-bold rounded">Add Account</button>
-                        </div>
+                        <span class="text-[9px] text-gray-600 mt-1 block">Enter your 9-digit mobile phone number (exclude first 0).</span>
+                    </div>
+
+                    <button onclick="submitMomoPayment()" class="w-full bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-yellow-400">
+                        Initiate Push Payment
+                    </button>
+                </div>
+
+                <!-- 4. ERROR NOTICE INTERACTIVE COMPONENT -->
+                <div id="errorGatewayContainer" class="hidden text-center py-6 px-4 space-y-4">
+                    <div class="w-16 h-16 bg-red-950/40 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 mx-auto">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black uppercase text-red-500 tracking-wider">Gateway Load Failure</h4>
+                        <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                            Couldn't load. Try again later.
+                        </p>
+                        <p class="text-[9px] text-gray-600 mt-1">
+                            Response code: 503 Server Temporarily Unavailable
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="retrySelectedPayment()" class="px-6 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-xs font-bold text-white hover:bg-neutral-800 transition-colors uppercase tracking-widest">
+                            <i class="fa-solid fa-arrows-rotate mr-2"></i> Retry Connection
+                        </button>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Modal Footer Controls -->
-            <div class="p-6 border-t border-zinc-800/80 bg-zinc-950">
-                <button onclick="handleLogOut()" class="w-full py-3.5 bg-red-600/10 hover:bg-red-600/20 text-red-500 border border-red-500/20 font-bold text-xs rounded-xl flex items-center justify-center space-x-2 transition">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>Log Out of Studio Account</span>
-                </button>
-                <p class="text-center text-[10px] text-zinc-500 mt-3">YouTube Partner ID: UID-849175390-A</p>
+            <!-- Helpful security badge -->
+            <div class="flex items-center justify-center gap-2 text-gray-600">
+                <i class="fa-solid fa-shield text-[10px]"></i>
+                <span class="text-[9px] font-semibold uppercase tracking-widest">End-to-End Encrypted Gateway</span>
             </div>
 
         </div>
     </div>
 
-    <!-- UTILITY MODAL -->
-    <div id="utility-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-55 flex items-center justify-center p-4">
-        <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl max-w-sm w-full text-center space-y-4">
-            <div id="utility-icon-container" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl"></div>
-            <div>
-                <h3 id="utility-title" class="text-base font-bold text-white">Title</h3>
-                <p id="utility-description" class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Description</p>
+    <!-- API MODAL -->
+    <div id="apiModal" class="modal">
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-sm font-black uppercase gemini-gradient-text">API Integration</h3>
+                <button onclick="closeModal('apiModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <button onclick="closeUtilityModal()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white text-xs py-2.5 rounded-lg transition font-medium">
-                Got it
-            </button>
+            <p class="text-[10px] text-gray-500 mb-4 uppercase font-bold">Standard PHP Integration for shawikbooster</p>
+            <div class="api-code-block">
+&lt;?php
+class Api {
+    public $api_url = 'https://shawikbooster.com/api/v2';
+    public $api_key = 'YOUR_API_KEY_HERE';
+
+    /** Add order */
+    public function order($data) {
+        $post = array_merge(['key' => $this->api_key, 'action' => 'add'], $data);
+        return json_decode((string)$this->connect($post));
+    }
+
+    /** Check balance */
+    public function balance() {
+        return json_decode($this->connect(['key' => $this->api_key, 'action' => 'balance']));
+    }
+
+    private function connect($post) {
+        $ch = curl_init($this->api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; SHAWIKBOOSTER)');
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+}
+?&gt;
+            </div>
         </div>
     </div>
 
-    <!-- LOGOUT OVERLAY DIALOG -->
-    <div id="logout-overlay" class="hidden fixed inset-0 bg-[#030303]/95 z-55 flex items-center justify-center p-4 backdrop-blur-md animate-fade-in">
-        <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl max-w-sm w-full text-center space-y-5">
-            <div class="w-16 h-16 bg-red-950/40 border border-red-800 text-red-500 rounded-full flex items-center justify-center mx-auto text-2xl">
-                <i class="fa-solid fa-lock"></i>
+    <!-- TICKETS MODAL -->
+    <div id="ticketsModal" class="modal">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-sm font-black uppercase tracking-widest">Support Center</h3>
+                <button onclick="closeModal('ticketsModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div>
-                <h3 class="text-lg font-bold text-white">Signed Out Successfully</h3>
-                <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
-                    You have successfully signed out of the Partner Portal session for Matovu Shawik.
+            <div class="space-y-5">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Order Number</label>
+                    <input type="text" placeholder="e.g. #SHAWIK-9981" class="p-4 rounded-xl text-sm mt-1">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Issue Category</label>
+                    <select class="p-4 rounded-xl text-sm mt-1 appearance-none">
+                        <option>Refill Request</option>
+                        <option>Payment Issues</option>
+                        <option>Order Cancellation</option>
+                        <option>Other Support</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Detailed Message</label>
+                    <textarea rows="5" placeholder="Explain your issue here..." class="p-4 rounded-xl text-sm mt-1"></textarea>
+                </div>
+                <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">Submit Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WELCOME APPRECIATION BONUS MODAL -->
+    <div id="bonusModal" class="modal bg-black/95 flex items-center justify-center p-5 select-none" style="display: none; align-items: center; justify-content: center; z-index: 9999;">
+        <div class="ios-card w-full max-w-sm p-8 text-center border-orange-500/30 bg-gradient-to-b from-[#111] to-black relative">
+            
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center border-4 border-black animate-bounce">
+                <i class="fa-solid fa-gift text-black text-3xl"></i>
+            </div>
+            
+            <div class="pt-8">
+                <h3 class="text-xl font-black text-white uppercase tracking-tight mb-2">Welcome First-Time Reward</h3>
+                <p class="text-xs text-gray-400 mb-4 leading-relaxed">
+                    Thank you for choosing SHAWIKBOOSTER! As a token of our appreciation, your account is being processed for a launch bonus.
                 </p>
+
+                <!-- Processing Counter Container -->
+                <div class="bg-black border border-gray-950 rounded-2xl p-4 my-5 relative">
+                    <p class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Processing Security Reward</p>
+                    <div class="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden mb-3">
+                        <div id="bonusProgressBar" class="h-full bg-gradient-to-r from-[#ff8c00] to-yellow-400 w-0 transition-all duration-1000"></div>
+                    </div>
+                    <div id="timerNumber" class="text-3xl font-black text-[#ff8c00]">Claiming...</div>
+                </div>
+
+                <p id="appreciationClaimText" class="text-[10px] text-gray-500 uppercase tracking-widest font-black">Hold on, verifying session...</p>
             </div>
-            <button onclick="reloadPortal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition text-xs">
-                Log Back In
-            </button>
         </div>
     </div>
 
-    <!-- Global Screen Toast Notifications -->
-    <div id="action-toast" class="fixed bottom-6 right-6 bg-emerald-950 border border-emerald-800 text-emerald-400 px-5 py-4 rounded-xl text-xs font-semibold flex items-center space-x-3 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 shadow-2xl z-50">
-        <i class="fa-solid fa-circle-check text-base"></i>
-        <span id="action-toast-msg">Success</span>
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar p-8">
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="text-xl ios-gradient-text">SHAWIK</h2>
+            <button onclick="toggleSidebar()" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <nav class="space-y-3">
+            <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl bg-white/5 text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
+            <a href="#" onclick="showPage('massOrdersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4 text-orange-500"></i> Mass Orders</a>
+            <a href="#" onclick="showPage('ordersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-receipt mr-4 text-blue-400"></i> Order Tracker</a>
+            <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
+            <a href="#" onclick="openModal('apiModal')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-link mr-4"></i> API Access</a>
+            <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-4 rounded-xl text-green-500 font-bold border border-green-900/20"><i class="fa-brands fa-whatsapp mr-4 text-xl"></i> WhatsApp Support</a>
+            <hr class="border-gray-900 my-6">
+            <a href="#" onclick="logout()" class="flex items-center p-4 rounded-xl text-red-500 font-bold"><i class="fa-solid fa-power-off mr-4"></i> Logout</a>
+        </nav>
     </div>
 
-    <!-- Script Implementations -->
     <script>
-        // Store balances and configuration dynamically
-        let activeBalance = 46400000;
-        let selectedBankId = 'dfcu';
-
-        // Bank Profiles
-        const bankProfiles = {
-            dfcu: {
-                title: "dfcu Bank Uganda",
-                iconClass: "fa-solid fa-building-columns",
-                holder: "Matovu Shawik",
-                number: "•••• •••• ••84 19",
-                badge: "Primary Linked Account"
-            },
-            stanbic: {
-                title: "Stanbic Bank Uganda",
-                iconClass: "fa-solid fa-building-columns text-amber-400",
-                holder: "Matovu Shawik",
-                number: "•••• •••• ••27 56",
-                badge: "Secondary Account"
-            }
+        const USH_RATE = 3850;
+        let selectedMethod = 'card';
+        let currentAuthTab = 'login';
+        let activeOrderTab = 'self';
+        
+        // Dynamic Services Catalogue matching requested pricing architecture directly in UGX
+        const categoryServices = {
+            followers: [
+                { id: "fol_1", name: "Premium Instant Followers (UGX 20,000 / 1k)", rate: 20000, time: "Instant" },
+                { id: "fol_2", name: "Real Active Followers (UGX 18,000 / 1k)", rate: 18000, time: "5-10 Mins" }
+            ],
+            views: [
+                { id: "view_1", name: "Super High-Speed Video Views (UGX 1,500 / 1k)", rate: 1500, time: "Instant" },
+                { id: "view_2", name: "Slow Drip Real Account Views (UGX 1,000 / 1k)", rate: 1000, time: "1-2 Hours" }
+            ],
+            shares: [
+                { id: "share_1", name: "Organic Shared Profiles / Re-posts (UGX 3,000 / 1k)", rate: 3000, time: "Instant" }
+            ],
+            comment_likes: [
+                { id: "cl_1", name: "Top-Comment Heart Likes (UGX 4,500 / 1k)", rate: 4500, time: "5 Mins" }
+            ],
+            shares_saves: [
+                { id: "ss_1", name: "Engagement Boost Combo: Shares + Saves (UGX 5,500 / 1k)", rate: 5500, time: "10 Mins" }
+            ],
+            story_views: [
+                { id: "sv_1", name: "Interactive 24h Story Video Views (UGX 2,500 / 1k)", rate: 2500, time: "Instant" }
+            ],
+            likes: [
+                { id: "like_1", name: "Real Video Hearts (UGX 6,000 / 1k)", rate: 6000, time: "Instant" },
+                { id: "like_2", name: "Super cheap automated likes (UGX 4,000 / 1k)", rate: 4000, time: "15 Mins" }
+            ],
+            live_likes: [
+                { id: "ll_1", name: "Active Live-Stream Heart Streams (UGX 3,500 / 1k)", rate: 3500, time: "Instant" }
+            ]
         };
 
-        // LOGIN VALIDATION & NETWORK DELAY LOOP
-        function handleLoginSubmit(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('login-email').value.trim();
-            const passwordInput = document.getElementById('login-password').value;
-            const errorBanner = document.getElementById('login-error');
+        // System memory for balances & live logs with prefilled UGX 80,000 active balance
+        let userSession = {
+            active: false,
+            balance: 80000,
+            spending: 0,
+            hasReceivedBonus: false,
+            name: 'Guest User',
+            email: ''
+        };
 
-            const targetEmail = "Japanboys0099@gmail.com";
-            const targetPassword = "Rockmeta@256";
+        // Real credentials validation database on local storage
+        let registeredAccounts = [];
 
-            if (emailInput.toLowerCase() === targetEmail.toLowerCase() && passwordInput === targetPassword) {
-                // Clear any previous error layouts
-                errorBanner.classList.add('hidden');
-                
-                // Toggle login view, reveal 4-second loading loop
-                document.getElementById('login-card').classList.add('hidden');
-                document.getElementById('loader-card').classList.remove('hidden');
+        // Orders registry stored in dynamic runtime array
+        let ordersList = [
+            { id: "SHAWIK-1052", date: "Just now", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@shawik", qty: 1000, cost: 20000, status: "Pending" }
+        ];
 
-                // Simulate Google Network delay (4000 milliseconds)
+        // Global simulated real-time stream of orders
+        let globalSimulatedOrders = [
+            { id: "SHAWIK-8842", date: "2 mins ago", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@sheilah_gashumba", qty: 5000, cost: 100000, status: "Completed" },
+            { id: "SHAWIK-7231", date: "4 mins ago", serviceName: "TikTok Likes [Real Hearts]", link: "https://www.tiktok.com/@mcbaba_ug", qty: 2500, cost: 15000, status: "Completed" },
+            { id: "SHAWIK-1250", date: "8 mins ago", serviceName: "TikTok Views [Super High-Speed]", link: "https://www.tiktok.com/@kansiime_anne", qty: 10000, cost: 15000, status: "Completed" }
+        ];
+
+        const ugandanTikTokHandles = [
+            "@bobi_wine", "@eddyleenzo", "@SpiceDianaUg", "@martha_kay", "@realkenzo", "@zarithebosslady", "@sheebahricher", "@jovial_ug", "@mr_mosh", "@uncle_mo_ug"
+        ];
+
+        /* --- CONSTELLATION 3D BACKGROUND ENGINE --- */
+        let scene, camera, renderer, starGeometry, starMaterial, starParticles;
+        let mouseX = 0, mouseY = 0;
+
+        function init3DEngine() {
+            const canvas = document.getElementById('canvas3d');
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 150;
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create Star Field Particles
+            starGeometry = new THREE.BufferGeometry();
+            const starsCount = 450;
+            const positions = new Float32Array(starsCount * 3);
+            const colors = new Float32Array(starsCount * 3);
+
+            for(let i = 0; i < starsCount * 3; i += 3) {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = u * 2.0 * Math.PI;
+                const phi = Math.acos(2.0 * v - 1.0);
+                const r = 90 + Math.random() * 110;
+
+                positions[i] = r * Math.sin(phi) * Math.cos(theta);
+                positions[i+1] = r * Math.sin(phi) * Math.sin(theta);
+                positions[i+2] = r * Math.cos(phi);
+
+                // Elegant iOS Gold / Cosmic Amber Color Palette
+                const rand = Math.random();
+                if(rand < 0.4) {
+                    colors[i] = 1.0; colors[i+1] = 0.55; colors[i+2] = 0.0; // Amber
+                } else if(rand < 0.7) {
+                    colors[i] = 0.5; colors[i+1] = 0.5; colors[i+2] = 0.6; // Cyber Slate
+                } else {
+                    colors[i] = 1.0; colors[i+1] = 1.0; colors[i+2] = 1.0; // Pearl White
+                }
+            }
+
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            // Custom glowing particle canvas
+            const pCanvas = document.createElement('canvas');
+            pCanvas.width = 16; pCanvas.height = 16;
+            const ctx = pCanvas.getContext('2d');
+            const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 16, 16);
+            const pTexture = new THREE.CanvasTexture(pCanvas);
+
+            starMaterial = new THREE.PointsMaterial({
+                size: 2.5,
+                map: pTexture,
+                vertexColors: true,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            starParticles = new THREE.Points(starGeometry, starMaterial);
+            scene.add(starParticles);
+
+            window.addEventListener('resize', onWindowResize);
+            document.addEventListener('mousemove', onDocumentMouseMove);
+            document.addEventListener('touchmove', onDocumentTouchMove);
+
+            animate3D();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) * 0.03;
+            mouseY = (event.clientY - window.innerHeight / 2) * 0.03;
+        }
+
+        function onDocumentTouchMove(event) {
+            if(event.touches.length > 0) {
+                mouseX = (event.touches[0].clientX - window.innerWidth / 2) * 0.05;
+                mouseY = (event.touches[0].clientY - window.innerHeight / 2) * 0.05;
+            }
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            starParticles.rotation.y += 0.0008;
+            starParticles.rotation.x += 0.0004;
+
+            starParticles.rotation.y += (mouseX * 0.001 - starParticles.rotation.y) * 0.05;
+            starParticles.rotation.x += (mouseY * 0.001 - starParticles.rotation.x) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        /* --- iOS DYNAMIC ISLAND ALERTS SYSTEM --- */
+        function triggerIslandAlert(title, desc, iconClass = "fa-solid fa-bell", isSuccess = true) {
+            const island = document.getElementById('dynamicIsland');
+            const small = document.getElementById('islandSmall');
+            const expanded = document.getElementById('islandExpanded');
+            const icon = document.getElementById('islandIcon');
+            const titleEl = document.getElementById('islandTitle');
+            const descEl = document.getElementById('islandDesc');
+
+            // Apply Details
+            titleEl.innerText = title;
+            descEl.innerText = desc;
+            icon.className = iconClass + (isSuccess ? " text-orange-500" : " text-red-500");
+
+            // Expand Animation
+            small.classList.add('hidden');
+            expanded.classList.remove('hidden');
+            island.classList.add('expanded');
+
+            // Shrink back to normal island pill after 4.5 seconds
+            setTimeout(() => {
+                island.classList.remove('expanded');
                 setTimeout(() => {
-                    // Hide overall login screen frame & show the Studio dashboard
-                    document.getElementById('login-screen').classList.add('hidden');
-                    document.getElementById('main-portal').classList.remove('hidden');
-                    
-                    showLocalNotification("Authenticated as Matovu Shawik");
-                }, 4000);
+                    expanded.classList.add('hidden');
+                    small.classList.remove('hidden');
+                }, 300);
+            }, 4500);
+        }
 
+        // Handle category selection and dynamically update services dropdown
+        function onCategoryChange() {
+            const categorySelect = document.getElementById('categorySelect');
+            const serviceSelect = document.getElementById('serviceSelect');
+            const selectedCat = categorySelect.value;
+            
+            const services = categoryServices[selectedCat] || [];
+            
+            serviceSelect.innerHTML = services.map(srv => `
+                <option value="${srv.rate}" data-id="${srv.id}" data-name="${srv.name}" data-time="${srv.time}">
+                    ${srv.name}
+                </option>
+            `).join('');
+
+            // Reset quantity to refresh price
+            document.getElementById('qtyInput').value = "1000";
+            calculateRealtimeCost();
+        }
+
+        // Calculate Cost directly using UGX Rate
+        function calculateRealtimeCost() {
+            const qtyInput = document.getElementById('qtyInput');
+            const serviceSelect = document.getElementById('serviceSelect');
+            const priceDisplay = document.getElementById('priceDisplay');
+            const timeDisplay = document.getElementById('timeDisplay');
+
+            const qtyVal = parseFloat(qtyInput.value) || 0;
+            const rateVal = parseFloat(serviceSelect.value) || 0;
+            
+            const totalUshCost = (qtyVal / 1000) * rateVal;
+
+            priceDisplay.innerText = "USh " + totalUshCost.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            if(serviceSelect.options[serviceSelect.selectedIndex]) {
+                const targetTime = serviceSelect.options[serviceSelect.selectedIndex].dataset.time;
+                timeDisplay.innerText = targetTime;
+            }
+        }
+
+        // Welcome Toast Controls
+        function showWelcomeToast() {
+            const toast = document.getElementById('welcomeToast');
+            toast.classList.add('show');
+        }
+
+        function dismissWelcomeToast() {
+            const toast = document.getElementById('welcomeToast');
+            toast.classList.remove('show');
+        }
+
+        // Intro and Navigation Controller
+        window.onload = () => {
+            init3DEngine();
+
+            // Load saved accounts DB
+            const savedAccounts = localStorage.getItem('shawik_registered_accounts');
+            if (savedAccounts) {
+                registeredAccounts = JSON.parse(savedAccounts);
+            }
+
+            // Check existing session
+            const savedSession = localStorage.getItem('shawik_active_session_v2');
+            if (savedSession) {
+                userSession = JSON.parse(savedSession);
             } else {
-                errorBanner.classList.remove('hidden');
-                document.getElementById('login-password').value = ""; // Clear incorrect password
-            }
-        }
-
-        // Toggle Password Visibility
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('login-password');
-            const toggleIcon = document.getElementById('password-toggle-icon');
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                toggleIcon.className = "fa-regular fa-eye-slash";
-            } else {
-                passwordField.type = "password";
-                toggleIcon.className = "fa-regular fa-eye";
-            }
-        }
-
-        // Forgot Password Simulated Helper
-        function handleForgotPassword() {
-            showUtilityModal(
-                "fa-solid fa-key bg-amber-950/40 border border-amber-900/60 text-amber-400",
-                "Reset Password Requested",
-                "A secure password recovery instructions link is being compiled for dispatch to your registered backup systems. Check your secure inbox shortly."
-            );
-        }
-
-        // Create Account Simulated Helper
-        function handleCreateAccount() {
-            showUtilityModal(
-                "fa-solid fa-signature bg-indigo-950/40 border border-indigo-900/60 text-indigo-400",
-                "Creator Application",
-                "New YouTube Partner accounts require a manual traffic validation review. Please contact your regional content support executive to request channel invitations."
-            );
-        }
-
-        // Utility Modals Control
-        function showUtilityModal(classes, title, description) {
-            document.getElementById('utility-icon-container').className = `w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl ${classes}`;
-            document.getElementById('utility-title').innerText = title;
-            document.getElementById('utility-description').innerText = description;
-            document.getElementById('utility-modal').classList.remove('hidden');
-        }
-
-        function closeUtilityModal() {
-            document.getElementById('utility-modal').classList.add('hidden');
-        }
-
-        // Numeric withdrawal validations
-        const inputField = document.getElementById('withdraw-amount-input');
-        inputField.addEventListener('input', function(e) {
-            let val = e.target.value.replace(/\D/g, "");
-            if (val === "") val = "0";
-            let numericVal = parseInt(val, 10);
-            
-            if (numericVal > activeBalance) {
-                numericVal = activeBalance;
-                showLocalNotification("Max amount restricted to available account balance!");
-            }
-            
-            e.target.value = numericVal.toLocaleString('en-US');
-            updateEstimatedFee(numericVal);
-        });
-
-        function setAmount(num) {
-            let actualValue = Math.min(num, activeBalance);
-            inputField.value = actualValue.toLocaleString('en-US');
-            updateEstimatedFee(actualValue);
-        }
-
-        function updateEstimatedFee(amount) {
-            const feeField = document.getElementById('transfer-fee-display');
-            const fee = Math.floor(amount * 0.0015);
-            feeField.innerText = "UGX " + fee.toLocaleString('en-US');
-        }
-
-        // Process Withdrawal Logic (Subtracts exact amount entered)
-        function processWithdrawal() {
-            const rawVal = inputField.value.replace(/,/g, "");
-            const numVal = parseInt(rawVal, 10);
-
-            if (isNaN(numVal) || numVal <= 0) {
-                showLocalNotification("Please enter a valid transfer amount!");
-                return;
+                userSession.balance = 80000; // set default UGX 80,000 balance
             }
 
-            if (numVal > activeBalance) {
-                showLocalNotification("Insufficient balance to execute this withdrawal.");
-                return;
-            }
+            // Auto display intro
+            setTimeout(() => {
+                exitIntro();
+            }, 3500); 
 
-            // Deduct the dynamic amount
-            activeBalance -= numVal;
+            // Initialize dropdown services
+            onCategoryChange();
 
-            // Re-render balances dynamically across all target panels
-            document.getElementById('current-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
-            document.getElementById('summary-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
+            setupInputs();
+            renderOrders();
+            updateBalanceDisplays();
 
-            // Format displays for successful receipts
-            document.getElementById('success-amount-display').innerText = "UGX " + numVal.toLocaleString('en-US');
-            document.getElementById('success-holder-display').innerText = bankProfiles[selectedBankId].holder;
-            document.getElementById('success-bank-display').innerText = bankProfiles[selectedBankId].title;
+            // Live updates stream
+            setInterval(simulateGlobalOrderFeed, 7000);
+        };
 
-            // Swap visual card layout states
-            document.getElementById('withdraw-flow-container').classList.add('hidden');
-            document.getElementById('transfer-success-panel').classList.remove('hidden');
-
-            showLocalNotification(`UGX ${numVal.toLocaleString('en-US')} dispatched successfully!`);
-        }
-
-        function resetWithdrawForm() {
-            document.getElementById('withdraw-flow-container').classList.remove('hidden');
-            document.getElementById('transfer-success-panel').classList.add('hidden');
-            // Re-sync Max button parameters
-            setAmount(30000000);
-        }
-
-        function scrollToWithdraw() {
-            document.getElementById('withdrawal-panel').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Switch active bank accounts dynamically
-        function selectBank(bankId) {
-            selectedBankId = bankId;
-            const profile = bankProfiles[bankId];
-            
-            document.getElementById('bank-title-display').innerText = profile.title;
-            document.getElementById('bank-holder-display').innerText = profile.holder;
-            document.getElementById('bank-number-display').innerText = profile.number;
-            document.getElementById('bank-badge').innerText = profile.badge;
-            
-            const borderDfcu = document.getElementById('bank-item-dfcu');
-            const borderStanbic = document.getElementById('additional-bank-card');
-            const radioDfcu = document.getElementById('radio-dfcu');
-            const radioStanbic = document.getElementById('radio-stanbic');
-
-            if (bankId === 'dfcu') {
-                borderDfcu.className = "flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
-                borderStanbic.className = "flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
-                radioDfcu.innerHTML = '<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>';
-                radioStanbic.innerHTML = '<span class="w-2 h-2 bg-transparent rounded-full"></span>';
-            } else {
-                borderDfcu.className = "flex items-center justify-between p-3.5 bg-zinc-950 border border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
-                borderStanbic.className = "flex items-center justify-between p-3.5 bg-zinc-950 border-2 border-indigo-500/80 rounded-xl cursor-pointer hover:bg-zinc-900 transition-all";
-                radioDfcu.innerHTML = '<span class="w-2 h-2 bg-transparent rounded-full"></span>';
-                radioStanbic.innerHTML = '<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>';
-            }
-
-            showLocalNotification(`Switched transfer output to ${profile.title}`);
-        }
-
-        // Add bank accounts dynamically
-        function triggerAddBank() {
-            document.getElementById('add-bank-btn').classList.add('hidden');
-            document.getElementById('add-bank-form').classList.remove('hidden');
-        }
-
-        function cancelAddBank() {
-            document.getElementById('add-bank-btn').classList.remove('hidden');
-            document.getElementById('add-bank-form').classList.add('hidden');
-        }
-
-        function confirmAddBank() {
-            const num = document.getElementById('new-bank-num').value.trim();
-            if(!num) {
-                showLocalNotification("Please enter a valid bank account number!");
-                return;
-            }
-            
-            const selectedName = document.getElementById('new-bank-name').value;
-            const lastTwoDigits = num.slice(-2);
-            
-            bankProfiles.stanbic.title = selectedName;
-            bankProfiles.stanbic.number = `•••• •••• ••${num.slice(0, 2)} ${lastTwoDigits}`;
-
-            document.getElementById('additional-bank-card').classList.remove('hidden');
-            cancelAddBank();
-            
-            showLocalNotification(`${selectedName} linked successfully!`);
-        }
-
-        // Slideout Profile Drawer Controls
-        function toggleProfileModal() {
-            const modal = document.getElementById('profile-modal');
-            const panel = document.getElementById('profile-panel-inner');
-
-            if (modal.classList.contains('pointer-events-none')) {
-                modal.classList.remove('pointer-events-none', 'opacity-0');
-                modal.classList.add('opacity-100');
-                panel.classList.remove('translate-x-full');
-            } else {
-                modal.classList.add('pointer-events-none', 'opacity-0');
-                modal.classList.remove('opacity-100');
-                panel.classList.add('translate-x-full');
-            }
-        }
-
-        // Log out clean reset session loop
-        function handleLogOut() {
-            toggleProfileModal();
-            document.getElementById('logout-overlay').classList.remove('hidden');
-        }
-
-        function reloadPortal() {
-            document.getElementById('logout-overlay').classList.add('hidden');
-            document.getElementById('main-portal').classList.add('hidden');
-            
-            // Re-reveal initial login input form card, hiding old dynamic loaders
-            document.getElementById('loader-card').classList.add('hidden');
-            document.getElementById('login-card').classList.remove('hidden');
-            document.getElementById('login-screen').classList.remove('hidden');
-            
-            document.getElementById('login-password').value = "";
-            
-            // Restores the starting balance variables on logoff
-            activeBalance = 46400000;
-            document.getElementById('current-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
-            document.getElementById('summary-balance-display').innerText = "UGX " + activeBalance.toLocaleString('en-US');
-            resetWithdrawForm();
-        }
-
-        // Global Screen Toast alerts
-        function showLocalNotification(message) {
-            const toast = document.getElementById('action-toast');
-            const msgSpan = document.getElementById('action-toast-msg');
-            msgSpan.innerText = message;
-            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        function exitIntro() {
+            const intro = document.getElementById('introPage');
+            intro.style.opacity = '0';
             
             setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                intro.classList.remove('active');
+                if (userSession.active) {
+                    showPage('dashboardPage');
+                    triggerIslandAlert("Mainnet Connected", "iOS 26 profile securely synced to cloud logs.", "fa-solid fa-shield-halved");
+                    setTimeout(showWelcomeToast, 1500);
+                } else {
+                    showPage('loginPage');
+                    switchAuthTab('login'); 
+                }
+            }, 1000);
+        }
+
+        function skipIntro() {
+            exitIntro();
+        }
+
+        // Authentication Controller Tab switcher
+        function switchAuthTab(tab) {
+            currentAuthTab = tab;
+            const deviceHasAccount = localStorage.getItem('shawik_device_has_account');
+
+            document.getElementById('tabBtn-login').classList.remove('active', 'text-white');
+            document.getElementById('tabBtn-login').classList.add('text-gray-500');
+            document.getElementById('tabBtn-signup').classList.remove('active', 'text-white');
+            document.getElementById('tabBtn-signup').classList.add('text-gray-500');
+
+            document.getElementById(`tabBtn-${tab}`).classList.add('active', 'text-white');
+
+            const signupField = document.getElementById('signupNameField');
+            const termsBox = document.getElementById('termsCheckbox');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const signupBlockerNotice = document.getElementById('signupBlockerNotice');
+
+            if (tab === 'signup') {
+                if (deviceHasAccount === 'true') {
+                    signupField.classList.add('hidden');
+                    termsBox.classList.add('hidden');
+                    signupBlockerNotice.classList.remove('hidden');
+                    submitBtn.classList.add('opacity-50', 'pointer-events-none');
+                    submitBtn.innerText = "Locked";
+                } else {
+                    signupField.classList.remove('hidden');
+                    termsBox.classList.remove('hidden');
+                    signupBlockerNotice.classList.add('hidden');
+                    submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                    submitBtn.innerText = "Register Account";
+                }
+            } else {
+                signupField.classList.add('hidden');
+                termsBox.classList.add('hidden');
+                signupBlockerNotice.classList.add('hidden');
+                submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                submitBtn.innerText = "Sign In";
+            }
+        }
+
+        // Submission handlers with local device memory verification
+        function handleAuthSubmit() {
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
+            const password = document.getElementById('authPassword').value.trim();
+            const name = document.getElementById('authName').value.trim();
+
+            if (!email || !password) {
+                triggerIslandAlert("Auth Error", "Please provide a valid email and password.", "fa-solid fa-triangle-exclamation", false);
+                return;
+            }
+
+            if (currentAuthTab === 'signup') {
+                if (localStorage.getItem('shawik_device_has_account') === 'true') {
+                    triggerIslandAlert("Blocked", "This iPhone is already bound to an account.", "fa-solid fa-circle-xmark", false);
+                    return;
+                }
+
+                if (!name) {
+                    triggerIslandAlert("Name Missing", "Please fill in your full name.", "fa-solid fa-user-xmark", false);
+                    return;
+                }
+                if (!document.getElementById('agreeTerms').checked) {
+                    triggerIslandAlert("Terms Refused", "You must accept our Terms of Service.", "fa-solid fa-circle-info", false);
+                    return;
+                }
+
+                // Register Account & Bind to Device with default UGX 80,000 balance
+                const newAccount = { email, password, name, balance: 80000, spending: 0, hasReceivedBonus: false };
+                registeredAccounts.push(newAccount);
+                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                localStorage.setItem('shawik_device_has_account', 'true');
+
+                userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: name, email: email };
+                saveAndProceed();
+
+            } else {
+                const matchedAccount = registeredAccounts.find(acc => acc.email === email && acc.password === password);
+
+                if (!matchedAccount) {
+                    triggerIslandAlert("Login Failed", "Incorrect credentials or account not registered on this iPhone.", "fa-solid fa-circle-xmark", false);
+                    return;
+                }
+
+                userSession = {
+                    active: true,
+                    balance: matchedAccount.balance,
+                    spending: matchedAccount.spending,
+                    hasReceivedBonus: matchedAccount.hasReceivedBonus,
+                    name: matchedAccount.name,
+                    email: matchedAccount.email
+                };
+
+                saveAndProceed();
+            }
+        }
+
+        function handleGoogleSignIn() {
+            const hasDeviceAccount = localStorage.getItem('shawik_device_has_account');
+            
+            if (hasDeviceAccount === 'true' && registeredAccounts.length > 0) {
+                const primaryAccount = registeredAccounts[0];
+                userSession = {
+                    active: true,
+                    balance: primaryAccount.balance,
+                    spending: primaryAccount.spending,
+                    hasReceivedBonus: primaryAccount.hasReceivedBonus,
+                    name: primaryAccount.name,
+                    email: primaryAccount.email
+                };
+                triggerIslandAlert("Google Synced", `Welcome back, ${primaryAccount.name}!`, "fa-brands fa-google");
+            } else {
+                const googleEmail = "google.user." + Math.floor(100+Math.random()*900) + "@gmail.com";
+                const googleAcc = { email: googleEmail, password: "GoogleSSO_Verified", name: "Google Booster", balance: 80000, spending: 0, hasReceivedBonus: false };
+                
+                registeredAccounts.push(googleAcc);
+                localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                localStorage.setItem('shawik_device_has_account', 'true');
+
+                userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: "Google Booster", email: googleEmail };
+            }
+            saveAndProceed();
+        }
+
+        function saveAndProceed() {
+            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
+            showPage('dashboardPage');
+            setTimeout(showWelcomeToast, 2500);
+
+            if (!userSession.hasReceivedBonus) {
+                triggerAppreciationBonusSequence();
+            }
+        }
+
+        function syncSessionToDatabase() {
+            if (userSession.email) {
+                const accIndex = registeredAccounts.findIndex(acc => acc.email === userSession.email);
+                if (accIndex !== -1) {
+                    registeredAccounts[accIndex].balance = userSession.balance;
+                    registeredAccounts[accIndex].spending = userSession.spending;
+                    registeredAccounts[accIndex].hasReceivedBonus = userSession.hasReceivedBonus;
+                    localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
+                }
+            }
+            localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
+        }
+
+        function logout() {
+            localStorage.removeItem('shawik_active_session_v2');
+            userSession = { active: false, balance: 80000, spending: 0, hasReceivedBonus: false, name: 'Guest User', email: '' };
+            location.reload();
+        }
+
+        // Welcome Appreciation 10,000 UGX sequence controller
+        function triggerAppreciationBonusSequence() {
+            const modal = document.getElementById('bonusModal');
+            const progressBar = document.getElementById('bonusProgressBar');
+            const timerNumber = document.getElementById('timerNumber');
+            const claimText = document.getElementById('appreciationClaimText');
+
+            modal.style.display = 'flex';
+            setTimeout(() => modal.style.opacity = "1", 50);
+
+            let progress = 0;
+            let count = 5;
+
+            timerNumber.innerText = `${count} Seconds`;
+            claimText.innerText = "Verifying first-time secure device fingerprint...";
+
+            const interval = setInterval(() => {
+                count--;
+                progress += 20;
+                progressBar.style.width = `${progress}%`;
+
+                if (count > 0) {
+                    timerNumber.innerText = `${count} Seconds`;
+                    if(count === 3) claimText.innerText = "Processing launch promo reward credit...";
+                    if(count === 1) claimText.innerText = "Adding USh 10,000 into secure balance...";
+                } else {
+                    clearInterval(interval);
+                    timerNumber.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i> USh 10,000';
+                    claimText.innerHTML = '<span class="text-[#ff8c00] font-black">CREDITED SUCCESSFULLY!</span>';
+                    
+                    userSession.balance += 10000;
+                    userSession.hasReceivedBonus = true;
+                    syncSessionToDatabase();
+
+                    updateBalanceDisplays();
+
+                    setTimeout(() => {
+                        modal.style.opacity = "0";
+                        setTimeout(() => modal.style.display = 'none', 500);
+                        triggerIslandAlert("Bonus Credited", "USh 10,000 added as loyalty bonus.", "fa-solid fa-gift");
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        function updateBalanceDisplays() {
+            document.getElementById('dashboardBalance').innerText = "USh " + userSession.balance.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('dashboardSpending').innerText = "USh " + userSession.spending.toLocaleString(undefined, {minimumFractionDigits: 2});
+        }
+
+        // Platforms Selector Switch
+        function selectPlatform(platform) {
+            document.querySelectorAll('.ios-plat-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            if (platform === 'TikTok') {
+                document.getElementById('platform-TikTok').classList.add('selected');
+                triggerIslandAlert("TikTok Synced", "Executing under TikTok ultra-speed v26 nodes.", "fa-brands fa-tiktok");
+            } else {
+                document.getElementById('platform-TikTok').classList.add('selected');
+                triggerIslandAlert("Beta Release", `${platform} will launch on 18 May 2026. Switched to optimized TikTok node!`, "fa-solid fa-clock");
+            }
+        }
+
+        // Live Simulated Orders Loop
+        function simulateGlobalOrderFeed() {
+            const randomHandle = ugandanTikTokHandles[Math.floor(Math.random() * ugandanTikTokHandles.length)];
+            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
+            const quantities = [1000, 2500, 5000, 10000];
+            const randomQty = quantities[Math.floor(Math.random() * quantities.length)];
+            
+            const cats = Object.keys(categoryServices);
+            const randomCat = cats[Math.floor(Math.random() * cats.length)];
+            const serviceList = categoryServices[randomCat];
+            const randomService = serviceList[Math.floor(Math.random() * serviceList.length)];
+            
+            const calculatedCost = (randomQty / 1000) * randomService.rate;
+
+            const newSimulatedOrder = {
+                id: randomId,
+                date: "Just now",
+                serviceName: randomService.name,
+                link: `https://www.tiktok.com/${randomHandle}`,
+                qty: randomQty,
+                cost: calculatedCost,
+                status: "Completed"
+            };
+
+            globalSimulatedOrders.unshift(newSimulatedOrder);
+            if (globalSimulatedOrders.length > 20) globalSimulatedOrders.pop(); 
+
+            if (document.getElementById('ordersPage').classList.contains('active')) {
+                renderOrders();
+            }
+        }
+
+        // Active Orders Tab Switcher
+        function switchOrderTab(tab) {
+            activeOrderTab = tab;
+            
+            document.getElementById('orderTabSelf').classList.remove('bg-orange-500', 'text-black');
+            document.getElementById('orderTabSelf').classList.add('text-gray-400');
+            document.getElementById('orderTabGlobal').classList.remove('bg-orange-500', 'text-black');
+            document.getElementById('orderTabGlobal').classList.add('text-gray-400');
+
+            if (tab === 'self') {
+                document.getElementById('orderTabSelf').classList.add('bg-orange-500', 'text-black');
+                document.getElementById('orderTabSelf').classList.remove('text-gray-400');
+            } else {
+                document.getElementById('orderTabGlobal').classList.add('bg-orange-500', 'text-black');
+                document.getElementById('orderTabGlobal').classList.remove('text-gray-400');
+            }
+
+            renderOrders();
+        }
+
+        // Dynamic multi-page SPA switch
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById(id);
+            targetPage.classList.add('active');
+            targetPage.style.opacity = '1';
+            window.scrollTo(0,0);
+
+            if(id === 'addFundsPage') {
+                resetForms();
+                triggerMethodTransition('card');
+            } else if (id === 'ordersPage') {
+                renderOrders();
+            }
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); if(id !== 'apiModal') toggleSidebar(); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Place Single Order handler with dynamic real-time balance calculations
+        function placeSingleOrder() {
+            const link = document.getElementById('linkInput').value.trim();
+            const qty = parseInt(document.getElementById('qtyInput').value) || 0;
+            const selectEl = document.getElementById('serviceSelect');
+            const serviceRate = parseFloat(selectEl.value);
+            const serviceName = selectEl.options[selectEl.selectedIndex].dataset.name;
+
+            if (!link) {
+                triggerIslandAlert("Link Missing", "Paste your TikTok link to start.", "fa-solid fa-link-slash", false);
+                return;
+            }
+            if (qty < 100) {
+                triggerIslandAlert("Qty Warning", "Minimum order must be at least 100 units.", "fa-solid fa-triangle-exclamation", false);
+                return;
+            }
+
+            const cost = (qty / 1000) * serviceRate;
+
+            if (userSession.balance < cost) {
+                triggerIslandAlert("Insufficient Funds", "Total cost exceeds your active balance.", "fa-solid fa-credit-card", false);
+                return;
+            }
+
+            userSession.balance -= cost;
+            userSession.spending += cost;
+            syncSessionToDatabase();
+            updateBalanceDisplays();
+
+            const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
+            ordersList.unshift({
+                id: randomId,
+                date: "Just now",
+                serviceName: serviceName,
+                link: link,
+                qty: qty,
+                cost: cost,
+                status: "Pending"
+            });
+
+            document.getElementById('linkInput').value = "";
+            document.getElementById('qtyInput').value = "";
+            document.getElementById('priceDisplay').innerText = "USh 0.00";
+
+            triggerIslandAlert("Order Placed", `Scheduled under ID: #${randomId}`, "fa-solid fa-circle-check");
+            switchOrderTab('self');
+            showPage('ordersPage');
+        }
+
+        // Mass Bulk Orders Parser
+        function submitMassOrders() {
+            const bulkText = document.getElementById('massOrdersInput').value.trim();
+            if(!bulkText) {
+                triggerIslandAlert("No Bulk Input", "Mass queue is empty.", "fa-solid fa-triangle-exclamation", false);
+                return;
+            }
+
+            const lines = bulkText.split('\n');
+            let successCount = 0;
+            let totalCost = 0;
+            let tempOrders = [];
+
+            for (let line of lines) {
+                if(!line.trim()) continue;
+                
+                const parts = line.split('|');
+                if(parts.length < 3) continue;
+
+                const serviceId = parts[0].trim().toLowerCase();
+                const link = parts[1].trim();
+                const qty = parseInt(parts[2].trim());
+
+                if(isNaN(qty) || !link) continue;
+
+                let foundService = null;
+                for (let cat in categoryServices) {
+                    const match = categoryServices[cat].find(s => s.id === serviceId);
+                    if (match) {
+                        foundService = match;
+                        break;
+                    }
+                }
+
+                let rate = foundService ? foundService.rate : 20000;
+                let sName = foundService ? foundService.name : "Premium Instant Followers (UGX 20,000 / 1k)";
+
+                const lineCost = (qty / 1000) * rate;
+                totalCost += lineCost;
+
+                tempOrders.push({
+                    id: "SHAWIK-" + Math.floor(1000 + Math.random() * 9000),
+                    date: "Bulk Action",
+                    serviceName: sName,
+                    link: link,
+                    qty: qty,
+                    cost: lineCost,
+                    status: "Pending"
+                });
+                successCount++;
+            }
+
+            if(successCount === 0) {
+                triggerIslandAlert("Parsing Failed", "Double-check: service_id | link | quantity", "fa-solid fa-triangle-exclamation", false);
+                return;
+            }
+
+            if(userSession.balance < totalCost) {
+                triggerIslandAlert("Insufficient Funds", "Total cost exceeds balance.", "fa-solid fa-circle-xmark", false);
+                return;
+            }
+
+            userSession.balance -= totalCost;
+            userSession.spending += totalCost;
+            syncSessionToDatabase();
+            updateBalanceDisplays();
+
+            for(let parsedOrder of tempOrders) {
+                ordersList.unshift(parsedOrder);
+            }
+
+            document.getElementById('massOrdersInput').value = "";
+            triggerIslandAlert("Queue Processed", `Successfully launched ${successCount} tasks.`, "fa-solid fa-rectangle-list");
+            switchOrderTab('self');
+            showPage('ordersPage');
+        }
+
+        // Order list renderer for simulated and personal orders
+        function renderOrders() {
+            const container = document.getElementById('ordersListContainer');
+            const countEl = document.getElementById('orderCount');
+            
+            const activeList = (activeOrderTab === 'self') ? ordersList : globalSimulatedOrders;
+            countEl.innerText = `Total: ${activeList.length} Orders (${activeOrderTab === 'self' ? 'Your Logs' : 'Global Feed'})`;
+
+            if(activeList.length === 0) {
+                container.innerHTML = `
+                    <div class="ios-card p-6 text-center text-gray-600">
+                        <i class="fa-solid fa-folder-open text-2xl mb-2"></i>
+                        <p class="text-xs">No active orders found.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = activeList.map(item => `
+                <div class="ios-card p-4 border-l-4 ${activeOrderTab === 'self' ? 'border-l-[#ff8c00]' : 'border-l-cyan-500'} bg-gradient-to-r from-black/40 to-black/60 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] text-gray-500 font-black uppercase tracking-wider">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[8px] text-gray-600 font-bold uppercase">${item.date}</span>
+                            <span class="text-[9px] font-black px-2.5 py-1 rounded-full ${
+                                item.status === 'Completed' ? 'bg-green-950/80 text-green-400 border border-green-900/40' : 'bg-orange-950/40 text-orange-400 border border-orange-900/30'
+                            }">${item.status}</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xs font-bold text-white mb-1.5">${item.serviceName}</h4>
+                    
+                    <div class="space-y-1.5 text-[10px] text-gray-400">
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-link text-gray-600"></i>
+                            <a href="${item.link}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[280px]">${item.link}</a>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-500 font-medium">
+                            <span>Quantity: <b class="text-gray-300 font-bold">${item.qty.toLocaleString()}</b></span>
+                            <span>Cost: <b class="text-[#ff8c00] font-black">USh ${item.cost.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearAllOrders() {
+            if (activeOrderTab === 'self') {
+                ordersList = [];
+            } else {
+                globalSimulatedOrders = [];
+            }
+            renderOrders();
+        }
+
+        /* --- ADD FUNDS INTERACTIVE LOGIC --- */
+        const depositAmtInput = document.getElementById('depositAmount');
+        const ugxConv = document.getElementById('ugxConversion');
+
+        depositAmtInput.addEventListener('input', () => {
+            const val = parseFloat(depositAmtInput.value) || 0;
+            const converted = val * USH_RATE;
+            ugxConv.innerText = "USh " + converted.toLocaleString(undefined, { maximumFractionDigits: 0 });
+        });
+
+        function resetForms() {
+            document.getElementById('creditCardForm').classList.add('hidden');
+            document.getElementById('mobileMoneyForm').classList.add('hidden');
+            document.getElementById('paymentLoadingState').classList.add('hidden');
+            document.getElementById('errorGatewayContainer').classList.add('hidden');
+        }
+
+        function selectPaymentMethod(method) {
+            selectedMethod = method;
+            document.getElementById('methodCard').classList.remove('selected');
+            document.getElementById('methodMobileMoney').classList.remove('selected');
+
+            if(method === 'card') {
+                document.getElementById('methodCard').classList.add('selected');
+                triggerMethodTransition('card');
+            } else {
+                document.getElementById('methodMobileMoney').classList.add('selected');
+                triggerMethodTransition('momo');
+            }
+        }
+
+        function triggerMethodTransition(method) {
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+
+            if (method === 'card') {
+                setTimeout(() => {
+                    document.getElementById('paymentLoadingState').classList.add('hidden');
+                    document.getElementById('creditCardForm').classList.remove('hidden');
+                }, 4000);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('paymentLoadingState').classList.add('hidden');
+                    document.getElementById('mobileMoneyForm').classList.remove('hidden');
+                }, 1200);
+            }
+        }
+
+        function submitCreditCardPayment() {
+            const cardVal = document.getElementById('cardNo').value.trim();
+            const expiryVal = document.getElementById('cardExpiry').value.trim();
+            const cvcVal = document.getElementById('cardCVC').value.trim();
+
+            if (!cardVal || !expiryVal || !cvcVal) {
+                triggerIslandAlert("Fields Empty", "Complete your card parameters.", "fa-solid fa-triangle-exclamation", false);
+                return;
+            }
+
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('paymentLoadingState').classList.add('hidden');
+                document.getElementById('errorGatewayContainer').classList.remove('hidden');
+                triggerIslandAlert("Gateway Error", "Couldn't load gateway details.", "fa-solid fa-circle-exclamation", false);
             }, 3000);
         }
 
-        function switchView(view) {
-            showLocalNotification(`Mapsd to active ${view} room.`);
+        function submitMomoPayment() {
+            const phone = document.getElementById('momoPhone').value.trim();
+            if(phone.length < 9) {
+                triggerIslandAlert("Phone Invalid", "Must contain 9 digits.", "fa-solid fa-mobile-button", false);
+                return;
+            }
+
+            resetForms();
+            document.getElementById('paymentLoadingState').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('paymentLoadingState').classList.add('hidden');
+                document.getElementById('errorGatewayContainer').classList.remove('hidden');
+                triggerIslandAlert("Momo Timeout", "Response code: 503 Server Unavailable", "fa-solid fa-triangle-exclamation", false);
+            }, 2500);
+        }
+
+        function retrySelectedPayment() {
+            triggerMethodTransition(selectedMethod);
+        }
+
+        // Format helpers and real-time form payable updating
+        function setupInputs() {
+            const cardNoInput = document.getElementById('cardNo');
+            if (cardNoInput) {
+                cardNoInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                    let matches = val.match(/\d{4,16}/g);
+                    let match = matches && matches[0] || '';
+                    let parts = [];
+
+                    for (let i=0, len=match.length; i<len; i+=4) {
+                        parts.push(match.substring(i, i+4));
+                    }
+
+                    if (parts.length > 0) {
+                        e.target.value = parts.join(' ');
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
+
+            const expiryInput = document.getElementById('cardExpiry');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                    if (val.length >= 2) {
+                        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            }
+
+            const cvcInput = document.getElementById('cardCVC');
+            if (cvcInput) {
+                cvcInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                });
+            }
+
+            const momoPhoneInput = document.getElementById('momoPhone');
+            if (momoPhoneInput) {
+                momoPhoneInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                });
+            }
+
+            // Real-time calculation listener
+            const qtyInput = document.getElementById('qtyInput');
+            const serviceSelect = document.getElementById('serviceSelect');
+
+            if(qtyInput && serviceSelect) {
+                qtyInput.addEventListener('input', calculateRealtimeCost);
+                serviceSelect.addEventListener('change', calculateRealtimeCost);
+            }
+        }
+
+        // Quick fallback alert notice
+        function triggerNotice(type) {
+            if (type === 'platform') {
+                triggerIslandAlert("Beta platform", "Selected platform launches 18 May 2026. Switched to optimized TikTok node!", "fa-solid fa-clock");
+            } else {
+                triggerIslandAlert("Core Gateway Sync", "Direct push payment nodes active.", "fa-solid fa-wallet");
+            }
         }
     </script>
 </body>

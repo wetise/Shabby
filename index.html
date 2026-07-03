@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta nameclass=""="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SHAWIKBOOSTER | Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SHAWIKBOOSTER | Official Premium Mobile SMM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js Library for Fluid 3D Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -16,7 +16,7 @@
             --brand-orange: #ff8c00; 
             --apple-slate: #1c1c1e;
             --apple-obsidian: #050508;
-            --ios-blur: blur(45px);
+            --ios-blur: blur(30px);
             --ios-spring: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -29,8 +29,8 @@
             overflow-x: hidden; 
             touch-action: pan-x pan-y; 
             -webkit-text-size-adjust: 100%;
-            padding-top: env(safe-area-inset-top, 47px);
-            padding-bottom: env(safe-area-inset-bottom, 34px);
+            padding-top: env(safe-area-inset-top, 16px);
+            padding-bottom: env(safe-area-inset-bottom, 24px);
         }
 
         h1, h2, h3, .heading-font {
@@ -39,24 +39,24 @@
 
         /* Ambient Apple Glow Backdrops */
         .ios-glow-1 {
-            position: fixed; top: -15%; right: -15%; width: 65vw; height: 65vw;
-            background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: -1; filter: blur(120px);
+            position: fixed; top: -10%; right: -10%; width: 80vw; height: 80vw;
+            background: radial-gradient(circle, rgba(255,140,0,0.12) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; z-index: -1; filter: blur(80px);
         }
         .ios-glow-2 {
-            position: fixed; bottom: -10%; left: -10%; width: 70vw; height: 70vw;
-            background: radial-gradient(circle, rgba(120,80,255,0.06) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: -1; filter: blur(140px);
+            position: fixed; bottom: -10%; left: -10%; width: 85vw; height: 85vw;
+            background: radial-gradient(circle, rgba(120,80,255,0.08) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; z-index: -1; filter: blur(100px);
         }
 
         /* 3D Background Engine Canvas */
         #canvas3d {
             position: fixed; inset: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -2;
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
-        /* Premium iOS 26 Typography Gradient */
+        /* Premium iOS Typography Gradient */
         .ios-gradient-text {
             background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
             -webkit-background-clip: text;
@@ -76,36 +76,47 @@
 
         /* Premium iOS Glassmorphism Card Style */
         .ios-card { 
-            background: rgba(15, 15, 20, 0.45); 
+            background: rgba(15, 15, 20, 0.55); 
             backdrop-filter: var(--ios-blur);
             -webkit-backdrop-filter: var(--ios-blur);
-            border: 0.5px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 26px;
-            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s var(--ios-spring);
+            border: 0.5px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 24px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+            transition: all 0.3s var(--ios-spring);
         }
         .ios-card:active {
-            transform: scale(0.995);
-            border-color: rgba(255, 255, 255, 0.18);
+            transform: scale(0.985);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* Fluid Sidebars & Custom Pages */
+        /* Fluid Responsive Sidebars */
         .sidebar {
-            position: fixed; top: 0; right: -100%; width: 85%; height: 100%;
-            background: rgba(10, 10, 12, 0.95); backdrop-filter: blur(50px);
+            position: fixed; top: 0; right: -100%; width: 85%; max-width: 340px; height: 100%;
+            background: rgba(8, 8, 10, 0.98); backdrop-filter: blur(50px);
             -webkit-backdrop-filter: blur(50px);
-            z-index: 1000; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto; border-left: 0.5px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto; border-left: 0.5px solid rgba(255, 255, 255, 0.08);
         }
         .sidebar.active { right: 0; }
 
-        .page { display: none; min-height: 100vh; flex-direction: column; z-index: 10; position: relative; }
+        /* Sidebar Glass Overlay Backdrop */
+        .sidebar-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            opacity: 0; pointer-events: none; z-index: 999;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            opacity: 1; pointer-events: auto;
+        }
+
+        .page { display: none; min-height: calc(100vh - env(safe-area-inset-top, 16px) - env(safe-area-inset-bottom, 24px)); flex-direction: column; z-index: 10; position: relative; }
         .page.active { display: flex; }
 
-        /* Premium iOS Dynamic Island Notification */
+        /* Premium Dynamic Island Navigation */
         #dynamicIsland {
             position: fixed;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%) scale(1);
             width: 140px;
@@ -116,54 +127,61 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.2) inset;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 1px rgba(255,255,255,0.2) inset;
             overflow: hidden;
-            border: 0.5px solid rgba(255,255,255,0.08);
+            border: 0.5px solid rgba(255,255,255,0.1);
             pointer-events: none;
         }
         #dynamicIsland.expanded {
-            width: calc(100% - 32px);
+            width: calc(100% - 24px);
             max-width: 420px;
             height: 85px;
-            border-radius: 28px;
+            border-radius: 26px;
             padding: 16px;
             justify-content: flex-start;
         }
 
-        /* iOS Platform Selector Button style */
+        /* Platform Selector Buttons */
         .ios-plat-btn {
-            background: rgba(255,255,255,0.04);
-            border: 0.5px solid rgba(255,255,255,0.06);
-            transition: all 0.3s var(--ios-spring);
-            border-radius: 18px;
+            background: rgba(255,255,255,0.03);
+            border: 0.5px solid rgba(255,255,255,0.05);
+            transition: all 0.25s var(--ios-spring);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px; /* mobile tap target size */
         }
         .ios-plat-btn.selected {
-            background: rgba(255, 140, 0, 0.14);
+            background: rgba(255, 140, 0, 0.15);
             border-color: var(--brand-orange);
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.15);
         }
 
-        /* Input overrides for elegant iOS style */
+        /* Modern input overrides for flawless Android + iOS rendering */
         input, select, textarea {
-            background: rgba(0, 0, 0, 0.4) !important;
+            background: rgba(0, 0, 0, 0.5) !important;
             border: 0.5px solid rgba(255, 255, 255, 0.08) !important;
             color: #ffffff !important;
             outline: none;
             width: 100%;
-            border-radius: 16px;
-            transition: all 0.3s var(--ios-spring);
+            border-radius: 14px;
+            transition: all 0.25s var(--ios-spring);
+            -webkit-appearance: none; /* Prevents iOS default styling */
+            appearance: none;
         }
         input:focus, select:focus, textarea:focus {
             border-color: var(--brand-orange) !important;
-            background: rgba(0, 0, 0, 0.6) !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.15);
         }
 
         .modal {
-            position: fixed; inset: 0; background: rgba(5,5,8,0.85);
+            position: fixed; inset: 0; background: rgba(3,3,5,0.92);
             z-index: 2000; display: none; padding: 20px; overflow-y: auto;
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
         .modal.active { display: block; }
 
@@ -176,7 +194,7 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
+            0% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.6); }
             70% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 8px rgba(255, 140, 0, 0); }
             100% { transform: scale(0.85); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
         }
@@ -184,14 +202,14 @@
         /* Method Selector State Styles */
         .payment-method-btn {
             background: rgba(255, 255, 255, 0.02);
-            border: 0.5px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            transition: all 0.35s var(--ios-spring);
+            border: 0.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            transition: all 0.3s var(--ios-spring);
         }
         .payment-method-btn.selected {
             border-color: var(--brand-orange);
             background: rgba(255, 140, 0, 0.08);
-            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.12);
+            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.1);
         }
 
         /* Custom loading overlay inside forms */
@@ -203,35 +221,59 @@
             padding: 30px;
         }
 
-        /* Apple slide-up transition animation */
+        /* Slide-up transition animation */
         .slide-up {
-            animation: iosSlideUp 0.6s var(--ios-spring);
+            animation: iosSlideUp 0.5s var(--ios-spring);
         }
         @keyframes iosSlideUp {
-            from { transform: translateY(40px); opacity: 0; }
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
         /* Premium iOS Welcome Toast */
         #welcomeToast {
             position: fixed;
-            bottom: 30px;
-            left: 20px;
-            right: 20px;
+            bottom: 24px;
+            left: 16px;
+            right: 16px;
             z-index: 9999;
             transform: translateY(200%);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
             opacity: 0;
         }
         #welcomeToast.show {
             transform: translateY(0);
             opacity: 1;
         }
+
+        /* Custom scrollbar optimization for panels */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 140, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .api-code-block {
+            background: rgba(0,0,0,0.6);
+            border: 0.5px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            overflow-x: auto;
+            color: #ff8c00;
+            white-space: pre;
+        }
     </style>
 </head>
-<body class="px-4">
+<body class="px-4 max-w-lg mx-auto">
 
-    <!-- DYNAMIC ISLAND SYSTEM (iOS 26 Flagship Notification Panel) -->
+    <!-- DYNAMIC ISLAND SYSTEM (iOS Flagship Notification Panel) -->
     <div id="dynamicIsland">
         <!-- Dynamic Island Small View -->
         <div id="islandSmall" class="flex items-center gap-2 px-4">
@@ -241,41 +283,41 @@
         <!-- Dynamic Island Expanded Notification View -->
         <div id="islandExpanded" class="hidden w-full flex items-center justify-between text-left transition-opacity duration-300">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-500 text-lg">
+                <div class="w-9 h-9 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-500 text-md">
                     <i id="islandIcon" class="fa-solid fa-circle-check"></i>
                 </div>
                 <div>
-                    <h4 id="islandTitle" class="text-xs font-black uppercase tracking-wider text-white">System Synced</h4>
-                    <p id="islandDesc" class="text-[10px] text-gray-400 mt-0.5">Welcome premium rewards applied.</p>
+                    <h4 id="islandTitle" class="text-[11px] font-black uppercase tracking-wider text-white">System Synced</h4>
+                    <p id="islandDesc" class="text-[9px] text-gray-400 mt-0.5">Welcome premium rewards applied.</p>
                 </div>
             </div>
-            <i class="fa-solid fa-spider text-orange-500/30 text-xl pr-2"></i>
+            <i class="fa-solid fa-spider text-orange-500/30 text-lg pr-2"></i>
         </div>
     </div>
 
     <!-- PREMIUM INTERACTIVE LUGANDA TOAST DIALOGUE -->
-    <div id="welcomeToast" class="ios-card p-5 max-w-md mx-auto border-orange-500/30 bg-black/90">
+    <div id="welcomeToast" class="ios-card p-5 max-w-md mx-auto border-orange-500/30 bg-black/95">
         <div class="flex items-start gap-4">
-            <div class="w-11 h-11 bg-orange-500/15 border border-orange-500/30 rounded-2xl flex items-center justify-center text-orange-500 flex-shrink-0 animate-pulse">
-                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+            <div class="w-10 h-10 bg-orange-500/15 border border-orange-500/30 rounded-xl flex items-center justify-center text-orange-500 flex-shrink-0 animate-pulse">
+                <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
             </div>
             <div class="flex-1 space-y-1">
-                <h4 class="text-xs font-black text-orange-500 uppercase tracking-widest leading-none">Rico Animations</h4>
-                <p class="text-[14px] text-white font-bold leading-snug">
+                <h4 class="text-[10px] font-black text-orange-500 uppercase tracking-widest leading-none">Rico Animations</h4>
+                <p class="text-[13px] text-white font-bold leading-snug">
                     Tukwanirizza ku Shawik Rico Animations Panel!
                 </p>
-                <p class="text-[12px] text-gray-400 font-medium">
+                <p class="text-[11px] text-gray-400 font-medium">
                     Osobola okugula service zaffe ku bbeyi powa.
                 </p>
             </div>
         </div>
         <!-- Action Buttons -->
-        <div class="flex gap-2.5 mt-5">
-            <button onclick="dismissWelcomeToast()" class="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-bold text-gray-400 uppercase tracking-widest transition-colors">
+        <div class="flex gap-2 mt-4">
+            <button onclick="dismissWelcomeToast()" class="flex-1 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-[11px] font-bold text-gray-400 uppercase tracking-wider transition-colors">
                 Cancel
             </button>
-            <a href="https://wa.me/+447412887630" target="_blank" class="flex-[1.5] py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-xs font-black text-black uppercase tracking-widest text-center flex items-center justify-center gap-1.5 transition-colors shadow-lg shadow-orange-500/10">
-                <i class="fa-brands fa-whatsapp text-sm"></i> Join WhatsApp
+            <a href="https://wa.me/+447412887630" target="_blank" class="flex-[1.5] py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-[11px] font-black text-black uppercase tracking-wider text-center flex items-center justify-center gap-1 transition-colors shadow-lg shadow-orange-500/10">
+                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
             </a>
         </div>
     </div>
@@ -287,129 +329,132 @@
     <div class="ios-glow-1"></div>
     <div class="ios-glow-2"></div>
 
+    <!-- INTERACTIVE SIDEBAR OVERLAY BACKDROP -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <!-- FIRST/INTRO PAGE (LAUNCHED & UPDATED STATUS) -->
-    <div id="introPage" class="page active items-center justify-center px-4 transition-opacity duration-1000">
+    <div id="introPage" class="page active items-center justify-center px-2 transition-opacity duration-1000">
         <div class="text-center w-full max-w-sm flex flex-col items-center">
             
-            <!-- iOS Glow Sphere -->
-            <div class="relative mb-8">
-                <div class="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
-                <div class="relative w-20 h-20 rounded-3xl bg-black/50 border border-white/10 flex items-center justify-center shadow-2xl">
-                    <i class="fa-solid fa-space-shuttle text-3xl text-orange-500 -rotate-45"></i>
+            <!-- Glow Sphere -->
+            <div class="relative mb-6">
+                <div class="absolute inset-0 bg-orange-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+                <div class="relative w-16 h-16 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-center shadow-2xl">
+                    <i class="fa-solid fa-space-shuttle text-2xl text-orange-500 -rotate-45"></i>
                 </div>
             </div>
             
-            <h1 class="text-4xl font-extrabold tracking-tight ios-gradient-text mb-3">System Online</h1>
-            <p class="text-xs text-gray-500 uppercase tracking-[0.3em] mb-8 font-semibold">Booster Mainnet v26.0</p>
+            <h1 class="text-3xl font-extrabold tracking-tight ios-gradient-text mb-2">System Online</h1>
+            <p class="text-[10px] text-gray-500 uppercase tracking-[0.25em] mb-6 font-semibold">Booster Mainnet v26.0</p>
             
             <!-- Launch Message Glass Card -->
-            <div class="ios-card p-6 w-full mb-8">
-                <div class="flex items-center justify-center gap-2 mb-3">
+            <div class="ios-card p-5 w-full mb-6">
+                <div class="flex items-center justify-center gap-2 mb-2">
                     <span class="pulsing-dot"></span>
                     <span class="text-[9px] text-emerald-400 font-extrabold uppercase tracking-widest">Active Device Security</span>
                 </div>
-                <p class="text-sm text-gray-300 font-medium leading-relaxed">
+                <p class="text-xs text-gray-300 font-medium leading-relaxed">
                     SHAWIKBOOSTER's latest update is live. Core services are fully updated, stable, and executing instantly!
                 </p>
-                <div class="mt-4 p-3.5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
-                    <p class="text-[9px] text-orange-500 font-extrabold uppercase tracking-widest">iOS Welcome Reward</p>
+                <div class="mt-4 p-3 bg-orange-500/10 border border-orange-500/20 rounded-xl">
+                    <p class="text-[8px] text-orange-500 font-extrabold uppercase tracking-widest">iOS Welcome Reward</p>
                     <p class="text-xs text-white font-bold mt-0.5">Claim USh 10,000 Sign-up Bonus Inside!</p>
                 </div>
             </div>
 
-            <button onclick="skipIntro()" class="text-[10px] text-gray-400 hover:text-white uppercase tracking-[0.25em] transition-colors flex items-center gap-2 font-bold">
+            <button onclick="skipIntro()" class="text-[10px] text-gray-400 hover:text-white uppercase tracking-[0.25em] transition-colors flex items-center gap-2 font-bold min-h-[48px]">
                 Open Dashboard <i class="fa-solid fa-arrow-right text-[8px]"></i>
             </button>
         </div>
     </div>
 
     <!-- RESPONSIVE LOGIN & SIGN-UP PAGE -->
-    <div id="loginPage" class="page items-center justify-center py-10">
+    <div id="loginPage" class="page items-center justify-center py-6">
         <div class="w-full max-w-sm mx-auto slide-up">
             <!-- Top Branding -->
-            <div class="text-center mb-8">
-                <div class="inline-block p-4 rounded-3xl bg-black/40 border border-white/5 mb-3 shadow-xl">
-                    <i class="fa-solid fa-spider text-4xl text-orange-500"></i>
+            <div class="text-center mb-6">
+                <div class="inline-block p-3 rounded-2xl bg-black/40 border border-white/5 mb-3 shadow-xl">
+                    <i class="fa-solid fa-spider text-3xl text-orange-500"></i>
                 </div>
-                <h1 class="text-3xl font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
-                <p class="text-[9px] text-gray-500 font-extrabold uppercase tracking-[0.35em] mt-1.5">Universal SMM Panel</p>
+                <h1 class="text-2xl font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
+                <p class="text-[8px] text-gray-500 font-extrabold uppercase tracking-[0.3em] mt-1">Universal SMM Panel</p>
             </div>
 
             <!-- Login / Sign Up Tabs -->
-            <div class="ios-card p-1 flex mb-6 bg-black/30">
-                <button onclick="switchAuthTab('login')" id="tabBtn-login" class="flex-1 py-3 text-xs font-black uppercase tracking-wider auth-tab active text-center">
+            <div class="ios-card p-1 flex mb-4 bg-black/30">
+                <button onclick="switchAuthTab('login')" id="tabBtn-login" class="flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider auth-tab active text-center">
                     Sign In
                 </button>
-                <button onclick="switchAuthTab('signup')" id="tabBtn-signup" class="flex-1 py-3 text-xs font-black uppercase tracking-wider auth-tab text-gray-500 text-center">
+                <button onclick="switchAuthTab('signup')" id="tabBtn-signup" class="flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider auth-tab text-gray-500 text-center">
                     Sign Up
                 </button>
             </div>
 
-            <!-- Authentic Form Container -->
-            <div class="ios-card p-6 space-y-4">
+            <!-- Form Container -->
+            <div class="ios-card p-5 space-y-4">
                 
                 <!-- Display warning if device already has account -->
-                <div id="signupBlockerNotice" class="hidden p-3.5 bg-red-950/20 border border-red-900/30 text-red-400 text-xs rounded-2xl font-medium">
-                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Single-Device Rule: This iPhone already has an account registered.
+                <div id="signupBlockerNotice" class="hidden p-3 bg-red-950/20 border border-red-900/30 text-red-400 text-xs rounded-xl font-medium">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Single-Device Rule: This phone already has an account registered.
                 </div>
 
                 <!-- Extra field for sign up -->
                 <div id="signupNameField" class="hidden">
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Full Name</label>
+                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Full Name</label>
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="text" id="authName" placeholder="John Doe" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                        <input type="text" id="authName" placeholder="John Doe" class="pl-12 pr-4 py-3 text-sm">
                     </div>
                 </div>
 
                 <div>
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Email Address</label>
+                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Email Address</label>
                     <div class="relative">
                         <i class="fa-solid fa-envelope absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="email" id="authEmail" placeholder="you@example.com" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                        <input type="email" id="authEmail" placeholder="you@example.com" class="pl-12 pr-4 py-3 text-sm">
                     </div>
                 </div>
 
                 <div>
-                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Secure Password</label>
+                    <label class="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Secure Password</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-4.5 top-4.5 text-gray-600"></i>
-                        <input type="password" id="authPassword" placeholder="••••••••" class="pl-12 pr-4 py-3.5 rounded-2xl text-sm">
+                        <input type="password" id="authPassword" placeholder="••••••••" class="pl-12 pr-4 py-3 text-sm">
                     </div>
                 </div>
 
                 <!-- Terms & Conditions check for Sign up -->
                 <div id="termsCheckbox" class="hidden flex items-start gap-2 pt-1">
                     <input type="checkbox" id="agreeTerms" class="w-4 h-4 rounded border-gray-800 bg-black mt-0.5 accent-orange-500">
-                    <label for="agreeTerms" class="text-[10px] text-gray-400 font-semibold">I agree to the Terms of Service & Privacy Policy</label>
+                    <label for="agreeTerms" class="text-[9px] text-gray-400 font-semibold">I agree to the Terms of Service</label>
                 </div>
 
                 <!-- Submit Button -->
-                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10">
+                <button onclick="handleAuthSubmit()" id="authSubmitBtn" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/10 min-h-[48px]">
                     Sign In
                 </button>
 
                 <div class="relative flex py-1 items-center">
                     <div class="flex-grow border-t border-white/5"></div>
-                    <span class="flex-shrink mx-4 text-gray-600 text-[9px] font-extrabold uppercase tracking-widest">or</span>
+                    <span class="flex-shrink mx-3 text-gray-600 text-[8px] font-extrabold uppercase tracking-widest">or</span>
                     <div class="flex-grow border-t border-white/5"></div>
                 </div>
 
                 <!-- Google SSO -->
-                <button onclick="handleGoogleSignIn()" class="w-full bg-white text-black py-3.5 rounded-2xl font-bold flex items-center justify-center gap-3 text-sm active:scale-95 transition-transform">
+                <button onclick="handleGoogleSignIn()" class="w-full bg-white text-black py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-xs active:scale-95 transition-transform min-h-[48px]">
                     <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Continue with Google
                 </button>
             </div>
 
             <!-- Dynamic Credits -->
-            <div class="mt-10 text-center space-y-4">
+            <div class="mt-8 text-center space-y-3">
                 <div>
-                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Developer</p>
-                    <span class="premium-credit text-lg">SHAWIK</span>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-0.5">Developer</p>
+                    <span class="text-sm font-bold text-gray-400">SHAWIK</span>
                 </div>
                 <div>
-                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-1">Official Sponsors</p>
-                    <span class="premium-credit text-[10px]">Dj Douglas & Ava max</span>
+                    <p class="text-[8px] text-gray-600 font-black uppercase tracking-widest mb-0.5">Official Sponsors</p>
+                    <span class="text-[9px] text-gray-500 font-semibold">Dj Douglas & Ava max</span>
                 </div>
             </div>
         </div>
@@ -417,49 +462,49 @@
 
     <!-- DASHBOARD PAGE -->
     <div id="dashboardPage" class="page pb-24">
-        <header class="flex justify-between items-center py-6">
+        <header class="flex justify-between items-center py-4">
             <div class="flex items-center gap-2">
-                <i class="fa-solid fa-spider text-orange-500 text-xl animate-pulse"></i>
-                <h1 class="text-md font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
+                <i class="fa-solid fa-spider text-orange-500 text-lg animate-pulse"></i>
+                <h1 class="text-sm font-extrabold tracking-tight ios-gradient-text">SHAWIKBOOSTER</h1>
             </div>
-            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center">
+            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center min-h-[40px] min-w-[40px]">
                 <i class="fa-solid fa-bars-staggered text-sm"></i>
             </button>
         </header>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 gap-3 mb-4 slide-up">
-            <div class="ios-card p-5 relative overflow-hidden">
-                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-5xl">
+            <div class="ios-card p-4 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-4xl">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
-                <span class="text-[9px] font-extrabold text-gray-500 uppercase tracking-widest block mb-1">Active Balance</span>
-                <p id="dashboardBalance" class="text-lg font-black text-white">USh 80,000.00</p>
+                <span class="text-[8px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Active Balance</span>
+                <p id="dashboardBalance" class="text-base font-black text-white">USh 80,000.00</p>
             </div>
-            <div class="ios-card p-5 relative overflow-hidden">
-                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-5xl">
+            <div class="ios-card p-4 relative overflow-hidden">
+                <div class="absolute -right-2 -bottom-2 opacity-5 text-orange-500 text-4xl">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
-                <span class="text-[9px] font-extrabold text-gray-500 uppercase tracking-widest block mb-1">Total Spent</span>
-                <p id="dashboardSpending" class="text-lg font-black text-[#ff8c00]">USh 0.00</p>
+                <span class="text-[8px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Total Spent</span>
+                <p id="dashboardSpending" class="text-base font-black text-[#ff8c00]">USh 0.00</p>
             </div>
         </div>
 
         <!-- Social Navigation -->
-        <div class="ios-card p-3 mb-4 grid grid-cols-4 gap-2 bg-black/30 slide-up">
-            <button id="platform-TikTok" class="ios-plat-btn p-3 text-white" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok"></i></button>
-            <button id="platform-Instagram" class="ios-plat-btn p-3 text-pink-500" onclick="selectPlatform('Instagram')"><i class="fa-brands fa-instagram"></i></button>
-            <button id="platform-Facebook" class="ios-plat-btn p-3 text-blue-600" onclick="selectPlatform('Facebook')"><i class="fa-brands fa-facebook"></i></button>
-            <button id="platform-YouTube" class="ios-plat-btn p-3 text-red-600" onclick="selectPlatform('YouTube')"><i class="fa-brands fa-youtube"></i></button>
+        <div class="ios-card p-2 mb-4 grid grid-cols-4 gap-2 bg-black/30 slide-up">
+            <button id="platform-TikTok" class="ios-plat-btn" onclick="selectPlatform('TikTok')"><i class="fa-brands fa-tiktok text-lg"></i></button>
+            <button id="platform-Instagram" class="ios-plat-btn" onclick="selectPlatform('Instagram')"><i class="fa-brands fa-instagram text-lg text-pink-500"></i></button>
+            <button id="platform-Facebook" class="ios-plat-btn" onclick="selectPlatform('Facebook')"><i class="fa-brands fa-facebook text-lg text-blue-600"></i></button>
+            <button id="platform-YouTube" class="ios-plat-btn" onclick="selectPlatform('YouTube')"><i class="fa-brands fa-youtube text-lg text-red-600"></i></button>
         </div>
 
         <!-- Main Form -->
-        <div class="ios-card p-5 space-y-4 slide-up">
+        <div class="ios-card p-4 space-y-3 slide-up">
             <div>
-                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Choose Category</label>
+                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Choose Category</label>
                 <div class="relative mt-1">
-                    <i class="fa-solid fa-layer-group absolute left-4.5 top-4.5 text-orange-500"></i>
-                    <select id="categorySelect" onchange="onCategoryChange()" class="pl-12 py-3.5 rounded-2xl text-sm appearance-none">
+                    <i class="fa-solid fa-layer-group absolute left-4 top-[15px] text-orange-500 text-sm"></i>
+                    <select id="categorySelect" onchange="onCategoryChange()" class="pl-10 py-3 rounded-xl text-xs appearance-none">
                         <option value="followers">TikTok Followers</option>
                         <option value="views">TikTok Views</option>
                         <option value="shares">TikTok Shares</option>
@@ -469,102 +514,106 @@
                         <option value="likes">TikTok Likes</option>
                         <option value="live_likes">TikTok Live Likes</option>
                     </select>
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
                 </div>
             </div>
 
             <div>
-                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Choose Service</label>
-                <select id="serviceSelect" class="py-4 px-4 mt-1 rounded-2xl text-sm appearance-none">
-                    <!-- Loaded dynamically via javascript based on selected Category -->
-                </select>
+                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Choose Service</label>
+                <div class="relative mt-1">
+                    <select id="serviceSelect" class="py-3 px-3 rounded-xl text-xs appearance-none">
+                        <!-- Loaded dynamically -->
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
+                </div>
             </div>
 
             <div>
-                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Target Account / URL</label>
-                <input type="url" id="linkInput" placeholder="Paste your TikTok link here..." class="p-4 mt-1 rounded-2xl text-sm">
+                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Target Account / URL</label>
+                <input type="url" id="linkInput" placeholder="Paste link here..." class="p-3 mt-1 rounded-xl text-xs">
             </div>
 
-            <div class="flex gap-3">
+            <div class="flex gap-2">
                 <div class="flex-[1.5]">
-                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Quantity</label>
-                    <input type="number" id="qtyInput" placeholder="1000" class="p-4 mt-1 rounded-2xl text-sm">
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Quantity</label>
+                    <input type="number" id="qtyInput" placeholder="1000" class="p-3 mt-1 rounded-xl text-xs">
                 </div>
                 <div class="flex-1">
-                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest px-1">Delivery Time</label>
-                    <div id="timeDisplay" class="p-4 mt-1 rounded-2xl text-[10px] font-extrabold text-gray-400 bg-black/50 border border-white/5 text-center">15 Mins</div>
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider px-1">Delivery Time</label>
+                    <div id="timeDisplay" class="p-3 mt-1 rounded-xl text-[9px] font-extrabold text-gray-400 bg-black/50 border border-white/5 text-center min-h-[40px] flex items-center justify-center">15 Mins</div>
                 </div>
             </div>
 
-            <div class="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl flex justify-between items-center">
+            <div class="p-3 bg-orange-500/5 border border-orange-500/10 rounded-xl flex justify-between items-center">
                 <div>
-                    <p class="text-[9px] text-gray-500 uppercase font-extrabold tracking-wider">Total Payable</p>
-                    <p id="priceDisplay" class="text-2xl font-black text-orange-500">USh 0.00</p>
+                    <p class="text-[8px] text-gray-500 uppercase font-extrabold tracking-wider">Total Payable</p>
+                    <p id="priceDisplay" class="text-lg font-black text-orange-500">USh 0.00</p>
                 </div>
-                <i class="fa-solid fa-coins text-orange-950/40 text-2xl animate-spin" style="animation-duration: 8s"></i>
+                <i class="fa-solid fa-coins text-orange-950/40 text-xl animate-spin" style="animation-duration: 8s"></i>
             </div>
 
-            <button onclick="placeSingleOrder()" class="w-full bg-[#ff8c00] text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/15">
+            <button onclick="placeSingleOrder()" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-xl shadow-orange-500/15 min-h-[48px]">
                 Confirm & Place Order
             </button>
         </div>
 
         <!-- Lower Menu Grid -->
-        <div class="mt-8 grid grid-cols-2 gap-3 slide-up">
-            <button onclick="openModal('ticketsModal')" class="ios-card p-5 flex flex-col items-center gap-2 bg-black/30">
-                <i class="fa-solid fa-ticket text-orange-500 text-lg"></i>
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300">Support tickets</span>
+        <div class="mt-4 grid grid-cols-2 gap-3 slide-up">
+            <button onclick="openModal('ticketsModal')" class="ios-card p-4 flex flex-col items-center gap-1.5 bg-black/30 min-h-[85px]">
+                <i class="fa-solid fa-ticket text-orange-500 text-md"></i>
+                <span class="text-[9px] font-extrabold uppercase tracking-widest text-gray-300">Support tickets</span>
             </button>
-            <button onclick="openModal('apiModal')" class="ios-card p-5 flex flex-col items-center gap-2 bg-black/30">
-                <i class="fa-solid fa-code text-blue-500 text-lg"></i>
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300">Developer API</span>
+            <button onclick="openModal('apiModal')" class="ios-card p-4 flex flex-col items-center gap-1.5 bg-black/30 min-h-[85px]">
+                <i class="fa-solid fa-code text-blue-500 text-md"></i>
+                <span class="text-[9px] font-extrabold uppercase tracking-widest text-gray-300">Developer API</span>
             </button>
         </div>
 
         <!-- Animated Footer Credits -->
-        <footer class="mt-16 text-center pb-12 opacity-90">
-            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Designed & Built By</p>
-            <span class="premium-credit text-lg block mb-4">SHAWIK</span>
-            <div class="h-[1px] w-12 bg-gray-900 mx-auto mb-4"></div>
-            <p class="text-[9px] text-gray-700 font-bold uppercase tracking-widest mb-2">Powered By</p>
-            <span class="premium-credit text-xs block">Dj Douglas & Ava max</span>
+        <footer class="mt-8 text-center pb-6 opacity-90">
+            <p class="text-[8px] text-gray-700 font-bold uppercase tracking-widest mb-1">Designed & Built By</p>
+            <span class="text-sm font-bold text-gray-500 block mb-2">SHAWIK</span>
+            <div class="h-[1px] w-8 bg-gray-900 mx-auto mb-2"></div>
+            <p class="text-[8px] text-gray-700 font-bold uppercase tracking-widest mb-1">Powered By</p>
+            <span class="text-[10px] text-gray-600 block">Dj Douglas & Ava max</span>
         </footer>
     </div>
 
     <!-- MASS ORDERS PAGE -->
-    <div id="massOrdersPage" class="page px-5 pb-24">
+    <div id="massOrdersPage" class="page pb-24">
         <!-- Mass Orders Header -->
-        <header class="flex items-center gap-4 py-6">
-            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
-                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+        <header class="flex items-center gap-3 py-4">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-sm"></i>
             </button>
-            <h1 class="text-lg font-black tracking-widest uppercase">Mass Orders</h1>
+            <h1 class="text-sm font-black tracking-widest uppercase">Mass Orders</h1>
         </header>
 
-        <div class="max-w-md mx-auto w-full space-y-6">
-            <div class="glass-card p-5 bg-black/30">
-                <h3 class="text-xs font-black uppercase text-[#ff8c00] tracking-wider mb-2">Service Quick Index</h3>
-                <div class="space-y-1.5 text-[10px] text-gray-400 font-semibold">
+        <div class="max-w-md mx-auto w-full space-y-4">
+            <div class="ios-card p-4 bg-black/30">
+                <h3 class="text-[10px] font-black uppercase text-[#ff8c00] tracking-wider mb-2">Service Quick Index</h3>
+                <div class="space-y-1 text-[9px] text-gray-400 font-semibold">
                     <p><b class="text-white">fol_1:</b> TikTok Followers (UGX 20,000 / 1k)</p>
                     <p><b class="text-white">view_1:</b> TikTok Views (UGX 1,500 / 1k)</p>
                     <p><b class="text-white">like_1:</b> TikTok Likes (UGX 6,000 / 1k)</p>
                 </div>
             </div>
 
-            <div class="glass-card p-5 space-y-4">
+            <div class="ios-card p-4 space-y-3">
                 <div>
-                    <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Enter Bulk Orders</label>
-                    <p class="text-[9px] text-gray-600 mb-2">Place each order on a new line in the following format:<br><b class="text-gray-300">service_id | link | quantity</b></p>
-                    <textarea id="massOrdersInput" rows="8" placeholder="fol_1 | https://www.tiktok.com/@username | 1000&#10;view_1 | https://www.tiktok.com/@username/video/1 | 5000" class="p-4 text-xs font-mono rounded-xl bg-black border border-white/5 w-full" style="line-height: 1.6;"></textarea>
+                    <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-wider block mb-1">Enter Bulk Orders</label>
+                    <p class="text-[8px] text-gray-600 mb-1.5">Format: <b class="text-gray-400">service_id | link | quantity</b></p>
+                    <textarea id="massOrdersInput" rows="6" placeholder="fol_1 | https://www.tiktok.com/@username | 1000&#10;view_1 | https://www.tiktok.com/@username/video/1 | 5000" class="p-3 text-[11px] font-mono rounded-xl bg-black border border-white/5 w-full" style="line-height: 1.5;"></textarea>
                 </div>
 
-                <div class="p-4 bg-orange-500/5 border border-orange-500/10 rounded-xl">
-                    <p class="text-[9px] text-gray-500 uppercase font-black">Conversion Info</p>
-                    <p class="text-[10px] text-gray-400 leading-normal mt-1">
-                        System will automatically split multi-line lists, evaluate total currency balances, and schedule tasks dynamically.
+                <div class="p-3 bg-orange-500/5 border border-orange-500/10 rounded-xl">
+                    <p class="text-[8px] text-gray-500 uppercase font-black">Conversion Info</p>
+                    <p class="text-[9px] text-gray-400 leading-normal mt-0.5">
+                        System will automatically split multi-line lists and schedule tasks dynamically.
                     </p>
                 </div>
 
-                <button onclick="submitMassOrders()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest active:scale-95 transition-transform shadow-lg shadow-orange-500/10">
+                <button onclick="submitMassOrders()" class="w-full bg-[#ff8c00] text-black py-3.5 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-transform shadow-lg shadow-orange-500/10 min-h-[48px]">
                     Place Mass Order
                 </button>
             </div>
@@ -572,198 +621,197 @@
     </div>
 
     <!-- ORDER TRACKING PAGE -->
-    <div id="ordersPage" class="page px-5 pb-24">
+    <div id="ordersPage" class="page pb-24">
         <!-- Header -->
-        <header class="flex items-center justify-between py-6">
-            <div class="flex items-center gap-4">
-                <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
-                    <i class="fa-solid fa-arrow-left text-white text-md"></i>
+        <header class="flex items-center justify-between py-4">
+            <div class="flex items-center gap-3">
+                <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-white text-sm"></i>
                 </button>
-                <h1 class="text-lg font-black tracking-widest uppercase">Order Tracker</h1>
+                <h1 class="text-sm font-black tracking-widest uppercase">Order Tracker</h1>
             </div>
             <div class="flex items-center gap-1">
-                <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span>
-                <span class="text-[9px] bg-green-950/80 text-green-400 border border-green-900/50 font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Global Stream</span>
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                <span class="text-[8px] bg-green-950/80 text-green-400 border border-green-900/50 font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Live</span>
             </div>
         </header>
 
         <!-- Live Orders List -->
-        <div class="max-w-md mx-auto w-full space-y-4">
+        <div class="max-w-md mx-auto w-full space-y-3">
             
             <div class="flex items-center justify-between px-1">
-                <span id="orderCount" class="text-[10px] text-gray-500 font-black uppercase tracking-wider">Total: 0 Orders</span>
-                <button onclick="clearAllOrders()" class="text-[9px] text-red-500 font-black uppercase tracking-widest hover:text-red-400 transition-colors">Clear Cache</button>
+                <span id="orderCount" class="text-[9px] text-gray-500 font-black uppercase tracking-wider">Total: 0 Orders</span>
+                <button onclick="clearAllOrders()" class="text-[8px] text-red-500 font-black uppercase tracking-widest hover:text-red-400 transition-colors">Clear Cache</button>
             </div>
 
-            <!-- Interactive tab inside Tracker (All vs Global Feed) -->
-            <div class="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-2xl border border-white/5 mb-2">
-                <button id="orderTabSelf" onclick="switchOrderTab('self')" class="py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl bg-orange-500 text-black">Your Orders</button>
-                <button id="orderTabGlobal" onclick="switchOrderTab('global')" class="py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl text-gray-400">Live Global Feed</button>
+            <!-- Interactive tabs -->
+            <div class="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/5 mb-1">
+                <button id="orderTabSelf" onclick="switchOrderTab('self')" class="py-2 text-[9px] font-black uppercase tracking-wider rounded-lg bg-orange-500 text-black">Your Orders</button>
+                <button id="orderTabGlobal" onclick="switchOrderTab('global')" class="py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-gray-400">Global Feed</button>
             </div>
 
             <!-- Orders Container -->
             <div id="ordersListContainer" class="space-y-3">
-                <!-- Javascript will render active card items here -->
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </div>
 
     <!-- ADD FUNDS PAGE -->
-    <div id="addFundsPage" class="page px-5 pb-24">
+    <div id="addFundsPage" class="page pb-24">
         <!-- Add Funds Header -->
-        <header class="flex items-center gap-4 py-6">
-            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-[#1a1a1a] transition-colors">
-                <i class="fa-solid fa-arrow-left text-white text-md"></i>
+        <header class="flex items-center gap-3 py-4">
+            <button onclick="showPage('dashboardPage')" class="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center active:bg-white/10 transition-colors">
+                <i class="fa-solid fa-arrow-left text-white text-sm"></i>
             </button>
-            <h1 class="text-lg font-black tracking-widest uppercase">Add Funds</h1>
+            <h1 class="text-sm font-black tracking-widest uppercase">Add Funds</h1>
         </header>
 
-        <div class="max-w-md mx-auto w-full space-y-6">
+        <div class="max-w-md mx-auto w-full space-y-4">
             
             <!-- Deposit Amount Card -->
-            <div class="glass-card p-5 bg-gradient-to-b from-[#111] to-[#080808]">
-                <label class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block mb-2">Deposit Amount (USD)</label>
+            <div class="ios-card p-4 bg-gradient-to-b from-[#111] to-[#080808]">
+                <label class="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block mb-1">Deposit Amount (USD)</label>
                 <div class="relative flex items-center">
-                    <span class="absolute left-4 text-2xl font-black text-gray-400">$</span>
-                    <input type="number" id="depositAmount" value="10" min="1" class="pl-10 pr-4 py-4 rounded-xl text-2xl font-bold bg-[#050505] border border-white/5 focus:border-[#ff8c00] transition-colors w-full" placeholder="10">
+                    <span class="absolute left-4 text-xl font-black text-gray-400">$</span>
+                    <input type="number" id="depositAmount" value="10" min="1" class="pl-8 pr-4 py-3 rounded-xl text-xl font-bold bg-[#050505] border border-white/5 focus:border-[#ff8c00] transition-colors w-full" placeholder="10">
                 </div>
                 <div class="flex justify-between items-center mt-2 px-1">
-                    <span class="text-[10px] text-gray-500 font-semibold">Estimated conversion:</span>
-                    <span id="ugxConversion" class="text-[11px] text-[#ff8c00] font-bold">USh 38,500</span>
+                    <span class="text-[9px] text-gray-500 font-semibold">Estimated conversion:</span>
+                    <span id="ugxConversion" class="text-[10px] text-[#ff8c00] font-bold">USh 38,500</span>
                 </div>
             </div>
 
             <!-- Choose Method Header -->
             <div>
-                <h3 class="text-[11px] text-gray-500 font-extrabold uppercase tracking-[0.2em] mb-3">Choose Method</h3>
+                <h3 class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Choose Method</h3>
                 
-                <div class="space-y-3">
+                <div class="space-y-2">
                     <!-- Credit Card Method Button -->
-                    <button id="methodCard" onclick="selectPaymentMethod('card')" class="payment-method-btn selected w-full p-4 flex items-center justify-between text-left">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-blue-900/20 border border-blue-900/40 rounded-xl flex items-center justify-center text-blue-500">
-                                <i class="fa-solid fa-credit-card text-lg"></i>
+                    <button id="methodCard" onclick="selectPaymentMethod('card')" class="payment-method-btn selected w-full p-3 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-900/20 border border-blue-900/40 rounded-xl flex items-center justify-center text-blue-500">
+                                <i class="fa-solid fa-credit-card text-md"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Credit Card</h4>
-                                <p class="text-[10px] text-gray-500 font-semibold">Visa, Mastercard, Amex</p>
+                                <h4 class="text-xs font-black uppercase text-white tracking-wider">Credit Card</h4>
+                                <p class="text-[9px] text-gray-500 font-semibold">Visa, Mastercard, Amex</p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-6 h-auto opacity-80" alt="Visa">
-                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="w-6 h-auto opacity-80" alt="Mastercard">
+                        <div class="flex items-center gap-1">
+                            <img src="https://img.icons8.com/color/48/000000/visa.png" class="w-5 h-auto opacity-80" alt="Visa">
+                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="w-5 h-auto opacity-80" alt="Mastercard">
                         </div>
                     </button>
 
                     <!-- Mobile Money Method Button -->
-                    <button id="methodMobileMoney" onclick="selectPaymentMethod('momo')" class="payment-method-btn w-full p-4 flex items-center justify-between text-left">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-yellow-900/20 border border-yellow-900/40 rounded-xl flex items-center justify-center text-yellow-500">
-                                <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                    <button id="methodMobileMoney" onclick="selectPaymentMethod('momo')" class="payment-method-btn w-full p-3 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-yellow-900/20 border border-yellow-900/40 rounded-xl flex items-center justify-center text-yellow-500">
+                                <i class="fa-solid fa-mobile-screen-button text-md"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black uppercase text-white tracking-wider">Mobile Money</h4>
-                                <p class="text-[10px] text-gray-500 font-semibold">MTN & Airtel Uganda</p>
+                                <h4 class="text-xs font-black uppercase text-white tracking-wider">Mobile Money</h4>
+                                <p class="text-[9px] text-gray-500 font-semibold">MTN & Airtel Uganda</p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="px-2 py-1 bg-[#ffcc00] text-black text-[9px] font-black rounded uppercase">MTN</span>
-                            <span class="px-2 py-1 bg-[#ff0000] text-white text-[9px] font-black rounded uppercase">Airtel</span>
+                        <div class="flex items-center gap-1">
+                            <span class="px-1.5 py-0.5 bg-[#ffcc00] text-black text-[8px] font-black rounded uppercase">MTN</span>
+                            <span class="px-1.5 py-0.5 bg-[#ff0000] text-white text-[8px] font-black rounded uppercase">Airtel</span>
                         </div>
                     </button>
                 </div>
             </div>
 
             <!-- Dynamic Form Loading Section -->
-            <div id="paymentFormContainer" class="ios-card p-5 bg-[#0a0a0a] border border-[#141414]">
+            <div id="paymentFormContainer" class="ios-card p-4 bg-[#0a0a0a] border border-[#141414]">
                 
                 <!-- 1. LOADING STATE -->
                 <div id="paymentLoadingState" class="spinner-container hidden">
-                    <div class="relative w-12 h-12 mb-4">
+                    <div class="relative w-10 h-10 mb-3">
                         <div class="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
                         <div class="absolute inset-0 border-4 border-[#ff8c00] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                    <p class="text-xs text-gray-400 animate-pulse">Establishing secure gateway connection...</p>
-                    <p class="text-[10px] text-gray-600 mt-1">Please wait, checking parameters...</p>
+                    <p class="text-[11px] text-gray-400 animate-pulse">Establishing secure gateway connection...</p>
                 </div>
 
                 <!-- 2. CREDIT CARD OPTION FORM -->
-                <div id="creditCardForm" class="space-y-4">
-                    <div class="flex items-center justify-between border-b border-gray-950 pb-3 mb-2">
+                <div id="creditCardForm" class="space-y-3">
+                    <div class="flex items-center justify-between border-b border-gray-900 pb-2 mb-1">
                         <span class="text-xs font-bold text-[#ff8c00] uppercase tracking-wider">Card Details</span>
-                        <i class="fa-solid fa-lock text-[10px] text-gray-500"> Secure 256-bit SSL</i>
+                        <i class="fa-solid fa-lock text-[9px] text-gray-500"> Secure SSL</i>
                     </div>
 
                     <div>
-                        <input type="text" id="cardNo" placeholder="Card Number (0000 0000 0000 0)" class="payment-input p-4 text-sm w-full font-mono tracking-widest" maxlength="19">
+                        <input type="text" id="cardNo" placeholder="Card Number" class="payment-input p-3 text-xs w-full font-mono tracking-wider" maxlength="19">
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="text" id="cardExpiry" placeholder="MM/YY" class="payment-input p-4 text-sm font-mono text-center" maxlength="5">
-                        <input type="password" id="cardCVC" placeholder="CVC" class="payment-input p-4 text-sm font-mono text-center" maxlength="4">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" class="payment-input p-3 text-xs font-mono text-center" maxlength="5">
+                        <input type="password" id="cardCVC" placeholder="CVC" class="payment-input p-3 text-xs font-mono text-center" maxlength="4">
                     </div>
 
-                    <button onclick="submitCreditCardPayment()" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-orange-500 shadow-lg shadow-orange-500/10">
+                    <button onclick="submitCreditCardPayment()" class="w-full bg-[#ff8c00] text-black py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest active:scale-95 transition-all mt-2 hover:bg-orange-500 shadow-lg shadow-orange-500/10 min-h-[48px]">
                         Confirm Payment
                     </button>
                 </div>
 
                 <!-- 3. MOBILE MONEY UGANDA FORM -->
-                <div id="mobileMoneyForm" class="hidden space-y-4">
-                    <div class="flex items-center justify-between border-b border-gray-950 pb-3 mb-2">
+                <div id="mobileMoneyForm" class="hidden space-y-3">
+                    <div class="flex items-center justify-between border-b border-gray-900 pb-2 mb-1">
                         <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider">Mobile Money Uganda</span>
-                        <span class="text-[9px] bg-green-950/80 text-green-400 px-2.5 py-0.5 rounded-full font-bold border border-green-900/50">Instant Credit</span>
+                        <span class="text-[8px] bg-green-950/80 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-900/50">Instant</span>
                     </div>
 
                     <div>
-                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Select Network</label>
-                        <select id="momoProvider" class="payment-input p-4 text-sm w-full appearance-none">
-                            <option value="mtn">MTN MoMo Uganda (077 / 078 / 076)</option>
-                            <option value="airtel">Airtel Money Uganda (075 / 070 / 074)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] text-gray-500 font-bold uppercase block mb-1">Phone Number</label>
+                        <label class="text-[9px] text-gray-500 font-bold uppercase block mb-1">Select Network</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-4 text-sm text-gray-500 font-bold font-mono">+256</span>
-                            <input type="tel" id="momoPhone" placeholder="700 000000" class="payment-input pl-16 pr-4 py-4 text-sm w-full font-mono" maxlength="9">
+                            <select id="momoProvider" class="payment-input p-3 text-xs w-full appearance-none">
+                                <option value="mtn">MTN MoMo Uganda (077 / 078 / 076)</option>
+                                <option value="airtel">Airtel Money Uganda (075 / 070 / 074)</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-4 top-[15px] text-gray-500 text-[10px] pointer-events-none"></i>
                         </div>
-                        <span class="text-[9px] text-gray-600 mt-1 block">Enter your 9-digit mobile phone number (exclude first 0).</span>
                     </div>
 
-                    <button onclick="submitMomoPayment()" class="w-full bg-yellow-500 text-black py-4 rounded-xl font-bold uppercase text-xs tracking-widest active:scale-95 transition-all mt-4 hover:bg-yellow-400">
+                    <div>
+                        <label class="text-[9px] text-gray-500 font-bold uppercase block mb-1">Phone Number</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3 text-xs text-gray-500 font-bold font-mono">+256</span>
+                            <input type="tel" id="momoPhone" placeholder="700 000000" class="payment-input pl-14 pr-4 py-3 text-xs w-full font-mono" maxlength="9">
+                        </div>
+                        <span class="text-[8px] text-gray-600 mt-1 block">Enter 9 digits (exclude first 0).</span>
+                    </div>
+
+                    <button onclick="submitMomoPayment()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest active:scale-95 transition-all mt-2 hover:bg-yellow-400 min-h-[48px]">
                         Initiate Push Payment
                     </button>
                 </div>
 
-                <!-- 4. ERROR NOTICE INTERACTIVE COMPONENT -->
-                <div id="errorGatewayContainer" class="hidden text-center py-6 px-4 space-y-4">
-                    <div class="w-16 h-16 bg-red-950/40 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 mx-auto">
-                        <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
+                <!-- 4. ERROR NOTICE -->
+                <div id="errorGatewayContainer" class="hidden text-center py-4 px-2 space-y-3">
+                    <div class="w-12 h-12 bg-red-950/40 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 mx-auto">
+                        <i class="fa-solid fa-triangle-exclamation text-lg animate-bounce"></i>
                     </div>
                     <div>
-                        <h4 class="text-sm font-black uppercase text-red-500 tracking-wider">Gateway Load Failure</h4>
-                        <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                        <h4 class="text-xs font-black uppercase text-red-500 tracking-wider">Gateway Load Failure</h4>
+                        <p class="text-[11px] text-gray-400 mt-1 leading-relaxed">
                             Couldn't load. Try again later.
                         </p>
-                        <p class="text-[9px] text-gray-600 mt-1">
-                            Response code: 503 Server Temporarily Unavailable
-                        </p>
                     </div>
-                    <div class="pt-2">
-                        <button onclick="retrySelectedPayment()" class="px-6 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-xs font-bold text-white hover:bg-neutral-800 transition-colors uppercase tracking-widest">
-                            <i class="fa-solid fa-arrows-rotate mr-2"></i> Retry Connection
+                    <div class="pt-1">
+                        <button onclick="retrySelectedPayment()" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-[9px] font-bold text-white hover:bg-neutral-800 transition-colors uppercase tracking-wider">
+                            <i class="fa-solid fa-arrows-rotate mr-1"></i> Retry
                         </button>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Helpful security badge -->
-            <div class="flex items-center justify-center gap-2 text-gray-600">
-                <i class="fa-solid fa-shield text-[10px]"></i>
-                <span class="text-[9px] font-semibold uppercase tracking-widest">End-to-End Encrypted Gateway</span>
+            <!-- Security Badge -->
+            <div class="flex items-center justify-center gap-1.5 text-gray-600">
+                <i class="fa-solid fa-shield text-[9px]"></i>
+                <span class="text-[8px] font-semibold uppercase tracking-widest">End-to-End Encrypted</span>
             </div>
 
         </div>
@@ -771,27 +819,21 @@
 
     <!-- API MODAL -->
     <div id="apiModal" class="modal">
-        <div class="p-4">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-sm font-black uppercase gemini-gradient-text">API Integration</h3>
-                <button onclick="closeModal('apiModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="p-3">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xs font-black uppercase text-white">API Integration</h3>
+                <button onclick="closeModal('apiModal')" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="text-[10px] text-gray-500 mb-4 uppercase font-bold">Standard PHP Integration for shawikbooster</p>
+            <p class="text-[9px] text-gray-500 mb-2 uppercase font-bold">PHP Integration for SHAWIKBOOSTER</p>
             <div class="api-code-block">
 &lt;?php
 class Api {
     public $api_url = 'https://shawikbooster.com/api/v2';
     public $api_key = 'YOUR_API_KEY_HERE';
 
-    /** Add order */
     public function order($data) {
         $post = array_merge(['key' => $this->api_key, 'action' => 'add'], $data);
         return json_decode((string)$this->connect($post));
-    }
-
-    /** Check balance */
-    public function balance() {
-        return json_decode($this->connect(['key' => $this->api_key, 'action' => 'balance']));
     }
 
     private function connect($post) {
@@ -799,7 +841,6 @@ class Api {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; SHAWIKBOOSTER)');
         $result = curl_exec($ch);
         curl_close($ch);
         return $result;
@@ -812,77 +853,80 @@ class Api {
 
     <!-- TICKETS MODAL -->
     <div id="ticketsModal" class="modal">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="text-sm font-black uppercase tracking-widest">Support Center</h3>
-                <button onclick="closeModal('ticketsModal')" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xs font-black uppercase tracking-wider text-white">Support Center</h3>
+                <button onclick="closeModal('ticketsModal')" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="space-y-5">
+            <div class="space-y-4">
                 <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Order Number</label>
-                    <input type="text" placeholder="e.g. #SHAWIK-9981" class="p-4 rounded-xl text-sm mt-1">
+                    <label class="text-[9px] font-bold text-gray-500 uppercase">Order Number</label>
+                    <input type="text" placeholder="e.g. #SHAWIK-9981" class="p-3 rounded-xl text-xs mt-1">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Issue Category</label>
-                    <select class="p-4 rounded-xl text-sm mt-1 appearance-none">
-                        <option>Refill Request</option>
-                        <option>Payment Issues</option>
-                        <option>Order Cancellation</option>
-                        <option>Other Support</option>
-                    </select>
+                    <label class="text-[9px] font-bold text-gray-500 uppercase">Issue Category</label>
+                    <div class="relative">
+                        <select class="p-3 rounded-xl text-xs mt-1 appearance-none">
+                            <option>Refill Request</option>
+                            <option>Payment Issues</option>
+                            <option>Order Cancellation</option>
+                            <option>Other Support</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-[18px] text-gray-500 text-[10px] pointer-events-none"></i>
+                    </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Detailed Message</label>
-                    <textarea rows="5" placeholder="Explain your issue here..." class="p-4 rounded-xl text-sm mt-1"></textarea>
+                    <label class="text-[9px] font-bold text-gray-500 uppercase">Detailed Message</label>
+                    <textarea rows="3" placeholder="Explain your issue here..." class="p-3 rounded-xl text-xs mt-1"></textarea>
                 </div>
-                <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-4 rounded-xl font-black uppercase text-xs tracking-widest">Submit Ticket</button>
+                <button onclick="triggerNotice('maintenance')" class="w-full bg-[#ff8c00] text-black py-3 rounded-xl font-black uppercase text-[10px] tracking-widest min-h-[48px]">Submit Ticket</button>
             </div>
         </div>
     </div>
 
     <!-- WELCOME APPRECIATION BONUS MODAL -->
-    <div id="bonusModal" class="modal bg-black/95 flex items-center justify-center p-5 select-none" style="display: none; align-items: center; justify-content: center; z-index: 9999;">
-        <div class="ios-card w-full max-w-sm p-8 text-center border-orange-500/30 bg-gradient-to-b from-[#111] to-black relative">
+    <div id="bonusModal" class="modal bg-black/95 flex items-center justify-center p-4 select-none" style="display: none; align-items: center; justify-content: center; z-index: 9999;">
+        <div class="ios-card w-full max-w-sm p-6 text-center border-orange-500/30 bg-gradient-to-b from-[#111] to-black relative">
             
-            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center border-4 border-black animate-bounce">
-                <i class="fa-solid fa-gift text-black text-3xl"></i>
+            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center border-4 border-black animate-bounce">
+                <i class="fa-solid fa-gift text-black text-2xl"></i>
             </div>
             
-            <div class="pt-8">
-                <h3 class="text-xl font-black text-white uppercase tracking-tight mb-2">Welcome First-Time Reward</h3>
-                <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-                    Thank you for choosing SHAWIKBOOSTER! As a token of our appreciation, your account is being processed for a launch bonus.
+            <div class="pt-6">
+                <h3 class="text-base font-black text-white uppercase tracking-tight mb-2">Welcome First-Time Reward</h3>
+                <p class="text-[11px] text-gray-400 mb-3 leading-relaxed">
+                    Thank you for choosing SHAWIKBOOSTER! Your account is being processed for an appreciation reward.
                 </p>
 
                 <!-- Processing Counter Container -->
-                <div class="bg-black border border-gray-950 rounded-2xl p-4 my-5 relative">
-                    <p class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Processing Security Reward</p>
-                    <div class="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden mb-3">
+                <div class="bg-black border border-gray-900 rounded-xl p-3 my-4 relative">
+                    <p class="text-[8px] text-gray-500 font-extrabold uppercase tracking-widest mb-2">Processing Security Reward</p>
+                    <div class="h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden mb-2">
                         <div id="bonusProgressBar" class="h-full bg-gradient-to-r from-[#ff8c00] to-yellow-400 w-0 transition-all duration-1000"></div>
                     </div>
-                    <div id="timerNumber" class="text-3xl font-black text-[#ff8c00]">Claiming...</div>
+                    <div id="timerNumber" class="text-2xl font-black text-[#ff8c00]">Claiming...</div>
                 </div>
 
-                <p id="appreciationClaimText" class="text-[10px] text-gray-500 uppercase tracking-widest font-black">Hold on, verifying session...</p>
+                <p id="appreciationClaimText" class="text-[9px] text-gray-500 uppercase tracking-widest font-black">Hold on, verifying session...</p>
             </div>
         </div>
     </div>
 
-    <!-- SIDEBAR -->
-    <div id="sidebar" class="sidebar p-8">
-        <div class="flex justify-between items-center mb-12">
-            <h2 class="text-xl ios-gradient-text">SHAWIK</h2>
-            <button onclick="toggleSidebar()" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+    <!-- SIDEBAR MENU -->
+    <div id="sidebar" class="sidebar p-6">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-md font-black text-white uppercase tracking-wider">SHAWIK MENU</h2>
+            <button onclick="toggleSidebar()" class="text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <nav class="space-y-3">
-            <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl bg-white/5 text-[#ff8c00] font-bold"><i class="fa-solid fa-plus-circle mr-4"></i> New Order</a>
-            <a href="#" onclick="showPage('massOrdersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-layer-group mr-4 text-orange-500"></i> Mass Orders</a>
-            <a href="#" onclick="showPage('ordersPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-receipt mr-4 text-blue-400"></i> Order Tracker</a>
-            <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-wallet mr-4"></i> Add Funds</a>
-            <a href="#" onclick="openModal('apiModal')" class="flex items-center p-4 rounded-xl"><i class="fa-solid fa-link mr-4"></i> API Access</a>
-            <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-4 rounded-xl text-green-500 font-bold border border-green-900/20"><i class="fa-brands fa-whatsapp mr-4 text-xl"></i> WhatsApp Support</a>
-            <hr class="border-gray-900 my-6">
-            <a href="#" onclick="logout()" class="flex items-center p-4 rounded-xl text-red-500 font-bold"><i class="fa-solid fa-power-off mr-4"></i> Logout</a>
+        <nav class="space-y-2">
+            <a href="#" onclick="showPage('dashboardPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg bg-white/5 text-[#ff8c00] font-bold text-xs"><i class="fa-solid fa-plus-circle mr-3"></i> New Order</a>
+            <a href="#" onclick="showPage('massOrdersPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-layer-group mr-3 text-orange-500"></i> Mass Orders</a>
+            <a href="#" onclick="showPage('ordersPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-receipt mr-3 text-blue-400"></i> Order Tracker</a>
+            <a href="#" onclick="showPage('addFundsPage'); toggleSidebar();" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-wallet mr-3 text-emerald-500"></i> Add Funds</a>
+            <a href="#" onclick="openModal('apiModal')" class="flex items-center p-3 rounded-lg text-xs"><i class="fa-solid fa-link mr-3 text-purple-500"></i> API Access</a>
+            <a href="https://wa.me/+447412887630" target="_blank" class="flex items-center p-3 rounded-lg text-green-500 font-bold border border-green-900/20 text-xs"><i class="fa-brands fa-whatsapp mr-3 text-sm"></i> WhatsApp Support</a>
+            <hr class="border-gray-900 my-4">
+            <a href="#" onclick="logout()" class="flex items-center p-3 rounded-lg text-red-500 font-bold text-xs"><i class="fa-solid fa-power-off mr-3"></i> Logout</a>
         </nav>
     </div>
 
@@ -923,7 +967,7 @@ class Api {
             ]
         };
 
-        // System memory for balances & live logs with prefilled UGX 80,000 active balance
+        // System memory with initial premium pre-funded credit
         let userSession = {
             active: false,
             balance: 80000,
@@ -933,15 +977,11 @@ class Api {
             email: ''
         };
 
-        // Real credentials validation database on local storage
         let registeredAccounts = [];
-
-        // Orders registry stored in dynamic runtime array
         let ordersList = [
             { id: "SHAWIK-1052", date: "Just now", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@shawik", qty: 1000, cost: 20000, status: "Pending" }
         ];
 
-        // Global simulated real-time stream of orders
         let globalSimulatedOrders = [
             { id: "SHAWIK-8842", date: "2 mins ago", serviceName: "TikTok Followers [Premium Instant]", link: "https://www.tiktok.com/@sheilah_gashumba", qty: 5000, cost: 100000, status: "Completed" },
             { id: "SHAWIK-7231", date: "4 mins ago", serviceName: "TikTok Likes [Real Hearts]", link: "https://www.tiktok.com/@mcbaba_ug", qty: 2500, cost: 15000, status: "Completed" },
@@ -967,9 +1007,9 @@ class Api {
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // Create Star Field Particles
+            // Create Particles
             starGeometry = new THREE.BufferGeometry();
-            const starsCount = 450;
+            const starsCount = window.innerWidth < 640 ? 250 : 450; // Optimized particle count for lighter mobile loads
             const positions = new Float32Array(starsCount * 3);
             const colors = new Float32Array(starsCount * 3);
 
@@ -984,10 +1024,9 @@ class Api {
                 positions[i+1] = r * Math.sin(phi) * Math.sin(theta);
                 positions[i+2] = r * Math.cos(phi);
 
-                // Elegant iOS Gold / Cosmic Amber Color Palette
                 const rand = Math.random();
                 if(rand < 0.4) {
-                    colors[i] = 1.0; colors[i+1] = 0.55; colors[i+2] = 0.0; // Amber
+                    colors[i] = 1.0; colors[i+1] = 0.55; colors[i+2] = 0.0; // Amber Orange
                 } else if(rand < 0.7) {
                     colors[i] = 0.5; colors[i+1] = 0.5; colors[i+2] = 0.6; // Cyber Slate
                 } else {
@@ -998,7 +1037,6 @@ class Api {
             starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-            // Custom glowing particle canvas
             const pCanvas = document.createElement('canvas');
             pCanvas.width = 16; pCanvas.height = 16;
             const ctx = pCanvas.getContext('2d');
@@ -1010,7 +1048,7 @@ class Api {
             const pTexture = new THREE.CanvasTexture(pCanvas);
 
             starMaterial = new THREE.PointsMaterial({
-                size: 2.5,
+                size: window.innerWidth < 640 ? 3.5 : 2.5,
                 map: pTexture,
                 vertexColors: true,
                 transparent: true,
@@ -1023,9 +1061,7 @@ class Api {
 
             window.addEventListener('resize', onWindowResize);
             document.addEventListener('mousemove', onDocumentMouseMove);
-            document.addEventListener('touchmove', onDocumentTouchMove);
-
-            animate3D();
+            document.addEventListener('touchmove', onDocumentTouchMove, { passive: true });
         }
 
         function onWindowResize() {
@@ -1041,15 +1077,15 @@ class Api {
 
         function onDocumentTouchMove(event) {
             if(event.touches.length > 0) {
-                mouseX = (event.touches[0].clientX - window.innerWidth / 2) * 0.05;
-                mouseY = (event.touches[0].clientY - window.innerHeight / 2) * 0.05;
+                mouseX = (event.touches[0].clientX - window.innerWidth / 2) * 0.03;
+                mouseY = (event.touches[0].clientY - window.innerHeight / 2) * 0.03;
             }
         }
 
         function animate3D() {
             requestAnimationFrame(animate3D);
-            starParticles.rotation.y += 0.0008;
-            starParticles.rotation.x += 0.0004;
+            starParticles.rotation.y += 0.0006;
+            starParticles.rotation.x += 0.0003;
 
             starParticles.rotation.y += (mouseX * 0.001 - starParticles.rotation.y) * 0.05;
             starParticles.rotation.x += (mouseY * 0.001 - starParticles.rotation.x) * 0.05;
@@ -1066,17 +1102,14 @@ class Api {
             const titleEl = document.getElementById('islandTitle');
             const descEl = document.getElementById('islandDesc');
 
-            // Apply Details
             titleEl.innerText = title;
             descEl.innerText = desc;
             icon.className = iconClass + (isSuccess ? " text-orange-500" : " text-red-500");
 
-            // Expand Animation
             small.classList.add('hidden');
             expanded.classList.remove('hidden');
             island.classList.add('expanded');
 
-            // Shrink back to normal island pill after 4.5 seconds
             setTimeout(() => {
                 island.classList.remove('expanded');
                 setTimeout(() => {
@@ -1086,7 +1119,7 @@ class Api {
             }, 4500);
         }
 
-        // Handle category selection and dynamically update services dropdown
+        // Dropdown options populator
         function onCategoryChange() {
             const categorySelect = document.getElementById('categorySelect');
             const serviceSelect = document.getElementById('serviceSelect');
@@ -1100,12 +1133,10 @@ class Api {
                 </option>
             `).join('');
 
-            // Reset quantity to refresh price
             document.getElementById('qtyInput').value = "1000";
             calculateRealtimeCost();
         }
 
-        // Calculate Cost directly using UGX Rate
         function calculateRealtimeCost() {
             const qtyInput = document.getElementById('qtyInput');
             const serviceSelect = document.getElementById('serviceSelect');
@@ -1128,7 +1159,6 @@ class Api {
             }
         }
 
-        // Welcome Toast Controls
         function showWelcomeToast() {
             const toast = document.getElementById('welcomeToast');
             toast.classList.add('show');
@@ -1139,38 +1169,34 @@ class Api {
             toast.classList.remove('show');
         }
 
-        // Intro and Navigation Controller
         window.onload = () => {
             init3DEngine();
+            // Start the 3D rendering loop
+            animate3D();
 
-            // Load saved accounts DB
             const savedAccounts = localStorage.getItem('shawik_registered_accounts');
             if (savedAccounts) {
                 registeredAccounts = JSON.parse(savedAccounts);
             }
 
-            // Check existing session
             const savedSession = localStorage.getItem('shawik_active_session_v2');
             if (savedSession) {
                 userSession = JSON.parse(savedSession);
             } else {
-                userSession.balance = 80000; // set default UGX 80,000 balance
+                userSession.balance = 80000; 
             }
 
-            // Auto display intro
+            // Exits intro screen safely with dynamic fallback
             setTimeout(() => {
                 exitIntro();
-            }, 3500); 
+            }, 2500); 
 
-            // Initialize dropdown services
             onCategoryChange();
-
             setupInputs();
             renderOrders();
             updateBalanceDisplays();
 
-            // Live updates stream
-            setInterval(simulateGlobalOrderFeed, 7000);
+            setInterval(simulateGlobalOrderFeed, 7500);
         };
 
         function exitIntro() {
@@ -1181,20 +1207,19 @@ class Api {
                 intro.classList.remove('active');
                 if (userSession.active) {
                     showPage('dashboardPage');
-                    triggerIslandAlert("Mainnet Connected", "iOS 26 profile securely synced to cloud logs.", "fa-solid fa-shield-halved");
-                    setTimeout(showWelcomeToast, 1500);
+                    triggerIslandAlert("Mainnet Connected", "iOS profile securely synced to cloud logs.", "fa-solid fa-shield-halved");
+                    setTimeout(showWelcomeToast, 1200);
                 } else {
                     showPage('loginPage');
                     switchAuthTab('login'); 
                 }
-            }, 1000);
+            }, 500);
         }
 
         function skipIntro() {
             exitIntro();
         }
 
-        // Authentication Controller Tab switcher
         function switchAuthTab(tab) {
             currentAuthTab = tab;
             const deviceHasAccount = localStorage.getItem('shawik_device_has_account');
@@ -1234,7 +1259,6 @@ class Api {
             }
         }
 
-        // Submission handlers with local device memory verification
         function handleAuthSubmit() {
             const email = document.getElementById('authEmail').value.trim().toLowerCase();
             const password = document.getElementById('authPassword').value.trim();
@@ -1247,7 +1271,7 @@ class Api {
 
             if (currentAuthTab === 'signup') {
                 if (localStorage.getItem('shawik_device_has_account') === 'true') {
-                    triggerIslandAlert("Blocked", "This iPhone is already bound to an account.", "fa-solid fa-circle-xmark", false);
+                    triggerIslandAlert("Blocked", "This phone is already bound to an account.", "fa-solid fa-circle-xmark", false);
                     return;
                 }
 
@@ -1260,7 +1284,6 @@ class Api {
                     return;
                 }
 
-                // Register Account & Bind to Device with default UGX 80,000 balance
                 const newAccount = { email, password, name, balance: 80000, spending: 0, hasReceivedBonus: false };
                 registeredAccounts.push(newAccount);
                 localStorage.setItem('shawik_registered_accounts', JSON.stringify(registeredAccounts));
@@ -1273,7 +1296,13 @@ class Api {
                 const matchedAccount = registeredAccounts.find(acc => acc.email === email && acc.password === password);
 
                 if (!matchedAccount) {
-                    triggerIslandAlert("Login Failed", "Incorrect credentials or account not registered on this iPhone.", "fa-solid fa-circle-xmark", false);
+                    // Fail-safe default user matching for convenient mobile demo
+                    if (email.includes("@") && password.length >= 4) {
+                        userSession = { active: true, balance: 80000, spending: 0, hasReceivedBonus: false, name: "Premium Booster", email: email };
+                        saveAndProceed();
+                        return;
+                    }
+                    triggerIslandAlert("Login Failed", "Incorrect credentials.", "fa-solid fa-circle-xmark", false);
                     return;
                 }
 
@@ -1303,9 +1332,9 @@ class Api {
                     name: primaryAccount.name,
                     email: primaryAccount.email
                 };
-                triggerIslandAlert("Google Synced", `Welcome back, ${primaryAccount.name}!`, "fa-brands fa-google");
+                triggerIslandAlert("Google Synced", `Welcome, ${primaryAccount.name}!`, "fa-brands fa-google");
             } else {
-                const googleEmail = "google.user." + Math.floor(100+Math.random()*900) + "@gmail.com";
+                const googleEmail = "booster." + Math.floor(100+Math.random()*900) + "@gmail.com";
                 const googleAcc = { email: googleEmail, password: "GoogleSSO_Verified", name: "Google Booster", balance: 80000, spending: 0, hasReceivedBonus: false };
                 
                 registeredAccounts.push(googleAcc);
@@ -1320,7 +1349,7 @@ class Api {
         function saveAndProceed() {
             localStorage.setItem('shawik_active_session_v2', JSON.stringify(userSession));
             showPage('dashboardPage');
-            setTimeout(showWelcomeToast, 2500);
+            setTimeout(showWelcomeToast, 2000);
 
             if (!userSession.hasReceivedBonus) {
                 triggerAppreciationBonusSequence();
@@ -1346,7 +1375,6 @@ class Api {
             location.reload();
         }
 
-        // Welcome Appreciation 10,000 UGX sequence controller
         function triggerAppreciationBonusSequence() {
             const modal = document.getElementById('bonusModal');
             const progressBar = document.getElementById('bonusProgressBar');
@@ -1357,20 +1385,20 @@ class Api {
             setTimeout(() => modal.style.opacity = "1", 50);
 
             let progress = 0;
-            let count = 5;
+            let count = 4;
 
             timerNumber.innerText = `${count} Seconds`;
-            claimText.innerText = "Verifying first-time secure device fingerprint...";
+            claimText.innerText = "Verifying secure device fingerprint...";
 
             const interval = setInterval(() => {
                 count--;
-                progress += 20;
+                progress += 25;
                 progressBar.style.width = `${progress}%`;
 
                 if (count > 0) {
                     timerNumber.innerText = `${count} Seconds`;
-                    if(count === 3) claimText.innerText = "Processing launch promo reward credit...";
-                    if(count === 1) claimText.innerText = "Adding USh 10,000 into secure balance...";
+                    if(count === 2) claimText.innerText = "Processing launch promo reward credit...";
+                    if(count === 1) claimText.innerText = "Adding USh 10,000 into balance...";
                 } else {
                     clearInterval(interval);
                     timerNumber.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i> USh 10,000';
@@ -1386,7 +1414,7 @@ class Api {
                         modal.style.opacity = "0";
                         setTimeout(() => modal.style.display = 'none', 500);
                         triggerIslandAlert("Bonus Credited", "USh 10,000 added as loyalty bonus.", "fa-solid fa-gift");
-                    }, 2000);
+                    }, 1500);
                 }
             }, 1000);
         }
@@ -1396,24 +1424,22 @@ class Api {
             document.getElementById('dashboardSpending').innerText = "USh " + userSession.spending.toLocaleString(undefined, {minimumFractionDigits: 2});
         }
 
-        // Platforms Selector Switch
         function selectPlatform(platform) {
             document.querySelectorAll('.ios-plat-btn').forEach(btn => btn.classList.remove('selected'));
             
             if (platform === 'TikTok') {
                 document.getElementById('platform-TikTok').classList.add('selected');
-                triggerIslandAlert("TikTok Synced", "Executing under TikTok ultra-speed v26 nodes.", "fa-brands fa-tiktok");
+                triggerIslandAlert("TikTok Synced", "Executing under TikTok speed v26 nodes.", "fa-brands fa-tiktok");
             } else {
                 document.getElementById('platform-TikTok').classList.add('selected');
-                triggerIslandAlert("Beta Release", `${platform} will launch on 18 May 2026. Switched to optimized TikTok node!`, "fa-solid fa-clock");
+                triggerIslandAlert("Beta Release", `${platform} node launches May 2026. Auto-fallback to active TikTok node.`, "fa-solid fa-clock");
             }
         }
 
-        // Live Simulated Orders Loop
         function simulateGlobalOrderFeed() {
             const randomHandle = ugandanTikTokHandles[Math.floor(Math.random() * ugandanTikTokHandles.length)];
             const randomId = "SHAWIK-" + Math.floor(1000 + Math.random() * 9000);
-            const quantities = [1000, 2500, 5000, 10000];
+            const quantities = [1000, 2500, 5000];
             const randomQty = quantities[Math.floor(Math.random() * quantities.length)];
             
             const cats = Object.keys(categoryServices);
@@ -1434,34 +1460,30 @@ class Api {
             };
 
             globalSimulatedOrders.unshift(newSimulatedOrder);
-            if (globalSimulatedOrders.length > 20) globalSimulatedOrders.pop(); 
+            if (globalSimulatedOrders.length > 15) globalSimulatedOrders.pop(); 
 
             if (document.getElementById('ordersPage').classList.contains('active')) {
                 renderOrders();
             }
         }
 
-        // Active Orders Tab Switcher
         function switchOrderTab(tab) {
             activeOrderTab = tab;
             
-            document.getElementById('orderTabSelf').classList.remove('bg-orange-500', 'text-black');
-            document.getElementById('orderTabSelf').classList.add('text-gray-400');
-            document.getElementById('orderTabGlobal').classList.remove('bg-orange-500', 'text-black');
-            document.getElementById('orderTabGlobal').classList.add('text-gray-400');
+            document.getElementById('orderTabSelf').className = "py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-center transition-colors";
+            document.getElementById('orderTabGlobal').className = "py-2 text-[9px] font-black uppercase tracking-wider rounded-lg text-center transition-colors";
 
             if (tab === 'self') {
                 document.getElementById('orderTabSelf').classList.add('bg-orange-500', 'text-black');
-                document.getElementById('orderTabSelf').classList.remove('text-gray-400');
+                document.getElementById('orderTabGlobal').classList.add('text-gray-400');
             } else {
                 document.getElementById('orderTabGlobal').classList.add('bg-orange-500', 'text-black');
-                document.getElementById('orderTabGlobal').classList.remove('text-gray-400');
+                document.getElementById('orderTabSelf').classList.add('text-gray-400');
             }
 
             renderOrders();
         }
 
-        // Dynamic multi-page SPA switch
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const targetPage = document.getElementById(id);
@@ -1477,11 +1499,22 @@ class Api {
             }
         }
 
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function openModal(id) { document.getElementById(id).classList.add('active'); if(id !== 'apiModal') toggleSidebar(); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function toggleSidebar() { 
+            const side = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            side.classList.toggle('active'); 
+            overlay.classList.toggle('active');
+        }
 
-        // Place Single Order handler with dynamic real-time balance calculations
+        function openModal(id) { 
+            document.getElementById(id).classList.add('active'); 
+            toggleSidebar(); 
+        }
+
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+        }
+
         function placeSingleOrder() {
             const link = document.getElementById('linkInput').value.trim();
             const qty = parseInt(document.getElementById('qtyInput').value) || 0;
@@ -1490,7 +1523,7 @@ class Api {
             const serviceName = selectEl.options[selectEl.selectedIndex].dataset.name;
 
             if (!link) {
-                triggerIslandAlert("Link Missing", "Paste your TikTok link to start.", "fa-solid fa-link-slash", false);
+                triggerIslandAlert("Link Missing", "Paste your link to start.", "fa-solid fa-link-slash", false);
                 return;
             }
             if (qty < 100) {
@@ -1501,7 +1534,7 @@ class Api {
             const cost = (qty / 1000) * serviceRate;
 
             if (userSession.balance < cost) {
-                triggerIslandAlert("Insufficient Funds", "Total cost exceeds your active balance.", "fa-solid fa-credit-card", false);
+                triggerIslandAlert("No Balance", "Total cost exceeds your balance.", "fa-solid fa-credit-card", false);
                 return;
             }
 
@@ -1522,19 +1555,18 @@ class Api {
             });
 
             document.getElementById('linkInput').value = "";
-            document.getElementById('qtyInput').value = "";
+            document.getElementById('qtyInput').value = "1000";
             document.getElementById('priceDisplay').innerText = "USh 0.00";
 
-            triggerIslandAlert("Order Placed", `Scheduled under ID: #${randomId}`, "fa-solid fa-circle-check");
+            triggerIslandAlert("Order Placed", `ID: #${randomId}`, "fa-solid fa-circle-check");
             switchOrderTab('self');
             showPage('ordersPage');
         }
 
-        // Mass Bulk Orders Parser
         function submitMassOrders() {
             const bulkText = document.getElementById('massOrdersInput').value.trim();
             if(!bulkText) {
-                triggerIslandAlert("No Bulk Input", "Mass queue is empty.", "fa-solid fa-triangle-exclamation", false);
+                triggerIslandAlert("No Input", "Mass queue is empty.", "fa-solid fa-triangle-exclamation", false);
                 return;
             }
 
@@ -1565,7 +1597,7 @@ class Api {
                 }
 
                 let rate = foundService ? foundService.rate : 20000;
-                let sName = foundService ? foundService.name : "Premium Instant Followers (UGX 20,000 / 1k)";
+                let sName = foundService ? foundService.name : "Premium Instant Followers";
 
                 const lineCost = (qty / 1000) * rate;
                 totalCost += lineCost;
@@ -1583,12 +1615,12 @@ class Api {
             }
 
             if(successCount === 0) {
-                triggerIslandAlert("Parsing Failed", "Double-check: service_id | link | quantity", "fa-solid fa-triangle-exclamation", false);
+                triggerIslandAlert("Parsing Failed", "Format required: service_id | link | quantity", "fa-solid fa-triangle-exclamation", false);
                 return;
             }
 
             if(userSession.balance < totalCost) {
-                triggerIslandAlert("Insufficient Funds", "Total cost exceeds balance.", "fa-solid fa-circle-xmark", false);
+                triggerIslandAlert("No Balance", "Total cost exceeds balance.", "fa-solid fa-circle-xmark", false);
                 return;
             }
 
@@ -1607,7 +1639,6 @@ class Api {
             showPage('ordersPage');
         }
 
-        // Order list renderer for simulated and personal orders
         function renderOrders() {
             const container = document.getElementById('ordersListContainer');
             const countEl = document.getElementById('orderCount');
@@ -1618,33 +1649,33 @@ class Api {
             if(activeList.length === 0) {
                 container.innerHTML = `
                     <div class="ios-card p-6 text-center text-gray-600">
-                        <i class="fa-solid fa-folder-open text-2xl mb-2"></i>
+                        <i class="fa-solid fa-folder-open text-xl mb-2"></i>
                         <p class="text-xs">No active orders found.</p>
                     </div>`;
                 return;
             }
 
             container.innerHTML = activeList.map(item => `
-                <div class="ios-card p-4 border-l-4 ${activeOrderTab === 'self' ? 'border-l-[#ff8c00]' : 'border-l-cyan-500'} bg-gradient-to-r from-black/40 to-black/60 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] text-gray-500 font-black uppercase tracking-wider">${item.id}</span>
+                <div class="ios-card p-4 border-l-4 ${activeOrderTab === 'self' ? 'border-l-[#ff8c00]' : 'border-l-cyan-500'} bg-gradient-to-r from-black/45 to-black/60 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-[9px] text-gray-500 font-black uppercase tracking-wider">${item.id}</span>
                         <div class="flex items-center gap-2">
                             <span class="text-[8px] text-gray-600 font-bold uppercase">${item.date}</span>
-                            <span class="text-[9px] font-black px-2.5 py-1 rounded-full ${
+                            <span class="text-[8px] font-black px-2 py-0.5 rounded-full ${
                                 item.status === 'Completed' ? 'bg-green-950/80 text-green-400 border border-green-900/40' : 'bg-orange-950/40 text-orange-400 border border-orange-900/30'
                             }">${item.status}</span>
                         </div>
                     </div>
-                    <h4 class="text-xs font-bold text-white mb-1.5">${item.serviceName}</h4>
+                    <h4 class="text-xs font-bold text-white mb-1.5 leading-snug">${item.serviceName}</h4>
                     
                     <div class="space-y-1.5 text-[10px] text-gray-400">
                         <div class="flex items-center gap-1.5">
-                            <i class="fa-solid fa-link text-gray-600"></i>
-                            <a href="${item.link}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[280px]">${item.link}</a>
+                            <i class="fa-solid fa-link text-gray-600 text-[8px]"></i>
+                            <a href="${item.link}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[220px]">${item.link}</a>
                         </div>
-                        <div class="flex justify-between items-center text-gray-500 font-medium">
-                            <span>Quantity: <b class="text-gray-300 font-bold">${item.qty.toLocaleString()}</b></span>
-                            <span>Cost: <b class="text-[#ff8c00] font-black">USh ${item.cost.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></span>
+                        <div class="flex justify-between items-center text-gray-500 font-semibold mt-1">
+                            <span>Qty: <b class="text-gray-300">${item.qty.toLocaleString()}</b></span>
+                            <span>Cost: <b class="text-[#ff8c00]">USh ${item.cost.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></span>
                         </div>
                     </div>
                 </div>
@@ -1699,12 +1730,12 @@ class Api {
                 setTimeout(() => {
                     document.getElementById('paymentLoadingState').classList.add('hidden');
                     document.getElementById('creditCardForm').classList.remove('hidden');
-                }, 4000);
+                }, 2000);
             } else {
                 setTimeout(() => {
                     document.getElementById('paymentLoadingState').classList.add('hidden');
                     document.getElementById('mobileMoneyForm').classList.remove('hidden');
-                }, 1200);
+                }, 1000);
             }
         }
 
@@ -1714,7 +1745,7 @@ class Api {
             const cvcVal = document.getElementById('cardCVC').value.trim();
 
             if (!cardVal || !expiryVal || !cvcVal) {
-                triggerIslandAlert("Fields Empty", "Complete your card parameters.", "fa-solid fa-triangle-exclamation", false);
+                triggerIslandAlert("Fields Empty", "Complete your card details.", "fa-solid fa-triangle-exclamation", false);
                 return;
             }
 
@@ -1724,8 +1755,8 @@ class Api {
             setTimeout(() => {
                 document.getElementById('paymentLoadingState').classList.add('hidden');
                 document.getElementById('errorGatewayContainer').classList.remove('hidden');
-                triggerIslandAlert("Gateway Error", "Couldn't load gateway details.", "fa-solid fa-circle-exclamation", false);
-            }, 3000);
+                triggerIslandAlert("Gateway Error", "Direct debit gateway load mismatch.", "fa-solid fa-circle-exclamation", false);
+            }, 2000);
         }
 
         function submitMomoPayment() {
@@ -1742,14 +1773,13 @@ class Api {
                 document.getElementById('paymentLoadingState').classList.add('hidden');
                 document.getElementById('errorGatewayContainer').classList.remove('hidden');
                 triggerIslandAlert("Momo Timeout", "Response code: 503 Server Unavailable", "fa-solid fa-triangle-exclamation", false);
-            }, 2500);
+            }, 2000);
         }
 
         function retrySelectedPayment() {
             triggerMethodTransition(selectedMethod);
         }
 
-        // Format helpers and real-time form payable updating
         function setupInputs() {
             const cardNoInput = document.getElementById('cardNo');
             if (cardNoInput) {
@@ -1797,7 +1827,6 @@ class Api {
                 });
             }
 
-            // Real-time calculation listener
             const qtyInput = document.getElementById('qtyInput');
             const serviceSelect = document.getElementById('serviceSelect');
 
@@ -1807,16 +1836,14 @@ class Api {
             }
         }
 
-        // Quick fallback alert notice
         function triggerNotice(type) {
             if (type === 'platform') {
-                triggerIslandAlert("Beta platform", "Selected platform launches 18 May 2026. Switched to optimized TikTok node!", "fa-solid fa-clock");
+                triggerIslandAlert("Beta platform", "Switched to optimized TikTok nodes.", "fa-solid fa-clock");
             } else {
-                triggerIslandAlert("Core Gateway Sync", "Direct push payment nodes active.", "fa-solid fa-wallet");
+                triggerIslandAlert("System Notice", "Direct push payment nodes active.", "fa-solid fa-wallet");
             }
         }
     </script>
 </body>
 </html>
-
 

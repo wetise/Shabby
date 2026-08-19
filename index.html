@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok Creator Configuration</title>
+    <title>TikTok Account Access & Process</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -40,7 +40,7 @@
             <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#fe2c55] to-[#25f4ee] flex items-center justify-center shadow-lg shadow-pink-500/20">
                 <i class="fa-brands fa-tiktok text-white text-sm"></i>
             </div>
-            <span class="font-bold tracking-wider text-base bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">TikTok Config</span>
+            <span class="font-bold tracking-wider text-base bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">TikTok Portal</span>
         </div>
         <div class="flex items-center space-x-1 text-xs px-2.5 py-1 rounded-full bg-zinc-800/80 text-zinc-300 border border-zinc-700">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -51,155 +51,76 @@
     <!-- Main Container -->
     <main class="flex-1 w-full max-w-md mx-auto p-4 flex flex-col justify-center">
 
-        <!-- Locked Out State -->
+        <!-- Locked Out State (Persists after completion) -->
         <div id="lockedState" class="hidden flex-col items-center justify-center text-center p-6 space-y-4 my-auto">
             <div class="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#fe2c55] text-2xl shadow-xl">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <h2 class="text-xl font-bold tracking-tight">Session Expired</h2>
             <p class="text-xs text-zinc-400 leading-relaxed max-w-xs">
-                This configuration link has already been utilized or your device hardware ID is locked. Each registration token is strictly limited to a single usage.
+                This configuration link has already been utilized or your device hardware ID is locked. Each token is strictly limited to a single usage.
             </p>
             <div class="p-3 bg-zinc-900/60 rounded-xl border border-zinc-800 w-full text-xs text-zinc-500">
-                Hardware ID: <span class="text-zinc-300 font-mono" id="lockedHwid">TK-9082-SECURE</span>
+                Hardware ID: <span class="text-zinc-300 font-mono">TK-9082-SECURE</span>
             </div>
         </div>
 
-        <!-- Active Registration Form -->
-        <div id="activeFormContainer" class="space-y-5">
+        <!-- TikTok Account Process & Logins State -->
+        <div id="processState" class="flex flex-col space-y-4 my-auto py-2">
             <div class="text-center space-y-1">
-                <h1 class="text-2xl font-black tracking-tight">Setup Creator Profile</h1>
-                <p class="text-xs text-zinc-400">Configure your region algorithms & secure credentials</p>
+                <h1 class="text-2xl font-black tracking-tight">TikTok Account Process</h1>
+                <p class="text-xs text-zinc-400">Review account configuration & login prerequisites</p>
             </div>
 
-            <form id="configForm" class="space-y-4">
-                <!-- Account Name -->
-                <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-zinc-300 flex items-center justify-between">
-                        <span>Account Name</span>
-                        <span class="text-[10px] text-[#fe2c55]">Required</span>
-                    </label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
-                            <i class="fa-solid fa-user text-xs"></i>
-                        </span>
-                        <input type="text" id="accName" required placeholder="e.g. CreatorFlow99" 
-                            class="w-full pl-9 pr-3 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-sm focus:outline-none focus:border-[#fe2c55] transition text-white placeholder-zinc-600">
-                    </div>
+            <!-- Show Account Button (Direct Link) -->
+            <a href="https://www.tiktok.com/@strong.family48?_r=1&_t=ZS-9912POZrBwH" target="_blank" 
+               class="w-full py-3.5 bg-gradient-to-r from-[#fe2c55] to-[#ff3b6c] hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-pink-600/25 transition flex items-center justify-center space-x-2 text-center">
+                <i class="fa-brands fa-tiktok text-base"></i>
+                <span>Show TikTok Account</span>
+            </a>
+
+            <!-- Disclaimer Card -->
+            <div class="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-1">
+                <div class="flex items-center space-x-2 text-amber-400 font-semibold text-xs">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Important Disclaimer</span>
                 </div>
-
-                <!-- Date of Birth -->
-                <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-zinc-300">Date of Birth (18+ Verified)</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
-                            <i class="fa-solid fa-calendar text-xs"></i>
-                        </span>
-                        <input type="date" id="dob" required 
-                            class="w-full pl-9 pr-3 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-sm focus:outline-none focus:border-[#fe2c55] transition text-white [color-scheme:dark]">
-                    </div>
-                </div>
-
-                <!-- Region Select -->
-                <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-zinc-300">Target Region / Algorithm</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
-                            <i class="fa-solid fa-globe text-xs"></i>
-                        </span>
-                        <select id="region" required 
-                            class="w-full pl-9 pr-8 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-sm focus:outline-none focus:border-[#fe2c55] transition text-white appearance-none">
-                            <option value="" disabled selected>Select your preferred country</option>
-                            <option value="Kuwait">Kuwait</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Saudi Arabia">Saudi Arabia</option>
-                            <option value="UAE">UAE</option>
-                            <option value="America">America</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Uganda">Uganda</option>
-                            <option value="Japan">Japan</option>
-                        </select>
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-500">
-                            <i class="fa-solid fa-chevron-down text-xs"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- VPN Credentials Section -->
-                <div class="pt-2">
-                    <button type="button" id="getVpnBtn" 
-                        class="w-full py-3 px-4 bg-zinc-800 hover:bg-zinc-700 active:scale-[0.99] border border-zinc-700 rounded-xl font-medium text-xs text-zinc-200 flex items-center justify-center space-x-2 transition shadow-md">
-                        <i class="fa-solid fa-shield-halved text-[#25f4ee]"></i>
-                        <span>Get Your Proton VPN Details</span>
-                    </button>
-
-                    <!-- VPN Details Box -->
-                    <div id="vpnBox" class="hidden mt-3 p-3.5 bg-zinc-900/90 border border-zinc-800 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-                            <span class="text-[11px] font-semibold text-[#25f4ee] flex items-center space-x-1.5">
-                                <i class="fa-solid fa-key"></i>
-                                <span>Dedicated VPN Tunnel</span>
-                            </span>
-                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Ready</span>
-                        </div>
-                        <div class="space-y-2 text-xs">
-                            <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
-                                <span class="text-zinc-400 text-[11px]">Username:</span>
-                                <span id="vpnUserText" class="font-mono text-zinc-200">gooddeedwork92@gmail.com</span>
-                            </div>
-                            <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
-                                <span class="text-zinc-400 text-[11px]">Password:</span>
-                                <span id="vpnPassText" class="font-mono text-zinc-200">King@256</span>
-                            </div>
-                        </div>
-                        <button type="button" id="copyBtn" 
-                            class="w-full py-2 bg-[#25f4ee]/10 hover:bg-[#25f4ee]/20 text-[#25f4ee] border border-[#25f4ee]/30 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                            <i class="fa-solid fa-copy"></i>
-                            <span id="copyBtnText">Copy VPN Credentials</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Submit / Register Button -->
-                <button type="submit" id="submitBtn" 
-                    class="w-full mt-2 py-3.5 bg-gradient-to-r from-[#fe2c55] to-[#ff3b6c] hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-pink-600/25 transition flex items-center justify-center space-x-2">
-                    <span>Initialize Registration</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </form>
-        </div>
-
-        <!-- Verification Loading / Waiting State -->
-        <div id="verifyState" class="hidden flex-col items-center justify-center text-center p-6 space-y-5 my-auto">
-            <div class="relative w-16 h-16 flex items-center justify-center">
-                <div class="absolute inset-0 rounded-full border-2 border-zinc-800"></div>
-                <div class="absolute inset-0 rounded-full border-2 border-[#fe2c55] border-t-transparent animate-spin"></div>
-                <i class="fa-solid fa-shield text-[#fe2c55] text-xl"></i>
-            </div>
-            
-            <div class="space-y-1">
-                <h3 class="text-lg font-bold tracking-tight">Verifying Credentials</h3>
-                <p class="text-xs text-zinc-400 max-w-xs mx-auto">
-                    Cross-checking region parameters with regional servers and synchronizing sandbox security...
+                <p class="text-[11px] text-amber-200/90 leading-relaxed">
+                    Disclaimers this don't login yet before your followers count reach its maximum 1k followers.
                 </p>
             </div>
 
-            <div class="w-full bg-zinc-900 border border-zinc-800 p-3.5 rounded-xl space-y-2 text-left">
-                <div class="flex justify-between text-xs text-zinc-400">
-                    <span>Estimated Verification Time:</span>
-                    <span class="text-zinc-200 font-mono">1 - 2 Hours</span>
+            <!-- Login Credentials Card -->
+            <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-3">
+                <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                    <span class="text-xs font-semibold text-zinc-200">Here are the logins you going to use to login</span>
+                    <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded">Ready</span>
                 </div>
-                <div class="w-full bg-zinc-950 h-1.5 rounded-full overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-[#fe2c55] to-[#25f4ee] h-full w-[15%] transition-all duration-1000"></div>
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
+                        <span class="text-zinc-400 text-[11px]">Username:</span>
+                        <span id="ttUserText" class="font-mono text-zinc-200">strong.family48</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
+                        <span class="text-zinc-400 text-[11px]">Password:</span>
+                        <span id="ttPassText" class="font-mono text-zinc-200">Strong@256</span>
+                    </div>
                 </div>
-                <p class="text-[11px] text-zinc-500 italic">Please keep this window open or forward details directly when ready.</p>
+                <button type="button" id="copyTtBtn" 
+                    class="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
+                    <i class="fa-solid fa-copy"></i>
+                    <span id="copyTtBtnText">Copy your account username</span>
+                </button>
             </div>
 
-            <!-- Forward Button -->
-            <button id="forwardBtn" class="hidden w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-emerald-600/25 transition flex items-center justify-center space-x-2">
+            <p class="text-[11px] text-zinc-400 text-center italic">
+                Request code from your developer after putting details.
+            </p>
+
+            <!-- Final WhatsApp Forward Button -->
+            <button id="finalWhatsappBtn" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-emerald-600/25 transition flex items-center justify-center space-x-2">
                 <i class="fa-brands fa-whatsapp text-lg"></i>
-                <span>Forward Details to Developer</span>
+                <span>Show me details to login</span>
             </button>
         </div>
 
@@ -207,7 +128,7 @@
 
     <!-- Footer Note -->
     <footer class="w-full text-center py-3 text-[11px] text-zinc-600 border-t border-zinc-900">
-        TikTok High-Refresh Config Engine v4.3 &bull; Enterprise Grade
+        TikTok High-Refresh Config Engine v4.5 &bull; Enterprise Grade
     </footer>
 
     <!-- Toast Overlay -->
@@ -217,136 +138,67 @@
     </div>
 
     <script>
-        const SESSION_KEY = "tiktok_config_locked_status";
+        const SESSION_KEY = "tiktok_account_portal_locked";
         
         window.addEventListener('DOMContentLoaded', () => {
             const isLocked = localStorage.getItem(SESSION_KEY);
             if (isLocked === "true") {
-                document.getElementById('activeFormContainer').classList.add('hidden');
+                document.getElementById('processState').classList.add('hidden');
                 document.getElementById('lockedState').classList.remove('hidden');
                 document.getElementById('lockedState').classList.add('flex');
                 return;
             }
 
-            // VPN Toggle details display
-            const getVpnBtn = document.getElementById('getVpnBtn');
-            const vpnBox = document.getElementById('vpnBox');
+            // Copy TikTok username logic
+            const copyTtBtn = document.getElementById('copyTtBtn');
+            const copyTtBtnText = document.getElementById('copyTtBtnText');
             
-            getVpnBtn.addEventListener('click', () => {
-                vpnBox.classList.toggle('hidden');
-                if(!vpnBox.classList.contains('hidden')) {
-                    getVpnBtn.innerHTML = `<i class="fa-solid fa-shield-halved text-[#25f4ee]"></i><span>Hide VPN Details</span>`;
-                } else {
-                    getVpnBtn.innerHTML = `<i class="fa-solid fa-shield-halved text-[#25f4ee]"></i><span>Get Your Proton VPN Details</span>`;
-                }
+            copyTtBtn.addEventListener('click', () => {
+                const textToCopy = `strong.family48`;
+                copyTextToClipboard(textToCopy, "Account username copied!", copyTtBtnText, "Copy your account username");
             });
 
-            // Copy credentials logic
-            const copyBtn = document.getElementById('copyBtn');
-            const copyBtnText = document.getElementById('copyBtnText');
-            
-            copyBtn.addEventListener('click', () => {
-                const textToCopy = `Username: gooddeedwork92@gmail.com\nPassword: King@256`;
-                
-                const textarea = document.createElement('textarea');
-                textarea.value = textToCopy;
-                textarea.style.position = 'fixed';
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
-                
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        showToast("VPN credentials copied successfully!", "success");
-                        copyBtnText.textContent = "Copied!";
-                        setTimeout(() => copyBtnText.textContent = "Copy VPN Credentials", 2000);
-                    } else {
-                        showToast("Failed to copy", "error");
-                    }
-                } catch (err) {
-                    showToast("Copy error", "error");
-                }
-                document.body.removeChild(textarea);
-            });
-
-            // Form submission handling
-            const configForm = document.getElementById('configForm');
-            configForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const accName = document.getElementById('accName').value.trim();
-                const dob = document.getElementById('dob').value;
-                const region = document.getElementById('region').value;
-
-                if (!accName || !dob || !region) {
-                    showToast("Please complete all fields.", "error");
-                    return;
-                }
-
-                // Save complete details including Date of Birth and full VPN info to sessionStorage
-                const formData = { 
-                    accName: accName, 
-                    dob: dob, 
-                    region: region, 
-                    vpnUser: "gooddeedwork92@gmail.com",
-                    vpnPass: "King@256"
-                };
-                sessionStorage.setItem('pending_tiktok_payload', JSON.stringify(formData));
-
-                // Switch UI to verification waiting state
-                document.getElementById('activeFormContainer').classList.add('hidden');
-                const verifyState = document.getElementById('verifyState');
-                verifyState.classList.remove('hidden');
-                verifyState.classList.add('flex');
-
-                // Simulate progress
-                let progress = 15;
-                const progressBar = document.getElementById('progressBar');
-                const interval = setInterval(() => {
-                    progress += Math.floor(Math.random() * 15) + 10;
-                    if (progress >= 100) {
-                        progress = 100;
-                        clearInterval(interval);
-                        document.getElementById('forwardBtn').classList.remove('hidden');
-                    }
-                    progressBar.style.width = progress + '%';
-                }, 400);
-            });
-
-            // WhatsApp Forwarding Action with complete data payload
-            const forwardBtn = document.getElementById('forwardBtn');
-            forwardBtn.addEventListener('click', () => {
-                const rawData = sessionStorage.getItem('pending_tiktok_payload');
-                let summaryText = "🚀 *TikTok Config Registration Details*:\n\n";
-                
-                if (rawData) {
-                    const parsed = JSON.parse(rawData);
-                    summaryText += `👤 Account Name: ${parsed.accName}\n`;
-                    summaryText += `📅 Date of Birth: ${parsed.dob}\n`;
-                    summaryText += `🌍 Region: ${parsed.region}\n\n`;
-                    summaryText += `🛡️ *Proton VPN Details*:\n`;
-                    summaryText += `• Username: ${parsed.vpnUser}\n`;
-                    summaryText += `• Password: ${parsed.vpnPass}\n`;
-                } else {
-                    summaryText += `👤 Account Name: ${document.getElementById('accName').value}\n`;
-                    summaryText += `📅 Date of Birth: ${document.getElementById('dob').value}\n`;
-                    summaryText += `🌍 Region: ${document.getElementById('region').value}\n`;
-                    summaryText += `🛡️ *Proton VPN Details*:\n`;
-                    summaryText += `• Username: gooddeedwork92@gmail.com\n`;
-                    summaryText += `• Password: King@256\n`;
-                }
+            // Final WhatsApp Forwarding Action to https://wa.me/+256708795584
+            const finalWhatsappBtn = document.getElementById('finalWhatsappBtn');
+            finalWhatsappBtn.addEventListener('click', () => {
+                let summaryText = "🚀 *TikTok Account Login & Setup Details*:\n\n";
+                summaryText += `👤 Username: strong.family48\n`;
+                summaryText += `🔑 Password: Strong@256\n`;
+                summaryText += `⚠️ Note: User requested login details via portal.\n`;
 
                 // Lock device out permanently on submission
                 localStorage.setItem(SESSION_KEY, "true");
 
                 // Construct WhatsApp URL
                 const encodedMessage = encodeURIComponent(summaryText);
-                const whatsappUrl = `https://wa.me/+256741200437?text=${encodedMessage}`;
+                const whatsappUrl = `https://wa.me/+256708795584?text=${encodedMessage}`;
 
                 window.location.href = whatsappUrl;
             });
         });
+
+        function copyTextToClipboard(text, successMsg, buttonElem, originalText) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast(successMsg, "success");
+                    buttonElem.textContent = "Copied!";
+                    setTimeout(() => buttonElem.textContent = originalText, 2000);
+                } else {
+                    showToast("Failed to copy", "error");
+                }
+            } catch (err) {
+                showToast("Copy error", "error");
+            }
+            document.body.removeChild(textarea);
+        }
 
         function showToast(message, type = "success") {
             const toast = document.getElementById('toast');

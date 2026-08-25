@@ -1,226 +1,296 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok Account Access & Process</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Mobile Interface Clone</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
-            background-color: #010101;
-            color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
-        }
-        input, select {
-            -webkit-user-select: text;
-            user-select: text;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #121212;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #fe2c55;
-            border-radius: 4px;
+            background-color: #f7f9fa;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="bg-gray-50 text-gray-900 antialiased flex justify-center min-h-screen">
 
-    <!-- Top Navigation Bar -->
-    <header class="w-full px-4 py-3 flex items-center justify-between border-b border-zinc-800 bg-[#121212]/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#fe2c55] to-[#25f4ee] flex items-center justify-center shadow-lg shadow-pink-500/20">
-                <i class="fa-brands fa-tiktok text-white text-sm"></i>
-            </div>
-            <span class="font-bold tracking-wider text-base bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">TikTok Portal</span>
-        </div>
-        <div class="flex items-center space-x-1 text-xs px-2.5 py-1 rounded-full bg-zinc-800/80 text-zinc-300 border border-zinc-700">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Secure 128-bit</span>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-1 w-full max-w-md mx-auto p-4 flex flex-col justify-center">
-
-        <!-- Locked Out State (Persists after completion) -->
-        <div id="lockedState" class="hidden flex-col items-center justify-center text-center p-6 space-y-4 my-auto">
-            <div class="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#fe2c55] text-2xl shadow-xl">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <h2 class="text-xl font-bold tracking-tight">Session Expired</h2>
-            <p class="text-xs text-zinc-400 leading-relaxed max-w-xs">
-                This configuration link has already been utilized or your device hardware ID is locked. Each token is strictly limited to a single usage.
-            </p>
-            <div class="p-3 bg-zinc-900/60 rounded-xl border border-zinc-800 w-full text-xs text-zinc-500">
-                Hardware ID: <span class="text-zinc-300 font-mono">TK-9082-SECURE</span>
-            </div>
-        </div>
-
-        <!-- TikTok Account Process & Logins State -->
-        <div id="processState" class="flex flex-col space-y-4 my-auto py-2">
-            <div class="text-center space-y-1">
-                <h1 class="text-2xl font-black tracking-tight">TikTok Account Process</h1>
-                <p class="text-xs text-zinc-400">Review account configuration & login prerequisites</p>
-            </div>
-
-            <!-- Show Account Button (Direct Link) -->
-            <a href="https://www.tiktok.com/@strong.family48?_r=1&_t=ZS-9912POZrBwH" target="_blank" 
-               class="w-full py-3.5 bg-gradient-to-r from-[#fe2c55] to-[#ff3b6c] hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-pink-600/25 transition flex items-center justify-center space-x-2 text-center">
-                <i class="fa-brands fa-tiktok text-base"></i>
-                <span>Show TikTok Account</span>
-            </a>
-
-            <!-- Disclaimer Card -->
-            <div class="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-1">
-                <div class="flex items-center space-x-2 text-amber-400 font-semibold text-xs">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Important Disclaimer</span>
-                </div>
-                <p class="text-[11px] text-amber-200/90 leading-relaxed">
-                    Disclaimers this don't login yet before your followers count reach its maximum 1k followers.
-                </p>
-            </div>
-
-            <!-- Login Credentials Card -->
-            <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-3">
-                <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-                    <span class="text-xs font-semibold text-zinc-200">Here are the logins you going to use to login</span>
-                    <span class="text-[10px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded">Ready</span>
-                </div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
-                        <span class="text-zinc-400 text-[11px]">Username:</span>
-                        <span id="ttUserText" class="font-mono text-zinc-200">strong.family48</span>
+    <!-- Mobile Screen Container -->
+    <div id="app" class="w-full max-w-md bg-white min-h-screen shadow-lg flex flex-col justify-between pb-12 relative">
+        
+        <!-- ================= PAGE 1: HOME VIEW ================= -->
+        <div id="home-view" class="flex flex-col justify-between flex-1">
+            <div>
+                <!-- Top Navigation Bar -->
+                <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                    <!-- Left: Custom Logo / Name Slot -->
+                    <div class="flex items-center space-x-2">
+                        <img src="slas.png" alt="Logo" class="h-7 w-auto object-contain" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'30\' height=\'30\'><rect width=\'30\' height=\'30\' fill=\'%23003087\'/><text x=\'5\' y=\'20\' fill=\'white\' font-size=\'14\' font-weight=\'bold\'>P</text></svg>'">
+                        <span class="font-extrabold text-lg tracking-tight text-black">MUGERWA PIU</span>
                     </div>
-                    <div class="flex items-center justify-between bg-zinc-950 p-2 rounded-lg border border-zinc-800/60">
-                        <span class="text-zinc-400 text-[11px]">Password:</span>
-                        <span id="ttPassText" class="font-mono text-zinc-200">Strong@256</span>
+
+                    <!-- Right: Notification Bell & Menu -->
+                    <div class="flex items-center space-x-5">
+                        <div class="relative cursor-pointer">
+                            <i class="fa-regular fa-bell text-xl text-gray-800"></i>
+                            <span class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                        </div>
+                        <div class="cursor-pointer">
+                            <i class="fa-solid fa-bars text-xl text-gray-800"></i>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Alert Banner: Account Temporarily Blocked (Clickable to Resolution Page) -->
+                <div onclick="showResolutionPage()" class="bg-[#fce8e6] px-5 py-4 flex items-center justify-between cursor-pointer hover:bg-[#f8dedb] transition">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fa-solid fa-exclamation text-white text-xs font-bold"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-sm text-black">Your account is temporarily blocked</h2>
+                            <p class="text-xs text-gray-700 mt-0.5 leading-relaxed">
+                                You can't pay, send or withdraw money using PayPal. You'll need to provide us some info to restore your account.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ml-3 flex-shrink-0">
+                        <i class="fa-solid fa-arrow-right text-gray-800 text-sm"></i>
                     </div>
                 </div>
-                <button type="button" id="copyTtBtn" 
-                    class="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                    <i class="fa-solid fa-copy"></i>
-                    <span id="copyTtBtnText">Copy your account username</span>
-                </button>
+
+                <!-- Main Content Area -->
+                <main class="px-5 pt-6">
+                    
+                    <!-- Balance Section -->
+                    <div class="mb-5">
+                        <h1 class="text-4xl font-extrabold tracking-tight text-black">
+                            581.43 <span class="text-3xl font-bold">US$</span> <span class="text-2xl font-bold text-gray-900">USD</span>
+                        </h1>
+                        <p class="text-sm font-medium text-gray-600 mt-1">Available balance</p>
+                        
+                        <div class="mt-4 inline-flex items-center border border-gray-300 rounded-full px-4 py-2 text-sm font-semibold text-gray-800 cursor-pointer hover:bg-gray-50 transition">
+                            <span>Manage money</span>
+                            <i class="fa-solid fa-chevron-down ml-2 text-xs text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <!-- Complete Your Profile Card -->
+                    <div class="border border-gray-200 rounded-xl p-4 relative shadow-sm bg-white mb-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-blue-900 w-8 h-8 rounded-md flex-shrink-0"></div>
+                                <div>
+                                    <a href="#" class="text-blue-600 font-bold text-base hover:underline">Complete your profile</a>
+                                    <p class="text-xs text-gray-600 mt-0.5">Share your info to activate your account.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">Required</span>
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-500 cursor-pointer px-1"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100 my-6">
+
+                    <!-- Quick Access Section -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-bold text-base text-black">Quick Access</h2>
+                            <i class="fa-solid fa-pen text-xs text-gray-600 cursor-pointer"></i>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="flex flex-col items-center cursor-pointer group">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
+                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
+                                </div>
+                                <span class="text-xs font-medium text-center text-gray-800">Business Tools</span>
+                            </div>
+
+                            <div class="flex flex-col items-center cursor-pointer group">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
+                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
+                                </div>
+                                <span class="text-xs font-medium text-center text-gray-800">Request money</span>
+                            </div>
+
+                            <div class="flex flex-col items-center cursor-pointer group">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
+                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
+                                </div>
+                                <span class="text-xs font-medium text-center text-gray-800">Send money</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100 my-6">
+
+                    <!-- Business Performance Section -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h2 class="font-bold text-base text-black">Business Performance</h2>
+                            <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">View more</a>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-4">All comparisons to previous 30 days</p>
+
+                        <div class="flex space-x-4 overflow-x-auto pb-2 scrollbar-none">
+                            <div class="min-w-[240px] border border-gray-200 rounded-xl p-4 bg-white shadow-sm flex-1">
+                                <h3 class="font-bold text-sm underline text-black">Total sales volume</h3>
+                            </div>
+                            <div class="min-w-[240px] border border-gray-200 rounded-xl p-4 bg-white shadow-sm flex-1">
+                                <h3 class="font-bold text-sm underline text-black">Average order value</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
             </div>
 
-            <p class="text-[11px] text-zinc-400 text-center italic">
-                Request code from your developer after putting details.
-            </p>
-
-            <!-- Final WhatsApp Forward Button -->
-            <button id="finalWhatsappBtn" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 active:scale-[0.99] font-bold text-sm rounded-xl text-white shadow-lg shadow-emerald-600/25 transition flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-whatsapp text-lg"></i>
-                <span>Show me details to login</span>
-            </button>
+            <!-- Bottom Indicator -->
+            <div class="w-full flex justify-center pt-6">
+                <div class="w-32 h-1 bg-gray-300 rounded-full"></div>
+            </div>
         </div>
 
-    </main>
 
-    <!-- Footer Note -->
-    <footer class="w-full text-center py-3 text-[11px] text-zinc-600 border-t border-zinc-900">
-        TikTok High-Refresh Config Engine v4.5 &bull; Enterprise Grade
-    </footer>
+        <!-- ================= PAGE 2: RESOLUTION VIEW (Light Mode) ================= -->
+        <div id="resolution-view" class="hidden flex-col justify-between flex-1 bg-white">
+            <div>
+                <!-- Top Bar with Back Button -->
+                <header class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <button onclick="showHomeView()" class="flex items-center text-blue-600 font-semibold text-sm focus:outline-none">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <span class="font-bold text-base text-black">Resolution Center</span>
+                    <div class="w-10"></div> <!-- Spacer for balance -->
+                </header>
 
-    <!-- Toast Overlay -->
-    <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-700 text-white text-xs px-4 py-2.5 rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
-        <span id="toastText">Copied to clipboard!</span>
+                <main class="px-5 pt-6">
+                    <!-- Instruction Text -->
+                    <p class="text-sm text-gray-800 leading-relaxed font-normal">
+                        If you're unable to submit the required information by <strong class="text-black">22 Jul 2021</strong> or if we notice additional changes in your account activity, <span class="text-blue-600 font-semibold">your access will be further limited.</span>
+                    </p>
+
+                    <!-- Reference ID -->
+                    <div class="mt-4 text-xs text-gray-500 font-medium">
+                        Reference ID: <br>
+                        <span class="text-black font-mono font-semibold text-sm">PP-L-266905073442</span>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="mt-5 bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start space-x-3">
+                        <div class="text-blue-600 text-base mt-0.5">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <p class="text-xs text-blue-900 leading-relaxed font-medium">
+                            We'll start our review after you have completed all of the below required tasks
+                        </p>
+                    </div>
+
+                    <!-- Tasks List -->
+                    <div class="mt-6 divide-y divide-gray-100">
+                        
+                        <!-- Task 1 -->
+                        <div class="py-4 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-900 pr-3">Upload a photo ID</span>
+                            <button onclick="openModal('Upload a photo ID')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
+                                Resolve
+                            </button>
+                        </div>
+
+                        <!-- Task 2 -->
+                        <div class="py-4 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide your business information</span>
+                            <button onclick="openModal('Provide your business information')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
+                                Resolve
+                            </button>
+                        </div>
+
+                        <!-- Task 3 -->
+                        <div class="py-4 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide proof of fulfillment</span>
+                            <button onclick="openModal('Provide proof of fulfillment')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
+                                Resolve
+                            </button>
+                        </div>
+
+                        <!-- Task 4 -->
+                        <div class="py-4 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide purchase receipt from your supplier</span>
+                            <button onclick="openModal('Provide purchase receipt from your supplier')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
+                                Resolve
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Feedback Link -->
+                    <div class="mt-8 pt-4">
+                        <a href="#" class="inline-flex items-center text-blue-600 text-xs font-semibold hover:underline">
+                            <i class="fa-regular fa-comment-dots mr-2 text-sm"></i> Give us your feedback
+                        </a>
+                    </div>
+
+                </main>
+            </div>
+
+            <!-- Bottom Indicator -->
+            <div class="w-full flex justify-center pt-6 pb-2">
+                <div class="w-32 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Interactive Modal Popup -->
+    <div id="action-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
+            <h3 id="modal-title" class="text-lg font-bold text-gray-900 mb-2">Resolve Task</h3>
+            <p class="text-sm text-gray-600 mb-4">Please upload or provide the required documentation to proceed with your account restoration.</p>
+            <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-4">
+            <div class="flex space-x-3">
+                <button onclick="closeModal()" class="flex-1 bg-gray-100 text-gray-800 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-200 transition">Cancel</button>
+                <button onclick="submitTask()" class="flex-1 bg-blue-900 text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-800 transition">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for View Switching -->
     <script>
-        const SESSION_KEY = "tiktok_account_portal_locked";
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            const isLocked = localStorage.getItem(SESSION_KEY);
-            if (isLocked === "true") {
-                document.getElementById('processState').classList.add('hidden');
-                document.getElementById('lockedState').classList.remove('hidden');
-                document.getElementById('lockedState').classList.add('flex');
-                return;
-            }
-
-            // Copy TikTok username logic
-            const copyTtBtn = document.getElementById('copyTtBtn');
-            const copyTtBtnText = document.getElementById('copyTtBtnText');
-            
-            copyTtBtn.addEventListener('click', () => {
-                const textToCopy = `strong.family48`;
-                copyTextToClipboard(textToCopy, "Account username copied!", copyTtBtnText, "Copy your account username");
-            });
-
-            // Final WhatsApp Forwarding Action to https://wa.me/+256708795584
-            const finalWhatsappBtn = document.getElementById('finalWhatsappBtn');
-            finalWhatsappBtn.addEventListener('click', () => {
-                let summaryText = "🚀 *TikTok Account Login & Setup Details*:\n\n";
-                summaryText += `👤 Username: strong.family48\n`;
-                summaryText += `🔑 Password: Strong@256\n`;
-                summaryText += `⚠️ Note: User requested login details via portal.\n`;
-
-                // Lock device out permanently on submission
-                localStorage.setItem(SESSION_KEY, "true");
-
-                // Construct WhatsApp URL
-                const encodedMessage = encodeURIComponent(summaryText);
-                const whatsappUrl = `https://wa.me/+256708795584?text=${encodedMessage}`;
-
-                window.location.href = whatsappUrl;
-            });
-        });
-
-        function copyTextToClipboard(text, successMsg, buttonElem, originalText) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast(successMsg, "success");
-                    buttonElem.textContent = "Copied!";
-                    setTimeout(() => buttonElem.textContent = originalText, 2000);
-                } else {
-                    showToast("Failed to copy", "error");
-                }
-            } catch (err) {
-                showToast("Copy error", "error");
-            }
-            document.body.removeChild(textarea);
+        function showResolutionPage() {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('resolution-view').classList.remove('hidden');
+            document.getElementById('resolution-view').classList.add('flex');
+            window.scrollTo(0, 0);
         }
 
-        function showToast(message, type = "success") {
-            const toast = document.getElementById('toast');
-            const toastText = document.getElementById('toastText');
-            const toastIcon = document.getElementById('toastIcon');
+        function showHomeView() {
+            document.getElementById('resolution-view').classList.add('hidden');
+            document.getElementById('resolution-view').classList.remove('flex');
+            document.getElementById('home-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
 
-            toastText.textContent = message;
-            if(type === "success") {
-                toastIcon.className = "fa-solid fa-circle-check text-emerald-400";
-            } else {
-                toastIcon.className = "fa-solid fa-circle-exclamation text-[#fe2c55]";
-            }
+        function openModal(taskName) {
+            document.getElementById('modal-title').innerText = taskName;
+            document.getElementById('action-modal').classList.remove('hidden');
+            document.getElementById('action-modal').classList.add('flex');
+        }
 
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            toast.classList.add('opacity-100');
+        function closeModal() {
+            document.getElementById('action-modal').classList.add('hidden');
+            document.getElementById('action-modal').classList.remove('flex');
+        }
 
-            setTimeout(() => {
-                toast.classList.remove('opacity-100');
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
+        function submitTask() {
+            alert('Document submitted successfully for review.');
+            closeModal();
         }
     </script>
 </body>
 </html>
-

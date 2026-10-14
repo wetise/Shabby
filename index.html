@@ -1,296 +1,949 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayPal Mobile Interface Clone</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9fa;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crown Win - Global Synthetic Indices Trading Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#ffc857',
+              dark: '#08090c',
+              card: '#121319',
+              border: '#252830',
+              cyan: '#36c6d5'
+            }
+          }
         }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(54, 198, 213, 0.2); }
+      50% { box-shadow: 0 0 25px rgba(54, 198, 213, 0.4); }
+    }
+    .glow-cyan { animation: pulseGlow 3s infinite; }
+    .digit-box { transition: all 0.2s ease; }
+    .active-cursor { transform: scale(1.05); }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased flex justify-center min-h-screen">
+<body class="dark:bg-[#08090c] bg-slate-50 dark:text-zinc-100 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-[#36c6d5] selection:text-black">
 
-    <!-- Mobile Screen Container -->
-    <div id="app" class="w-full max-w-md bg-white min-h-screen shadow-lg flex flex-col justify-between pb-12 relative">
-        
-        <!-- ================= PAGE 1: HOME VIEW ================= -->
-        <div id="home-view" class="flex flex-col justify-between flex-1">
-            <div>
-                <!-- Top Navigation Bar -->
-                <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                    <!-- Left: Custom Logo / Name Slot -->
-                    <div class="flex items-center space-x-2">
-                        <img src="slas.png" alt="Logo" class="h-7 w-auto object-contain" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'30\' height=\'30\'><rect width=\'30\' height=\'30\' fill=\'%23003087\'/><text x=\'5\' y=\'20\' fill=\'white\' font-size=\'14\' font-weight=\'bold\'>P</text></svg>'">
-                        <span class="font-extrabold text-lg tracking-tight text-black">MUGERWA PIU</span>
-                    </div>
+<!-- HEADER / TOP NAV -->
+<header class="sticky top-0 z-40 dark:bg-[#08090c]/95 bg-white/95 backdrop-blur-md border-b dark:border-[#252830] border-slate-200 px-3 sm:px-6 py-2.5 transition-colors">
+ <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+  <!-- Brand Logo -->
+  <div class="flex items-center gap-2 cursor-pointer" onclick="showView('landing')">
+   <div class="w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center shadow-md overflow-hidden">
+    <img src="Cro.png" alt="Crown Win Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-black text-amber-400 text-xs\'>CW</span>'">
+   </div>
+   <div>
+    <div class="font-extrabold text-base sm:text-lg tracking-wider text-[#ffc857] flex items-center gap-1">
+     CROWN <span class="dark:text-white text-slate-800">WIN</span>
+    </div>
+   </div>
+  </div>
 
-                    <!-- Right: Notification Bell & Menu -->
-                    <div class="flex items-center space-x-5">
-                        <div class="relative cursor-pointer">
-                            <i class="fa-regular fa-bell text-xl text-gray-800"></i>
-                            <span class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-                        </div>
-                        <div class="cursor-pointer">
-                            <i class="fa-solid fa-bars text-xl text-gray-800"></i>
-                        </div>
-                    </div>
-                </header>
+  <!-- Real-time API Connection Status Badge -->
+  <div id="apiStatusBadge" class="hidden xl:flex items-center gap-2 dark:bg-[#121319] bg-slate-100 border dark:border-[#292b33] border-slate-200 px-3 py-1.5 rounded-full text-xs font-mono">
+    <span id="apiDot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+    <span id="apiText" class="dark:text-zinc-300 text-slate-700">Connecting to Live Feed...</span>
+  </div>
 
-                <!-- Alert Banner: Account Temporarily Blocked (Clickable to Resolution Page) -->
-                <div onclick="showResolutionPage()" class="bg-[#fce8e6] px-5 py-4 flex items-center justify-between cursor-pointer hover:bg-[#f8dedb] transition">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <i class="fa-solid fa-exclamation text-white text-xs font-bold"></i>
-                        </div>
-                        <div>
-                            <h2 class="font-bold text-sm text-black">Your account is temporarily blocked</h2>
-                            <p class="text-xs text-gray-700 mt-0.5 leading-relaxed">
-                                You can't pay, send or withdraw money using PayPal. You'll need to provide us some info to restore your account.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ml-3 flex-shrink-0">
-                        <i class="fa-solid fa-arrow-right text-gray-800 text-sm"></i>
-                    </div>
-                </div>
-
-                <!-- Main Content Area -->
-                <main class="px-5 pt-6">
-                    
-                    <!-- Balance Section -->
-                    <div class="mb-5">
-                        <h1 class="text-4xl font-extrabold tracking-tight text-black">
-                            581.43 <span class="text-3xl font-bold">US$</span> <span class="text-2xl font-bold text-gray-900">USD</span>
-                        </h1>
-                        <p class="text-sm font-medium text-gray-600 mt-1">Available balance</p>
-                        
-                        <div class="mt-4 inline-flex items-center border border-gray-300 rounded-full px-4 py-2 text-sm font-semibold text-gray-800 cursor-pointer hover:bg-gray-50 transition">
-                            <span>Manage money</span>
-                            <i class="fa-solid fa-chevron-down ml-2 text-xs text-gray-600"></i>
-                        </div>
-                    </div>
-
-                    <!-- Complete Your Profile Card -->
-                    <div class="border border-gray-200 rounded-xl p-4 relative shadow-sm bg-white mb-6">
-                        <div class="flex items-start justify-between">
-                            <div class="flex items-start space-x-3">
-                                <div class="bg-blue-900 w-8 h-8 rounded-md flex-shrink-0"></div>
-                                <div>
-                                    <a href="#" class="text-blue-600 font-bold text-base hover:underline">Complete your profile</a>
-                                    <p class="text-xs text-gray-600 mt-0.5">Share your info to activate your account.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">Required</span>
-                                <i class="fa-solid fa-ellipsis-vertical text-gray-500 cursor-pointer px-1"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-100 my-6">
-
-                    <!-- Quick Access Section -->
-                    <div class="mb-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="font-bold text-base text-black">Quick Access</h2>
-                            <i class="fa-solid fa-pen text-xs text-gray-600 cursor-pointer"></i>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-3">
-                            <div class="flex flex-col items-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
-                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
-                                </div>
-                                <span class="text-xs font-medium text-center text-gray-800">Business Tools</span>
-                            </div>
-
-                            <div class="flex flex-col items-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
-                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
-                                </div>
-                                <span class="text-xs font-medium text-center text-gray-800">Request money</span>
-                            </div>
-
-                            <div class="flex flex-col items-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition">
-                                    <div class="w-7 h-7 bg-black rounded-sm"></div>
-                                </div>
-                                <span class="text-xs font-medium text-center text-gray-800">Send money</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-100 my-6">
-
-                    <!-- Business Performance Section -->
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <h2 class="font-bold text-base text-black">Business Performance</h2>
-                            <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">View more</a>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">All comparisons to previous 30 days</p>
-
-                        <div class="flex space-x-4 overflow-x-auto pb-2 scrollbar-none">
-                            <div class="min-w-[240px] border border-gray-200 rounded-xl p-4 bg-white shadow-sm flex-1">
-                                <h3 class="font-bold text-sm underline text-black">Total sales volume</h3>
-                            </div>
-                            <div class="min-w-[240px] border border-gray-200 rounded-xl p-4 bg-white shadow-sm flex-1">
-                                <h3 class="font-bold text-sm underline text-black">Average order value</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </main>
-            </div>
-
-            <!-- Bottom Indicator -->
-            <div class="w-full flex justify-center pt-6">
-                <div class="w-32 h-1 bg-gray-300 rounded-full"></div>
-            </div>
-        </div>
-
-
-        <!-- ================= PAGE 2: RESOLUTION VIEW (Light Mode) ================= -->
-        <div id="resolution-view" class="hidden flex-col justify-between flex-1 bg-white">
-            <div>
-                <!-- Top Bar with Back Button -->
-                <header class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                    <button onclick="showHomeView()" class="flex items-center text-blue-600 font-semibold text-sm focus:outline-none">
-                        <i class="fa-solid fa-arrow-left mr-2"></i> Back
-                    </button>
-                    <span class="font-bold text-base text-black">Resolution Center</span>
-                    <div class="w-10"></div> <!-- Spacer for balance -->
-                </header>
-
-                <main class="px-5 pt-6">
-                    <!-- Instruction Text -->
-                    <p class="text-sm text-gray-800 leading-relaxed font-normal">
-                        If you're unable to submit the required information by <strong class="text-black">22 Jul 2021</strong> or if we notice additional changes in your account activity, <span class="text-blue-600 font-semibold">your access will be further limited.</span>
-                    </p>
-
-                    <!-- Reference ID -->
-                    <div class="mt-4 text-xs text-gray-500 font-medium">
-                        Reference ID: <br>
-                        <span class="text-black font-mono font-semibold text-sm">PP-L-266905073442</span>
-                    </div>
-
-                    <!-- Info Box -->
-                    <div class="mt-5 bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start space-x-3">
-                        <div class="text-blue-600 text-base mt-0.5">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </div>
-                        <p class="text-xs text-blue-900 leading-relaxed font-medium">
-                            We'll start our review after you have completed all of the below required tasks
-                        </p>
-                    </div>
-
-                    <!-- Tasks List -->
-                    <div class="mt-6 divide-y divide-gray-100">
-                        
-                        <!-- Task 1 -->
-                        <div class="py-4 flex items-center justify-between">
-                            <span class="text-sm font-semibold text-gray-900 pr-3">Upload a photo ID</span>
-                            <button onclick="openModal('Upload a photo ID')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
-                                Resolve
-                            </button>
-                        </div>
-
-                        <!-- Task 2 -->
-                        <div class="py-4 flex items-center justify-between">
-                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide your business information</span>
-                            <button onclick="openModal('Provide your business information')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
-                                Resolve
-                            </button>
-                        </div>
-
-                        <!-- Task 3 -->
-                        <div class="py-4 flex items-center justify-between">
-                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide proof of fulfillment</span>
-                            <button onclick="openModal('Provide proof of fulfillment')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
-                                Resolve
-                            </button>
-                        </div>
-
-                        <!-- Task 4 -->
-                        <div class="py-4 flex items-center justify-between">
-                            <span class="text-sm font-semibold text-gray-900 pr-3">Provide purchase receipt from your supplier</span>
-                            <button onclick="openModal('Provide purchase receipt from your supplier')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-sm">
-                                Resolve
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <!-- Feedback Link -->
-                    <div class="mt-8 pt-4">
-                        <a href="#" class="inline-flex items-center text-blue-600 text-xs font-semibold hover:underline">
-                            <i class="fa-regular fa-comment-dots mr-2 text-sm"></i> Give us your feedback
-                        </a>
-                    </div>
-
-                </main>
-            </div>
-
-            <!-- Bottom Indicator -->
-            <div class="w-full flex justify-center pt-6 pb-2">
-                <div class="w-32 h-1 bg-gray-300 rounded-full"></div>
-            </div>
-        </div>
-
+  <!-- Right Actions -->
+  <div class="flex items-center gap-1.5 sm:gap-3">
+    <!-- Balance / Account Pill -->
+    <div class="dark:bg-[#121319] bg-slate-100 border dark:border-[#292b33] border-slate-200 rounded-full px-2.5 sm:px-3.5 py-1.5 flex items-center gap-1.5 text-xs shadow-sm">
+      <span class="text-zinc-400 hidden xs:inline text-[10px]" id="accountTypeLabel">REAL</span>
+      <b class="dark:text-white text-slate-900 font-mono text-xs sm:text-sm" id="headerBalance">$0.00</b>
+      <span class="text-[#ffc857] bg-amber-500/10 px-1.5 py-0.5 rounded-full font-bold text-[9px]">USD</span>
     </div>
 
-    <!-- Interactive Modal Popup -->
-    <div id="action-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
-            <h3 id="modal-title" class="text-lg font-bold text-gray-900 mb-2">Resolve Task</h3>
-            <p class="text-sm text-gray-600 mb-4">Please upload or provide the required documentation to proceed with your account restoration.</p>
-            <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-4">
-            <div class="flex space-x-3">
-                <button onclick="closeModal()" class="flex-1 bg-gray-100 text-gray-800 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-200 transition">Cancel</button>
-                <button onclick="submitTask()" class="flex-1 bg-blue-900 text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-800 transition">Submit</button>
-            </div>
+    <button onclick="openDepositModal()" class="bg-[#36c6d5] hover:bg-[#2cb2c0] text-[#061215] font-bold px-3.5 py-2 rounded-xl text-xs transition-all shadow-md">
+      Deposit
+    </button>
+    
+    <button onclick="openAuthModal('login')" id="loginHeaderBtn" class="dark:bg-[#121319] bg-slate-100 border dark:border-[#292b33] border-slate-200 hover:border-zinc-500 dark:text-white text-slate-800 font-bold px-3 py-2 rounded-xl text-xs transition-all shadow-sm">
+      Login
+    </button>
+    <button onclick="showView('profile')" id="profileHeaderBtn" class="hidden bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold px-3.5 py-2 rounded-xl text-xs transition-all shadow-md items-center gap-1">
+      👤 <span class="hidden sm:inline">Profile</span>
+    </button>
+
+    <!-- Theme Toggle Button -->
+    <button onclick="toggleTheme()" class="dark:bg-[#121319] bg-slate-100 border dark:border-[#292b33] border-slate-200 hover:border-amber-400 dark:text-amber-400 text-amber-600 w-9 h-9 rounded-xl flex items-center justify-center text-sm transition-all shadow-sm" title="Toggle Theme">
+      <span id="themeIcon">☀️</span>
+    </button>
+  </div>
+ </div>
+</header>
+
+<!-- MAIN VIEW CONTAINER -->
+<div id="mainContainer" class="flex-grow">
+  
+  <!-- ==================== LANDING VIEW ==================== -->
+  <div id="landingView" class="max-w-7xl mx-auto px-4 py-8 sm:py-12 space-y-12">
+    <!-- Hero Section -->
+    <div class="grid lg:grid-cols-2 gap-8 items-center">
+      <div class="space-y-6">
+        <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full text-amber-400 text-xs font-mono font-bold">
+          ♛ THE ULTIMATE TRADING DESK
         </div>
+        <h1 class="text-4xl sm:text-6xl font-black tracking-tight dark:text-white text-slate-900 leading-none">
+          Trade Synthetic Indices with <span class="text-[#ffc857]">Precision.</span>
+        </h1>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Experience lightning-fast execution on volatility indices, high-payout digit contracts, and real-time tick analysis powered by Crown Win.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="showView('desk')" class="bg-gradient-to-r from-amber-400 to-amber-600 text-black font-extrabold px-6 py-3.5 rounded-2xl text-sm shadow-lg hover:scale-105 transition-all">
+            Launch Trading Desk →
+          </button>
+          <button onclick="switchToDemoAndDesk()" class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-800 font-bold px-6 py-3.5 rounded-2xl text-sm shadow-sm hover:border-amber-400 transition-all">
+            Try Free Demo ($10,000)
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Live Card Preview -->
+      <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-6 rounded-3xl shadow-xl">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <span class="text-xs text-zinc-400 font-mono">VOLATILITY 10 (1s)</span>
+            <div class="text-2xl font-black font-mono dark:text-white text-slate-900" id="heroLivePrice">10,189.19</div>
+          </div>
+          <span class="bg-emerald-500/10 text-emerald-500 text-xs px-2.5 py-1 rounded-full font-bold font-mono">● LIVE TICK</span>
+        </div>
+        <div class="dark:bg-[#08090c] bg-slate-50 p-4 rounded-2xl border dark:border-[#252830] border-slate-200 text-xs space-y-2 font-mono">
+          <div class="flex justify-between"><span class="text-zinc-500">24h High</span><span class="text-emerald-400 font-bold">10,240.50</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500">24h Low</span><span class="text-rose-400 font-bold">10,085.20</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500">Payout Rate</span><span class="text-[#36c6d5] font-bold">Up to 98.00%</span></div>
+        </div>
+        <button onclick="showView('desk')" class="w-full mt-4 bg-[#36c6d5] text-[#061215] font-bold py-3 rounded-xl text-xs">Start Trading Now</button>
+      </div>
     </div>
 
-    <!-- JavaScript for View Switching -->
-    <script>
-        function showResolutionPage() {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('resolution-view').classList.remove('hidden');
-            document.getElementById('resolution-view').classList.add('flex');
-            window.scrollTo(0, 0);
-        }
+    <!-- Feature Grid -->
+    <div class="grid md:grid-cols-3 gap-4 sm:gap-6">
+      <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl shadow-sm">
+        <div class="text-lg sm:text-xl font-bold dark:text-white text-slate-900 mb-2">∞ Even / Odd</div>
+        <p class="text-xs dark:text-zinc-400 text-slate-600 mb-4">Call whether the last digit of the price will be even or odd.</p>
+        <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-3 rounded-xl flex justify-between items-center font-mono">
+          <span class="text-xs text-zinc-500">Even / Odd Pays</span>
+          <span class="text-emerald-500 font-bold text-base">1.80×</span>
+        </div>
+      </div>
 
-        function showHomeView() {
-            document.getElementById('resolution-view').classList.add('hidden');
-            document.getElementById('resolution-view').classList.remove('flex');
-            document.getElementById('home-view').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
+      <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl shadow-sm">
+        <div class="text-lg sm:text-xl font-bold dark:text-white text-slate-900 mb-2">↕ Over / Under</div>
+        <p class="text-xs dark:text-zinc-400 text-slate-600 mb-4">Pick a digit and call whether the last digit lands above or below it.</p>
+        <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-3 rounded-xl flex justify-between items-center font-mono">
+          <span class="text-xs text-zinc-500">Over 4 Pays</span>
+          <span class="text-emerald-500 font-bold text-base">1.80×</span>
+        </div>
+      </div>
 
-        function openModal(taskName) {
-            document.getElementById('modal-title').innerText = taskName;
-            document.getElementById('action-modal').classList.remove('hidden');
-            document.getElementById('action-modal').classList.add('flex');
-        }
+      <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl shadow-sm">
+        <div class="text-lg sm:text-xl font-bold dark:text-white text-slate-900 mb-2">◎ Matches / Differs</div>
+        <p class="text-xs dark:text-zinc-400 text-slate-600 mb-4">Name the exact last digit, or bet that it will be anything else.</p>
+        <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-3 rounded-xl flex justify-between items-center font-mono">
+          <span class="text-xs text-zinc-500">Matches 7 Pays</span>
+          <span class="text-emerald-500 font-bold text-base">9.00×</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        function closeModal() {
-            document.getElementById('action-modal').classList.add('hidden');
-            document.getElementById('action-modal').classList.remove('flex');
-        }
 
-        function submitTask() {
-            alert('Document submitted successfully for review.');
-            closeModal();
-        }
-    </script>
+  <!-- ==================== DESK / TRADING VIEW ==================== -->
+  <div id="deskView" class="hidden max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+    
+    <!-- Top Status Line & Navigation Tabs -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 text-xs font-mono">
+      <div class="flex items-center gap-2 text-emerald-500">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>● LIVE ROOM</span>
+        <span class="text-zinc-500">· <span id="onlineCount">128</span> traders</span>
+      </div>
+
+      <!-- Quick Desk Navigation Sub-bar -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <button onclick="showView('desk')" class="bg-emerald-500/20 text-emerald-500 border border-emerald-500/40 px-3 py-1.5 rounded-xl font-bold">Trade Desk</button>
+        <button onclick="showView('profile')" class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 px-3 py-1.5 rounded-xl hover:border-[#36c6d5]">Profile & Menu</button>
+        <button onclick="showView('landing')" class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 text-zinc-400 hover:text-white px-2.5 py-1.5 rounded-xl">Exit to Hub</button>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="grid grid-cols-3 gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+      <button class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 hover:border-[#36c6d5] dark:text-zinc-300 text-slate-700 font-bold py-2.5 sm:py-3 px-1 rounded-xl text-[11px] sm:text-xs text-center transition-all truncate">
+        ◎ Match/Diff
+      </button>
+      <button class="dark:bg-[#121319] bg-white border border-[#17616a] text-[#36c6d5] font-bold py-2.5 sm:py-3 px-1 rounded-xl text-[11px] sm:text-xs text-center shadow-sm truncate">
+        ∞ Even/Odd
+      </button>
+      <button class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 hover:border-[#36c6d5] dark:text-zinc-300 text-slate-700 font-bold py-2.5 sm:py-3 px-1 rounded-xl text-[11px] sm:text-xs text-center transition-all truncate">
+        ↕ Over/Under
+      </button>
+    </div>
+
+    <!-- Main Desk Grid -->
+    <div class="grid lg:grid-cols-3 gap-4 sm:gap-6">
+      
+      <!-- Chart and Digit Panel (Left 2 cols) -->
+      <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+        <!-- Chart Container -->
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-3 sm:p-4 rounded-2xl shadow-sm">
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <span class="text-[10px] sm:text-xs text-zinc-400 font-mono">VOLATILITY 10 (1s)</span>
+              <div class="text-xl sm:text-2xl font-black font-mono dark:text-white text-slate-900" id="deskLivePrice">10,189.19</div>
+            </div>
+            <div class="text-[11px] sm:text-xs bg-rose-500/10 text-rose-500 px-2 py-0.5 sm:py-1 rounded font-bold">-1.41%</div>
+          </div>
+
+          <canvas id="liveChartCanvas" class="w-full h-[180px] sm:h-[220px] dark:bg-[#0c0e12] bg-slate-50 rounded-xl border dark:border-[#252830] border-slate-200"></canvas>
+
+          <!-- Fast Running Cursor Digits Grid (0 - 9) -->
+          <div class="mt-3 sm:mt-4">
+            <div class="text-[10px] text-zinc-500 font-mono mb-2 flex justify-between">
+              <span>DIGIT FREQUENCY</span>
+              <span class="text-[#36c6d5] font-bold">1S TICK STREAM</span>
+            </div>
+            <div class="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2" id="digitsGrid">
+              <!-- Digits generated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Stake Controls -->
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-3 sm:p-4 rounded-2xl shadow-sm">
+          <div class="text-xs text-zinc-400 uppercase font-mono mb-2">AMOUNT · USD</div>
+          <div class="flex gap-2 items-center mb-3">
+            <button onclick="changeStake(-1)" class="w-12 h-12 dark:bg-[#08090c] bg-slate-100 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xl font-bold rounded-xl flex items-center justify-center hover:opacity-80 active:scale-95">-</button>
+            <input id="stakeInput" type="number" value="10" min="1" max="1000" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 text-center text-xl sm:text-2xl font-black dark:text-white text-slate-900 py-2.5 rounded-xl font-mono focus:outline-none focus:border-[#36c6d5]">
+            <button onclick="changeStake(1)" class="w-12 h-12 dark:bg-[#08090c] bg-slate-100 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xl font-bold rounded-xl flex items-center justify-center hover:opacity-80 active:scale-95">+</button>
+          </div>
+
+          <!-- Quick Amount Buttons -->
+          <div class="grid grid-cols-6 gap-1.5 sm:gap-2 mb-4">
+            <button onclick="setStake(1)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 py-2.5 rounded-lg text-xs font-mono hover:border-zinc-500">$1</button>
+            <button onclick="setStake(5)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 py-2.5 rounded-lg text-xs font-mono hover:border-zinc-500">$5</button>
+            <button onclick="setStake(10)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#36c6d5] border-slate-300 text-[#36c6d5] py-2.5 rounded-lg text-xs font-mono font-bold">$10</button>
+            <button onclick="setStake(25)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 py-2.5 rounded-lg text-xs font-mono hover:border-zinc-500">$25</button>
+            <button onclick="setStake(50)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 py-2.5 rounded-lg text-xs font-mono hover:border-zinc-500">$50</button>
+            <button onclick="setStake(100)" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 py-2.5 rounded-lg text-xs font-mono hover:border-zinc-500">$100</button>
+          </div>
+
+          <!-- Contract Action Buttons -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <button onclick="placeContract('EVEN')" class="bg-gradient-to-br from-[#00d99b] to-[#008d69] hover:opacity-95 p-4 rounded-2xl text-left text-white shadow-lg glow-green transition-all active:scale-[0.98]">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-extrabold text-base sm:text-lg">∞ Even</span>
+                <span class="text-[11px] bg-black/20 px-2 py-0.5 rounded font-mono">98%</span>
+              </div>
+              <div class="text-xs font-mono opacity-90" id="evenReturnDisplay">$19.80 Return</div>
+            </button>
+
+            <button onclick="placeContract('ODD')" class="bg-gradient-to-br from-[#ff547e] to-[#d9004a] hover:opacity-95 p-4 rounded-2xl text-left text-white shadow-lg glow-red transition-all active:scale-[0.98]">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-extrabold text-base sm:text-lg">○ Odd</span>
+                <span class="text-[11px] bg-black/20 px-2 py-0.5 rounded font-mono">98%</span>
+              </div>
+              <div class="text-xs font-mono opacity-90" id="oddReturnDisplay">$19.80 Return</div>
+            </button>
+          </div>
+
+          <div id="tradeFeedback" class="mt-3 text-center text-xs font-mono text-amber-500 font-bold min-h-[18px]"></div>
+        </div>
+
+        <!-- Open / Closed Positions Tab -->
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-3 sm:p-4 rounded-2xl shadow-sm">
+          <div class="flex gap-4 border-b dark:border-[#252830] border-slate-200 pb-2 text-xs font-bold font-mono">
+            <button class="text-[#36c6d5] border-b-2 border-[#36c6d5] pb-2">Positions (<span id="openCount">0</span>)</button>
+            <button class="text-zinc-500 hover:text-zinc-300 pb-2">History (<span id="closedCount">0</span>)</button>
+          </div>
+
+          <div class="mt-3 space-y-2 max-h-36 sm:max-h-40 overflow-y-auto" id="positionsList">
+            <div class="text-xs text-zinc-500 text-center py-4">No active contracts running. Stake above to trade.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Chat & Feed Panel (Right 1 col) -->
+      <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-3 sm:p-4 rounded-2xl flex flex-col shadow-sm">
+        <div class="flex justify-between items-center pb-3 border-b dark:border-[#252830] border-slate-200 mb-3">
+          <b class="text-xs sm:text-sm dark:text-white text-slate-900">♛ CROWN LIVE CHAT</b>
+          <span class="text-xs text-emerald-500 font-mono">● LIVE</span>
+        </div>
+
+        <div class="flex-grow space-y-2 overflow-y-auto h-[220px] lg:h-[340px] pr-1" id="chatBox">
+          <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-2.5 rounded-xl text-xs">
+            <b class="text-[#36c6d5]">CrownBot:</b>
+            <p class="dark:text-zinc-300 text-slate-700 mt-1">Welcome to Crown Win Trading! Place contracts on fast digits.</p>
+          </div>
+          <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-2.5 rounded-xl text-xs">
+            <b class="text-amber-500">Alex_Trade:</b>
+            <p class="dark:text-zinc-300 text-slate-700 mt-1">Fast execution today on Volatility 10!</p>
+          </div>
+        </div>
+
+        <form id="chatForm" class="mt-3 flex gap-2" onsubmit="handleChatSubmit(event)">
+          <input id="chatInput" type="text" placeholder="Type a message..." class="flex-grow dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 text-xs dark:text-white text-slate-900 px-3 py-2.5 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+          <button type="submit" class="bg-[#36c6d5] text-[#061215] font-bold px-4 py-2.5 rounded-xl text-xs">Send</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ==================== PROFILE / SETTINGS & MENU VIEW ==================== -->
+  <div id="profileView" class="hidden max-w-5xl mx-auto px-4 py-8">
+    
+    <!-- Profile Header Card -->
+    <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-6 rounded-3xl mb-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center shadow-md overflow-hidden p-2">
+          <img src="Cro.png" alt="Crown Win Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-black text-amber-400 text-xl\'>CW</span>'">
+        </div>
+        <div>
+          <h2 class="text-xl font-extrabold dark:text-white text-slate-900">Crown Trader #89421</h2>
+          <p class="text-xs text-zinc-400 font-mono">ID: 89421092 · Verified Real Account</p>
+          <div class="mt-2 inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-emerald-500 text-[11px] font-mono font-bold">
+            ● Active Wallet Balance: <span id="profileBalanceDisplay">$0.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="showView('desk')" class="bg-[#36c6d5] text-[#061215] font-bold px-4 py-2.5 rounded-xl text-xs shadow-md">Open Trading Desk</button>
+        <button onclick="logoutUser()" class="dark:bg-[#08090c] bg-slate-100 border dark:border-[#292b33] border-slate-300 text-rose-500 font-bold px-4 py-2.5 rounded-xl text-xs">Log Out</button>
+      </div>
+    </div>
+
+    <!-- Navigation Hub Tabs inside Profile -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-6">
+      <button onclick="switchProfileTab('home')" id="tabBtn-home" class="p-3 rounded-2xl font-bold text-xs border dark:border-[#36c6d5] border-slate-300 text-[#36c6d5] bg-cyan-500/10 text-center transition-all">Home</button>
+      <button onclick="switchProfileTab('cashier')" id="tabBtn-cashier" class="p-3 rounded-2xl font-bold text-xs border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 text-center transition-all">Cashier</button>
+      <button onclick="switchProfileTab('history')" id="tabBtn-history" class="p-3 rounded-2xl font-bold text-xs border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 text-center transition-all">History</button>
+      <button onclick="switchProfileTab('refer')" id="tabBtn-refer" class="p-3 rounded-2xl font-bold text-xs border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 text-center transition-all">Refer & Earn</button>
+      <button onclick="switchProfileTab('settings')" id="tabBtn-settings" class="p-3 rounded-2xl font-bold text-xs border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 text-center transition-all col-span-2 sm:col-span-1">Settings</button>
+    </div>
+
+    <!-- TAB CONTENT AREA -->
+    <div class="space-y-6">
+      
+      <!-- 1. HOME TAB -->
+      <div id="profileTab-home" class="profile-tab-content space-y-4">
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 rounded-2xl">
+          <h3 class="font-bold dark:text-white text-slate-900 text-base mb-2">Welcome to your Crown Hub</h3>
+          <p class="text-xs text-zinc-400 mb-4">Quickly jump into active markets, check your latest performance, or fund your account instantly.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div onclick="showView('desk')" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-4 rounded-xl cursor-pointer hover:border-amber-400">
+              <div class="text-amber-500 text-lg mb-1">📈</div>
+              <div class="font-bold dark:text-white text-slate-900 text-sm">Trading Desk</div>
+              <div class="text-[11px] text-zinc-500">Volatility Indices</div>
+            </div>
+            <div onclick="switchProfileTab('cashier'); openDepositModal();" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-4 rounded-xl cursor-pointer hover:border-emerald-500">
+              <div class="text-emerald-500 text-lg mb-1">💳</div>
+              <div class="font-bold dark:text-white text-slate-900 text-sm">Instant Cashier</div>
+              <div class="text-[11px] text-zinc-500">Deposit & Withdraw</div>
+            </div>
+            <div onclick="switchProfileTab('refer')" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-4 rounded-xl cursor-pointer hover:border-cyan-500">
+              <div class="text-[#36c6d5] text-lg mb-1">🎁</div>
+              <div class="font-bold dark:text-white text-slate-900 text-sm">Refer & Earn</div>
+              <div class="text-[11px] text-zinc-500">Get 20% commission</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. CASHIER TAB -->
+      <div id="profileTab-cashier" class="profile-tab-content hidden space-y-4">
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl">
+          <div class="flex justify-between items-center mb-4">
+            <div>
+              <h3 class="font-bold dark:text-white text-slate-900 text-base">Cashier & Fund Management</h3>
+              <p class="text-xs text-zinc-400">Secure international deposits & payouts.</p>
+            </div>
+            <button onclick="openDepositModal()" class="bg-[#36c6d5] hover:bg-[#2cb2c0] text-[#061215] font-bold px-4 py-2 rounded-xl text-xs">+ Deposit Now</button>
+          </div>
+          <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-4 rounded-xl flex items-center justify-between text-xs font-mono">
+            <div>
+              <div class="text-zinc-500">REAL WALLET BALANCE</div>
+              <div class="text-lg font-black dark:text-white text-slate-900" id="cashierBalanceDisplay">$0.00</div>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="openDepositModal()" class="bg-emerald-500 text-black font-bold px-3 py-1.5 rounded-lg">Deposit</button>
+              <button onclick="alert('Withdrawal request initialized. Funds sent to verified payment method.')" class="dark:bg-[#1a1c24] bg-slate-200 dark:text-white text-slate-800 font-bold px-3 py-1.5 rounded-lg">Withdraw</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. HISTORY TAB -->
+      <div id="profileTab-history" class="profile-tab-content hidden space-y-4">
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 rounded-2xl">
+          <h3 class="font-bold dark:text-white text-slate-900 text-base mb-1">Trading History</h3>
+          <p class="text-xs text-zinc-400 mb-4">Log of all placed contracts and settlements.</p>
+          <div class="space-y-2 max-h-72 overflow-y-auto" id="profileHistoryList">
+            <div class="text-xs text-zinc-500 text-center py-6">No historical contracts recorded yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. REFER & EARN TAB -->
+      <div id="profileTab-refer" class="profile-tab-content hidden space-y-4">
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl">
+          <h3 class="font-bold dark:text-white text-slate-900 text-base mb-1">Refer & Earn Program</h3>
+          <p class="text-xs text-zinc-400 mb-4">Invite friends to Crown Win and earn lifelong commissions on every trade.</p>
+          <div class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-3.5 rounded-xl flex items-center justify-between gap-2 mb-4">
+            <input type="text" readonly value="https://crownwin.com/join?ref=CW89421" id="refLinkInput" class="bg-transparent text-xs dark:text-white text-slate-900 font-mono w-full focus:outline-none">
+            <button onclick="copyRefLink()" class="bg-[#36c6d5] text-[#061215] font-bold px-3 py-2 rounded-lg text-xs whitespace-nowrap">Copy Link</button>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-3 text-xs">
+            <div class="dark:bg-[#08090c] bg-slate-50 p-3 rounded-xl border dark:border-[#252830] border-slate-200">
+              <div class="text-zinc-500 mb-1">Total Referred</div>
+              <div class="text-base font-bold dark:text-white text-slate-900">0 Traders</div>
+            </div>
+            <div class="dark:bg-[#08090c] bg-slate-50 p-3 rounded-xl border dark:border-[#252830] border-slate-200">
+              <div class="text-zinc-500 mb-1">Commission Earned</div>
+              <div class="text-base font-bold text-emerald-500">$0.00</div>
+            </div>
+            <div class="dark:bg-[#08090c] bg-slate-50 p-3 rounded-xl border dark:border-[#252830] border-slate-200">
+              <div class="text-zinc-500 mb-1">Commission Rate</div>
+              <div class="text-base font-bold text-amber-500">20% Lifetime</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. SETTINGS TAB -->
+      <div id="profileTab-settings" class="profile-tab-content hidden space-y-4">
+        <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 p-5 sm:p-6 rounded-2xl">
+          <h3 class="font-bold dark:text-white text-slate-900 text-base mb-1">Platform Settings</h3>
+          <p class="text-xs text-zinc-400 mb-5">Customize your trading preferences and visual theme.</p>
+          
+          <div class="space-y-4 text-xs">
+            <div class="flex items-center justify-between py-3 border-b dark:border-[#252830] border-slate-100">
+              <div>
+                <div class="font-bold dark:text-white text-slate-900">Theme Mode</div>
+                <div class="text-zinc-500 text-[11px]">Switch between dark and light appearance</div>
+              </div>
+              <button onclick="toggleTheme()" class="dark:bg-[#08090c] bg-slate-100 border dark:border-[#292b33] border-slate-300 dark:text-amber-400 text-amber-600 px-3 py-2 rounded-xl font-bold">
+                <span id="settingsThemeLabel">Toggle Dark/Light</span>
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between py-3 border-b dark:border-[#252830] border-slate-100">
+              <div>
+                <div class="font-bold dark:text-white text-slate-900">Audio Sound Effects</div>
+                <div class="text-zinc-500 text-[11px]">Play audio cues on contract win or loss</div>
+              </div>
+              <input type="checkbox" checked class="w-4 h-4 accent-[#36c6d5]">
+            </div>
+
+            <div class="flex items-center justify-between py-3 border-b dark:border-[#252830] border-slate-100">
+              <div>
+                <div class="font-bold dark:text-white text-slate-900">One-Tap Fast Trading</div>
+                <div class="text-zinc-500 text-[11px]">Execute orders instantly on digit click</div>
+              </div>
+              <input type="checkbox" checked class="w-4 h-4 accent-[#36c6d5]">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- MODAL 1: AUTHENTICATION (SIGNUP / LOGIN) -->
+<div id="authModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+  <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 rounded-3xl p-5 sm:p-8 max-w-md w-full relative my-auto shadow-2xl">
+    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+
+    <div class="text-center mb-5 sm:mb-6">
+      <div class="inline-block mb-2 w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 overflow-hidden p-1.5">
+        <img src="Cro.png" alt="Crown Win" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-black text-amber-400 text-lg\'>CW</span>'">
+      </div>
+      <h3 id="authTitle" class="text-lg sm:text-xl font-bold dark:text-white text-slate-900">Create your account</h3>
+      <p class="text-xs text-zinc-400 mt-1">Access global synthetic indices trading instantly.</p>
+    </div>
+
+    <!-- Social Sign In -->
+    <button onclick="simulateGoogleLogin()" class="w-full bg-slate-100 dark:bg-white text-black font-bold py-3.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-all border dark:border-none border-slate-300">
+      <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+      Continue with Google
+    </button>
+
+    <div class="relative flex items-center justify-center mb-4">
+      <div class="border-t dark:border-[#252830] border-slate-200 w-full"></div>
+      <span class="dark:bg-[#121319] bg-white px-2 text-[10px] text-zinc-500 font-mono uppercase absolute">Or Phone Sign Up</span>
+    </div>
+
+    <!-- Phone Form -->
+    <div class="space-y-3">
+      <div>
+        <label class="block text-xs text-zinc-400 mb-1">Country</label>
+        <select id="countrySelect" onchange="updateCountryCode()" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xs p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+          <option value="+1" data-flag="🇺🇸">United States (+1)</option>
+          <option value="+44" data-flag="🇬🇧">United Kingdom (+44)</option>
+          <option value="+1" data-flag="🇨🇦">Canada (+1)</option>
+          <option value="+27" data-flag="🇿🇦">South Africa (+27)</option>
+          <option value="+971" data-flag="🇦🇪">United Arab Emirates (+971)</option>
+          <option value="+254" data-flag="🇰🇪">Kenya (+254)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs text-zinc-400 mb-1">Phone Number</label>
+        <div class="flex gap-2">
+          <span id="codeDisplay" class="dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xs px-3 py-3 rounded-xl flex items-center font-mono">+1</span>
+          <input type="tel" placeholder="000 000 000" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xs p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs text-zinc-400 mb-1">Password</label>
+        <input type="password" placeholder="••••••••" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-xs p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+      </div>
+
+      <button onclick="completeAuth()" class="w-full bg-[#36c6d5] hover:bg-[#2cb2c0] text-[#061215] font-extrabold py-3.5 rounded-xl text-xs transition-all shadow-md mt-2">
+        Continue to Trading Desk
+      </button>
+    </div>
+
+    <div class="text-center mt-4 text-xs text-zinc-400">
+      <span id="authToggleText">Already have an account?</span>
+      <button onclick="toggleAuthMode()" class="text-[#36c6d5] font-bold ml-1 hover:underline" id="authToggleBtn">Log in</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL 2: DEPOSIT (INTERNATIONAL PAYMENTS) -->
+<div id="depositModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+  <div class="dark:bg-[#121319] bg-white border dark:border-[#292b33] border-slate-200 rounded-3xl p-5 sm:p-6 max-w-md w-full relative my-auto shadow-2xl">
+    <button onclick="closeDepositModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+
+    <div class="mb-4">
+      <h3 class="text-lg sm:text-xl font-extrabold dark:text-white text-slate-900">Deposit Funds</h3>
+      <p class="text-xs text-zinc-400">Instant funding to your Crown Win real wallet.</p>
+    </div>
+
+    <!-- Payment Gateways with pay.png, bt.png, vs.png -->
+    <div class="space-y-3 mb-5 sm:mb-6">
+      <div class="border border-emerald-500/40 bg-emerald-500/10 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-600/10 border border-blue-600/30 flex items-center justify-center overflow-hidden p-1">
+            <img src="pay.png" alt="PayPal" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-blue-500 text-xs\'>P</span>'">
+          </div>
+          <div>
+            <div class="font-bold dark:text-white text-slate-900 text-xs">PayPal Checkout</div>
+            <div class="text-[10px] text-zinc-400">Instant Global Payment</div>
+          </div>
+        </div>
+        <span class="text-[10px] text-emerald-500 font-bold">Recommended</span>
+      </div>
+
+      <div class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center overflow-hidden p-1">
+            <img src="bt.png" alt="Bitcoin" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-amber-500 text-xs\'>₿</span>'">
+          </div>
+          <div>
+            <div class="font-bold dark:text-white text-slate-900 text-xs">BTC Crypto Payment</div>
+            <div class="text-[10px] text-zinc-400">Bitcoin / USDT Accepted</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/10 border border-indigo-600/30 flex items-center justify-center overflow-hidden p-1">
+            <img src="vs.png" alt="Visa / Mastercard" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-indigo-400 text-xs\'>💳</span>'">
+          </div>
+          <div>
+            <div class="font-bold dark:text-white text-slate-900 text-xs">Visa / Mastercard</div>
+            <div class="text-[10px] text-zinc-400">International Debit & Credit Cards</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <div>
+        <label class="block text-xs text-zinc-400 mb-1">Deposit Amount (USD)</label>
+        <input type="number" value="50" min="5" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-base font-mono font-bold p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+      </div>
+
+      <button onclick="processDeposit()" class="w-full bg-emerald-400 hover:bg-emerald-300 text-black font-extrabold py-3.5 rounded-xl text-xs transition-all shadow-lg">
+        Proceed to Secure Payment
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<footer class="border-t dark:border-[#252830] border-slate-200 dark:bg-[#08090c] bg-white py-6 px-4 text-center text-xs text-zinc-500 transition-colors">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded bg-amber-400/10 border border-amber-400/30 flex items-center justify-center overflow-hidden p-0.5">
+        <img src="Cro.png" alt="Crown Win" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-black text-amber-400 text-[9px]\'>CW</span>'">
+      </div>
+      <span class="dark:text-zinc-300 text-slate-700 font-bold">CROWN WIN</span>
+      <span>© 2026 Crown Win Global Trading.</span>
+    </div>
+    <div class="flex gap-4 text-zinc-400 text-xs">
+      <a href="#" class="hover:text-amber-500">Terms</a>
+      <a href="#" class="hover:text-amber-500">Privacy</a>
+      <a href="#" class="hover:text-amber-500">Risk Disclosure</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+let currentBalance = 0.00;
+let isDemo = false;
+let currentView = 'landing';
+let deskPrice = 10189.19;
+let deskHistory = Array.from({length: 50}, (_, i) => 10190 - i * 0.4 + Math.sin(i / 3) * 15);
+let activeDigit = 9;
+let openPositions = [];
+let closedPositions = [];
+let authMode = 'signup';
+let isDarkMode = true;
+
+// API Connection Status Simulation
+let apiConnected = false;
+setTimeout(() => {
+  apiConnected = true;
+  document.getElementById('apiDot').className = 'w-2 h-2 rounded-full bg-emerald-500';
+  document.getElementById('apiText').textContent = 'API Feed Connected';
+}, 2500);
+
+// Theme Toggle Handler
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  const body = document.body;
+  const html = document.documentElement;
+  if(isDarkMode) {
+    body.classList.add('dark');
+    html.classList.add('dark');
+    document.getElementById('themeIcon').textContent = '☀️';
+  } else {
+    body.classList.remove('dark');
+    html.classList.remove('dark');
+    document.getElementById('themeIcon').textContent = '🌙';
+  }
+}
+
+// View Switcher (Landing, Desk, Profile)
+function showView(view) {
+  currentView = view;
+  document.getElementById('landingView').className = (view === 'landing') ? 'max-w-7xl mx-auto px-4 py-8 sm:py-12 space-y-12' : 'hidden';
+  document.getElementById('deskView').className = (view === 'desk') ? 'max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6' : 'hidden';
+  document.getElementById('profileView').className = (view === 'profile') ? 'max-w-5xl mx-auto px-4 py-8' : 'hidden';
+  window.scrollTo(0, 0);
+}
+
+// Profile Sub-Tabs Switcher (Home, Cashier, History, Refer, Settings)
+function switchProfileTab(tabName) {
+  const tabs = ['home', 'cashier', 'history', 'refer', 'settings'];
+  tabs.forEach(t => {
+    const content = document.getElementById(`profileTab-${t}`);
+    const btn = document.getElementById(`tabBtn-${t}`);
+    if(t === tabName) {
+      if(content) content.classList.remove('hidden');
+      if(btn) {
+        btn.className = 'p-3 rounded-2xl font-bold text-xs border dark:border-[#36c6d5] border-slate-300 text-[#36c6d5] bg-cyan-500/10 text-center transition-all';
+      }
+    } else {
+      if(content) content.classList.add('hidden');
+      if(btn) {
+        btn.className = 'p-3 rounded-2xl font-bold text-xs border dark:border-[#292b33] border-slate-200 dark:text-zinc-300 text-slate-700 text-center transition-all';
+      }
+    }
+  });
+}
+
+function switchToDemoAndDesk() {
+  isDemo = true;
+  currentBalance = 10000.00;
+  updateBalances();
+  showView('desk');
+}
+
+function updateBalances() {
+  document.getElementById('headerBalance').textContent = `$${currentBalance.toFixed(2)}`;
+  if(document.getElementById('profileBalanceDisplay')) {
+    document.getElementById('profileBalanceDisplay').textContent = `$${currentBalance.toFixed(2)}`;
+  }
+  if(document.getElementById('cashierBalanceDisplay')) {
+    document.getElementById('cashierBalanceDisplay').textContent = `$${currentBalance.toFixed(2)}`;
+  }
+}
+
+// Stake Adjusters
+function setStake(amount) {
+  document.getElementById('stakeInput').value = amount;
+  updateReturns();
+}
+
+function changeStake(delta) {
+  let val = Number(document.getElementById('stakeInput').value) || 10;
+  val = Math.max(1, val + delta);
+  document.getElementById('stakeInput').value = val;
+  updateReturns();
+}
+
+function updateReturns() {
+  const stake = Number(document.getElementById('stakeInput').value) || 10;
+  const ret = (stake * 1.98).toFixed(2);
+  document.getElementById('evenReturnDisplay').textContent = `$${ret} Return`;
+  document.getElementById('oddReturnDisplay').textContent = `$${ret} Return`;
+}
+
+// Fast Tick Engine & Simulation Loop
+setInterval(() => {
+  const delta = (Math.random() - 0.53) * 14.5;
+  deskPrice = Math.max(10, deskPrice + delta);
+  deskHistory.push(deskPrice);
+  if(deskHistory.length > 50) deskHistory.shift();
+
+  const priceStr = deskPrice.toFixed(2);
+  activeDigit = Number(priceStr.slice(-1));
+
+  const digitsGrid = document.getElementById('digitsGrid');
+  if(digitsGrid) {
+    digitsGrid.innerHTML = '';
+    for(let i = 0; i < 10; i++) {
+      const isCurrent = (i === activeDigit);
+      const box = document.createElement('div');
+      box.className = `digit-box p-1.5 sm:p-2 rounded-xl border text-center font-mono text-[11px] sm:text-xs ${isCurrent ? 'active-cursor border-[#36c6d5] font-black' : 'dark:border-[#292b33] border-slate-200 text-zinc-500 dark:bg-[#08090c] bg-slate-50'}`;
+      box.innerHTML = `<div>${i}</div><div class="text-[8px] sm:text-[9px] opacity-70">${(Math.random()*15).toFixed(0)}%</div>`;
+      digitsGrid.appendChild(box);
+    }
+  }
+
+  renderChart();
+
+  if(document.getElementById('deskLivePrice')) {
+    document.getElementById('deskLivePrice').textContent = deskPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
+  if(document.getElementById('heroLivePrice')) {
+    document.getElementById('heroLivePrice').textContent = deskPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
+
+  // Contract Settlement Evaluation
+  for(let i = openPositions.length - 1; i >= 0; i--) {
+    let p = openPositions[i];
+    p.ticksLeft--;
+    if(p.ticksLeft <= 0) {
+      let won = false;
+      if(p.type === 'EVEN') won = (activeDigit % 2 === 0);
+      if(p.type === 'ODD') won = (activeDigit % 2 === 1);
+
+      if(Math.random() < 0.62) won = false;
+
+      if(won) {
+        currentBalance += (p.stake * 1.98);
+        updateBalances();
+      }
+
+      closedPositions.unshift({ ...p, activeDigit, won });
+      openPositions.splice(i, 1);
+      renderPositions();
+    }
+  }
+}, 400);
+
+// Chart Renderer
+function renderChart() {
+  const canvas = document.getElementById('liveChartCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width = canvas.offsetWidth;
+  const h = canvas.height = canvas.offsetHeight;
+
+  ctx.clearRect(0, 0, w, h);
+
+  ctx.strokeStyle = isDarkMode ? '#1a1d26' : '#e2e8f0';
+  ctx.lineWidth = 1;
+  for(let y = 20; y < h; y += 40) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+  }
+
+  const min = Math.min(...deskHistory) - 2;
+  const max = Math.max(...deskHistory) + 2;
+
+  ctx.beginPath();
+  deskHistory.forEach((v, i) => {
+    const x = (i * w) / (deskHistory.length - 1);
+    const y = h - 10 - ((v - min) / (max - min)) * (h - 20);
+    if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+
+  ctx.strokeStyle = '#36c6d5';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+}
+
+// Order Placing
+function placeContract(type) {
+  const stake = Number(document.getElementById('stakeInput').value) || 10;
+  if(stake > currentBalance && currentBalance > 0) {
+    document.getElementById('tradeFeedback').textContent = 'Insufficient balance! Deposit or switch to Demo.';
+    return;
+  }
+
+  if(currentBalance >= stake) {
+    currentBalance -= stake;
+    updateBalances();
+  }
+
+  openPositions.unshift({
+    id: 'TX' + Math.floor(Math.random() * 89999 + 10000),
+    type: type,
+    stake: stake,
+    ticksLeft: 3
+  });
+
+  document.getElementById('tradeFeedback').textContent = `Contract ${type} placed! Settling in 3 ticks...`;
+  renderPositions();
+}
+
+function renderPositions() {
+  const container = document.getElementById('positionsList');
+  const profileHistoryContainer = document.getElementById('profileHistoryList');
+  document.getElementById('openCount').textContent = openPositions.length;
+  document.getElementById('closedCount').textContent = closedPositions.length;
+
+  if(container) {
+    container.innerHTML = '';
+    openPositions.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs font-mono';
+      div.innerHTML = `
+        <div><b class="dark:text-white text-slate-900">${p.type}</b> <span class="text-zinc-500">#${p.id}</span></div>
+        <div class="text-amber-500 font-bold">Settling in ${p.ticksLeft}s...</div>
+        <div class="dark:text-white text-slate-900">$${p.stake.toFixed(2)}</div>
+      `;
+      container.appendChild(div);
+    });
+
+    closedPositions.slice(0, 5).forEach(p => {
+      const div = document.createElement('div');
+      div.className = `dark:bg-[#08090c] bg-slate-50 border p-2.5 rounded-xl flex justify-between items-center text-xs font-mono ${p.won ? 'border-emerald-500/30' : 'border-rose-500/30'}`;
+      div.innerHTML = `
+        <div><b class="dark:text-white text-slate-900">${p.type}</b> <span class="text-zinc-500">Digit: ${p.activeDigit}</span></div>
+        <div class="${p.won ? 'text-emerald-500 font-bold' : 'text-rose-500'}">${p.won ? '+$' + (p.stake * 0.98).toFixed(2) + ' WON' : '-$' + p.stake.toFixed(2) + ' LOST'}</div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  if(profileHistoryContainer) {
+    if(closedPositions.length === 0) {
+      profileHistoryContainer.innerHTML = '<div class="text-xs text-zinc-500 text-center py-6">No historical contracts recorded yet.</div>';
+    } else {
+      profileHistoryContainer.innerHTML = '';
+      closedPositions.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-3 rounded-xl flex justify-between items-center text-xs font-mono';
+        div.innerHTML = `
+          <div><b class="dark:text-white text-slate-900">${p.type}</b> <span class="text-zinc-500">#${p.id}</span></div>
+          <div class="text-zinc-400">Digit: ${p.activeDigit}</div>
+          <div class="${p.won ? 'text-emerald-500 font-bold' : 'text-rose-500'}">${p.won ? '+$' + (p.stake * 0.98).toFixed(2) : '-$' + p.stake.toFixed(2)}</div>
+        `;
+        profileHistoryContainer.appendChild(div);
+      });
+    }
+  }
+}
+
+// Modals & Navigation
+function openAuthModal(mode) {
+  authMode = mode;
+  document.getElementById('authTitle').textContent = mode === 'signup' ? 'Create your account' : 'Welcome back';
+  document.getElementById('authModal').classList.remove('hidden');
+}
+function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+function toggleAuthMode() {
+  openAuthModal(authMode === 'signup' ? 'login' : 'signup');
+}
+
+function updateCountryCode() {
+  const sel = document.getElementById('countrySelect');
+  document.getElementById('codeDisplay').textContent = sel.value;
+}
+
+function completeAuth() {
+  closeAuthModal();
+  currentBalance = 100.00;
+  document.getElementById('accountTypeLabel').textContent = 'REAL';
+  updateBalances();
+  
+  document.getElementById('loginHeaderBtn').classList.add('hidden');
+  document.getElementById('profileHeaderBtn').classList.remove('hidden');
+  showView('profile');
+}
+
+function logoutUser() {
+  currentBalance = 0.00;
+  updateBalances();
+  document.getElementById('profileHeaderBtn').classList.add('hidden');
+  document.getElementById('loginHeaderBtn').classList.remove('hidden');
+  showView('landing');
+}
+
+function simulateGoogleLogin() {
+  completeAuth();
+}
+
+function openDepositModal() { document.getElementById('depositModal').classList.remove('hidden'); }
+function closeDepositModal() { document.getElementById('depositModal').classList.add('hidden'); }
+
+function processDeposit() {
+  closeDepositModal();
+  currentBalance += 50.00;
+  updateBalances();
+  alert('Deposit of $50.00 confirmed! Funds added to your Crown Win real wallet.');
+}
+
+function copyRefLink() {
+  const input = document.getElementById('refLinkInput');
+  input.select();
+  document.execCommand('copy');
+  alert('Referral link copied to clipboard!');
+}
+
+function handleChatSubmit(e) {
+  e.preventDefault();
+  const input = document.getElementById('chatInput');
+  if(!input.value.trim()) return;
+  const chatBox = document.getElementById('chatBox');
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'dark:bg-[#08090c] bg-slate-50 border dark:border-[#252830] border-slate-200 p-2.5 rounded-xl text-xs';
+  msgDiv.innerHTML = `<b class="text-emerald-500">You:</b><p class="dark:text-zinc-300 text-slate-700 mt-1">${input.value}</p>`;
+  chatBox.appendChild(msgDiv);
+  input.value = '';
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+updateReturns();
+</script>
 </body>
 </html>

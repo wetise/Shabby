@@ -543,7 +543,7 @@
 
     <!-- Payment Gateways with pay.png, bt.png, vs.png -->
     <div class="space-y-3 mb-5 sm:mb-6">
-      <div class="border border-emerald-500/40 bg-emerald-500/10 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer">
+      <div onclick="selectPaymentMethod('PayPal Checkout')" id="gateway-paypal" class="border border-emerald-500/40 bg-emerald-500/10 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-emerald-400 transition-all">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-blue-600/10 border border-blue-600/30 flex items-center justify-center overflow-hidden p-1">
             <img src="pay.png" alt="PayPal" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-blue-500 text-xs\'>P</span>'">
@@ -556,7 +556,7 @@
         <span class="text-[10px] text-emerald-500 font-bold">Recommended</span>
       </div>
 
-      <div class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500">
+      <div onclick="selectPaymentMethod('BTC Crypto Payment')" id="gateway-btc" class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500 transition-all">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center overflow-hidden p-1">
             <img src="bt.png" alt="Bitcoin" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-amber-500 text-xs\'>₿</span>'">
@@ -568,7 +568,7 @@
         </div>
       </div>
 
-      <div class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500">
+      <div onclick="selectPaymentMethod('Visa / Mastercard')" id="gateway-visa" class="border dark:border-[#292b33] border-slate-200 dark:bg-[#08090c] bg-slate-50 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-zinc-500 transition-all">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-indigo-600/10 border border-indigo-600/30 flex items-center justify-center overflow-hidden p-1">
             <img src="vs.png" alt="Visa / Mastercard" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'font-bold text-indigo-400 text-xs\'>💳</span>'">
@@ -581,10 +581,16 @@
       </div>
     </div>
 
+    <!-- API Connection Status feedback for payment -->
+    <div id="paymentApiStatus" class="hidden mb-3 p-3 rounded-xl dark:bg-[#08090c] bg-slate-50 border border-[#36c6d5]/40 text-xs font-mono text-[#36c6d5] flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-[#36c6d5] animate-pulse"></span>
+      <span id="paymentApiText">Connecting to payment gateway API...</span>
+    </div>
+
     <div class="space-y-3">
       <div>
         <label class="block text-xs text-zinc-400 mb-1">Deposit Amount (USD)</label>
-        <input type="number" value="50" min="5" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-base font-mono font-bold p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
+        <input id="depositAmountInput" type="number" value="50" min="5" class="w-full dark:bg-[#08090c] bg-slate-50 border dark:border-[#292b33] border-slate-300 dark:text-white text-slate-900 text-base font-mono font-bold p-3 rounded-xl focus:outline-none focus:border-[#36c6d5]">
       </div>
 
       <button onclick="processDeposit()" class="w-full bg-emerald-400 hover:bg-emerald-300 text-black font-extrabold py-3.5 rounded-xl text-xs transition-all shadow-lg">
@@ -913,14 +919,28 @@ function simulateGoogleLogin() {
   completeAuth();
 }
 
-function openDepositModal() { document.getElementById('depositModal').classList.remove('hidden'); }
+function openDepositModal() { 
+  document.getElementById('depositModal').classList.remove('hidden'); 
+  document.getElementById('paymentApiStatus').classList.add('hidden');
+}
 function closeDepositModal() { document.getElementById('depositModal').classList.add('hidden'); }
 
+function selectPaymentMethod(methodName) {
+  const statusDiv = document.getElementById('paymentApiStatus');
+  const statusText = document.getElementById('paymentApiText');
+  statusDiv.classList.remove('hidden');
+  statusText.textContent = `Establishing secure connection to ${methodName} API...`;
+  
+  setTimeout(() => {
+    statusText.textContent = `Connected securely to ${methodName} API endpoint. Ready to process.`;
+  }, 1200);
+}
+
 function processDeposit() {
+  const amt = Number(document.getElementById('depositAmountInput').value) || 50;
   closeDepositModal();
-  currentBalance += 50.00;
-  updateBalances();
-  alert('Deposit of $50.00 confirmed! Funds added to your Crown Win real wallet.');
+  // Funds intentionally DO NOT reflect on balance as requested
+  alert(`Payment request of $${amt.toFixed(2)} submitted to payment gateway. Awaiting server-side settlement confirmation. Balance will update once processed.`);
 }
 
 function copyRefLink() {
